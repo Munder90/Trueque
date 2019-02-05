@@ -1,0 +1,223 @@
+﻿span.k-dropdowntree {
+    background-image: none;
+    height: 45px;
+}
+.k-dropdowntree {
+    white-space: nowrap;
+    position: relative;
+    display: inline-block;
+    width: 12.4em;
+    overflow: visible;
+    border-width: 0;
+    vertical-align: middle;
+}
+.k-widget {
+    box-sizing: content-box;
+    outline: 0;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    border-style: solid;
+    -webkit-appearance: none;
+    color: #26a69a;
+    border-color: #d5d5d5;
+    background-color: #fff;
+    box-sizing: content-box;
+}
+.k-dropdown-wrap {
+    background-repeat: repeat;
+    border-radius: 4px;
+}
+ .k-dropdowntree .k-dropdown-wrap {
+    cursor: pointer;
+}
+.k-dropdown-wrap > .k-i-close {
+    right: 2.4em;
+}
+
+.k-dropdown-wrap > .k-i-close {
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.k-dropdown-wrap > .k-i-close {
+    font-size: 14px;
+    display: none;
+    position: absolute;
+    cursor: pointer;
+}
+
+.k-dropdown-wrap .k-select {
+    line-height: 2em;
+    -moz-box-sizing: border-box;
+    text-align: center;
+    width: 2em;
+    height: 100%;
+    overflow: hidden;
+    border: 0;
+    text-decoration: none;
+    color: #0c0c0c;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-block;
+    vertical-align: top;
+    text-decoration: none;
+    border-radius: 0 4px 4px 0;
+}
+
+.k-state-default > .k-select {
+    border-color: #c5c5c5;
+}
+
+
+.k-state-default .k-select{
+border-color: #d5d5d5;
+}
+
+.k-treeview span.k-in {
+    cursor: default;
+}
+i + span.k-in {
+    font-weight: bold;
+    padding-left: 0px !important;
+}
+.k-treeview .k-in {
+    margin: 1px 0 1px .16666em;
+    line-height: 21px;
+    text-decoration: none;
+    border-style: solid;
+    border-width: 1px;
+    display: inline-block;
+    border-color: transparent;
+    border-radius: 4px;
+    padding-left: 20px;
+}
+
+.k-treeview .k-i-collapse {
+    margin-top: -4px;
+    cursor: pointer;
+}
+
+
+.k-treeview .material-icons {
+    vertical-align: middle;
+    display: inline-block;
+}
+i.k-i-collapse:before {
+    content: "keyboard_arrow_down";
+}
+i.k-i-expand:before {
+    content: "keyboard_arrow_right";
+}
+.k-popup .k-item.k-first {
+    position: relative;
+}
+ .k-popup .k-item {
+    cursor: default;
+
+}
+.k-treeview .k-item {
+    display: block;
+    border-width: 0;
+    margin: 0;
+    padding: 0 0 0 15px;
+}
+.k-treeview > .k-group {
+    margin: 0;
+    padding: 0;
+    background: 0 0;
+    list-style-type: none;
+    position: relative;
+}
+.k-list-container.k-popup-dropdowntree .k-treeview {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+div.k-treeview {
+    border-width: 0;
+    background-color: #fff;
+    overflow: auto;
+    white-space: nowrap;
+}
+.k-list-container.k-popup-dropdowntree {
+    padding: 0;
+}
+
+.k-popup.k-list-container {
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    padding: 2px;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.k-list-container.k-state-border-up {
+    border-radius: 0 0 4px 4px;
+    border-color: #9e9e9e;
+}
+.k-list-container, .k-animation-container * {
+    border-radius: 0 0 4px 4px;
+}
+.k-reset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    text-decoration: none;
+    font-size: 14px;
+    list-style: none;
+}
+
+.k-list-container {
+    color: #2e2e2e;
+}
+.k-popup{
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,.3); 
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.3);
+}
+.k-dropdown-wrap .k-input {
+    position: relative;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
+    outline: none;
+    height: 3rem;
+    line-height: 3rem;
+    width: 100%;
+    font-size: 14px;
+    margin: 0 0 8px 0;
+    padding: 0;
+    display: block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    z-index: 1;
+}
+.k-animation-container{
+    background-color:white;
+}
+.dropdowntree {
+    width: 100%;
+    font-size: 14px;   
+}
+
+div.dropdowntree {
+    position: absolute;
+    background-color: #fff;
+    display: none;
+    z-index: 2;
+    font-size: 12px;
+}
+.dropdown-trigger {
+}
+.dropdown-trigger:hover + div.dropdowntree {
+    display: block;
+}
+div.dropdowntree:hover {
+    display: block;
+}

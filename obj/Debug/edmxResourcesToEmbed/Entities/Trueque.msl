@@ -1,0 +1,3096 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TruequeModelStoreContainer" CdmEntityContainer="TruequeEntities">
+    <EntitySetMapping Name="ACCIONs">
+      <EntityTypeMapping TypeName="TruequeModel.ACCION">
+        <MappingFragment StoreEntitySet="ACCION">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCCRIPCION" ColumnName="DESCCRIPCION" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ACCIONTs">
+      <EntityTypeMapping TypeName="TruequeModel.ACCIONT">
+        <MappingFragment StoreEntitySet="ACCIONT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="ACCION_ID" ColumnName="ACCION_ID" />
+          <ScalarProperty Name="TXT050" ColumnName="TXT050" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="APPSETTINGs">
+      <EntityTypeMapping TypeName="TruequeModel.APPSETTING">
+        <MappingFragment StoreEntitySet="APPSETTING">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="VALUE" ColumnName="VALUE" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CALENDARIO_AC">
+      <EntityTypeMapping TypeName="TruequeModel.CALENDARIO_AC">
+        <MappingFragment StoreEntitySet="CALENDARIO_AC">
+          <ScalarProperty Name="EJERCICIO" ColumnName="EJERCICIO" />
+          <ScalarProperty Name="PERIODO" ColumnName="PERIODO" />
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="TSOL_ID" ColumnName="TSOL_ID" />
+          <ScalarProperty Name="PRE_FROMF" ColumnName="PRE_FROMF" />
+          <ScalarProperty Name="PRE_FROMH" ColumnName="PRE_FROMH" />
+          <ScalarProperty Name="PRE_TOF" ColumnName="PRE_TOF" />
+          <ScalarProperty Name="PRE_TOH" ColumnName="PRE_TOH" />
+          <ScalarProperty Name="CIE_FROMF" ColumnName="CIE_FROMF" />
+          <ScalarProperty Name="CIE_FROMH" ColumnName="CIE_FROMH" />
+          <ScalarProperty Name="CIE_TOF" ColumnName="CIE_TOF" />
+          <ScalarProperty Name="CIE_TOH" ColumnName="CIE_TOH" />
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+          <ScalarProperty Name="USUARIOM_ID" ColumnName="USUARIOM_ID" />
+          <ScalarProperty Name="FECHAM" ColumnName="FECHAM" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CALENDARIO_EX">
+      <EntityTypeMapping TypeName="TruequeModel.CALENDARIO_EX">
+        <MappingFragment StoreEntitySet="CALENDARIO_EX">
+          <ScalarProperty Name="EJERCICIO" ColumnName="EJERCICIO" />
+          <ScalarProperty Name="PERIODO" ColumnName="PERIODO" />
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="TSOL_ID" ColumnName="TSOL_ID" />
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="EX_FROMF" ColumnName="EX_FROMF" />
+          <ScalarProperty Name="EX_FROMH" ColumnName="EX_FROMH" />
+          <ScalarProperty Name="EX_TOF" ColumnName="EX_TOF" />
+          <ScalarProperty Name="EX_TOH" ColumnName="EX_TOH" />
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="FEHAC" ColumnName="FEHAC" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAMPOS">
+      <EntityTypeMapping TypeName="TruequeModel.CAMPOS">
+        <MappingFragment StoreEntitySet="CAMPOS">
+          <ScalarProperty Name="PAGINA_ID" ColumnName="PAGINA_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAMPOZKE24">
+      <EntityTypeMapping TypeName="TruequeModel.CAMPOZKE24">
+        <MappingFragment StoreEntitySet="CAMPOZKE24">
+          <ScalarProperty Name="CAMPO" ColumnName="CAMPO" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAMPOZKE24T">
+      <EntityTypeMapping TypeName="TruequeModel.CAMPOZKE24T">
+        <MappingFragment StoreEntitySet="CAMPOZKE24T">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="CAMPO_ID" ColumnName="CAMPO_ID" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CANALs">
+      <EntityTypeMapping TypeName="TruequeModel.CANAL">
+        <MappingFragment StoreEntitySet="CANAL">
+          <ScalarProperty Name="CANAL1" ColumnName="CANAL" />
+          <ScalarProperty Name="CDESCRIPCION" ColumnName="CDESCRIPCION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CARPETAs">
+      <EntityTypeMapping TypeName="TruequeModel.CARPETA">
+        <MappingFragment StoreEntitySet="CARPETA">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="TITULO" ColumnName="TITULO" />
+          <ScalarProperty Name="ICON" ColumnName="ICON" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CARPETATs">
+      <EntityTypeMapping TypeName="TruequeModel.CARPETAT">
+        <MappingFragment StoreEntitySet="CARPETAT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CARTAs">
+      <EntityTypeMapping TypeName="TruequeModel.CARTA">
+        <MappingFragment StoreEntitySet="CARTA">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="COMPANY" ColumnName="COMPANY" />
+          <ScalarProperty Name="COMPANYX" ColumnName="COMPANYX" />
+          <ScalarProperty Name="TAXID" ColumnName="TAXID" />
+          <ScalarProperty Name="TAXIDX" ColumnName="TAXIDX" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="CONCEPTOX" ColumnName="CONCEPTOX" />
+          <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+          <ScalarProperty Name="CLIENTEX" ColumnName="CLIENTEX" />
+          <ScalarProperty Name="PUESTO" ColumnName="PUESTO" />
+          <ScalarProperty Name="PUESTOX" ColumnName="PUESTOX" />
+          <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+          <ScalarProperty Name="DIRECCIONX" ColumnName="DIRECCIONX" />
+          <ScalarProperty Name="FOLIO" ColumnName="FOLIO" />
+          <ScalarProperty Name="FOLIOX" ColumnName="FOLIOX" />
+          <ScalarProperty Name="LUGAR" ColumnName="LUGAR" />
+          <ScalarProperty Name="LUGARX" ColumnName="LUGARX" />
+          <ScalarProperty Name="PAYER" ColumnName="PAYER" />
+          <ScalarProperty Name="PAYERX" ColumnName="PAYERX" />
+          <ScalarProperty Name="ESTIMADO" ColumnName="ESTIMADO" />
+          <ScalarProperty Name="ESTIMADOX" ColumnName="ESTIMADOX" />
+          <ScalarProperty Name="MECANICA" ColumnName="MECANICA" />
+          <ScalarProperty Name="MECANICAX" ColumnName="MECANICAX" />
+          <ScalarProperty Name="NOMBREE" ColumnName="NOMBREE" />
+          <ScalarProperty Name="NOMBREEX" ColumnName="NOMBREEX" />
+          <ScalarProperty Name="PUESTOE" ColumnName="PUESTOE" />
+          <ScalarProperty Name="PUESTOEX" ColumnName="PUESTOEX" />
+          <ScalarProperty Name="COMPANYC" ColumnName="COMPANYC" />
+          <ScalarProperty Name="COMPANYCX" ColumnName="COMPANYCX" />
+          <ScalarProperty Name="NOMBREC" ColumnName="NOMBREC" />
+          <ScalarProperty Name="NOMBRECX" ColumnName="NOMBRECX" />
+          <ScalarProperty Name="PUESTOC" ColumnName="PUESTOC" />
+          <ScalarProperty Name="PUESTOCX" ColumnName="PUESTOCX" />
+          <ScalarProperty Name="COMPANYCC" ColumnName="COMPANYCC" />
+          <ScalarProperty Name="COMPANYCCX" ColumnName="COMPANYCCX" />
+          <ScalarProperty Name="LEGAL" ColumnName="LEGAL" />
+          <ScalarProperty Name="LEGALX" ColumnName="LEGALX" />
+          <ScalarProperty Name="MAIL" ColumnName="MAIL" />
+          <ScalarProperty Name="MAILX" ColumnName="MAILX" />
+          <ScalarProperty Name="LUGARFECH" ColumnName="LUGARFECH" />
+          <ScalarProperty Name="LUGARFECHX" ColumnName="LUGARFECHX" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="MONEDA" ColumnName="MONEDA" />
+          <ScalarProperty Name="PAYERNOM" ColumnName="PAYERNOM" />
+          <ScalarProperty Name="PAYERNOMX" ColumnName="PAYERNOMX" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+          <ScalarProperty Name="COMENTARIOX" ColumnName="COMENTARIOX" />
+          <ScalarProperty Name="COMPROMISOK" ColumnName="COMPROMISOK" />
+          <ScalarProperty Name="COMPROMISOKX" ColumnName="COMPROMISOKX" />
+          <ScalarProperty Name="COMPROMISOC" ColumnName="COMPROMISOC" />
+          <ScalarProperty Name="COMPROMISOCX" ColumnName="COMPROMISOCX" />
+          <ScalarProperty Name="SECOND_TABX" ColumnName="SECOND_TABX" />
+          <ScalarProperty Name="MATERIALX" ColumnName="MATERIALX" />
+          <ScalarProperty Name="COSTO_UNX" ColumnName="COSTO_UNX" />
+          <ScalarProperty Name="APOYOX" ColumnName="APOYOX" />
+          <ScalarProperty Name="APOYOPX" ColumnName="APOYOPX" />
+          <ScalarProperty Name="COSTOAPX" ColumnName="COSTOAPX" />
+          <ScalarProperty Name="PRECIOX" ColumnName="PRECIOX" />
+          <ScalarProperty Name="APOYO_ESTX" ColumnName="APOYO_ESTX" />
+          <ScalarProperty Name="APOYO_REAX" ColumnName="APOYO_REAX" />
+          <ScalarProperty Name="VOLUMEN_ESTX" ColumnName="VOLUMEN_ESTX" />
+          <ScalarProperty Name="VOLUMEN_REAX" ColumnName="VOLUMEN_REAX" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CARTAPs">
+      <EntityTypeMapping TypeName="TruequeModel.CARTAP">
+        <MappingFragment StoreEntitySet="CARTAP">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="POS_ID" ColumnName="POS_ID" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="MATNR" ColumnName="MATNR" />
+          <ScalarProperty Name="MATKL" ColumnName="MATKL" />
+          <ScalarProperty Name="CANTIDAD" ColumnName="CANTIDAD" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="PORC_APOYO" ColumnName="PORC_APOYO" />
+          <ScalarProperty Name="MONTO_APOYO" ColumnName="MONTO_APOYO" />
+          <ScalarProperty Name="PRECIO_SUG" ColumnName="PRECIO_SUG" />
+          <ScalarProperty Name="VOLUMEN_EST" ColumnName="VOLUMEN_EST" />
+          <ScalarProperty Name="VOLUMEN_REAL" ColumnName="VOLUMEN_REAL" />
+          <ScalarProperty Name="APOYO_REAL" ColumnName="APOYO_REAL" />
+          <ScalarProperty Name="VIGENCIA_DE" ColumnName="VIGENCIA_DE" />
+          <ScalarProperty Name="VIGENCIA_AL" ColumnName="VIGENCIA_AL" />
+          <ScalarProperty Name="APOYO_EST" ColumnName="APOYO_EST" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CATEGORIAs">
+      <EntityTypeMapping TypeName="TruequeModel.CATEGORIA">
+        <MappingFragment StoreEntitySet="CATEGORIA">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CATEGORIATs">
+      <EntityTypeMapping TypeName="TruequeModel.CATEGORIAT">
+        <MappingFragment StoreEntitySet="CATEGORIAT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="CATEGORIA_ID" ColumnName="CATEGORIA_ID" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CITIES">
+      <EntityTypeMapping TypeName="TruequeModel.CITy">
+        <MappingFragment StoreEntitySet="CITIES">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="STATE_ID" ColumnName="STATE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CLIENTEs">
+      <EntityTypeMapping TypeName="TruequeModel.CLIENTE">
+        <MappingFragment StoreEntitySet="CLIENTE">
+          <ScalarProperty Name="VKORG" ColumnName="VKORG" />
+          <ScalarProperty Name="VTWEG" ColumnName="VTWEG" />
+          <ScalarProperty Name="SPART" ColumnName="SPART" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="NAME1" ColumnName="NAME1" />
+          <ScalarProperty Name="STCD1" ColumnName="STCD1" />
+          <ScalarProperty Name="STCD2" ColumnName="STCD2" />
+          <ScalarProperty Name="LAND" ColumnName="LAND" />
+          <ScalarProperty Name="REGION" ColumnName="REGION" />
+          <ScalarProperty Name="SUBREGION" ColumnName="SUBREGION" />
+          <ScalarProperty Name="REGIO" ColumnName="REGIO" />
+          <ScalarProperty Name="ORT01" ColumnName="ORT01" />
+          <ScalarProperty Name="STRAS_GP" ColumnName="STRAS_GP" />
+          <ScalarProperty Name="PSTLZ" ColumnName="PSTLZ" />
+          <ScalarProperty Name="CONTAC" ColumnName="CONTAC" />
+          <ScalarProperty Name="CONT_EMAIL" ColumnName="CONT_EMAIL" />
+          <ScalarProperty Name="PARVW" ColumnName="PARVW" />
+          <ScalarProperty Name="PAYER" ColumnName="PAYER" />
+          <ScalarProperty Name="GRUPO" ColumnName="GRUPO" />
+          <ScalarProperty Name="SPRAS" ColumnName="SPRAS" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="BDESCRIPCION" ColumnName="BDESCRIPCION" />
+          <ScalarProperty Name="BANNER" ColumnName="BANNER" />
+          <ScalarProperty Name="CANAL" ColumnName="CANAL" />
+          <ScalarProperty Name="BZIRK" ColumnName="BZIRK" />
+          <ScalarProperty Name="KONDA" ColumnName="KONDA" />
+          <ScalarProperty Name="VKGRP" ColumnName="VKGRP" />
+          <ScalarProperty Name="VKBUR" ColumnName="VKBUR" />
+          <ScalarProperty Name="BANNERG" ColumnName="BANNERG" />
+          <ScalarProperty Name="PROVEEDOR_ID" ColumnName="PROVEEDOR_ID" />
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="EXPORTACION" ColumnName="EXPORTACION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CLIENTEFs">
+      <EntityTypeMapping TypeName="TruequeModel.CLIENTEF">
+        <MappingFragment StoreEntitySet="CLIENTEF">
+          <ScalarProperty Name="VKORG" ColumnName="VKORG" />
+          <ScalarProperty Name="VTWEG" ColumnName="VTWEG" />
+          <ScalarProperty Name="SPART" ColumnName="SPART" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="USUARIO0_ID" ColumnName="USUARIO0_ID" />
+          <ScalarProperty Name="USUARIO1_ID" ColumnName="USUARIO1_ID" />
+          <ScalarProperty Name="USUARIO2_ID" ColumnName="USUARIO2_ID" />
+          <ScalarProperty Name="USUARIO3_ID" ColumnName="USUARIO3_ID" />
+          <ScalarProperty Name="USUARIO4_ID" ColumnName="USUARIO4_ID" />
+          <ScalarProperty Name="USUARIO5_ID" ColumnName="USUARIO5_ID" />
+          <ScalarProperty Name="USUARIO6_ID" ColumnName="USUARIO6_ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+          <ScalarProperty Name="FECHAM" ColumnName="FECHAM" />
+          <ScalarProperty Name="USUARIO7_ID" ColumnName="USUARIO7_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CLIENTEIs">
+      <EntityTypeMapping TypeName="TruequeModel.CLIENTEI">
+        <MappingFragment StoreEntitySet="CLIENTEI">
+          <ScalarProperty Name="VKORG" ColumnName="VKORG" />
+          <ScalarProperty Name="VTWEG" ColumnName="VTWEG" />
+          <ScalarProperty Name="SPART" ColumnName="SPART" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="MWSKZ" ColumnName="MWSKZ" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONDICIONs">
+      <EntityTypeMapping TypeName="TruequeModel.CONDICION">
+        <MappingFragment StoreEntitySet="CONDICION">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCR" ColumnName="DESCR" />
+          <ScalarProperty Name="COND" ColumnName="COND" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONDICIONTs">
+      <EntityTypeMapping TypeName="TruequeModel.CONDICIONT">
+        <MappingFragment StoreEntitySet="CONDICIONT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="CONDICION_ID" ColumnName="CONDICION_ID" />
+          <ScalarProperty Name="TXT050" ColumnName="TXT050" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONFDIST_CAT">
+      <EntityTypeMapping TypeName="TruequeModel.CONFDIST_CAT">
+        <MappingFragment StoreEntitySet="CONFDIST_CAT">
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="CAMPO" ColumnName="CAMPO" />
+          <ScalarProperty Name="PORC_AD" ColumnName="PORC_AD" />
+          <ScalarProperty Name="PERIODOS" ColumnName="PERIODOS" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONMAILs">
+      <EntityTypeMapping TypeName="TruequeModel.CONMAIL">
+        <MappingFragment StoreEntitySet="CONMAIL">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HOST" ColumnName="HOST" />
+          <ScalarProperty Name="PORT" ColumnName="PORT" />
+          <ScalarProperty Name="SSL" ColumnName="SSL" />
+          <ScalarProperty Name="MAIL" ColumnName="MAIL" />
+          <ScalarProperty Name="PASS" ColumnName="PASS" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONPOSAPHs">
+      <EntityTypeMapping TypeName="TruequeModel.CONPOSAPH">
+        <MappingFragment StoreEntitySet="CONPOSAPH">
+          <ScalarProperty Name="CONSECUTIVO" ColumnName="CONSECUTIVO" />
+          <ScalarProperty Name="TIPO_SOL" ColumnName="TIPO_SOL" />
+          <ScalarProperty Name="TIPO_DOC" ColumnName="TIPO_DOC" />
+          <ScalarProperty Name="SOCIEDAD" ColumnName="SOCIEDAD" />
+          <ScalarProperty Name="FECHA_CONTAB" ColumnName="FECHA_CONTAB" />
+          <ScalarProperty Name="FECHA_DOCU" ColumnName="FECHA_DOCU" />
+          <ScalarProperty Name="MONEDA" ColumnName="MONEDA" />
+          <ScalarProperty Name="HEADER_TEXT" ColumnName="HEADER_TEXT" />
+          <ScalarProperty Name="FECHA_INIVIG" ColumnName="FECHA_INIVIG" />
+          <ScalarProperty Name="FECHA_FINVIG" ColumnName="FECHA_FINVIG" />
+          <ScalarProperty Name="REFERENCIA" ColumnName="REFERENCIA" />
+          <ScalarProperty Name="PAIS" ColumnName="PAIS" />
+          <ScalarProperty Name="NOTA" ColumnName="NOTA" />
+          <ScalarProperty Name="CORRESPONDENCIA" ColumnName="CORRESPONDENCIA" />
+          <ScalarProperty Name="CALC_TAXT" ColumnName="CALC_TAXT" />
+          <ScalarProperty Name="RELACION" ColumnName="RELACION" />
+          <ScalarProperty Name="RETENCION" ColumnName="RETENCION" />
+          <ScalarProperty Name="DESCRI_CONFIG" ColumnName="DESCRI_CONFIG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONPOSAPPs">
+      <EntityTypeMapping TypeName="TruequeModel.CONPOSAPP">
+        <MappingFragment StoreEntitySet="CONPOSAPP">
+          <ScalarProperty Name="CONSECUTIVO" ColumnName="CONSECUTIVO" />
+          <ScalarProperty Name="POSICION" ColumnName="POSICION" />
+          <ScalarProperty Name="RELACION" ColumnName="RELACION" />
+          <ScalarProperty Name="KEY" ColumnName="KEY" />
+          <ScalarProperty Name="BUS_AREA" ColumnName="BUS_AREA" />
+          <ScalarProperty Name="POSTING_KEY" ColumnName="POSTING_KEY" />
+          <ScalarProperty Name="NUM_PROV" ColumnName="NUM_PROV" />
+          <ScalarProperty Name="NUM_CTE" ColumnName="NUM_CTE" />
+          <ScalarProperty Name="CTA_MAYOR" ColumnName="CTA_MAYOR" />
+          <ScalarProperty Name="CTA_MAYOR_FV" ColumnName="CTA_MAYOR_FV" />
+          <ScalarProperty Name="CECO" ColumnName="CECO" />
+          <ScalarProperty Name="TEXTO" ColumnName="TEXTO" />
+          <ScalarProperty Name="SALES_ORG" ColumnName="SALES_ORG" />
+          <ScalarProperty Name="CAN_DIST" ColumnName="CAN_DIST" />
+          <ScalarProperty Name="DIVISION" ColumnName="DIVISION" />
+          <ScalarProperty Name="SALES_OFF" ColumnName="SALES_OFF" />
+          <ScalarProperty Name="SALES_GRP" ColumnName="SALES_GRP" />
+          <ScalarProperty Name="PRICE_GRP" ColumnName="PRICE_GRP" />
+          <ScalarProperty Name="CORP_CAT" ColumnName="CORP_CAT" />
+          <ScalarProperty Name="CORP_BRAND" ColumnName="CORP_BRAND" />
+          <ScalarProperty Name="INV_REF" ColumnName="INV_REF" />
+          <ScalarProperty Name="PAYM_TERM" ColumnName="PAYM_TERM" />
+          <ScalarProperty Name="JURIS_CODE" ColumnName="JURIS_CODE" />
+          <ScalarProperty Name="SALES_DIST" ColumnName="SALES_DIST" />
+          <ScalarProperty Name="PRODUCT" ColumnName="PRODUCT" />
+          <ScalarProperty Name="TAX_CODE" ColumnName="TAX_CODE" />
+          <ScalarProperty Name="PLANT" ColumnName="PLANT" />
+          <ScalarProperty Name="REF_KEY1" ColumnName="REF_KEY1" />
+          <ScalarProperty Name="REF_KEY3" ColumnName="REF_KEY3" />
+          <ScalarProperty Name="ASSIGNACION" ColumnName="ASSIGNACION" />
+          <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+          <ScalarProperty Name="BASE_UNIT" ColumnName="BASE_UNIT" />
+          <ScalarProperty Name="MATERIALGP" ColumnName="MATERIALGP" />
+          <ScalarProperty Name="TAXCODEGP" ColumnName="TAXCODEGP" />
+          <ScalarProperty Name="ASIGNACIONTXT" ColumnName="ASIGNACIONTXT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONSOPORTEs">
+      <EntityTypeMapping TypeName="TruequeModel.CONSOPORTE">
+        <MappingFragment StoreEntitySet="CONSOPORTE">
+          <ScalarProperty Name="TSOL_ID" ColumnName="TSOL_ID" />
+          <ScalarProperty Name="TSOPORTE_ID" ColumnName="TSOPORTE_ID" />
+          <ScalarProperty Name="OBLIGATORIO" ColumnName="OBLIGATORIO" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONTACTOCs">
+      <EntityTypeMapping TypeName="TruequeModel.CONTACTOC">
+        <MappingFragment StoreEntitySet="CONTACTOC">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="VKORG" ColumnName="VKORG" />
+          <ScalarProperty Name="VTWEG" ColumnName="VTWEG" />
+          <ScalarProperty Name="SPART" ColumnName="SPART" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="DEFECTO" ColumnName="DEFECTO" />
+          <ScalarProperty Name="CARTA" ColumnName="CARTA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="COUNTRIES">
+      <EntityTypeMapping TypeName="TruequeModel.COUNTRy">
+        <MappingFragment StoreEntitySet="COUNTRIES">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="SORTNAME" ColumnName="SORTNAME" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="PHONECODE" ColumnName="PHONECODE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CUENTAs">
+      <EntityTypeMapping TypeName="TruequeModel.CUENTA">
+        <MappingFragment StoreEntitySet="CUENTA">
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="TALL_ID" ColumnName="TALL_ID" />
+          <ScalarProperty Name="EJERCICIO" ColumnName="EJERCICIO" />
+          <ScalarProperty Name="ABONO" ColumnName="ABONO" />
+          <ScalarProperty Name="CARGO" ColumnName="CARGO" />
+          <ScalarProperty Name="CLEARING" ColumnName="CLEARING" />
+          <ScalarProperty Name="LIMITE" ColumnName="LIMITE" />
+          <ScalarProperty Name="IMPUESTO" ColumnName="IMPUESTO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CUENTAAs">
+      <EntityTypeMapping TypeName="TruequeModel.CUENTAA">
+        <MappingFragment StoreEntitySet="CUENTAA">
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="CLAVE" ColumnName="CLAVE" />
+          <ScalarProperty Name="CUENTA_ID" ColumnName="CUENTA_ID" />
+          <ScalarProperty Name="NOMBRE1" ColumnName="NOMBRE1" />
+          <ScalarProperty Name="NOMBRE2" ColumnName="NOMBRE2" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CUENTAGLs">
+      <EntityTypeMapping TypeName="TruequeModel.CUENTAGL">
+        <MappingFragment StoreEntitySet="CUENTAGL">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DELEGARs">
+      <EntityTypeMapping TypeName="TruequeModel.DELEGAR">
+        <MappingFragment StoreEntitySet="DELEGAR">
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="USUARIOD_ID" ColumnName="USUARIOD_ID" />
+          <ScalarProperty Name="FECHAI" ColumnName="FECHAI" />
+          <ScalarProperty Name="FECHAF" ColumnName="FECHAF" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DET_AGENTE">
+      <EntityTypeMapping TypeName="TruequeModel.DET_AGENTE">
+        <MappingFragment StoreEntitySet="DET_AGENTE">
+          <ScalarProperty Name="PUESTOC_ID" ColumnName="PUESTOC_ID" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="PUESTOA_ID" ColumnName="PUESTOA_ID" />
+          <ScalarProperty Name="AGROUP_ID" ColumnName="AGROUP_ID" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="PRESUPUESTO" ColumnName="PRESUPUESTO" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="USUARIOA" ColumnName="USUARIOA" />
+          <ScalarProperty Name="USUARIOC" ColumnName="USUARIOC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DET_AGENTEC">
+      <EntityTypeMapping TypeName="TruequeModel.DET_AGENTEC">
+        <MappingFragment StoreEntitySet="DET_AGENTEC">
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="VKORG" ColumnName="VKORG" />
+          <ScalarProperty Name="VTWEG" ColumnName="VTWEG" />
+          <ScalarProperty Name="SPART" ColumnName="SPART" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="USUARIOA_ID" ColumnName="USUARIOA_ID" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="PRESUPUESTO" ColumnName="PRESUPUESTO" />
+          <ScalarProperty Name="MAIL" ColumnName="MAIL" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DET_AGENTEH">
+      <EntityTypeMapping TypeName="TruequeModel.DET_AGENTEH">
+        <MappingFragment StoreEntitySet="DET_AGENTEH">
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PUESTOC_ID" ColumnName="PUESTOC_ID" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="AGROUP_ID" ColumnName="AGROUP_ID" />
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DET_AGENTEP">
+      <EntityTypeMapping TypeName="TruequeModel.DET_AGENTEP">
+        <MappingFragment StoreEntitySet="DET_AGENTEP">
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PUESTOC_ID" ColumnName="PUESTOC_ID" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="AGROUP_ID" ColumnName="AGROUP_ID" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="PUESTOA_ID" ColumnName="PUESTOA_ID" />
+          <ScalarProperty Name="USUARIOA_ID" ColumnName="USUARIOA_ID" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="PRESUPUESTO" ColumnName="PRESUPUESTO" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DET_APROB">
+      <EntityTypeMapping TypeName="TruequeModel.DET_APROB">
+        <MappingFragment StoreEntitySet="DET_APROB">
+          <ScalarProperty Name="PUESTOC_ID" ColumnName="PUESTOC_ID" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="PUESTOA_ID" ColumnName="PUESTOA_ID" />
+          <ScalarProperty Name="BUKRS" ColumnName="BUKRS" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="PRESUPUESTO" ColumnName="PRESUPUESTO" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DET_APROBH">
+      <EntityTypeMapping TypeName="TruequeModel.DET_APROBH">
+        <MappingFragment StoreEntitySet="DET_APROBH">
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PUESTOC_ID" ColumnName="PUESTOC_ID" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DET_APROBP">
+      <EntityTypeMapping TypeName="TruequeModel.DET_APROBP">
+        <MappingFragment StoreEntitySet="DET_APROBP">
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PUESTOC_ID" ColumnName="PUESTOC_ID" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="PUESTOA_ID" ColumnName="PUESTOA_ID" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="PRESUPUESTO" ColumnName="PRESUPUESTO" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="N_MONTO" ColumnName="N_MONTO" />
+          <ScalarProperty Name="N_PRESUP" ColumnName="N_PRESUP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DET_TAX">
+      <EntityTypeMapping TypeName="TruequeModel.DET_TAX">
+        <MappingFragment StoreEntitySet="DET_TAX">
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PUESTOC_ID" ColumnName="PUESTOC_ID" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="PUESTOA_ID" ColumnName="PUESTOA_ID" />
+          <ScalarProperty Name="USUARIOA_ID" ColumnName="USUARIOA_ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DET_TAXEO">
+      <EntityTypeMapping TypeName="TruequeModel.DET_TAXEO">
+        <MappingFragment StoreEntitySet="DET_TAXEO">
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="PUESTOC_ID" ColumnName="PUESTOC_ID" />
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="PUESTOA_ID" ColumnName="PUESTOA_ID" />
+          <ScalarProperty Name="USUARIOA_ID" ColumnName="USUARIOA_ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DET_TAXEOC">
+      <EntityTypeMapping TypeName="TruequeModel.DET_TAXEOC">
+        <MappingFragment StoreEntitySet="DET_TAXEOC">
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="VKORG" ColumnName="VKORG" />
+          <ScalarProperty Name="VTWEG" ColumnName="VTWEG" />
+          <ScalarProperty Name="SPART" ColumnName="SPART" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="USUARIOA_ID" ColumnName="USUARIOA_ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCTOAYUDAs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCTOAYUDA">
+        <MappingFragment StoreEntitySet="DOCTOAYUDA">
+          <ScalarProperty Name="ID_DOCUMENTO" ColumnName="ID_DOCUMENTO" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="ID_CLASIFICACION" ColumnName="ID_CLASIFICACION" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="RUTA_DOCUMENTO" ColumnName="RUTA_DOCUMENTO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCTOCLASIFs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCTOCLASIF">
+        <MappingFragment StoreEntitySet="DOCTOCLASIF">
+          <ScalarProperty Name="ID_CLASIFICACION" ColumnName="ID_CLASIFICACION" />
+          <ScalarProperty Name="CLASIFICACION_DSC" ColumnName="CLASIFICACION_DSC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCTOCLASIFTs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCTOCLASIFT">
+        <MappingFragment StoreEntitySet="DOCTOCLASIFT">
+          <ScalarProperty Name="ID_CLASIFICACION" ColumnName="ID_CLASIFICACION" />
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="TEXTO" ColumnName="TEXTO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTBORRs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTBORR">
+        <MappingFragment StoreEntitySet="DOCUMENTBORR">
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="TSOL_ID" ColumnName="TSOL_ID" />
+          <ScalarProperty Name="TALL_ID" ColumnName="TALL_ID" />
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+          <ScalarProperty Name="CIUDAD" ColumnName="CIUDAD" />
+          <ScalarProperty Name="PERIODO" ColumnName="PERIODO" />
+          <ScalarProperty Name="EJERCICIO" ColumnName="EJERCICIO" />
+          <ScalarProperty Name="TIPO_TECNICO" ColumnName="TIPO_TECNICO" />
+          <ScalarProperty Name="TIPO_RECURRENTE" ColumnName="TIPO_RECURRENTE" />
+          <ScalarProperty Name="CANTIDAD_EV" ColumnName="CANTIDAD_EV" />
+          <ScalarProperty Name="FECHAD" ColumnName="FECHAD" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+          <ScalarProperty Name="HORAC" ColumnName="HORAC" />
+          <ScalarProperty Name="FECHAC_PLAN" ColumnName="FECHAC_PLAN" />
+          <ScalarProperty Name="FECHAC_USER" ColumnName="FECHAC_USER" />
+          <ScalarProperty Name="HORAC_USER" ColumnName="HORAC_USER" />
+          <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+          <ScalarProperty Name="ESTATUS_C" ColumnName="ESTATUS_C" />
+          <ScalarProperty Name="ESTATUS_SAP" ColumnName="ESTATUS_SAP" />
+          <ScalarProperty Name="ESTATUS_WF" ColumnName="ESTATUS_WF" />
+          <ScalarProperty Name="DOCUMENTO_REF" ColumnName="DOCUMENTO_REF" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="NOTAS" ColumnName="NOTAS" />
+          <ScalarProperty Name="MONTO_DOC_MD" ColumnName="MONTO_DOC_MD" />
+          <ScalarProperty Name="MONTO_FIJO_MD" ColumnName="MONTO_FIJO_MD" />
+          <ScalarProperty Name="MONTO_BASE_GS_PCT_MD" ColumnName="MONTO_BASE_GS_PCT_MD" />
+          <ScalarProperty Name="MONTO_BASE_NS_PCT_MD" ColumnName="MONTO_BASE_NS_PCT_MD" />
+          <ScalarProperty Name="MONTO_DOC_ML" ColumnName="MONTO_DOC_ML" />
+          <ScalarProperty Name="MONTO_FIJO_ML" ColumnName="MONTO_FIJO_ML" />
+          <ScalarProperty Name="MONTO_BASE_GS_PCT_ML" ColumnName="MONTO_BASE_GS_PCT_ML" />
+          <ScalarProperty Name="MONTO_BASE_NS_PCT_ML" ColumnName="MONTO_BASE_NS_PCT_ML" />
+          <ScalarProperty Name="MONTO_DOC_ML2" ColumnName="MONTO_DOC_ML2" />
+          <ScalarProperty Name="MONTO_FIJO_ML2" ColumnName="MONTO_FIJO_ML2" />
+          <ScalarProperty Name="MONTO_BASE_GS_PCT_ML2" ColumnName="MONTO_BASE_GS_PCT_ML2" />
+          <ScalarProperty Name="MONTO_BASE_NS_PCT_ML2" ColumnName="MONTO_BASE_NS_PCT_ML2" />
+          <ScalarProperty Name="PORC_ADICIONAL" ColumnName="PORC_ADICIONAL" />
+          <ScalarProperty Name="IMPUESTO" ColumnName="IMPUESTO" />
+          <ScalarProperty Name="FECHAI_VIG" ColumnName="FECHAI_VIG" />
+          <ScalarProperty Name="FECHAF_VIG" ColumnName="FECHAF_VIG" />
+          <ScalarProperty Name="ESTATUS_EXT" ColumnName="ESTATUS_EXT" />
+          <ScalarProperty Name="SOLD_TO_ID" ColumnName="SOLD_TO_ID" />
+          <ScalarProperty Name="PAYER_ID" ColumnName="PAYER_ID" />
+          <ScalarProperty Name="PAYER_NOMBRE" ColumnName="PAYER_NOMBRE" />
+          <ScalarProperty Name="PAYER_EMAIL" ColumnName="PAYER_EMAIL" />
+          <ScalarProperty Name="GRUPO_CTE_ID" ColumnName="GRUPO_CTE_ID" />
+          <ScalarProperty Name="CANAL_ID" ColumnName="CANAL_ID" />
+          <ScalarProperty Name="MONEDA_ID" ColumnName="MONEDA_ID" />
+          <ScalarProperty Name="MONEDAL_ID" ColumnName="MONEDAL_ID" />
+          <ScalarProperty Name="MONEDAL2_ID" ColumnName="MONEDAL2_ID" />
+          <ScalarProperty Name="TIPO_CAMBIO" ColumnName="TIPO_CAMBIO" />
+          <ScalarProperty Name="TIPO_CAMBIOL" ColumnName="TIPO_CAMBIOL" />
+          <ScalarProperty Name="TIPO_CAMBIOL2" ColumnName="TIPO_CAMBIOL2" />
+          <ScalarProperty Name="NO_FACTURA" ColumnName="NO_FACTURA" />
+          <ScalarProperty Name="FECHAD_SOPORTE" ColumnName="FECHAD_SOPORTE" />
+          <ScalarProperty Name="METODO_PAGO" ColumnName="METODO_PAGO" />
+          <ScalarProperty Name="NO_PROVEEDOR" ColumnName="NO_PROVEEDOR" />
+          <ScalarProperty Name="PASO_ACTUAL" ColumnName="PASO_ACTUAL" />
+          <ScalarProperty Name="AGENTE_ACTUAL" ColumnName="AGENTE_ACTUAL" />
+          <ScalarProperty Name="FECHA_PASO_ACTUAL" ColumnName="FECHA_PASO_ACTUAL" />
+          <ScalarProperty Name="VKORG" ColumnName="VKORG" />
+          <ScalarProperty Name="VTWEG" ColumnName="VTWEG" />
+          <ScalarProperty Name="SPART" ColumnName="SPART" />
+          <ScalarProperty Name="TIPO_TECNICO2" ColumnName="TIPO_TECNICO2" />
+          <ScalarProperty Name="MONEDA_DIS" ColumnName="MONEDA_DIS" />
+          <ScalarProperty Name="PORC_APOYO" ColumnName="PORC_APOYO" />
+          <ScalarProperty Name="LIGADA" ColumnName="LIGADA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTOes">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTO">
+        <MappingFragment StoreEntitySet="DOCUMENTO">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="TSOL_ID" ColumnName="TSOL_ID" />
+          <ScalarProperty Name="TALL_ID" ColumnName="TALL_ID" />
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+          <ScalarProperty Name="CIUDAD" ColumnName="CIUDAD" />
+          <ScalarProperty Name="PERIODO" ColumnName="PERIODO" />
+          <ScalarProperty Name="EJERCICIO" ColumnName="EJERCICIO" />
+          <ScalarProperty Name="TIPO_TECNICO" ColumnName="TIPO_TECNICO" />
+          <ScalarProperty Name="TIPO_RECURRENTE" ColumnName="TIPO_RECURRENTE" />
+          <ScalarProperty Name="CANTIDAD_EV" ColumnName="CANTIDAD_EV" />
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="USUARIOD_ID" ColumnName="USUARIOD_ID" />
+          <ScalarProperty Name="FECHAD" ColumnName="FECHAD" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+          <ScalarProperty Name="HORAC" ColumnName="HORAC" />
+          <ScalarProperty Name="FECHAC_PLAN" ColumnName="FECHAC_PLAN" />
+          <ScalarProperty Name="FECHAC_USER" ColumnName="FECHAC_USER" />
+          <ScalarProperty Name="HORAC_USER" ColumnName="HORAC_USER" />
+          <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+          <ScalarProperty Name="ESTATUS_C" ColumnName="ESTATUS_C" />
+          <ScalarProperty Name="ESTATUS_SAP" ColumnName="ESTATUS_SAP" />
+          <ScalarProperty Name="ESTATUS_WF" ColumnName="ESTATUS_WF" />
+          <ScalarProperty Name="DOCUMENTO_REF" ColumnName="DOCUMENTO_REF" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="NOTAS" ColumnName="NOTAS" />
+          <ScalarProperty Name="MONTO_DOC_MD" ColumnName="MONTO_DOC_MD" />
+          <ScalarProperty Name="MONTO_FIJO_MD" ColumnName="MONTO_FIJO_MD" />
+          <ScalarProperty Name="MONTO_BASE_GS_PCT_MD" ColumnName="MONTO_BASE_GS_PCT_MD" />
+          <ScalarProperty Name="MONTO_BASE_NS_PCT_MD" ColumnName="MONTO_BASE_NS_PCT_MD" />
+          <ScalarProperty Name="MONTO_DOC_ML" ColumnName="MONTO_DOC_ML" />
+          <ScalarProperty Name="MONTO_FIJO_ML" ColumnName="MONTO_FIJO_ML" />
+          <ScalarProperty Name="MONTO_BASE_GS_PCT_ML" ColumnName="MONTO_BASE_GS_PCT_ML" />
+          <ScalarProperty Name="MONTO_BASE_NS_PCT_ML" ColumnName="MONTO_BASE_NS_PCT_ML" />
+          <ScalarProperty Name="MONTO_DOC_ML2" ColumnName="MONTO_DOC_ML2" />
+          <ScalarProperty Name="MONTO_FIJO_ML2" ColumnName="MONTO_FIJO_ML2" />
+          <ScalarProperty Name="MONTO_BASE_GS_PCT_ML2" ColumnName="MONTO_BASE_GS_PCT_ML2" />
+          <ScalarProperty Name="MONTO_BASE_NS_PCT_ML2" ColumnName="MONTO_BASE_NS_PCT_ML2" />
+          <ScalarProperty Name="PORC_ADICIONAL" ColumnName="PORC_ADICIONAL" />
+          <ScalarProperty Name="IMPUESTO" ColumnName="IMPUESTO" />
+          <ScalarProperty Name="FECHAI_VIG" ColumnName="FECHAI_VIG" />
+          <ScalarProperty Name="FECHAF_VIG" ColumnName="FECHAF_VIG" />
+          <ScalarProperty Name="ESTATUS_EXT" ColumnName="ESTATUS_EXT" />
+          <ScalarProperty Name="SOLD_TO_ID" ColumnName="SOLD_TO_ID" />
+          <ScalarProperty Name="PAYER_ID" ColumnName="PAYER_ID" />
+          <ScalarProperty Name="PAYER_NOMBRE" ColumnName="PAYER_NOMBRE" />
+          <ScalarProperty Name="PAYER_EMAIL" ColumnName="PAYER_EMAIL" />
+          <ScalarProperty Name="GRUPO_CTE_ID" ColumnName="GRUPO_CTE_ID" />
+          <ScalarProperty Name="CANAL_ID" ColumnName="CANAL_ID" />
+          <ScalarProperty Name="MONEDA_ID" ColumnName="MONEDA_ID" />
+          <ScalarProperty Name="MONEDAL_ID" ColumnName="MONEDAL_ID" />
+          <ScalarProperty Name="MONEDAL2_ID" ColumnName="MONEDAL2_ID" />
+          <ScalarProperty Name="TIPO_CAMBIO" ColumnName="TIPO_CAMBIO" />
+          <ScalarProperty Name="TIPO_CAMBIOL" ColumnName="TIPO_CAMBIOL" />
+          <ScalarProperty Name="TIPO_CAMBIOL2" ColumnName="TIPO_CAMBIOL2" />
+          <ScalarProperty Name="NO_FACTURA" ColumnName="NO_FACTURA" />
+          <ScalarProperty Name="FECHAD_SOPORTE" ColumnName="FECHAD_SOPORTE" />
+          <ScalarProperty Name="METODO_PAGO" ColumnName="METODO_PAGO" />
+          <ScalarProperty Name="NO_PROVEEDOR" ColumnName="NO_PROVEEDOR" />
+          <ScalarProperty Name="PASO_ACTUAL" ColumnName="PASO_ACTUAL" />
+          <ScalarProperty Name="AGENTE_ACTUAL" ColumnName="AGENTE_ACTUAL" />
+          <ScalarProperty Name="FECHA_PASO_ACTUAL" ColumnName="FECHA_PASO_ACTUAL" />
+          <ScalarProperty Name="VKORG" ColumnName="VKORG" />
+          <ScalarProperty Name="VTWEG" ColumnName="VTWEG" />
+          <ScalarProperty Name="SPART" ColumnName="SPART" />
+          <ScalarProperty Name="PUESTO_ID" ColumnName="PUESTO_ID" />
+          <ScalarProperty Name="GALL_ID" ColumnName="GALL_ID" />
+          <ScalarProperty Name="CONCEPTO_ID" ColumnName="CONCEPTO_ID" />
+          <ScalarProperty Name="DOCUMENTO_SAP" ColumnName="DOCUMENTO_SAP" />
+          <ScalarProperty Name="PORC_APOYO" ColumnName="PORC_APOYO" />
+          <ScalarProperty Name="LIGADA" ColumnName="LIGADA" />
+          <ScalarProperty Name="OBJETIVOQ" ColumnName="OBJETIVOQ" />
+          <ScalarProperty Name="FRECUENCIA_LIQ" ColumnName="FRECUENCIA_LIQ" />
+          <ScalarProperty Name="OBJQ_PORC" ColumnName="OBJQ_PORC" />
+          <ScalarProperty Name="CUENTAP" ColumnName="CUENTAP" />
+          <ScalarProperty Name="CUENTAPL" ColumnName="CUENTAPL" />
+          <ScalarProperty Name="EXCEDE_PRES" ColumnName="EXCEDE_PRES" />
+          <ScalarProperty Name="CUENTACL" ColumnName="CUENTACL" />
+          <ScalarProperty Name="TSOL_LIG" ColumnName="TSOL_LIG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTOAs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTOA">
+        <MappingFragment StoreEntitySet="DOCUMENTOA">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="CLASE" ColumnName="CLASE" />
+          <ScalarProperty Name="STEP_WF" ColumnName="STEP_WF" />
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="PATH" ColumnName="PATH" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTOBORRFs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTOBORRF">
+        <MappingFragment StoreEntitySet="DOCUMENTOBORRF">
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="FACTURA" ColumnName="FACTURA" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="PROVEEDOR" ColumnName="PROVEEDOR" />
+          <ScalarProperty Name="CONTROL" ColumnName="CONTROL" />
+          <ScalarProperty Name="AUTORIZACION" ColumnName="AUTORIZACION" />
+          <ScalarProperty Name="VENCIMIENTO" ColumnName="VENCIMIENTO" />
+          <ScalarProperty Name="FACTURAK" ColumnName="FACTURAK" />
+          <ScalarProperty Name="EJERCICIOK" ColumnName="EJERCICIOK" />
+          <ScalarProperty Name="BILL_DOC" ColumnName="BILL_DOC" />
+          <ScalarProperty Name="BELNR" ColumnName="BELNR" />
+          <ScalarProperty Name="IMPORTE_FAC" ColumnName="IMPORTE_FAC" />
+          <ScalarProperty Name="PAYER" ColumnName="PAYER" />
+          <ScalarProperty Name="NAME1" ColumnName="NAME1" />
+          <ScalarProperty Name="SOCIEDAD" ColumnName="SOCIEDAD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTOBORRMs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTOBORRM">
+        <MappingFragment StoreEntitySet="DOCUMENTOBORRM">
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="POS_ID" ColumnName="POS_ID" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="MATNR" ColumnName="MATNR" />
+          <ScalarProperty Name="PORC_APOYO" ColumnName="PORC_APOYO" />
+          <ScalarProperty Name="APOYO_EST" ColumnName="APOYO_EST" />
+          <ScalarProperty Name="APOYO_REAL" ColumnName="APOYO_REAL" />
+          <ScalarProperty Name="VIGENCIA_DE" ColumnName="VIGENCIA_DE" />
+          <ScalarProperty Name="VIGENCIA_AL" ColumnName="VIGENCIA_AL" />
+          <ScalarProperty Name="VALORH" ColumnName="VALORH" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTOBORRNs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTOBORRN">
+        <MappingFragment StoreEntitySet="DOCUMENTOBORRN">
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="STEP" ColumnName="STEP" />
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="TEXTO" ColumnName="TEXTO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTOBORRPs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTOBORRP">
+        <MappingFragment StoreEntitySet="DOCUMENTOBORRP">
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="MATNR" ColumnName="MATNR" />
+          <ScalarProperty Name="MATKL" ColumnName="MATKL" />
+          <ScalarProperty Name="CANTIDAD" ColumnName="CANTIDAD" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="PORC_APOYO" ColumnName="PORC_APOYO" />
+          <ScalarProperty Name="MONTO_APOYO" ColumnName="MONTO_APOYO" />
+          <ScalarProperty Name="PRECIO_SUG" ColumnName="PRECIO_SUG" />
+          <ScalarProperty Name="VOLUMEN_EST" ColumnName="VOLUMEN_EST" />
+          <ScalarProperty Name="VOLUMEN_REAL" ColumnName="VOLUMEN_REAL" />
+          <ScalarProperty Name="APOYO_REAL" ColumnName="APOYO_REAL" />
+          <ScalarProperty Name="VIGENCIA_DE" ColumnName="VIGENCIA_DE" />
+          <ScalarProperty Name="VIGENCIA_AL" ColumnName="VIGENCIA_AL" />
+          <ScalarProperty Name="APOYO_EST" ColumnName="APOYO_EST" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTOBORRRECs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTOBORRREC">
+        <MappingFragment StoreEntitySet="DOCUMENTOBORRREC">
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="FECHAF" ColumnName="FECHAF" />
+          <ScalarProperty Name="PERIODO" ColumnName="PERIODO" />
+          <ScalarProperty Name="EJERCICIO" ColumnName="EJERCICIO" />
+          <ScalarProperty Name="MONTO_BASE" ColumnName="MONTO_BASE" />
+          <ScalarProperty Name="MONTO_FIJO" ColumnName="MONTO_FIJO" />
+          <ScalarProperty Name="MONTO_GRS" ColumnName="MONTO_GRS" />
+          <ScalarProperty Name="MONTO_NET" ColumnName="MONTO_NET" />
+          <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+          <ScalarProperty Name="PORC" ColumnName="PORC" />
+          <ScalarProperty Name="DOC_REF" ColumnName="DOC_REF" />
+          <ScalarProperty Name="FECHAV" ColumnName="FECHAV" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTOFs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTOF">
+        <MappingFragment StoreEntitySet="DOCUMENTOF">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="FACTURA" ColumnName="FACTURA" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="PROVEEDOR" ColumnName="PROVEEDOR" />
+          <ScalarProperty Name="CONTROL" ColumnName="CONTROL" />
+          <ScalarProperty Name="AUTORIZACION" ColumnName="AUTORIZACION" />
+          <ScalarProperty Name="VENCIMIENTO" ColumnName="VENCIMIENTO" />
+          <ScalarProperty Name="FACTURAK" ColumnName="FACTURAK" />
+          <ScalarProperty Name="EJERCICIOK" ColumnName="EJERCICIOK" />
+          <ScalarProperty Name="BILL_DOC" ColumnName="BILL_DOC" />
+          <ScalarProperty Name="BELNR" ColumnName="BELNR" />
+          <ScalarProperty Name="IMPORTE_FAC" ColumnName="IMPORTE_FAC" />
+          <ScalarProperty Name="PAYER" ColumnName="PAYER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTOLs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTOL">
+        <MappingFragment StoreEntitySet="DOCUMENTOL">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="FECHAF" ColumnName="FECHAF" />
+          <ScalarProperty Name="MONTO_VENTA" ColumnName="MONTO_VENTA" />
+          <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+          <ScalarProperty Name="BACKORDER" ColumnName="BACKORDER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTOMs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTOM">
+        <MappingFragment StoreEntitySet="DOCUMENTOM">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="POS_ID" ColumnName="POS_ID" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="MATNR" ColumnName="MATNR" />
+          <ScalarProperty Name="PORC_APOYO" ColumnName="PORC_APOYO" />
+          <ScalarProperty Name="APOYO_EST" ColumnName="APOYO_EST" />
+          <ScalarProperty Name="APOYO_REAL" ColumnName="APOYO_REAL" />
+          <ScalarProperty Name="VIGENCIA_DE" ColumnName="VIGENCIA_DE" />
+          <ScalarProperty Name="VIGENCIA_A" ColumnName="VIGENCIA_A" />
+          <ScalarProperty Name="VALORH" ColumnName="VALORH" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTONs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTON">
+        <MappingFragment StoreEntitySet="DOCUMENTON">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="STEP" ColumnName="STEP" />
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="TEXTO" ColumnName="TEXTO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTOPs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTOP">
+        <MappingFragment StoreEntitySet="DOCUMENTOP">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="MATNR" ColumnName="MATNR" />
+          <ScalarProperty Name="MATKL" ColumnName="MATKL" />
+          <ScalarProperty Name="CANTIDAD" ColumnName="CANTIDAD" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="PORC_APOYO" ColumnName="PORC_APOYO" />
+          <ScalarProperty Name="MONTO_APOYO" ColumnName="MONTO_APOYO" />
+          <ScalarProperty Name="PRECIO_SUG" ColumnName="PRECIO_SUG" />
+          <ScalarProperty Name="VOLUMEN_EST" ColumnName="VOLUMEN_EST" />
+          <ScalarProperty Name="VOLUMEN_REAL" ColumnName="VOLUMEN_REAL" />
+          <ScalarProperty Name="APOYO_REAL" ColumnName="APOYO_REAL" />
+          <ScalarProperty Name="VIGENCIA_DE" ColumnName="VIGENCIA_DE" />
+          <ScalarProperty Name="VIGENCIA_AL" ColumnName="VIGENCIA_AL" />
+          <ScalarProperty Name="APOYO_EST" ColumnName="APOYO_EST" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTORs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTOR">
+        <MappingFragment StoreEntitySet="DOCUMENTOR">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="TREVERSA_ID" ColumnName="TREVERSA_ID" />
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTORANs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTORAN">
+        <MappingFragment StoreEntitySet="DOCUMENTORAN">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="LIN" ColumnName="LIN" />
+          <ScalarProperty Name="OBJETIVOI" ColumnName="OBJETIVOI" />
+          <ScalarProperty Name="PORCENTAJE" ColumnName="PORCENTAJE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTORECs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTOREC">
+        <MappingFragment StoreEntitySet="DOCUMENTOREC">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="FECHAF" ColumnName="FECHAF" />
+          <ScalarProperty Name="PERIODO" ColumnName="PERIODO" />
+          <ScalarProperty Name="EJERCICIO" ColumnName="EJERCICIO" />
+          <ScalarProperty Name="MONTO_BASE" ColumnName="MONTO_BASE" />
+          <ScalarProperty Name="MONTO_FIJO" ColumnName="MONTO_FIJO" />
+          <ScalarProperty Name="MONTO_GRS" ColumnName="MONTO_GRS" />
+          <ScalarProperty Name="MONTO_NET" ColumnName="MONTO_NET" />
+          <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+          <ScalarProperty Name="PORC" ColumnName="PORC" />
+          <ScalarProperty Name="DOC_REF" ColumnName="DOC_REF" />
+          <ScalarProperty Name="FECHAV" ColumnName="FECHAV" />
+          <ScalarProperty Name="NUM_DOC_Q" ColumnName="NUM_DOC_Q" />
+          <ScalarProperty Name="ESTATUS_Q" ColumnName="ESTATUS_Q" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTOSAPs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTOSAP">
+        <MappingFragment StoreEntitySet="DOCUMENTOSAP">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="BUKRS" ColumnName="BUKRS" />
+          <ScalarProperty Name="EJERCICIO" ColumnName="EJERCICIO" />
+          <ScalarProperty Name="CUENTA_C" ColumnName="CUENTA_C" />
+          <ScalarProperty Name="CUENTA_A" ColumnName="CUENTA_A" />
+          <ScalarProperty Name="REGISTRO_PR" ColumnName="REGISTRO_PR" />
+          <ScalarProperty Name="REGISTRO_NO" ColumnName="REGISTRO_NO" />
+          <ScalarProperty Name="REGISTRO_RE" ColumnName="REGISTRO_RE" />
+          <ScalarProperty Name="REGISTRO_AP" ColumnName="REGISTRO_AP" />
+          <ScalarProperty Name="BLART" ColumnName="BLART" />
+          <ScalarProperty Name="LIFNR" ColumnName="LIFNR" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="IMPORTE" ColumnName="IMPORTE" />
+          <ScalarProperty Name="DESCR" ColumnName="DESCR" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTOTS">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTOT">
+        <MappingFragment StoreEntitySet="DOCUMENTOTS">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="TSFORM_ID" ColumnName="TSFORM_ID" />
+          <ScalarProperty Name="CHECKS" ColumnName="CHECKS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ESTATUS">
+      <EntityTypeMapping TypeName="TruequeModel.ESTATU">
+        <MappingFragment StoreEntitySet="ESTATUS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="CLASS" ColumnName="CLASS" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ESTATUSRs">
+      <EntityTypeMapping TypeName="TruequeModel.ESTATUSR">
+        <MappingFragment StoreEntitySet="ESTATUSR">
+          <ScalarProperty Name="ESTATUS_ID" ColumnName="ESTATUS_ID" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="REGEX" ColumnName="REGEX" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ESTATUSTs">
+      <EntityTypeMapping TypeName="TruequeModel.ESTATUST">
+        <MappingFragment StoreEntitySet="ESTATUST">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="ESTATUS_ID" ColumnName="ESTATUS_ID" />
+          <ScalarProperty Name="TXT050" ColumnName="TXT050" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FACTURASCONFs">
+      <EntityTypeMapping TypeName="TruequeModel.FACTURASCONF">
+        <MappingFragment StoreEntitySet="FACTURASCONF">
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="TSOL" ColumnName="TSOL" />
+          <ScalarProperty Name="FACTURA" ColumnName="FACTURA" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="PROVEEDOR" ColumnName="PROVEEDOR" />
+          <ScalarProperty Name="CONTROL" ColumnName="CONTROL" />
+          <ScalarProperty Name="AUTORIZACION" ColumnName="AUTORIZACION" />
+          <ScalarProperty Name="VENCIMIENTO" ColumnName="VENCIMIENTO" />
+          <ScalarProperty Name="FACTURAK" ColumnName="FACTURAK" />
+          <ScalarProperty Name="EJERCICIOK" ColumnName="EJERCICIOK" />
+          <ScalarProperty Name="BILL_DOC" ColumnName="BILL_DOC" />
+          <ScalarProperty Name="BELNR" ColumnName="BELNR" />
+          <ScalarProperty Name="IMPORTE_FAC" ColumnName="IMPORTE_FAC" />
+          <ScalarProperty Name="PAYER" ColumnName="PAYER" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="SOCIEDAD" ColumnName="SOCIEDAD" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FLUJNEGOes">
+      <EntityTypeMapping TypeName="TruequeModel.FLUJNEGO">
+        <MappingFragment StoreEntitySet="FLUJNEGO">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+          <ScalarProperty Name="FECHAM" ColumnName="FECHAM" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FLUJOes">
+      <EntityTypeMapping TypeName="TruequeModel.FLUJO">
+        <MappingFragment StoreEntitySet="FLUJO">
+          <ScalarProperty Name="WORKF_ID" ColumnName="WORKF_ID" />
+          <ScalarProperty Name="WF_VERSION" ColumnName="WF_VERSION" />
+          <ScalarProperty Name="WF_POS" ColumnName="WF_POS" />
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="DETPOS" ColumnName="DETPOS" />
+          <ScalarProperty Name="DETVER" ColumnName="DETVER" />
+          <ScalarProperty Name="LOOP" ColumnName="LOOP" />
+          <ScalarProperty Name="USUARIOA_ID" ColumnName="USUARIOA_ID" />
+          <ScalarProperty Name="USUARIOD_ID" ColumnName="USUARIOD_ID" />
+          <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+          <ScalarProperty Name="FECHAM" ColumnName="FECHAM" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GALLs">
+      <EntityTypeMapping TypeName="TruequeModel.GALL">
+        <MappingFragment StoreEntitySet="GALL">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="GRUPO_ALL" ColumnName="GRUPO_ALL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GALLTs">
+      <EntityTypeMapping TypeName="TruequeModel.GALLT">
+        <MappingFragment StoreEntitySet="GALLT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="GALL_ID" ColumnName="GALL_ID" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GAUTORIZACIONs">
+      <EntityTypeMapping TypeName="TruequeModel.GAUTORIZACION">
+        <MappingFragment StoreEntitySet="GAUTORIZACION">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CLAVE" ColumnName="CLAVE" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="BUKRS" ColumnName="BUKRS" />
+          <ScalarProperty Name="LAND" ColumnName="LAND" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Grupoes">
+      <EntityTypeMapping TypeName="TruequeModel.Grupo">
+        <MappingFragment StoreEntitySet="Grupo">
+          <ScalarProperty Name="Grupo_ID" ColumnName="Grupo_ID" />
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrupoCats">
+      <EntityTypeMapping TypeName="TruequeModel.GrupoCat">
+        <MappingFragment StoreEntitySet="GrupoCat">
+          <ScalarProperty Name="Grupo_ID" ColumnName="Grupo_ID" />
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Mantto" ColumnName="Mantto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IIMPUESTOes">
+      <EntityTypeMapping TypeName="TruequeModel.IIMPUESTO">
+        <MappingFragment StoreEntitySet="IIMPUESTO">
+          <ScalarProperty Name="LAND" ColumnName="LAND" />
+          <ScalarProperty Name="MWSKZ" ColumnName="MWSKZ" />
+          <ScalarProperty Name="KSCHL" ColumnName="KSCHL" />
+          <ScalarProperty Name="KBETR" ColumnName="KBETR" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IMPUESTOes">
+      <EntityTypeMapping TypeName="TruequeModel.IMPUESTO">
+        <MappingFragment StoreEntitySet="IMPUESTO">
+          <ScalarProperty Name="MWSKZ" ColumnName="MWSKZ" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LAYOUT_CARGA">
+      <EntityTypeMapping TypeName="TruequeModel.LAYOUT_CARGA">
+        <MappingFragment StoreEntitySet="LAYOUT_CARGA">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="LAND" ColumnName="LAND" />
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="RUTA" ColumnName="RUTA" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LEYENDAs">
+      <EntityTypeMapping TypeName="TruequeModel.LEYENDA">
+        <MappingFragment StoreEntitySet="LEYENDA">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="LEYENDA1" ColumnName="LEYENDA" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="EDITABLE" ColumnName="EDITABLE" />
+          <ScalarProperty Name="OBLIGATORIA" ColumnName="OBLIGATORIA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MATERIALs">
+      <EntityTypeMapping TypeName="TruequeModel.MATERIAL">
+        <MappingFragment StoreEntitySet="MATERIAL">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MTART" ColumnName="MTART" />
+          <ScalarProperty Name="MATKL_ID" ColumnName="MATKL_ID" />
+          <ScalarProperty Name="MAKTX" ColumnName="MAKTX" />
+          <ScalarProperty Name="MAKTG" ColumnName="MAKTG" />
+          <ScalarProperty Name="MEINS" ColumnName="MEINS" />
+          <ScalarProperty Name="PUNIT" ColumnName="PUNIT" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="CTGR" ColumnName="CTGR" />
+          <ScalarProperty Name="BRAND" ColumnName="BRAND" />
+          <ScalarProperty Name="MATERIALGP_ID" ColumnName="MATERIALGP_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MATERIALGPs">
+      <EntityTypeMapping TypeName="TruequeModel.MATERIALGP">
+        <MappingFragment StoreEntitySet="MATERIALGP">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="EXCLUIR" ColumnName="EXCLUIR" />
+          <ScalarProperty Name="UNICA" ColumnName="UNICA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MATERIALGPTs">
+      <EntityTypeMapping TypeName="TruequeModel.MATERIALGPT">
+        <MappingFragment StoreEntitySet="MATERIALGPT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="MATERIALGP_ID" ColumnName="MATERIALGP_ID" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MATERIALTs">
+      <EntityTypeMapping TypeName="TruequeModel.MATERIALT">
+        <MappingFragment StoreEntitySet="MATERIALT">
+          <ScalarProperty Name="SPRAS" ColumnName="SPRAS" />
+          <ScalarProperty Name="MATERIAL_ID" ColumnName="MATERIAL_ID" />
+          <ScalarProperty Name="MAKTX" ColumnName="MAKTX" />
+          <ScalarProperty Name="MAKTG" ColumnName="MAKTG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MATERIALVKEs">
+      <EntityTypeMapping TypeName="TruequeModel.MATERIALVKE">
+        <MappingFragment StoreEntitySet="MATERIALVKE">
+          <ScalarProperty Name="MATERIAL_ID" ColumnName="MATERIAL_ID" />
+          <ScalarProperty Name="VKORG" ColumnName="VKORG" />
+          <ScalarProperty Name="VTWEG" ColumnName="VTWEG" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MENSAJES">
+      <EntityTypeMapping TypeName="TruequeModel.MENSAJE">
+        <MappingFragment StoreEntitySet="MENSAJES">
+          <ScalarProperty Name="ID_MENSAJE" ColumnName="ID_MENSAJE" />
+          <ScalarProperty Name="SPRAS" ColumnName="SPRAS" />
+          <ScalarProperty Name="PAGINA_ID" ColumnName="PAGINA_ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MIEMBROS">
+      <EntityTypeMapping TypeName="TruequeModel.MIEMBRO">
+        <MappingFragment StoreEntitySet="MIEMBROS">
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="ROL_ID" ColumnName="ROL_ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MONEDAs">
+      <EntityTypeMapping TypeName="TruequeModel.MONEDA">
+        <MappingFragment StoreEntitySet="MONEDA">
+          <ScalarProperty Name="WAERS" ColumnName="WAERS" />
+          <ScalarProperty Name="ISOCD" ColumnName="ISOCD" />
+          <ScalarProperty Name="ALTWR" ColumnName="ALTWR" />
+          <ScalarProperty Name="LTEXT" ColumnName="LTEXT" />
+          <ScalarProperty Name="KTEXT" ColumnName="KTEXT" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NEGOCIACIONs">
+      <EntityTypeMapping TypeName="TruequeModel.NEGOCIACION">
+        <MappingFragment StoreEntitySet="NEGOCIACION">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FECHAI" ColumnName="FECHAI" />
+          <ScalarProperty Name="FECHAF" ColumnName="FECHAF" />
+          <ScalarProperty Name="FECHAN" ColumnName="FECHAN" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NEGOCIACION2">
+      <EntityTypeMapping TypeName="TruequeModel.NEGOCIACION2">
+        <MappingFragment StoreEntitySet="NEGOCIACION2">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TITULO" ColumnName="TITULO" />
+          <ScalarProperty Name="FINICIO" ColumnName="FINICIO" />
+          <ScalarProperty Name="FRECUENCIA" ColumnName="FRECUENCIA" />
+          <ScalarProperty Name="FRECUENCIA_N" ColumnName="FRECUENCIA_N" />
+          <ScalarProperty Name="DIA_SEMANA" ColumnName="DIA_SEMANA" />
+          <ScalarProperty Name="DIA_MES" ColumnName="DIA_MES" />
+          <ScalarProperty Name="ORDINAL_MES" ColumnName="ORDINAL_MES" />
+          <ScalarProperty Name="ORDINAL_DSEMANA" ColumnName="ORDINAL_DSEMANA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NOTICIAs">
+      <EntityTypeMapping TypeName="TruequeModel.NOTICIA">
+        <MappingFragment StoreEntitySet="NOTICIA">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FECHAI" ColumnName="FECHAI" />
+          <ScalarProperty Name="FECHAF" ColumnName="FECHAF" />
+          <ScalarProperty Name="PATH" ColumnName="PATH" />
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PAGINAs">
+      <EntityTypeMapping TypeName="TruequeModel.PAGINA">
+        <MappingFragment StoreEntitySet="PAGINA">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="TITULO" ColumnName="TITULO" />
+          <ScalarProperty Name="CARPETA_ID" ColumnName="CARPETA_ID" />
+          <ScalarProperty Name="ICON" ColumnName="ICON" />
+          <ScalarProperty Name="MOSTRAR" ColumnName="MOSTRAR" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="Mantenimiento" ColumnName="Mantenimiento" />
+          <ScalarProperty Name="Grupo" ColumnName="Grupo" />
+          <ScalarProperty Name="Orden" ColumnName="Orden" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PAGINATs">
+      <EntityTypeMapping TypeName="TruequeModel.PAGINAT">
+        <MappingFragment StoreEntitySet="PAGINAT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PAIS">
+      <EntityTypeMapping TypeName="TruequeModel.PAI">
+        <MappingFragment StoreEntitySet="PAIS">
+          <ScalarProperty Name="LAND" ColumnName="LAND" />
+          <ScalarProperty Name="SPRAS" ColumnName="SPRAS" />
+          <ScalarProperty Name="LANDX" ColumnName="LANDX" />
+          <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="DECIMAL" ColumnName="DECIMAL" />
+          <ScalarProperty Name="MILES" ColumnName="MILES" />
+          <ScalarProperty Name="BACKORDER" ColumnName="BACKORDER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PERIODOes">
+      <EntityTypeMapping TypeName="TruequeModel.PERIODO">
+        <MappingFragment StoreEntitySet="PERIODO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PERIODO445">
+      <EntityTypeMapping TypeName="TruequeModel.PERIODO445">
+        <MappingFragment StoreEntitySet="PERIODO445">
+          <ScalarProperty Name="EJERCICIO" ColumnName="EJERCICIO" />
+          <ScalarProperty Name="MES_NATURAL" ColumnName="MES_NATURAL" />
+          <ScalarProperty Name="DIA_NATURAL" ColumnName="DIA_NATURAL" />
+          <ScalarProperty Name="PERIODO" ColumnName="PERIODO" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="SUMA" ColumnName="SUMA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PERIODOTs">
+      <EntityTypeMapping TypeName="TruequeModel.PERIODOT">
+        <MappingFragment StoreEntitySet="PERIODOT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="PERIODO_ID" ColumnName="PERIODO_ID" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+          <ScalarProperty Name="TXT03" ColumnName="TXT03" />
+          <ScalarProperty Name="TXT01" ColumnName="TXT01" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PERMISO_PAGINA">
+      <EntityTypeMapping TypeName="TruequeModel.PERMISO_PAGINA">
+        <MappingFragment StoreEntitySet="PERMISO_PAGINA">
+          <ScalarProperty Name="PAGINA_ID" ColumnName="PAGINA_ID" />
+          <ScalarProperty Name="ROL_ID" ColumnName="ROL_ID" />
+          <ScalarProperty Name="PERMISO" ColumnName="PERMISO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="POSICIONs">
+      <EntityTypeMapping TypeName="TruequeModel.POSICION">
+        <MappingFragment StoreEntitySet="POSICION">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PRESUPSAPHs">
+      <EntityTypeMapping TypeName="TruequeModel.PRESUPSAPH">
+        <MappingFragment StoreEntitySet="PRESUPSAPH">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ANIO" ColumnName="ANIO" />
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PRESUPSAPPs">
+      <EntityTypeMapping TypeName="TruequeModel.PRESUPSAPP">
+        <MappingFragment StoreEntitySet="PRESUPSAPP">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ANIO" ColumnName="ANIO" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="PERIOD" ColumnName="PERIOD" />
+          <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+          <ScalarProperty Name="BUKRS" ColumnName="BUKRS" />
+          <ScalarProperty Name="VKORG" ColumnName="VKORG" />
+          <ScalarProperty Name="VTWEG" ColumnName="VTWEG" />
+          <ScalarProperty Name="SPART" ColumnName="SPART" />
+          <ScalarProperty Name="VKBUR" ColumnName="VKBUR" />
+          <ScalarProperty Name="VKGRP" ColumnName="VKGRP" />
+          <ScalarProperty Name="BZIRK" ColumnName="BZIRK" />
+          <ScalarProperty Name="MATNR" ColumnName="MATNR" />
+          <ScalarProperty Name="PRDHA" ColumnName="PRDHA" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="KUNNR_P" ColumnName="KUNNR_P" />
+          <ScalarProperty Name="BANNER" ColumnName="BANNER" />
+          <ScalarProperty Name="BANNER_CALC" ColumnName="BANNER_CALC" />
+          <ScalarProperty Name="KUNNR_PAY" ColumnName="KUNNR_PAY" />
+          <ScalarProperty Name="FECHAP" ColumnName="FECHAP" />
+          <ScalarProperty Name="UNAME" ColumnName="UNAME" />
+          <ScalarProperty Name="XBLNR" ColumnName="XBLNR" />
+          <ScalarProperty Name="VVX17" ColumnName="VVX17" />
+          <ScalarProperty Name="CSHDC" ColumnName="CSHDC" />
+          <ScalarProperty Name="RECUN" ColumnName="RECUN" />
+          <ScalarProperty Name="DSTRB" ColumnName="DSTRB" />
+          <ScalarProperty Name="OTHTA" ColumnName="OTHTA" />
+          <ScalarProperty Name="ADVER" ColumnName="ADVER" />
+          <ScalarProperty Name="CORPM" ColumnName="CORPM" />
+          <ScalarProperty Name="POP" ColumnName="POP" />
+          <ScalarProperty Name="OTHER" ColumnName="OTHER" />
+          <ScalarProperty Name="CONPR" ColumnName="CONPR" />
+          <ScalarProperty Name="OHV" ColumnName="OHV" />
+          <ScalarProperty Name="FREEG" ColumnName="FREEG" />
+          <ScalarProperty Name="RSRDV" ColumnName="RSRDV" />
+          <ScalarProperty Name="SPA" ColumnName="SPA" />
+          <ScalarProperty Name="PMVAR" ColumnName="PMVAR" />
+          <ScalarProperty Name="GRSLS" ColumnName="GRSLS" />
+          <ScalarProperty Name="NETLB" ColumnName="NETLB" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PRESUPUESTOHs">
+      <EntityTypeMapping TypeName="TruequeModel.PRESUPUESTOH">
+        <MappingFragment StoreEntitySet="PRESUPUESTOH">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ANIO" ColumnName="ANIO" />
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PRESUPUESTOPs">
+      <EntityTypeMapping TypeName="TruequeModel.PRESUPUESTOP">
+        <MappingFragment StoreEntitySet="PRESUPUESTOP">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ANIO" ColumnName="ANIO" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="MES" ColumnName="MES" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="PAIS" ColumnName="PAIS" />
+          <ScalarProperty Name="REGION" ColumnName="REGION" />
+          <ScalarProperty Name="MONEDA" ColumnName="MONEDA" />
+          <ScalarProperty Name="MATERIAL" ColumnName="MATERIAL" />
+          <ScalarProperty Name="BANNER" ColumnName="BANNER" />
+          <ScalarProperty Name="ADVER" ColumnName="ADVER" />
+          <ScalarProperty Name="CONPR" ColumnName="CONPR" />
+          <ScalarProperty Name="CSHDC" ColumnName="CSHDC" />
+          <ScalarProperty Name="DIRLB" ColumnName="DIRLB" />
+          <ScalarProperty Name="DSTRB" ColumnName="DSTRB" />
+          <ScalarProperty Name="FREEG" ColumnName="FREEG" />
+          <ScalarProperty Name="GRSLS" ColumnName="GRSLS" />
+          <ScalarProperty Name="NETLB" ColumnName="NETLB" />
+          <ScalarProperty Name="OVHDF" ColumnName="OVHDF" />
+          <ScalarProperty Name="OVHDV" ColumnName="OVHDV" />
+          <ScalarProperty Name="PKGMT" ColumnName="PKGMT" />
+          <ScalarProperty Name="PMVAR" ColumnName="PMVAR" />
+          <ScalarProperty Name="POP" ColumnName="POP" />
+          <ScalarProperty Name="PURCH" ColumnName="PURCH" />
+          <ScalarProperty Name="RAWMT" ColumnName="RAWMT" />
+          <ScalarProperty Name="RECUN" ColumnName="RECUN" />
+          <ScalarProperty Name="RSRDV" ColumnName="RSRDV" />
+          <ScalarProperty Name="TOTCS" ColumnName="TOTCS" />
+          <ScalarProperty Name="VVX17" ColumnName="VVX17" />
+          <ScalarProperty Name="OTHTA" ColumnName="OTHTA" />
+          <ScalarProperty Name="CORPM" ColumnName="CORPM" />
+          <ScalarProperty Name="SPA" ColumnName="SPA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PROVEEDORs">
+      <EntityTypeMapping TypeName="TruequeModel.PROVEEDOR">
+        <MappingFragment StoreEntitySet="PROVEEDOR">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUESTOes">
+      <EntityTypeMapping TypeName="TruequeModel.PUESTO">
+        <MappingFragment StoreEntitySet="PUESTO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PUESTOTs">
+      <EntityTypeMapping TypeName="TruequeModel.PUESTOT">
+        <MappingFragment StoreEntitySet="PUESTOT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="PUESTO_ID" ColumnName="PUESTO_ID" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RANGOes">
+      <EntityTypeMapping TypeName="TruequeModel.RANGO">
+        <MappingFragment StoreEntitySet="RANGO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="INICIO" ColumnName="INICIO" />
+          <ScalarProperty Name="FIN" ColumnName="FIN" />
+          <ScalarProperty Name="ACTUAL" ColumnName="ACTUAL" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REGIONs">
+      <EntityTypeMapping TypeName="TruequeModel.REGION">
+        <MappingFragment StoreEntitySet="REGION">
+          <ScalarProperty Name="REGION1" ColumnName="REGION" />
+          <ScalarProperty Name="SOCIEDAD" ColumnName="SOCIEDAD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RETENCIONs">
+      <EntityTypeMapping TypeName="TruequeModel.RETENCION">
+        <MappingFragment StoreEntitySet="RETENCION">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCIÓN" ColumnName="DESCRIPCIÓN" />
+          <ScalarProperty Name="PORC" ColumnName="PORC" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RETENCIONTs">
+      <EntityTypeMapping TypeName="TruequeModel.RETENCIONT">
+        <MappingFragment StoreEntitySet="RETENCIONT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="RETENCION_ID" ColumnName="RETENCION_ID" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ROLs">
+      <EntityTypeMapping TypeName="TruequeModel.ROL">
+        <MappingFragment StoreEntitySet="ROL">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CLAVE" ColumnName="CLAVE" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ROLTs">
+      <EntityTypeMapping TypeName="TruequeModel.ROLT">
+        <MappingFragment StoreEntitySet="ROLT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="ROL_ID" ColumnName="ROL_ID" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SOCIEDADs">
+      <EntityTypeMapping TypeName="TruequeModel.SOCIEDAD">
+        <MappingFragment StoreEntitySet="SOCIEDAD">
+          <ScalarProperty Name="BUKRS" ColumnName="BUKRS" />
+          <ScalarProperty Name="BUTXT" ColumnName="BUTXT" />
+          <ScalarProperty Name="ORT01" ColumnName="ORT01" />
+          <ScalarProperty Name="LAND" ColumnName="LAND" />
+          <ScalarProperty Name="SUBREGIO" ColumnName="SUBREGIO" />
+          <ScalarProperty Name="WAERS" ColumnName="WAERS" />
+          <ScalarProperty Name="SPRAS" ColumnName="SPRAS" />
+          <ScalarProperty Name="NAME1" ColumnName="NAME1" />
+          <ScalarProperty Name="KTOPL" ColumnName="KTOPL" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="REGION" ColumnName="REGION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SPRAS">
+      <EntityTypeMapping TypeName="TruequeModel.SPRA">
+        <MappingFragment StoreEntitySet="SPRAS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STATES">
+      <EntityTypeMapping TypeName="TruequeModel.STATE">
+        <MappingFragment StoreEntitySet="STATES">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="COUNTRY_ID" ColumnName="COUNTRY_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TABs">
+      <EntityTypeMapping TypeName="TruequeModel.TAB">
+        <MappingFragment StoreEntitySet="TAB">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CONTAINER" ColumnName="CONTAINER" />
+          <ScalarProperty Name="DESCR" ColumnName="DESCR" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TALLs">
+      <EntityTypeMapping TypeName="TruequeModel.TALL">
+        <MappingFragment StoreEntitySet="TALL">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="FECHAI" ColumnName="FECHAI" />
+          <ScalarProperty Name="FECHAF" ColumnName="FECHAF" />
+          <ScalarProperty Name="GALL_ID" ColumnName="GALL_ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TALLTs">
+      <EntityTypeMapping TypeName="TruequeModel.TALLT">
+        <MappingFragment StoreEntitySet="TALLT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="TALL_ID" ColumnName="TALL_ID" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAX_LAND">
+      <EntityTypeMapping TypeName="TruequeModel.TAX_LAND">
+        <MappingFragment StoreEntitySet="TAX_LAND">
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAXEOHs">
+      <EntityTypeMapping TypeName="TruequeModel.TAXEOH">
+        <MappingFragment StoreEntitySet="TAXEOH">
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="VKORG" ColumnName="VKORG" />
+          <ScalarProperty Name="VTWEG" ColumnName="VTWEG" />
+          <ScalarProperty Name="SPART" ColumnName="SPART" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="CONCEPTO_ID" ColumnName="CONCEPTO_ID" />
+          <ScalarProperty Name="TNOTA_ID" ColumnName="TNOTA_ID" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="FECHAM" ColumnName="FECHAM" />
+          <ScalarProperty Name="USUARIOM_ID" ColumnName="USUARIOM_ID" />
+          <ScalarProperty Name="IMPUESTO_ID" ColumnName="IMPUESTO_ID" />
+          <ScalarProperty Name="PORC" ColumnName="PORC" />
+          <ScalarProperty Name="PAY_T" ColumnName="PAY_T" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAXEOPs">
+      <EntityTypeMapping TypeName="TruequeModel.TAXEOP">
+        <MappingFragment StoreEntitySet="TAXEOP">
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="VKORG" ColumnName="VKORG" />
+          <ScalarProperty Name="VTWEG" ColumnName="VTWEG" />
+          <ScalarProperty Name="SPART" ColumnName="SPART" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="CONCEPTO_ID" ColumnName="CONCEPTO_ID" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="RETENCION_ID" ColumnName="RETENCION_ID" />
+          <ScalarProperty Name="PORC" ColumnName="PORC" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="TRETENCION_ID" ColumnName="TRETENCION_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TCAMBIOs">
+      <EntityTypeMapping TypeName="TruequeModel.TCAMBIO">
+        <MappingFragment StoreEntitySet="TCAMBIO">
+          <ScalarProperty Name="KURST" ColumnName="KURST" />
+          <ScalarProperty Name="FCURR" ColumnName="FCURR" />
+          <ScalarProperty Name="TCURR" ColumnName="TCURR" />
+          <ScalarProperty Name="GDATU" ColumnName="GDATU" />
+          <ScalarProperty Name="UKURS" ColumnName="UKURS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TCLIENTEs">
+      <EntityTypeMapping TypeName="TruequeModel.TCLIENTE">
+        <MappingFragment StoreEntitySet="TCLIENTE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TCLIENTETs">
+      <EntityTypeMapping TypeName="TruequeModel.TCLIENTET">
+        <MappingFragment StoreEntitySet="TCLIENTET">
+          <ScalarProperty Name="SPRAS" ColumnName="SPRAS" />
+          <ScalarProperty Name="PARVW_ID" ColumnName="PARVW_ID" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TEXTOes">
+      <EntityTypeMapping TypeName="TruequeModel.TEXTO">
+        <MappingFragment StoreEntitySet="TEXTO">
+          <ScalarProperty Name="PAGINA_ID" ColumnName="PAGINA_ID" />
+          <ScalarProperty Name="CAMPO_ID" ColumnName="CAMPO_ID" />
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="TEXTOS" ColumnName="TEXTOS" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TEXTOCVs">
+      <EntityTypeMapping TypeName="TruequeModel.TEXTOCV">
+        <MappingFragment StoreEntitySet="TEXTOCV">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="CAMPO" ColumnName="CAMPO" />
+          <ScalarProperty Name="TEXTO" ColumnName="TEXTO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TRETENCIONs">
+      <EntityTypeMapping TypeName="TruequeModel.TRETENCION">
+        <MappingFragment StoreEntitySet="TRETENCION">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TRETENCIONTs">
+      <EntityTypeMapping TypeName="TruequeModel.TRETENCIONT">
+        <MappingFragment StoreEntitySet="TRETENCIONT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="TRETENCION_ID" ColumnName="TRETENCION_ID" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TREVERSAs">
+      <EntityTypeMapping TypeName="TruequeModel.TREVERSA">
+        <MappingFragment StoreEntitySet="TREVERSA">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TREVERSATs">
+      <EntityTypeMapping TypeName="TruequeModel.TREVERSAT">
+        <MappingFragment StoreEntitySet="TREVERSAT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="TREVERSA_ID" ColumnName="TREVERSA_ID" />
+          <ScalarProperty Name="TXT100" ColumnName="TXT100" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TS_CAMPO">
+      <EntityTypeMapping TypeName="TruequeModel.TS_CAMPO">
+        <MappingFragment StoreEntitySet="TS_CAMPO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TS_FORM">
+      <EntityTypeMapping TypeName="TruequeModel.TS_FORM">
+        <MappingFragment StoreEntitySet="TS_FORM">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BUKRS_ID" ColumnName="BUKRS_ID" />
+          <ScalarProperty Name="LAND_ID" ColumnName="LAND_ID" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="CAMPO" ColumnName="CAMPO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TS_FORMT">
+      <EntityTypeMapping TypeName="TruequeModel.TS_FORMT">
+        <MappingFragment StoreEntitySet="TS_FORMT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="TSFORM_ID" ColumnName="TSFORM_ID" />
+          <ScalarProperty Name="TXT100" ColumnName="TXT100" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TSOLs">
+      <EntityTypeMapping TypeName="TruequeModel.TSOL">
+        <MappingFragment StoreEntitySet="TSOL">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="TSOLR" ColumnName="TSOLR" />
+          <ScalarProperty Name="RANGO_ID" ColumnName="RANGO_ID" />
+          <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+          <ScalarProperty Name="FACTURA" ColumnName="FACTURA" />
+          <ScalarProperty Name="PADRE" ColumnName="PADRE" />
+          <ScalarProperty Name="ADICIONA" ColumnName="ADICIONA" />
+          <ScalarProperty Name="TSOLM" ColumnName="TSOLM" />
+          <ScalarProperty Name="TSOLC" ColumnName="TSOLC" />
+          <ScalarProperty Name="TRECU" ColumnName="TRECU" />
+          <ScalarProperty Name="NEGO" ColumnName="NEGO" />
+          <ScalarProperty Name="CARTA" ColumnName="CARTA" />
+          <ScalarProperty Name="REVERSO" ColumnName="REVERSO" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TSOL_GROUP">
+      <EntityTypeMapping TypeName="TruequeModel.TSOL_GROUP">
+        <MappingFragment StoreEntitySet="TSOL_GROUP">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ID_PADRE" ColumnName="ID_PADRE" />
+          <ScalarProperty Name="TIPO_PADRE" ColumnName="TIPO_PADRE" />
+          <ScalarProperty Name="TIPOSOC" ColumnName="TIPOSOC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TSOL_GROUPT">
+      <EntityTypeMapping TypeName="TruequeModel.TSOL_GROUPT">
+        <MappingFragment StoreEntitySet="TSOL_GROUPT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="TSOL_GROUP_ID" ColumnName="TSOL_GROUP_ID" />
+          <ScalarProperty Name="TSOL_GROUP_TIPO" ColumnName="TSOL_GROUP_TIPO" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TSOL_TREE">
+      <EntityTypeMapping TypeName="TruequeModel.TSOL_TREE">
+        <MappingFragment StoreEntitySet="TSOL_TREE">
+          <ScalarProperty Name="TSOL_GROUP_ID" ColumnName="TSOL_GROUP_ID" />
+          <ScalarProperty Name="TSOL_GROUP_TIPO" ColumnName="TSOL_GROUP_TIPO" />
+          <ScalarProperty Name="TSOL_ID" ColumnName="TSOL_ID" />
+          <ScalarProperty Name="TIPOSOC" ColumnName="TIPOSOC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TSOL_XG">
+      <EntityTypeMapping TypeName="TruequeModel.TSOL_XG">
+        <MappingFragment StoreEntitySet="TSOL_XG">
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="TSOL_TIPO" ColumnName="TSOL_TIPO" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TSOLTs">
+      <EntityTypeMapping TypeName="TruequeModel.TSOLT">
+        <MappingFragment StoreEntitySet="TSOLT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="TSOL_ID" ColumnName="TSOL_ID" />
+          <ScalarProperty Name="TXT020" ColumnName="TXT020" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+          <ScalarProperty Name="TXT010" ColumnName="TXT010" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TSOPORTEs">
+      <EntityTypeMapping TypeName="TruequeModel.TSOPORTE">
+        <MappingFragment StoreEntitySet="TSOPORTE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TSOPORTETs">
+      <EntityTypeMapping TypeName="TruequeModel.TSOPORTET">
+        <MappingFragment StoreEntitySet="TSOPORTET">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="TSOPORTE_ID" ColumnName="TSOPORTE_ID" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TX_CONCEPTO">
+      <EntityTypeMapping TypeName="TruequeModel.TX_CONCEPTO">
+        <MappingFragment StoreEntitySet="TX_CONCEPTO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TX_CONCEPTOT">
+      <EntityTypeMapping TypeName="TruequeModel.TX_CONCEPTOT">
+        <MappingFragment StoreEntitySet="TX_CONCEPTOT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="CONCEPTO_ID" ColumnName="CONCEPTO_ID" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TX_NOTAT">
+      <EntityTypeMapping TypeName="TruequeModel.TX_NOTAT">
+        <MappingFragment StoreEntitySet="TX_NOTAT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="TNOTA_ID" ColumnName="TNOTA_ID" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TX_TNOTA">
+      <EntityTypeMapping TypeName="TruequeModel.TX_TNOTA">
+        <MappingFragment StoreEntitySet="TX_TNOTA">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UMEDIDAs">
+      <EntityTypeMapping TypeName="TruequeModel.UMEDIDA">
+        <MappingFragment StoreEntitySet="UMEDIDA">
+          <ScalarProperty Name="MSEHI" ColumnName="MSEHI" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UMEDIDATs">
+      <EntityTypeMapping TypeName="TruequeModel.UMEDIDAT">
+        <MappingFragment StoreEntitySet="UMEDIDAT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="MSEHI" ColumnName="MSEHI" />
+          <ScalarProperty Name="MSEH3" ColumnName="MSEH3" />
+          <ScalarProperty Name="MSEH6" ColumnName="MSEH6" />
+          <ScalarProperty Name="MSEHT" ColumnName="MSEHT" />
+          <ScalarProperty Name="MSEHL" ColumnName="MSEHL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USUARIOs">
+      <EntityTypeMapping TypeName="TruequeModel.USUARIO">
+        <MappingFragment StoreEntitySet="USUARIO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PASS" ColumnName="PASS" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="APELLIDO_P" ColumnName="APELLIDO_P" />
+          <ScalarProperty Name="APELLIDO_M" ColumnName="APELLIDO_M" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="PUESTO_ID" ColumnName="PUESTO_ID" />
+          <ScalarProperty Name="MANAGER" ColumnName="MANAGER" />
+          <ScalarProperty Name="BACKUP_ID" ColumnName="BACKUP_ID" />
+          <ScalarProperty Name="BUNIT" ColumnName="BUNIT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USUARIOFs">
+      <EntityTypeMapping TypeName="TruequeModel.USUARIOF">
+        <MappingFragment StoreEntitySet="USUARIOF">
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="VKORG" ColumnName="VKORG" />
+          <ScalarProperty Name="VTWEG" ColumnName="VTWEG" />
+          <ScalarProperty Name="SPART" ColumnName="SPART" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+          <ScalarProperty Name="USUARIOM_ID" ColumnName="USUARIOM_ID" />
+          <ScalarProperty Name="FECHAM" ColumnName="FECHAM" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USUARIOLOGs">
+      <EntityTypeMapping TypeName="TruequeModel.USUARIOLOG">
+        <MappingFragment StoreEntitySet="USUARIOLOG">
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="SESION" ColumnName="SESION" />
+          <ScalarProperty Name="NAVEGADOR" ColumnName="NAVEGADOR" />
+          <ScalarProperty Name="UBICACION" ColumnName="UBICACION" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="LOGIN" ColumnName="LOGIN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USUARIOSAPs">
+      <EntityTypeMapping TypeName="TruequeModel.USUARIOSAP">
+        <MappingFragment StoreEntitySet="USUARIOSAP">
+          <ScalarProperty Name="IDUSUARIO" ColumnName="IDUSUARIO" />
+          <ScalarProperty Name="AUTOMATICO" ColumnName="AUTOMATICO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WARNINGs">
+      <EntityTypeMapping TypeName="TruequeModel.WARNING">
+        <MappingFragment StoreEntitySet="WARNING">
+          <ScalarProperty Name="PAGINA_ID" ColumnName="PAGINA_ID" />
+          <ScalarProperty Name="CAMPO_ID" ColumnName="CAMPO_ID" />
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="WARNING1" ColumnName="WARNING" />
+          <ScalarProperty Name="POSICION" ColumnName="POSICION" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WARNING_COND">
+      <EntityTypeMapping TypeName="TruequeModel.WARNING_COND">
+        <MappingFragment StoreEntitySet="WARNING_COND">
+          <ScalarProperty Name="TAB_ID" ColumnName="TAB_ID" />
+          <ScalarProperty Name="WARNING_ID" ColumnName="WARNING_ID" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="ANDOR" ColumnName="ANDOR" />
+          <ScalarProperty Name="CONDICION_ID" ColumnName="CONDICION_ID" />
+          <ScalarProperty Name="VALOR_COMP" ColumnName="VALOR_COMP" />
+          <ScalarProperty Name="ORAND" ColumnName="ORAND" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WARNINGPs">
+      <EntityTypeMapping TypeName="TruequeModel.WARNINGP">
+        <MappingFragment StoreEntitySet="WARNINGP">
+          <ScalarProperty Name="TAB_ID" ColumnName="TAB_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCR" ColumnName="DESCR" />
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="TSOL_ID" ColumnName="TSOL_ID" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="CAMPOVAL_ID" ColumnName="CAMPOVAL_ID" />
+          <ScalarProperty Name="PAGINA_ID" ColumnName="PAGINA_ID" />
+          <ScalarProperty Name="CAMPO_ID" ColumnName="CAMPO_ID" />
+          <ScalarProperty Name="ACCION" ColumnName="ACCION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WARNINGPTs">
+      <EntityTypeMapping TypeName="TruequeModel.WARNINGPT">
+        <MappingFragment StoreEntitySet="WARNINGPT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="TAB_ID" ColumnName="TAB_ID" />
+          <ScalarProperty Name="WARNING_ID" ColumnName="WARNING_ID" />
+          <ScalarProperty Name="TXT100" ColumnName="TXT100" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WORKFHs">
+      <EntityTypeMapping TypeName="TruequeModel.WORKFH">
+        <MappingFragment StoreEntitySet="WORKFH">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="TSOL_ID" ColumnName="TSOL_ID" />
+          <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+          <ScalarProperty Name="BUKRS" ColumnName="BUKRS" />
+          <ScalarProperty Name="ROL_ID" ColumnName="ROL_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WORKFPs">
+      <EntityTypeMapping TypeName="TruequeModel.WORKFP">
+        <MappingFragment StoreEntitySet="WORKFP">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="AGENTE_ID" ColumnName="AGENTE_ID" />
+          <ScalarProperty Name="ACCION_ID" ColumnName="ACCION_ID" />
+          <ScalarProperty Name="NEXT_STEP" ColumnName="NEXT_STEP" />
+          <ScalarProperty Name="NS_ACCEPT" ColumnName="NS_ACCEPT" />
+          <ScalarProperty Name="NS_REJECT" ColumnName="NS_REJECT" />
+          <ScalarProperty Name="LOOPS" ColumnName="LOOPS" />
+          <ScalarProperty Name="CONDICION_ID" ColumnName="CONDICION_ID" />
+          <ScalarProperty Name="NS_CN_ACCEPT" ColumnName="NS_CN_ACCEPT" />
+          <ScalarProperty Name="NS_CN_REJECT" ColumnName="NS_CN_REJECT" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="EMAIL_TXT_ID" ColumnName="EMAIL_TXT_ID" />
+          <ScalarProperty Name="EMAIL_INN_ID" ColumnName="EMAIL_INN_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WORKFTs">
+      <EntityTypeMapping TypeName="TruequeModel.WORKFT">
+        <MappingFragment StoreEntitySet="WORKFT">
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="WF_ID" ColumnName="WF_ID" />
+          <ScalarProperty Name="WF_VERSION" ColumnName="WF_VERSION" />
+          <ScalarProperty Name="TXT20" ColumnName="TXT20" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WORKFVs">
+      <EntityTypeMapping TypeName="TruequeModel.WORKFV">
+        <MappingFragment StoreEntitySet="WORKFV">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+          <ScalarProperty Name="FECHAI" ColumnName="FECHAI" />
+          <ScalarProperty Name="FECHAF" ColumnName="FECHAF" />
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ZBRANDs">
+      <EntityTypeMapping TypeName="TruequeModel.ZBRAND">
+        <MappingFragment StoreEntitySet="ZBRAND">
+          <ScalarProperty Name="ID_ZB" ColumnName="ID_ZB" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ZCTGRs">
+      <EntityTypeMapping TypeName="TruequeModel.ZCTGR">
+        <MappingFragment StoreEntitySet="ZCTGR">
+          <ScalarProperty Name="ID_ZC" ColumnName="ID_ZC" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAB_CAMPO">
+      <EntityTypeMapping TypeName="TruequeModel.TAB_CAMPO">
+        <MappingFragment StoreEntitySet="TAB_CAMPO">
+          <ScalarProperty Name="TAB_ID" ColumnName="TAB_ID" />
+          <ScalarProperty Name="CAMPO_ID" ColumnName="CAMPO_ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CARPETAVs">
+      <EntityTypeMapping TypeName="TruequeModel.CARPETAV">
+        <MappingFragment StoreEntitySet="CARPETAV">
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+          <ScalarProperty Name="ICON" ColumnName="ICON" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CREADORs">
+      <EntityTypeMapping TypeName="TruequeModel.CREADOR">
+        <MappingFragment StoreEntitySet="CREADOR">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PUESTOC_ID" ColumnName="PUESTOC_ID" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="AGROUP_ID" ColumnName="AGROUP_ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="BUKRS" ColumnName="BUKRS" />
+          <ScalarProperty Name="LAND" ColumnName="LAND" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CREADOR2">
+      <EntityTypeMapping TypeName="TruequeModel.CREADOR2">
+        <MappingFragment StoreEntitySet="CREADOR2">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PUESTOC_ID" ColumnName="PUESTOC_ID" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="AGROUP_ID" ColumnName="AGROUP_ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="BUKRS" ColumnName="BUKRS" />
+          <ScalarProperty Name="LAND" ColumnName="LAND" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DET_APROBV">
+      <EntityTypeMapping TypeName="TruequeModel.DET_APROBV">
+        <MappingFragment StoreEntitySet="DET_APROBV">
+          <ScalarProperty Name="BUKRS" ColumnName="BUKRS" />
+          <ScalarProperty Name="PUESTOC_ID" ColumnName="PUESTOC_ID" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCUMENTOVs">
+      <EntityTypeMapping TypeName="TruequeModel.DOCUMENTOV">
+        <MappingFragment StoreEntitySet="DOCUMENTOV">
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="TSOL_ID" ColumnName="TSOL_ID" />
+          <ScalarProperty Name="TALL_ID" ColumnName="TALL_ID" />
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="PERIODO" ColumnName="PERIODO" />
+          <ScalarProperty Name="EJERCICIO" ColumnName="EJERCICIO" />
+          <ScalarProperty Name="TIPO_TECNICO" ColumnName="TIPO_TECNICO" />
+          <ScalarProperty Name="TIPO_RECURRENTE" ColumnName="TIPO_RECURRENTE" />
+          <ScalarProperty Name="CANTIDAD_EV" ColumnName="CANTIDAD_EV" />
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="FECHAD" ColumnName="FECHAD" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+          <ScalarProperty Name="HORAC" ColumnName="HORAC" />
+          <ScalarProperty Name="FECHAC_PLAN" ColumnName="FECHAC_PLAN" />
+          <ScalarProperty Name="FECHAC_USER" ColumnName="FECHAC_USER" />
+          <ScalarProperty Name="HORAC_USER" ColumnName="HORAC_USER" />
+          <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+          <ScalarProperty Name="ESTATUS_C" ColumnName="ESTATUS_C" />
+          <ScalarProperty Name="ESTATUS_SAP" ColumnName="ESTATUS_SAP" />
+          <ScalarProperty Name="ESTATUS_WF" ColumnName="ESTATUS_WF" />
+          <ScalarProperty Name="DOCUMENTO_REF" ColumnName="DOCUMENTO_REF" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="NOTAS" ColumnName="NOTAS" />
+          <ScalarProperty Name="MONTO_DOC_MD" ColumnName="MONTO_DOC_MD" />
+          <ScalarProperty Name="MONTO_FIJO_MD" ColumnName="MONTO_FIJO_MD" />
+          <ScalarProperty Name="MONTO_BASE_GS_PCT_MD" ColumnName="MONTO_BASE_GS_PCT_MD" />
+          <ScalarProperty Name="MONTO_BASE_NS_PCT_MD" ColumnName="MONTO_BASE_NS_PCT_MD" />
+          <ScalarProperty Name="MONTO_DOC_ML" ColumnName="MONTO_DOC_ML" />
+          <ScalarProperty Name="MONTO_FIJO_ML" ColumnName="MONTO_FIJO_ML" />
+          <ScalarProperty Name="MONTO_BASE_GS_PCT_ML" ColumnName="MONTO_BASE_GS_PCT_ML" />
+          <ScalarProperty Name="MONTO_BASE_NS_PCT_ML" ColumnName="MONTO_BASE_NS_PCT_ML" />
+          <ScalarProperty Name="MONTO_DOC_ML2" ColumnName="MONTO_DOC_ML2" />
+          <ScalarProperty Name="MONTO_FIJO_ML2" ColumnName="MONTO_FIJO_ML2" />
+          <ScalarProperty Name="MONTO_BASE_GS_PCT_ML2" ColumnName="MONTO_BASE_GS_PCT_ML2" />
+          <ScalarProperty Name="MONTO_BASE_NS_PCT_ML2" ColumnName="MONTO_BASE_NS_PCT_ML2" />
+          <ScalarProperty Name="PORC_ADICIONAL" ColumnName="PORC_ADICIONAL" />
+          <ScalarProperty Name="IMPUESTO" ColumnName="IMPUESTO" />
+          <ScalarProperty Name="FECHAI_VIG" ColumnName="FECHAI_VIG" />
+          <ScalarProperty Name="FECHAF_VIG" ColumnName="FECHAF_VIG" />
+          <ScalarProperty Name="ESTATUS_EXT" ColumnName="ESTATUS_EXT" />
+          <ScalarProperty Name="SOLD_TO_ID" ColumnName="SOLD_TO_ID" />
+          <ScalarProperty Name="PAYER_ID" ColumnName="PAYER_ID" />
+          <ScalarProperty Name="PAYER_NOMBRE" ColumnName="PAYER_NOMBRE" />
+          <ScalarProperty Name="PAYER_EMAIL" ColumnName="PAYER_EMAIL" />
+          <ScalarProperty Name="GRUPO_CTE_ID" ColumnName="GRUPO_CTE_ID" />
+          <ScalarProperty Name="CANAL_ID" ColumnName="CANAL_ID" />
+          <ScalarProperty Name="MONEDA_ID" ColumnName="MONEDA_ID" />
+          <ScalarProperty Name="MONEDAL_ID" ColumnName="MONEDAL_ID" />
+          <ScalarProperty Name="MONEDAL2_ID" ColumnName="MONEDAL2_ID" />
+          <ScalarProperty Name="TIPO_CAMBIO" ColumnName="TIPO_CAMBIO" />
+          <ScalarProperty Name="TIPO_CAMBIOL" ColumnName="TIPO_CAMBIOL" />
+          <ScalarProperty Name="TIPO_CAMBIOL2" ColumnName="TIPO_CAMBIOL2" />
+          <ScalarProperty Name="NO_FACTURA" ColumnName="NO_FACTURA" />
+          <ScalarProperty Name="FECHAD_SOPORTE" ColumnName="FECHAD_SOPORTE" />
+          <ScalarProperty Name="METODO_PAGO" ColumnName="METODO_PAGO" />
+          <ScalarProperty Name="NO_PROVEEDOR" ColumnName="NO_PROVEEDOR" />
+          <ScalarProperty Name="PASO_ACTUAL" ColumnName="PASO_ACTUAL" />
+          <ScalarProperty Name="AGENTE_ACTUAL" ColumnName="AGENTE_ACTUAL" />
+          <ScalarProperty Name="FECHA_PASO_ACTUAL" ColumnName="FECHA_PASO_ACTUAL" />
+          <ScalarProperty Name="VKORG" ColumnName="VKORG" />
+          <ScalarProperty Name="VTWEG" ColumnName="VTWEG" />
+          <ScalarProperty Name="SPART" ColumnName="SPART" />
+          <ScalarProperty Name="USUARIOA_ID" ColumnName="USUARIOA_ID" />
+          <ScalarProperty Name="EXPR2" ColumnName="EXPR2" />
+          <ScalarProperty Name="CIUDAD" ColumnName="CIUDAD" />
+          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PAGINAVs">
+      <EntityTypeMapping TypeName="TruequeModel.PAGINAV">
+        <MappingFragment StoreEntitySet="PAGINAV">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PAGINA_ID" ColumnName="PAGINA_ID" />
+          <ScalarProperty Name="PAGINA_URL" ColumnName="PAGINA_URL" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+          <ScalarProperty Name="CARPETA_ID" ColumnName="CARPETA_ID" />
+          <ScalarProperty Name="CARPETA_URL" ColumnName="CARPETA_URL" />
+          <ScalarProperty Name="ICON" ColumnName="ICON" />
+          <ScalarProperty Name="PERMISO" ColumnName="PERMISO" />
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="USUARIO_SPRAS" ColumnName="USUARIO_SPRAS" />
+          <ScalarProperty Name="Mantenimiento" ColumnName="Mantenimiento" />
+          <ScalarProperty Name="ManttoText" ColumnName="ManttoText" />
+          <ScalarProperty Name="Grupo" ColumnName="Grupo" />
+          <ScalarProperty Name="GrupoText" ColumnName="GrupoText" />
+          <ScalarProperty Name="Orden" ColumnName="Orden" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WARNINGVs">
+      <EntityTypeMapping TypeName="TruequeModel.WARNINGV">
+        <MappingFragment StoreEntitySet="WARNINGV">
+          <ScalarProperty Name="PAGINA_ID" ColumnName="PAGINA_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="WARNING" ColumnName="WARNING" />
+          <ScalarProperty Name="POSICION" ColumnName="POSICION" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="USUARIOGA" TypeName="TruequeModel.USUARIOGA" StoreEntitySet="USUARIOGA">
+      <EndProperty Name="GAUTORIZACION">
+        <ScalarProperty Name="ID" ColumnName="AGROUP_ID" />
+      </EndProperty>
+      <EndProperty Name="USUARIO">
+        <ScalarProperty Name="ID" ColumnName="USUARIO_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="USUARIOSOC" TypeName="TruequeModel.USUARIOSOC" StoreEntitySet="USUARIOSOC">
+      <EndProperty Name="SOCIEDAD">
+        <ScalarProperty Name="BUKRS" ColumnName="SOCIEDAD_ID" />
+      </EndProperty>
+      <EndProperty Name="USUARIO">
+        <ScalarProperty Name="ID" ColumnName="USUARIO_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionName="TruequeModel.Store.split" FunctionImportName="split">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.split_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="val" ColumnName="val" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CPS_LISTA_CITIES" FunctionName="TruequeModel.Store.CPS_LISTA_CITIES">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CPS_LISTA_CITIES_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="STATE_ID" ColumnName="STATE_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CPS_LISTA_CLI_PRO" FunctionName="TruequeModel.Store.CPS_LISTA_CLI_PRO">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CPS_LISTA_CLI_PRO_Result">
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="NAME1" ColumnName="NAME1" />
+          <ScalarProperty Name="PROVEEDOR_ID" ColumnName="PROVEEDOR_ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="LANDX" ColumnName="LANDX" />
+          <ScalarProperty Name="VKORG" ColumnName="VKORG" />
+          <ScalarProperty Name="CANAL" ColumnName="CANAL" />
+          <ScalarProperty Name="CONTAC" ColumnName="CONTAC" />
+          <ScalarProperty Name="CONT_EMAIL" ColumnName="CONT_EMAIL" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CPS_LISTA_CLIENTES" FunctionName="TruequeModel.Store.CPS_LISTA_CLIENTES">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CPS_LISTA_CLIENTES_Result">
+          <ScalarProperty Name="VKORG" ColumnName="VKORG" />
+          <ScalarProperty Name="VTWEG" ColumnName="VTWEG" />
+          <ScalarProperty Name="SPART" ColumnName="SPART" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="NAME1" ColumnName="NAME1" />
+          <ScalarProperty Name="STCD1" ColumnName="STCD1" />
+          <ScalarProperty Name="STCD2" ColumnName="STCD2" />
+          <ScalarProperty Name="LAND" ColumnName="LAND" />
+          <ScalarProperty Name="REGION" ColumnName="REGION" />
+          <ScalarProperty Name="SUBREGION" ColumnName="SUBREGION" />
+          <ScalarProperty Name="REGIO" ColumnName="REGIO" />
+          <ScalarProperty Name="ORT01" ColumnName="ORT01" />
+          <ScalarProperty Name="STRAS_GP" ColumnName="STRAS_GP" />
+          <ScalarProperty Name="PSTLZ" ColumnName="PSTLZ" />
+          <ScalarProperty Name="CONTAC" ColumnName="CONTAC" />
+          <ScalarProperty Name="CONT_EMAIL" ColumnName="CONT_EMAIL" />
+          <ScalarProperty Name="PARVW" ColumnName="PARVW" />
+          <ScalarProperty Name="PAYER" ColumnName="PAYER" />
+          <ScalarProperty Name="GRUPO" ColumnName="GRUPO" />
+          <ScalarProperty Name="SPRAS" ColumnName="SPRAS" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="BDESCRIPCION" ColumnName="BDESCRIPCION" />
+          <ScalarProperty Name="BANNER" ColumnName="BANNER" />
+          <ScalarProperty Name="CANAL" ColumnName="CANAL" />
+          <ScalarProperty Name="BZIRK" ColumnName="BZIRK" />
+          <ScalarProperty Name="KONDA" ColumnName="KONDA" />
+          <ScalarProperty Name="VKGRP" ColumnName="VKGRP" />
+          <ScalarProperty Name="VKBUR" ColumnName="VKBUR" />
+          <ScalarProperty Name="BANNERG" ColumnName="BANNERG" />
+          <ScalarProperty Name="PROVEEDOR_ID" ColumnName="PROVEEDOR_ID" />
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="EXPORTACION" ColumnName="EXPORTACION" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CPS_LISTA_CONTACTOS" FunctionName="TruequeModel.Store.CPS_LISTA_CONTACTOS">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CPS_LISTA_CONTACTOS_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="VKORG" ColumnName="VKORG" />
+          <ScalarProperty Name="VTWEG" ColumnName="VTWEG" />
+          <ScalarProperty Name="SPART" ColumnName="SPART" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="DEFECTO" ColumnName="DEFECTO" />
+          <ScalarProperty Name="CARTA" ColumnName="CARTA" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CPS_LISTA_DOCUMENTOP" FunctionName="TruequeModel.Store.CPS_LISTA_DOCUMENTOP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CPS_LISTA_DOCUMENTOP_Result">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="MATNR" ColumnName="MATNR" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="MAKTX" ColumnName="MAKTX" />
+          <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+          <ScalarProperty Name="PUNIT" ColumnName="PUNIT" />
+          <ScalarProperty Name="PORC_APOYO" ColumnName="PORC_APOYO" />
+          <ScalarProperty Name="MONTO_APOYO" ColumnName="MONTO_APOYO" />
+          <ScalarProperty Name="RESTA" ColumnName="RESTA" />
+          <ScalarProperty Name="PRECIO_SUG" ColumnName="PRECIO_SUG" />
+          <ScalarProperty Name="APOYO_EST" ColumnName="APOYO_EST" />
+          <ScalarProperty Name="APOYO_REAL" ColumnName="APOYO_REAL" />
+          <ScalarProperty Name="VOLUMEN_EST" ColumnName="VOLUMEN_EST" />
+          <ScalarProperty Name="VOLUMEN_REAL" ColumnName="VOLUMEN_REAL" />
+          <ScalarProperty Name="VIGENCIA_DE" ColumnName="VIGENCIA_DE" />
+          <ScalarProperty Name="VIGENCIA_AL" ColumnName="VIGENCIA_AL" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CPS_LISTA_MATERIALES" FunctionName="TruequeModel.Store.CPS_LISTA_MATERIALES">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CPS_LISTA_MATERIALES_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MTART" ColumnName="MTART" />
+          <ScalarProperty Name="MATKL_ID" ColumnName="MATKL_ID" />
+          <ScalarProperty Name="MAKTX" ColumnName="MAKTX" />
+          <ScalarProperty Name="MAKTG" ColumnName="MAKTG" />
+          <ScalarProperty Name="MEINS" ColumnName="MEINS" />
+          <ScalarProperty Name="PUNIT" ColumnName="PUNIT" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="CTGR" ColumnName="CTGR" />
+          <ScalarProperty Name="BRAND" ColumnName="BRAND" />
+          <ScalarProperty Name="MATERIALGP_ID" ColumnName="MATERIALGP_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CPS_LISTA_MATERIALGP_CLIENTE" FunctionName="TruequeModel.Store.CPS_LISTA_MATERIALGP_CLIENTE" />
+    <FunctionImportMapping FunctionImportName="CPS_LISTA_MATERIALGP_MATERIALES" FunctionName="TruequeModel.Store.CPS_LISTA_MATERIALGP_MATERIALES" />
+    <FunctionImportMapping FunctionImportName="CPS_LISTA_SOCIEDADES" FunctionName="TruequeModel.Store.CPS_LISTA_SOCIEDADES">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CPS_LISTA_SOCIEDADES_Result">
+          <ScalarProperty Name="BUKRS" ColumnName="BUKRS" />
+          <ScalarProperty Name="BUTXT" ColumnName="BUTXT" />
+          <ScalarProperty Name="ORT01" ColumnName="ORT01" />
+          <ScalarProperty Name="LAND" ColumnName="LAND" />
+          <ScalarProperty Name="SUBREGIO" ColumnName="SUBREGIO" />
+          <ScalarProperty Name="WAERS" ColumnName="WAERS" />
+          <ScalarProperty Name="SPRAS" ColumnName="SPRAS" />
+          <ScalarProperty Name="NAME1" ColumnName="NAME1" />
+          <ScalarProperty Name="KTOPL" ColumnName="KTOPL" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="REGION" ColumnName="REGION" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CPS_LISTA_SOLICITUDES" FunctionName="TruequeModel.Store.CPS_LISTA_SOLICITUDES">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CPS_LISTA_SOLICITUDES_Result">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="TSOL_ID" ColumnName="TSOL_ID" />
+          <ScalarProperty Name="TALL_ID" ColumnName="TALL_ID" />
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+          <ScalarProperty Name="CIUDAD" ColumnName="CIUDAD" />
+          <ScalarProperty Name="PERIODO" ColumnName="PERIODO" />
+          <ScalarProperty Name="EJERCICIO" ColumnName="EJERCICIO" />
+          <ScalarProperty Name="TIPO_TECNICO" ColumnName="TIPO_TECNICO" />
+          <ScalarProperty Name="TIPO_RECURRENTE" ColumnName="TIPO_RECURRENTE" />
+          <ScalarProperty Name="CANTIDAD_EV" ColumnName="CANTIDAD_EV" />
+          <ScalarProperty Name="USUARIOC_ID" ColumnName="USUARIOC_ID" />
+          <ScalarProperty Name="USUARIOD_ID" ColumnName="USUARIOD_ID" />
+          <ScalarProperty Name="FECHAD" ColumnName="FECHAD" />
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+          <ScalarProperty Name="HORAC" ColumnName="HORAC" />
+          <ScalarProperty Name="FECHAC_PLAN" ColumnName="FECHAC_PLAN" />
+          <ScalarProperty Name="FECHAC_USER" ColumnName="FECHAC_USER" />
+          <ScalarProperty Name="HORAC_USER" ColumnName="HORAC_USER" />
+          <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+          <ScalarProperty Name="ESTATUS_C" ColumnName="ESTATUS_C" />
+          <ScalarProperty Name="ESTATUS_SAP" ColumnName="ESTATUS_SAP" />
+          <ScalarProperty Name="ESTATUS_WF" ColumnName="ESTATUS_WF" />
+          <ScalarProperty Name="DOCUMENTO_REF" ColumnName="DOCUMENTO_REF" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="NOTAS" ColumnName="NOTAS" />
+          <ScalarProperty Name="MONTO_DOC_MD" ColumnName="MONTO_DOC_MD" />
+          <ScalarProperty Name="MONTO_FIJO_MD" ColumnName="MONTO_FIJO_MD" />
+          <ScalarProperty Name="MONTO_BASE_GS_PCT_MD" ColumnName="MONTO_BASE_GS_PCT_MD" />
+          <ScalarProperty Name="MONTO_BASE_NS_PCT_MD" ColumnName="MONTO_BASE_NS_PCT_MD" />
+          <ScalarProperty Name="MONTO_DOC_ML" ColumnName="MONTO_DOC_ML" />
+          <ScalarProperty Name="MONTO_FIJO_ML" ColumnName="MONTO_FIJO_ML" />
+          <ScalarProperty Name="MONTO_BASE_GS_PCT_ML" ColumnName="MONTO_BASE_GS_PCT_ML" />
+          <ScalarProperty Name="MONTO_BASE_NS_PCT_ML" ColumnName="MONTO_BASE_NS_PCT_ML" />
+          <ScalarProperty Name="MONTO_DOC_ML2" ColumnName="MONTO_DOC_ML2" />
+          <ScalarProperty Name="MONTO_FIJO_ML2" ColumnName="MONTO_FIJO_ML2" />
+          <ScalarProperty Name="MONTO_BASE_GS_PCT_ML2" ColumnName="MONTO_BASE_GS_PCT_ML2" />
+          <ScalarProperty Name="MONTO_BASE_NS_PCT_ML2" ColumnName="MONTO_BASE_NS_PCT_ML2" />
+          <ScalarProperty Name="PORC_ADICIONAL" ColumnName="PORC_ADICIONAL" />
+          <ScalarProperty Name="IMPUESTO" ColumnName="IMPUESTO" />
+          <ScalarProperty Name="FECHAI_VIG" ColumnName="FECHAI_VIG" />
+          <ScalarProperty Name="FECHAF_VIG" ColumnName="FECHAF_VIG" />
+          <ScalarProperty Name="ESTATUS_EXT" ColumnName="ESTATUS_EXT" />
+          <ScalarProperty Name="SOLD_TO_ID" ColumnName="SOLD_TO_ID" />
+          <ScalarProperty Name="PAYER_ID" ColumnName="PAYER_ID" />
+          <ScalarProperty Name="PAYER_NOMBRE" ColumnName="PAYER_NOMBRE" />
+          <ScalarProperty Name="PAYER_EMAIL" ColumnName="PAYER_EMAIL" />
+          <ScalarProperty Name="GRUPO_CTE_ID" ColumnName="GRUPO_CTE_ID" />
+          <ScalarProperty Name="CANAL_ID" ColumnName="CANAL_ID" />
+          <ScalarProperty Name="MONEDA_ID" ColumnName="MONEDA_ID" />
+          <ScalarProperty Name="MONEDAL_ID" ColumnName="MONEDAL_ID" />
+          <ScalarProperty Name="MONEDAL2_ID" ColumnName="MONEDAL2_ID" />
+          <ScalarProperty Name="TIPO_CAMBIO" ColumnName="TIPO_CAMBIO" />
+          <ScalarProperty Name="TIPO_CAMBIOL" ColumnName="TIPO_CAMBIOL" />
+          <ScalarProperty Name="TIPO_CAMBIOL2" ColumnName="TIPO_CAMBIOL2" />
+          <ScalarProperty Name="NO_FACTURA" ColumnName="NO_FACTURA" />
+          <ScalarProperty Name="FECHAD_SOPORTE" ColumnName="FECHAD_SOPORTE" />
+          <ScalarProperty Name="METODO_PAGO" ColumnName="METODO_PAGO" />
+          <ScalarProperty Name="NO_PROVEEDOR" ColumnName="NO_PROVEEDOR" />
+          <ScalarProperty Name="PASO_ACTUAL" ColumnName="PASO_ACTUAL" />
+          <ScalarProperty Name="AGENTE_ACTUAL" ColumnName="AGENTE_ACTUAL" />
+          <ScalarProperty Name="FECHA_PASO_ACTUAL" ColumnName="FECHA_PASO_ACTUAL" />
+          <ScalarProperty Name="VKORG" ColumnName="VKORG" />
+          <ScalarProperty Name="VTWEG" ColumnName="VTWEG" />
+          <ScalarProperty Name="SPART" ColumnName="SPART" />
+          <ScalarProperty Name="PUESTO_ID" ColumnName="PUESTO_ID" />
+          <ScalarProperty Name="GALL_ID" ColumnName="GALL_ID" />
+          <ScalarProperty Name="CONCEPTO_ID" ColumnName="CONCEPTO_ID" />
+          <ScalarProperty Name="DOCUMENTO_SAP" ColumnName="DOCUMENTO_SAP" />
+          <ScalarProperty Name="PORC_APOYO" ColumnName="PORC_APOYO" />
+          <ScalarProperty Name="LIGADA" ColumnName="LIGADA" />
+          <ScalarProperty Name="OBJETIVOQ" ColumnName="OBJETIVOQ" />
+          <ScalarProperty Name="FRECUENCIA_LIQ" ColumnName="FRECUENCIA_LIQ" />
+          <ScalarProperty Name="OBJQ_PORC" ColumnName="OBJQ_PORC" />
+          <ScalarProperty Name="CUENTAP" ColumnName="CUENTAP" />
+          <ScalarProperty Name="CUENTAPL" ColumnName="CUENTAPL" />
+          <ScalarProperty Name="EXCEDE_PRES" ColumnName="EXCEDE_PRES" />
+          <ScalarProperty Name="CUENTACL" ColumnName="CUENTACL" />
+          <ScalarProperty Name="TSOL_LIG" ColumnName="TSOL_LIG" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CPS_LISTA_SOLICITUDES_POR_APROBAR" FunctionName="TruequeModel.Store.CPS_LISTA_SOLICITUDES_POR_APROBAR">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CPS_LISTA_SOLICITUDES_POR_APROBAR_Result">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="USUARIOA_ID" ColumnName="USUARIOA_ID" />
+          <ScalarProperty Name="USUARIOD_ID" ColumnName="USUARIOD_ID" />
+          <ScalarProperty Name="USUARIOA_NOMBRE" ColumnName="USUARIOA_NOMBRE" />
+          <ScalarProperty Name="USUARIOD_NOMBRE" ColumnName="USUARIOD_NOMBRE" />
+          <ScalarProperty Name="USUARIOA_ID_NUEVO" ColumnName="USUARIOA_ID_NUEVO" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CPS_LISTA_SPRAS" FunctionName="TruequeModel.Store.CPS_LISTA_SPRAS">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CPS_LISTA_SPRAS_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CPS_LISTA_STATES" FunctionName="TruequeModel.Store.CPS_LISTA_STATES">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CPS_LISTA_STATES_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="COUNTRY_ID" ColumnName="COUNTRY_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CPS_LISTA_USUARIOS" FunctionName="TruequeModel.Store.CPS_LISTA_USUARIOS">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CPS_LISTA_USUARIOS_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PASS" ColumnName="PASS" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="APELLIDO_P" ColumnName="APELLIDO_P" />
+          <ScalarProperty Name="APELLIDO_M" ColumnName="APELLIDO_M" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="PUESTO_ID" ColumnName="PUESTO_ID" />
+          <ScalarProperty Name="MANAGER" ColumnName="MANAGER" />
+          <ScalarProperty Name="BACKUP_ID" ColumnName="BACKUP_ID" />
+          <ScalarProperty Name="BUNIT" ColumnName="BUNIT" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CSP_BANNERSINCANAL" FunctionName="TruequeModel.Store.CSP_BANNERSINCANAL">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CSP_BANNERSINCANAL_Result">
+          <ScalarProperty Name="BANNER" ColumnName="BANNER" />
+          <ScalarProperty Name="SOCIEDAD" ColumnName="SOCIEDAD" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CSP_CAMBIO" FunctionName="TruequeModel.Store.CSP_CAMBIO">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CSP_CAMBIO_Result">
+          <ScalarProperty Name="FCURR" ColumnName="FCURR" />
+          <ScalarProperty Name="TCURR" ColumnName="TCURR" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CSP_CARPETA" FunctionName="TruequeModel.Store.CSP_CARPETA">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CSP_CARPETA_Result">
+          <ScalarProperty Name="CAR_ID" ColumnName="CAR_ID" />
+          <ScalarProperty Name="CAR_URL" ColumnName="CAR_URL" />
+          <ScalarProperty Name="CAR_TIT" ColumnName="CAR_TIT" />
+          <ScalarProperty Name="ICONO" ColumnName="ICONO" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CSP_CONSULTARPRESUPUESTO" FunctionName="TruequeModel.Store.CSP_CONSULTARPRESUPUESTO">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CSP_CONSULTARPRESUPUESTO_Result">
+          <ScalarProperty Name="CANAL" ColumnName="CANAL" />
+          <ScalarProperty Name="CDESCRIPCION" ColumnName="CDESCRIPCION" />
+          <ScalarProperty Name="PPTOC" ColumnName="PPTOC" />
+          <ScalarProperty Name="BANNER" ColumnName="BANNER" />
+          <ScalarProperty Name="BDESCRIPCION" ColumnName="BDESCRIPCION" />
+          <ScalarProperty Name="PPTO" ColumnName="PPTO" />
+          <ScalarProperty Name="PERIODO" ColumnName="PERIODO" />
+          <ScalarProperty Name="CSHDC" ColumnName="CSHDC" />
+          <ScalarProperty Name="RECUN" ColumnName="RECUN" />
+          <ScalarProperty Name="OTHTA" ColumnName="OTHTA" />
+          <ScalarProperty Name="SPA" ColumnName="SPA" />
+          <ScalarProperty Name="FREEG" ColumnName="FREEG" />
+          <ScalarProperty Name="CONPR" ColumnName="CONPR" />
+          <ScalarProperty Name="RSRDV" ColumnName="RSRDV" />
+          <ScalarProperty Name="CORPM" ColumnName="CORPM" />
+          <ScalarProperty Name="POP" ColumnName="POP" />
+          <ScalarProperty Name="PMVAR" ColumnName="PMVAR" />
+          <ScalarProperty Name="ADVER" ColumnName="ADVER" />
+          <ScalarProperty Name="DSTRB" ColumnName="DSTRB" />
+          <ScalarProperty Name="VVX17" ColumnName="VVX17" />
+          <ScalarProperty Name="ALLB" ColumnName="ALLB" />
+          <ScalarProperty Name="ALLF" ColumnName="ALLF" />
+          <ScalarProperty Name="PROCESO" ColumnName="PROCESO" />
+          <ScalarProperty Name="CONSU" ColumnName="CONSU" />
+          <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CSP_DOCUMENTOSRECCXSOL" FunctionName="TruequeModel.Store.CSP_DOCUMENTOSRECCXSOL">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CSP_DOCUMENTOSRECCXSOL_Result">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="PADRE" ColumnName="PADRE" />
+          <ScalarProperty Name="REVERSO" ColumnName="REVERSO" />
+          <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+          <ScalarProperty Name="USUARIOA_ID" ColumnName="USUARIOA_ID" />
+          <ScalarProperty Name="NUM_DOC_TEXT" ColumnName="NUM_DOC_TEXT" />
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="FECHAD" ColumnName="FECHAD" />
+          <ScalarProperty Name="HORAC" ColumnName="HORAC" />
+          <ScalarProperty Name="PERIODO" ColumnName="PERIODO" />
+          <ScalarProperty Name="ESTATUSS" ColumnName="ESTATUSS" />
+          <ScalarProperty Name="PAYER_ID" ColumnName="PAYER_ID" />
+          <ScalarProperty Name="NAME1" ColumnName="NAME1" />
+          <ScalarProperty Name="CANAL" ColumnName="CANAL" />
+          <ScalarProperty Name="TXT020" ColumnName="TXT020" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="MONTO_DOC_MD" ColumnName="MONTO_DOC_MD" />
+          <ScalarProperty Name="FACTURA" ColumnName="FACTURA" />
+          <ScalarProperty Name="FACTURAK" ColumnName="FACTURAK" />
+          <ScalarProperty Name="USUARIOD_ID" ColumnName="USUARIOD_ID" />
+          <ScalarProperty Name="DOCUMENTO_SAP" ColumnName="DOCUMENTO_SAP" />
+          <ScalarProperty Name="BLART" ColumnName="BLART" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="DESCR" ColumnName="DESCR" />
+          <ScalarProperty Name="IMPORTE" ColumnName="IMPORTE" />
+          <ScalarProperty Name="CUENTA_C" ColumnName="CUENTA_C" />
+          <ScalarProperty Name="CARGO" ColumnName="CARGO" />
+          <ScalarProperty Name="CUENTAP" ColumnName="CUENTAP" />
+          <ScalarProperty Name="CUENTAPL" ColumnName="CUENTAPL" />
+          <ScalarProperty Name="CUENTACL" ColumnName="CUENTACL" />
+          <ScalarProperty Name="NUM_DOC_PADRE" ColumnName="NUM_DOC_PADRE" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CSP_DOCUMENTOSRELXSOL" FunctionName="TruequeModel.Store.CSP_DOCUMENTOSRELXSOL">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CSP_DOCUMENTOSRELXSOL_Result">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="PADRE" ColumnName="PADRE" />
+          <ScalarProperty Name="REVERSO" ColumnName="REVERSO" />
+          <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+          <ScalarProperty Name="USUARIOA_ID" ColumnName="USUARIOA_ID" />
+          <ScalarProperty Name="NUM_DOC_TEXT" ColumnName="NUM_DOC_TEXT" />
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="FECHAD" ColumnName="FECHAD" />
+          <ScalarProperty Name="HORAC" ColumnName="HORAC" />
+          <ScalarProperty Name="PERIODO" ColumnName="PERIODO" />
+          <ScalarProperty Name="ESTATUSS" ColumnName="ESTATUSS" />
+          <ScalarProperty Name="PAYER_ID" ColumnName="PAYER_ID" />
+          <ScalarProperty Name="NAME1" ColumnName="NAME1" />
+          <ScalarProperty Name="CANAL" ColumnName="CANAL" />
+          <ScalarProperty Name="TXT020" ColumnName="TXT020" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="MONTO_DOC_MD" ColumnName="MONTO_DOC_MD" />
+          <ScalarProperty Name="FACTURA" ColumnName="FACTURA" />
+          <ScalarProperty Name="FACTURAK" ColumnName="FACTURAK" />
+          <ScalarProperty Name="USUARIOD_ID" ColumnName="USUARIOD_ID" />
+          <ScalarProperty Name="DOCUMENTO_SAP" ColumnName="DOCUMENTO_SAP" />
+          <ScalarProperty Name="BLART" ColumnName="BLART" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="DESCR" ColumnName="DESCR" />
+          <ScalarProperty Name="IMPORTE" ColumnName="IMPORTE" />
+          <ScalarProperty Name="CUENTA_C" ColumnName="CUENTA_C" />
+          <ScalarProperty Name="CARGO" ColumnName="CARGO" />
+          <ScalarProperty Name="CUENTAP" ColumnName="CUENTAP" />
+          <ScalarProperty Name="CUENTAPL" ColumnName="CUENTAPL" />
+          <ScalarProperty Name="CUENTACL" ColumnName="CUENTACL" />
+          <ScalarProperty Name="DOCUMENTO_REF" ColumnName="DOCUMENTO_REF" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CSP_DOCUMENTOSXCOCODE" FunctionName="TruequeModel.Store.CSP_DOCUMENTOSXCOCODE">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CSP_DOCUMENTOSXCOCODE_Result">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="PADRE" ColumnName="PADRE" />
+          <ScalarProperty Name="REVERSO" ColumnName="REVERSO" />
+          <ScalarProperty Name="BUTTON" ColumnName="BUTTON" />
+          <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+          <ScalarProperty Name="USUARIOA_ID" ColumnName="USUARIOA_ID" />
+          <ScalarProperty Name="NUM_DOC_TEXT" ColumnName="NUM_DOC_TEXT" />
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="FECHAD" ColumnName="FECHAD" />
+          <ScalarProperty Name="HORAC" ColumnName="HORAC" />
+          <ScalarProperty Name="PERIODO" ColumnName="PERIODO" />
+          <ScalarProperty Name="ESTATUSS" ColumnName="ESTATUSS" />
+          <ScalarProperty Name="PAYER_ID" ColumnName="PAYER_ID" />
+          <ScalarProperty Name="NAME1" ColumnName="NAME1" />
+          <ScalarProperty Name="CANAL" ColumnName="CANAL" />
+          <ScalarProperty Name="TXT020" ColumnName="TXT020" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="MONTO_DOC_MD" ColumnName="MONTO_DOC_MD" />
+          <ScalarProperty Name="FACTURA" ColumnName="FACTURA" />
+          <ScalarProperty Name="FACTURAK" ColumnName="FACTURAK" />
+          <ScalarProperty Name="USUARIOD_ID" ColumnName="USUARIOD_ID" />
+          <ScalarProperty Name="DOCUMENTO_SAP" ColumnName="DOCUMENTO_SAP" />
+          <ScalarProperty Name="BLART" ColumnName="BLART" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="DESCR" ColumnName="DESCR" />
+          <ScalarProperty Name="IMPORTE" ColumnName="IMPORTE" />
+          <ScalarProperty Name="CUENTA_C" ColumnName="CUENTA_C" />
+          <ScalarProperty Name="CARGO" ColumnName="CARGO" />
+          <ScalarProperty Name="CUENTAP" ColumnName="CUENTAP" />
+          <ScalarProperty Name="CUENTAPL" ColumnName="CUENTAPL" />
+          <ScalarProperty Name="CUENTACL" ColumnName="CUENTACL" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CSP_DOCUMENTOSXUSER" FunctionName="TruequeModel.Store.CSP_DOCUMENTOSXUSER">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CSP_DOCUMENTOSXUSER_Result">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="PADRE" ColumnName="PADRE" />
+          <ScalarProperty Name="REVERSO" ColumnName="REVERSO" />
+          <ScalarProperty Name="BUTTON" ColumnName="BUTTON" />
+          <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+          <ScalarProperty Name="USUARIOA_ID" ColumnName="USUARIOA_ID" />
+          <ScalarProperty Name="NUM_DOC_TEXT" ColumnName="NUM_DOC_TEXT" />
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="FECHAD" ColumnName="FECHAD" />
+          <ScalarProperty Name="HORAC" ColumnName="HORAC" />
+          <ScalarProperty Name="PERIODO" ColumnName="PERIODO" />
+          <ScalarProperty Name="ESTATUSS" ColumnName="ESTATUSS" />
+          <ScalarProperty Name="PAYER_ID" ColumnName="PAYER_ID" />
+          <ScalarProperty Name="NAME1" ColumnName="NAME1" />
+          <ScalarProperty Name="CANAL" ColumnName="CANAL" />
+          <ScalarProperty Name="TXT020" ColumnName="TXT020" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="MONTO_DOC_MD" ColumnName="MONTO_DOC_MD" />
+          <ScalarProperty Name="FACTURA" ColumnName="FACTURA" />
+          <ScalarProperty Name="FACTURAK" ColumnName="FACTURAK" />
+          <ScalarProperty Name="USUARIOD_ID" ColumnName="USUARIOD_ID" />
+          <ScalarProperty Name="DOCUMENTO_SAP" ColumnName="DOCUMENTO_SAP" />
+          <ScalarProperty Name="BLART" ColumnName="BLART" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="DESCR" ColumnName="DESCR" />
+          <ScalarProperty Name="IMPORTE" ColumnName="IMPORTE" />
+          <ScalarProperty Name="CUENTA_C" ColumnName="CUENTA_C" />
+          <ScalarProperty Name="CARGO" ColumnName="CARGO" />
+          <ScalarProperty Name="CUENTAP" ColumnName="CUENTAP" />
+          <ScalarProperty Name="CUENTAPL" ColumnName="CUENTAPL" />
+          <ScalarProperty Name="CUENTACL" ColumnName="CUENTACL" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CSP_DOCUMENTOSXUSER_test" FunctionName="TruequeModel.Store.CSP_DOCUMENTOSXUSER_test">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CSP_DOCUMENTOSXUSER_test_Result">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="PADRE" ColumnName="PADRE" />
+          <ScalarProperty Name="REVERSO" ColumnName="REVERSO" />
+          <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+          <ScalarProperty Name="USUARIOA_ID" ColumnName="USUARIOA_ID" />
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="FECHAD" ColumnName="FECHAD" />
+          <ScalarProperty Name="HORAC" ColumnName="HORAC" />
+          <ScalarProperty Name="PERIODO" ColumnName="PERIODO" />
+          <ScalarProperty Name="ESTATUSS" ColumnName="ESTATUSS" />
+          <ScalarProperty Name="PAYER_ID" ColumnName="PAYER_ID" />
+          <ScalarProperty Name="NAME1" ColumnName="NAME1" />
+          <ScalarProperty Name="CANAL" ColumnName="CANAL" />
+          <ScalarProperty Name="TXT020" ColumnName="TXT020" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="MONTO_DOC_MD" ColumnName="MONTO_DOC_MD" />
+          <ScalarProperty Name="FACTURA" ColumnName="FACTURA" />
+          <ScalarProperty Name="FACTURAK" ColumnName="FACTURAK" />
+          <ScalarProperty Name="USUARIOD_ID" ColumnName="USUARIOD_ID" />
+          <ScalarProperty Name="DOCUMENTO_SAP" ColumnName="DOCUMENTO_SAP" />
+          <ScalarProperty Name="BLART" ColumnName="BLART" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="DESCR" ColumnName="DESCR" />
+          <ScalarProperty Name="IMPORTE" ColumnName="IMPORTE" />
+          <ScalarProperty Name="CUENTA_C" ColumnName="CUENTA_C" />
+          <ScalarProperty Name="CARGO" ColumnName="CARGO" />
+          <ScalarProperty Name="CUENTAP" ColumnName="CUENTAP" />
+          <ScalarProperty Name="CUENTAPL" ColumnName="CUENTAPL" />
+          <ScalarProperty Name="CUENTACL" ColumnName="CUENTACL" />
+          <ScalarProperty Name="TIPO_RECURRENTE" ColumnName="TIPO_RECURRENTE" />
+          <ScalarProperty Name="DOCUMENTO_REF" ColumnName="DOCUMENTO_REF" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CSP_DOCUMENTOSXUSER2" FunctionName="TruequeModel.Store.CSP_DOCUMENTOSXUSER2">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CSP_DOCUMENTOSXUSER2_Result">
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="PADRE" ColumnName="PADRE" />
+          <ScalarProperty Name="REVERSO" ColumnName="REVERSO" />
+          <ScalarProperty Name="BUTTON" ColumnName="BUTTON" />
+          <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+          <ScalarProperty Name="USUARIOA_ID" ColumnName="USUARIOA_ID" />
+          <ScalarProperty Name="NUM_DOC_TEXT" ColumnName="NUM_DOC_TEXT" />
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="FECHAD" ColumnName="FECHAD" />
+          <ScalarProperty Name="HORAC" ColumnName="HORAC" />
+          <ScalarProperty Name="PERIODO" ColumnName="PERIODO" />
+          <ScalarProperty Name="ESTATUSS" ColumnName="ESTATUSS" />
+          <ScalarProperty Name="PAYER_ID" ColumnName="PAYER_ID" />
+          <ScalarProperty Name="NAME1" ColumnName="NAME1" />
+          <ScalarProperty Name="CANAL" ColumnName="CANAL" />
+          <ScalarProperty Name="TXT020" ColumnName="TXT020" />
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="MONTO_DOC_MD" ColumnName="MONTO_DOC_MD" />
+          <ScalarProperty Name="FACTURA" ColumnName="FACTURA" />
+          <ScalarProperty Name="FACTURAK" ColumnName="FACTURAK" />
+          <ScalarProperty Name="USUARIOD_ID" ColumnName="USUARIOD_ID" />
+          <ScalarProperty Name="DOCUMENTO_SAP" ColumnName="DOCUMENTO_SAP" />
+          <ScalarProperty Name="BLART" ColumnName="BLART" />
+          <ScalarProperty Name="KUNNR" ColumnName="KUNNR" />
+          <ScalarProperty Name="DESCR" ColumnName="DESCR" />
+          <ScalarProperty Name="IMPORTE" ColumnName="IMPORTE" />
+          <ScalarProperty Name="CUENTA_C" ColumnName="CUENTA_C" />
+          <ScalarProperty Name="CARGO" ColumnName="CARGO" />
+          <ScalarProperty Name="CUENTAP" ColumnName="CUENTAP" />
+          <ScalarProperty Name="CUENTAPL" ColumnName="CUENTAPL" />
+          <ScalarProperty Name="CUENTACL" ColumnName="CUENTACL" />
+          <ScalarProperty Name="TIPO_RECURRENTE" ColumnName="TIPO_RECURRENTE" />
+          <ScalarProperty Name="DOCUMENTO_REF" ColumnName="DOCUMENTO_REF" />
+          <ScalarProperty Name="nRelacionadas" ColumnName="nRelacionadas" />
+          <ScalarProperty Name="nRecurrentes" ColumnName="nRecurrentes" />
+          <ScalarProperty Name="ESTATUS_WF_USER" ColumnName="ESTATUS_WF_USER" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CSP_LISTA_TALL_CUENTA" FunctionName="TruequeModel.Store.CSP_LISTA_TALL_CUENTA">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CSP_LISTA_TALL_CUENTA_Result">
+          <ScalarProperty Name="TXT50" ColumnName="TXT50" />
+          <ScalarProperty Name="TALL_ID" ColumnName="TALL_ID" />
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CSP_MASIVA_CLIENTES" FunctionName="TruequeModel.Store.CSP_MASIVA_CLIENTES" />
+    <FunctionImportMapping FunctionImportName="CSP_PERMISO" FunctionName="TruequeModel.Store.CSP_PERMISO">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CSP_PERMISO_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_PAG" ColumnName="ID_PAG" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="TITULO" ColumnName="TITULO" />
+          <ScalarProperty Name="CAR_ID" ColumnName="CAR_ID" />
+          <ScalarProperty Name="CAR_URL" ColumnName="CAR_URL" />
+          <ScalarProperty Name="ICONO" ColumnName="ICONO" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CSP_PRESU_CLIENT" FunctionName="TruequeModel.Store.CSP_PRESU_CLIENT" />
+    <FunctionImportMapping FunctionImportName="CSP_PRESUPUESTO_ADD" FunctionName="TruequeModel.Store.CSP_PRESUPUESTO_ADD" />
+    <FunctionImportMapping FunctionImportName="CSP_PRESUPUESTO_ADDP" FunctionName="TruequeModel.Store.CSP_PRESUPUESTO_ADDP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CSP_PRESUPUESTO_ADDP_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ANIO" ColumnName="ANIO" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="MES" ColumnName="MES" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="PAIS" ColumnName="PAIS" />
+          <ScalarProperty Name="REGION" ColumnName="REGION" />
+          <ScalarProperty Name="MONEDA" ColumnName="MONEDA" />
+          <ScalarProperty Name="MATERIAL" ColumnName="MATERIAL" />
+          <ScalarProperty Name="BANNER" ColumnName="BANNER" />
+          <ScalarProperty Name="ADVER" ColumnName="ADVER" />
+          <ScalarProperty Name="CONPR" ColumnName="CONPR" />
+          <ScalarProperty Name="CSHDC" ColumnName="CSHDC" />
+          <ScalarProperty Name="DIRLB" ColumnName="DIRLB" />
+          <ScalarProperty Name="DSTRB" ColumnName="DSTRB" />
+          <ScalarProperty Name="FREEG" ColumnName="FREEG" />
+          <ScalarProperty Name="GRSLS" ColumnName="GRSLS" />
+          <ScalarProperty Name="NETLB" ColumnName="NETLB" />
+          <ScalarProperty Name="OVHDF" ColumnName="OVHDF" />
+          <ScalarProperty Name="OVHDV" ColumnName="OVHDV" />
+          <ScalarProperty Name="PKGMT" ColumnName="PKGMT" />
+          <ScalarProperty Name="PMVAR" ColumnName="PMVAR" />
+          <ScalarProperty Name="POP" ColumnName="POP" />
+          <ScalarProperty Name="PURCH" ColumnName="PURCH" />
+          <ScalarProperty Name="RAWMT" ColumnName="RAWMT" />
+          <ScalarProperty Name="RECUN" ColumnName="RECUN" />
+          <ScalarProperty Name="RSRDV" ColumnName="RSRDV" />
+          <ScalarProperty Name="TOTCS" ColumnName="TOTCS" />
+          <ScalarProperty Name="VVX17" ColumnName="VVX17" />
+          <ScalarProperty Name="OTHTA" ColumnName="OTHTA" />
+          <ScalarProperty Name="CORPM" ColumnName="CORPM" />
+          <ScalarProperty Name="SPA" ColumnName="SPA" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CSP_PROVISIONES_ABIERTAS" FunctionName="TruequeModel.Store.CSP_PROVISIONES_ABIERTAS">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CSP_PROVISIONES_ABIERTAS_Result">
+          <ScalarProperty Name="SOCIEDAD_ID" ColumnName="SOCIEDAD_ID" />
+          <ScalarProperty Name="FECHA_EMISION" ColumnName="FECHA_EMISION" />
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="TALL" ColumnName="TALL" />
+          <ScalarProperty Name="CLIENTE_N" ColumnName="CLIENTE_N" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="SALDO" ColumnName="SALDO" />
+          <ScalarProperty Name="ANTIGUEDAD" ColumnName="ANTIGUEDAD" />
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="EMAIL_USUARIO" ColumnName="EMAIL_USUARIO" />
+          <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CSP_USUARIO" FunctionName="TruequeModel.Store.CSP_USUARIO">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TruequeModel.CSP_USUARIO_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PASS" ColumnName="PASS" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="APELLIDO_P" ColumnName="APELLIDO_P" />
+          <ScalarProperty Name="APELLIDO_M" ColumnName="APELLIDO_M" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="SPRAS_ID" ColumnName="SPRAS_ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="ID_GR" ColumnName="ID_GR" />
+          <ScalarProperty Name="NOMBRE_GR" ColumnName="NOMBRE_GR" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

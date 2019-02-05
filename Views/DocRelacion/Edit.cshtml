@@ -1,0 +1,516 @@
+﻿@model TAT001.Entities.FACTURASCONF
+@using TAT001.Entities
+@using System.Data.Entity
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 1213;
+    ViewBag.carpeta_r = 500;
+}
+
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row right-align">
+            <div class="col l12 m12">
+                <button type="submit" id="btnGuardar" class="btn btn-default" ></button>
+            </div>
+        </div>
+        <div class="col 12 s12">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="form-horizontal">
+                        <div class="row">
+                            @Html.HiddenFor(x=>x.TSOL)
+                            @Html.HiddenFor(x=>x.SOCIEDAD_ID)
+                            @{
+                                using (TruequeEntities db = new TruequeEntities())
+                                {
+                                    string spras_id = ViewBag.spras_id;
+                                    SOCIEDAD sociedad = db.SOCIEDADs.First(x => x.BUKRS == Model.SOCIEDAD_ID);
+                                    TSOL tSol = db.TSOLs.Include(x=>x.TSOLTs).First(x => x.ID == Model.TSOL);
+
+                                    string sociedadTxt = (sociedad.BUKRS + " - " + sociedad.BUTXT);
+                                    string tSolTxt = (tSol.ID + " - " + (tSol.TSOLTs.Any(x => x.SPRAS_ID == spras_id) ? tSol.TSOLTs.First(x => x.SPRAS_ID == spras_id).TXT50 : tSol.DESCRIPCION));
+
+
+                                    <div class="input-field col s4" style="margin-bottom:0;">
+                                        @Html.Editor("SOCIEDAD_ID_TXT", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = sociedadTxt } })
+                                        @Html.LabelFor(model => model.SOCIEDAD_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblSociedadId" })
+                                    </div>
+                                    <div class="input-field col s4" style="margin-bottom:0;">
+                                        @Html.EditorFor(model => model.PAIS_ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        @Html.LabelFor(model => model.PAIS_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblPais" })
+                                    </div>
+
+                                    <div class="input-field col s4" style="margin-bottom:0;">
+                                        @Html.Editor("TSOL_TXT", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = tSolTxt } })
+                                        @Html.LabelFor(model => model.TSOL, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblTsol" })
+                                    </div>
+                                }
+                            }
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col s4" style="margin-bottom:0;">
+                                <div class="">
+                                   @Html.EditorFor(model => model.FACTURA, new { htmlAttributes = new { @class = "form-control pname material-icons green-text", @maxlength = "230", @hidden = "hidden", id = "idfac" } })
+                                </div>
+                                <div class="">
+                                    @if ((bool)Model.FACTURA == true)
+                                    {
+
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="fac" onclick="check()" checked />
+                                            <span id = "lblFactura" ></span>
+                                        </label>
+
+                                    }
+                                    else
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="fac" onclick="check()" />
+                                            <span id = "lblFactura" ></span>
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="col s4" style="margin-bottom:0;">
+                                <div class="">
+                                    @Html.EditorFor(model => model.FECHA, new { htmlAttributes = new { @class = "form-control pname", @maxlength = "230", @hidden = "hidden", id = "idfec" } })
+                                </div>
+                                <div class="">
+                                    @if ((bool)Model.FECHA == true)
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="fec" onclick="check()" checked />
+                                            <span id = "lblFecha"></span>
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="fec" onclick="check()" />
+                                            <span id = "lblFecha"></span>
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="col s4" style="margin-bottom:0;">
+                                <div class="">
+                                    @Html.EditorFor(model => model.ACTIVO, new { htmlAttributes = new { @class = "form-control pname", @maxlength = "230", @hidden = "hidden", id = "idact" } })
+                                </div>
+
+                                <div class="">
+                                    @if ((bool)Model.ACTIVO == true)
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="act" onclick="check()" checked />
+                                            <span id="lblActivo"></span>
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="act" onclick="check()" />
+                                            <span id="lblActivo"></span>
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s4" style="margin-bottom:0;">
+                                <div class="">
+                                    @Html.EditorFor(model => model.PROVEEDOR, new { htmlAttributes = new { @class = "form-control pname", @maxlength = "230", @hidden = "hidden", id = "idprov" } })
+                                </div>
+
+                                <div class="">
+                                    @if ((bool)Model.PROVEEDOR == true)
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="prov" onclick="check()" checked />
+                                            <span id = "lblProveedor" ></span>
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="prov" onclick="check()" />
+                                            <span id = "lblProveedor" ></span>
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+
+
+
+                            <div class="col s4" style="margin-bottom:0;">
+                                <div class="">
+                                    @Html.EditorFor(model => model.CONTROL, new { htmlAttributes = new { @class = "form-control pname", @maxlength = "230", @hidden = "hidden", id = "idcon" } })
+                                </div>
+
+                                <div class="">
+                                    @if ((bool)Model.CONTROL == true)
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="con" onclick="check()" checked />
+                                            <span id = "lblControl" ></span>
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="con" onclick="check()" />
+                                            <span id = "lblControl" ></span>
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s4" style="margin-bottom:0;">
+                                <div class="">
+                                    @Html.EditorFor(model => model.AUTORIZACION, new { htmlAttributes = new { @class = "form-control pname", @maxlength = "230", @hidden = "hidden", id = "idauto" } })
+                                </div>
+
+                                <div class="">
+                                    @if ((bool)Model.AUTORIZACION == true)
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="auto" onclick="check()" checked />
+                                            <span id = "lblAutorizacion"></span>
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="auto" onclick="check()" />
+                                            <span id = "lblAutorizacion"></span>
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+
+
+
+                            <div class="col s4" style="margin-bottom:0;">
+                                <div class="">
+                                    @Html.EditorFor(model => model.VENCIMIENTO, new { htmlAttributes = new { @class = "form-control pname", @maxlength = "230", @hidden = "hidden", id = "idvenc" } })
+                                </div>
+
+                                <div class="">
+                                    @if ((bool)Model.VENCIMIENTO == true)
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="venc" onclick="check()" checked />
+                                            <span id = "lblVenc"></span>
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="venc" onclick="check()" />
+                                            <span id = "lblVenc"></span>
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s4" style="margin-bottom:0;">
+                                <div class="">
+                                    @Html.EditorFor(model => model.FACTURAK, new { htmlAttributes = new { @class = "form-control pname", @maxlength = "230", @hidden = "hidden", id = "idfactk" } })
+                                </div>
+
+                                <div class="">
+                                    @if ((bool)Model.FACTURAK == true)
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="factk" onclick="check()" checked />
+                                            <span id = "lblFactK"></span>
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="factk" onclick="check()" />
+                                            <span id = "lblFactK"></span>
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+
+
+                            <div class="col s4" style="margin-bottom:0;">
+                                <div class="">
+                                    @Html.EditorFor(model => model.EJERCICIOK, new { htmlAttributes = new { @class = "form-control pname", @maxlength = "230", @hidden = "hidden", id = "idejek" } })
+                                </div>
+
+                                <div class="">
+                                    @if ((bool)Model.EJERCICIOK == true)
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="ejek" onclick="check()" checked />
+                                            <span id = "lblEjeK"></span>
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="ejek" onclick="check()" />
+                                            <span id = "lblEjeK"></span>
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s4" style="margin-bottom:0;">
+                                <div class="">
+                                    @Html.EditorFor(model => model.BILL_DOC, new { htmlAttributes = new { @class = "form-control pname", @maxlength = "230", @hidden = "hidden", id = "idbill" } })
+                                </div>
+
+                                <div class="">
+                                    @if ((bool)Model.BILL_DOC == true)
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="bill" onclick="check()" checked />
+                                            <span id = "lblBill"></span>
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="bill" onclick="check()" />
+                                            <span id = "lblBill"></span>
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+
+
+
+                            <div class="col s4" style="margin-bottom:0;">
+                                <div class="">
+                                    @Html.EditorFor(model => model.BELNR, new { htmlAttributes = new { @class = "form-control pname", @maxlength = "230", @hidden = "hidden", id = "idbellnr" } })
+                                </div>
+
+                                <div class="">
+                                    @if ((bool)Model.BELNR == true)
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="bellnr" onclick="check()" checked />
+                                            <span id = "lblBell"></span>
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="bellnr" onclick="check()" />
+                                            <span id = "lblBell"></span>
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s4" style="margin-bottom:0;">
+                                <div class="">
+                                    @Html.EditorFor(model => model.IMPORTE_FAC, new { htmlAttributes = new { @class = "form-control pname", @maxlength = "230", @hidden = "hidden", id = "idimpo" } })
+                                </div>
+                                <div class="">
+                                    @if ((bool)Model.IMPORTE_FAC == true)
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="impo" onclick="check()" checked />
+                                            <span id = "lblImporte"></span>
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="impo" onclick="check()" />
+                                            <span id = "lblImporte"></span>
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+
+
+
+                            <div class="col s4" style="margin-bottom:0;">
+                                <div class="">
+                                   @Html.EditorFor(model => model.PAYER, new { htmlAttributes = new { @class = "form-control pname", @maxlength = "230", @hidden = "hidden", id = "idpay" } })
+                                </div>
+
+                                <div class="">
+                                    @if ((bool)Model.PAYER == true)
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="pay" onclick="check()" checked />
+                                            <span id = "lblPayer"></span>
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="pay" onclick="check()" />
+                                            <span id = "lblPayer"></span>
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s4" style="margin-bottom:0;">
+                                <div class="">
+                                    @Html.EditorFor(model => model.DESCRIPCION, new { htmlAttributes = new { @class = "form-control pname", @maxlength = "230", @hidden = "hidden", id = "iddes" } })
+                                </div>
+
+                                <div class="">
+                                    @if ((bool)Model.DESCRIPCION == true)
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="des" onclick="check()" checked />
+                                            <span id = "lblDesc"></span>
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="des" onclick="check()" />
+                                            <span id = "lblDesc"></span>
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+
+
+                            <div class="col s4" style="margin-bottom:0;">
+                                <div class="">
+                                    @Html.EditorFor(model => model.SOCIEDAD, new { htmlAttributes = new { @class = "form-control pname", @maxlength = "230", @hidden = "hidden", id = "idsoc" } })
+                                </div>
+
+                                <div class="">
+                                    @if ((bool)Model.SOCIEDAD == true)
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="soc" onclick="check()" checked />
+                                            <span id = "lblSoci"></span>
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label>
+                                            <input type="checkbox" name="selectedCustomers" value="true" id="soc" onclick="check()" />
+                                            <span id = "lblSoci"></span>
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+<div class="col s12">
+    <a id="btnRegresar" href="@Url.Action("Index")"></a>
+</div>
+
+<script>
+
+    function check() {
+        if ($("#fac").prop('checked'))
+            $("#idfac").prop('checked', true);
+        else
+            $("#idfac").prop('checked', false);
+
+        if ($("#fec").prop('checked'))
+            $("#idfec").prop('checked', true);
+        else
+            $("#idfec").prop('checked', false);
+
+        if ($("#prov").prop('checked'))
+            $("#idprov").prop('checked', true);
+        else
+            $("#idprov").prop('checked', false);
+
+        if ($("#con").prop('checked'))
+            $("#idcon").prop('checked', true);
+        else
+            $("#idcon").prop('checked', false);
+
+        if ($("#auto").prop('checked'))
+            $("#idauto").prop('checked', true);
+        else
+            $("#idauto").prop('checked', false);
+
+        if ($("#venc").prop('checked'))
+            $("#idvenc").prop('checked', true);
+        else
+            $("#idvenc").prop('checked', false);
+
+        if ($("#factk").prop('checked'))
+            $("#idfactk").prop('checked', true);
+        else
+            $("#idfactk").prop('checked', false);
+
+        if ($("#ejek").prop('checked'))
+            $("#idejek").prop('checked', true);
+        else
+            $("#idejek").prop('checked', false);
+
+        if ($("#bill").prop('checked'))
+            $("#idbill").prop('checked', true);
+        else
+            $("#idbill").prop('checked', false);
+
+        if ($("#bellnr").prop('checked'))
+            $("#idbellnr").prop('checked', true);
+        else
+            $("#idbellnr").prop('checked', false);
+
+        if ($("#impo").prop('checked'))
+            $("#idimpo").prop('checked', true);
+        else
+            $("#idimpo").prop('checked', false);
+
+        if ($("#pay").prop('checked'))
+            $("#idpay").prop('checked', true);
+        else
+            $("#idpay").prop('checked', false);
+
+        if ($("#des").prop('checked'))
+            $("#iddes").prop('checked', true);
+        else
+            $("#iddes").prop('checked', false);
+
+        if ($("#soc").prop('checked'))
+            $("#idsoc").prop('checked', true);
+        else
+            $("#idsoc").prop('checked', false);
+
+        if ($("#act").prop('checked'))
+            $("#idact").prop('checked', true);
+        else
+            $("#idact").prop('checked', false);
+    }
+
+    var elem = document.querySelectorAll('select');
+    var instance = M.FormSelect.init(elem, []);
+</script>
+
+
+

@@ -1,0 +1,79 @@
+﻿@model TAT001.Entities.MATERIAL
+
+@{
+    ViewBag.pagina_r = 662;
+    ViewBag.carpeta_r = 500;
+    //ViewBag.Title = "Páginas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col s12 l12 right-align">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default", id = "btn_save" })
+</div>
+<div class="row">
+    <div class="col s12 m6">
+        <div class="card-panel">
+            @*<div class="row">
+                    <div class="row" style="height:10px;width:100%;">
+                        <div class="col l7 pink darken-1" style="height:10px;padding:0;"></div>
+                        <div class="col l3 pink darken-4" style="height:10px;padding:0;">
+                            <div class="col l3 pink darken-4" style="height:10px;padding:0;"></div>
+                            <div class="col l8 orange" style="height:10px;padding:0;"></div>
+                            <div class="col l1 red" style="height:10px;padding:0;"></div>
+                        </div>
+                        <div class="col l2 yellow" style="height:10px;padding:0;"></div>
+                    </div>
+                </div>*@
+            <div class="row">
+                <div class="input-field col s12" style="margin-bottom:0;">
+                    @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_id" })
+                </div>
+
+                <div class="input-field col s12" style="margin-bottom:0;">
+                    @Html.EditorFor(model => model.MATERIALGP.DESCRIPCION, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.LabelFor(model => model.MATERIALGP.DESCRIPCION, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_MatGroup" })
+                </div>
+                @*<div class="input-field col l10 m10" style="margin-bottom:0;">
+                        @if ((bool)Model.ACTIVO == true)
+                        {
+                            <i class='material-icons green-text'>check</i>}
+                        else
+                        {
+                            <i class='material-icons red-text'>clear</i>}
+                        @Html.LabelFor(model => model.ACTIVO, htmlAttributes: new { @class = "control-label col-md-2 active", @id = "lbl_Activo" })
+                    </div>*@
+
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m6">
+        <div class="card-panel">
+            <div class="row">
+                @{if (Model.MATERIALTs.Count > 0)
+                    {
+                        foreach (var e in Model.MATERIALTs)
+                        {
+                            if (e.MAKTX != "")
+                            {
+                                <div class="input-field col s12" style="margin-bottom:0;">
+                                    @Html.Editor(e.MAKTX, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = e.MAKTX } })
+                                    @Html.LabelFor(model => model.MAKTX, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_Dsc" + e.SPRAS })
+                                </div>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.MAKTX, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.LabelFor(model => model.MAKTX, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_DscEN" })
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col s12">
+    <a id="btn_return" href="@Url.Action("Index")"></a>
+</div>

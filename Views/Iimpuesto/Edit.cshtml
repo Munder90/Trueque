@@ -1,0 +1,63 @@
+﻿@model TAT001.Entities.IIMPUESTO
+
+@{
+    /**/
+    ViewBag.pagina_r = 733;
+    ViewBag.carpeta_r = 500;
+    //ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidarImpuestos.js"></script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button id="btnGEdit" type="submit" value="Submit" class="btn btn-default" style="float:right;"></button>
+            </div>
+        </div>
+    </div>
+    <div class="col 12 s12 ">
+        <div class="card-panel">
+            <div class="row">
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="input-field col l6">
+                            @Html.LabelFor(model => model.LAND, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblSPRAS" })
+                            @Html.EditorFor(model => model.LAND, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.LAND, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="input-field col l6">
+                            @Html.LabelFor(model => model.MWSKZ, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblMWSKZ" })
+                            @Html.EditorFor(model => model.MWSKZ, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.MWSKZ, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col l6">
+                            @Html.LabelFor(model => model.KSCHL, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblKSCHL" })
+                            @Html.EditorFor(model => model.KSCHL, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.KSCHL, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="input-field col l6">
+                            @Html.LabelFor(model => model.KBETR, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblKBETR" })
+                            @Html.EditorFor(model => model.KBETR, new { htmlAttributes = new { @class = "form-control kbetr" } })
+                            @Html.ValidationMessageFor(model => model.KBETR, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { id = "anLst" })
+</div>

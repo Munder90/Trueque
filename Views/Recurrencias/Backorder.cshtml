@@ -1,0 +1,396 @@
+﻿@model TAT001.Models.DocumentoFlujo
+@using TAT001.Entities
+@{
+    /**/
+
+    //ViewBag.Title = "Páginas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 201;
+    ViewBag.carpeta_r = 200;
+}
+
+@try
+{
+    <input id="miles" name="miles" type="hidden" value="@ViewBag.miles">//LEJ 09.07.18
+    <input id="dec" name="dec" type="hidden" value="@ViewBag.dec">//LEJ 09.07.18
+    <div class="row" style="margin-bottom:0">
+        <div class="col s12 m5 l5">
+            <div class="row" style="margin-bottom:0">
+                <div class="input-field col s4">
+                    @Html.EditorFor(model => model.D.USUARIOC_ID, new { htmlAttributes = new { @disabled = "disabled" } })
+                    @Html.LabelFor(model => model.D.USUARIOC_ID, new { @id = "lbl_userid" })
+                </div>
+                <div class="input-field col s4">
+                    @*<input type="text" id="txt_user" value="@ViewBag.usuario.MANAGER" disabled="disabled" />
+                        <label for="txt_user">Manager</label>*@
+                    @Html.EditorFor(model => model.D.USUARIO.MANAGER, new { htmlAttributes = new { @disabled = "disabled" } })
+                    @Html.LabelFor(model => model.D.USUARIO.MANAGER, new { @id = "lbl_manager" })
+                </div>
+                <div class="input-field col s4">
+                    @Html.EditorFor(model => model.D.USUARIO.BACKUP_ID, new { htmlAttributes = new { @disabled = "disabled" } })
+                    @Html.LabelFor(model => model.D.USUARIO.BACKUP_ID, new { @id = "lbl_backup" })
+                    @*<input type="text" id="txt_user" value="@ViewBag.usuario.BACKUP_ID" disabled="disabled" />
+                        <label for="txt_user">Backup</label>*@
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m2 l2">
+            <div class="input-field col s6">
+                @*<input type="text" id="txt_user" value="PRGA" disabled="disabled" />
+                    <label for="txt_user">BU</label>*@
+                @Html.EditorFor(model => model.D.USUARIO.BUNIT, new { htmlAttributes = new { @disabled = "disabled" } })
+                @Html.LabelFor(model => model.D.USUARIO.BUNIT, "Sociedad", new { @id = "lbl_bu" })
+            </div>
+            <div class="input-field col s6">
+                @if (Model.D.ESTATUS == "N")
+                {
+                    <input type="text" id="txt_status" value="Nuevo" disabled="disabled" />
+                    <label for="txt_status" id="lbl_status">Estatus</label>
+                }
+            </div>
+        </div>
+        <div class="col s12 m5 l5 right-align">
+            <a href="@Url.Action("Details", "Solicitudes", new { id = Model.D.NUM_DOC})" class="btn-small">Regresar</a>
+        </div>
+
+    </div>
+
+    <div class="">
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs" id="tab">
+                    <li class="tab col s2 hide"><a href="#info" id="lbl_info">Información</a></li>
+                    <li class="tab col s2 hide"><a href="#supp" id="lbl_supp">Soporte</a></li>
+                    <li class="tab col s2"><a href="#dist" id="lbl_dist" class="active">Distribución</a></li>
+                    <li class="tab col s2 hide"><a href="#fina" id="lbl_fina">Financiera</a></li>
+                </ul>
+            </div>
+            <div id="dist" class="col s12">
+                <div class="row">
+                    @if (@*Model.D.LIGADA != null)
+                    {
+                        if ((bool)Model.D.LIGADA &*@ Model.D.DOCUMENTORECs.Count == 0)
+                        {
+                            <div class="col l6 offset-l6 m12 s12">
+                                <div class="card-panel">
+                                    <h5>Base para aplicar</h5>
+                                    <div class="row" style="margin-bottom:0px;">
+                                        <div class="input-field col s6">
+                                            <input type="text" value="@Model.D.PORC_APOYO" class="porcentaje" disabled="disabled" id="PORC_APOYO" />
+                                            <label for="txt_porc">Porcentaje apoyo</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field col s6">
+                                            @*<input type="text" value="0.00" class="precio" disabled="disabled" id="txt_venta" onload="calcValor()" />*@
+                                            <input type="text" value="@Model.D.DOCUMENTOLs.FirstOrDefault().MONTO_VENTA" class="precio" disabled="disabled" id="txt_venta" />
+                                            <label for="txt_porc">Venta del mes</label>
+                                        </div>
+                                        <div class="input-field col s6">
+                                            <input type="text" value="@Model.D.MONTO_DOC_MD" class="precio" disabled="disabled" id="MONTO_DOC_MD" />
+                                            <label for="txt_porc">Monto base</label>
+                                        </div>
+                                        <form method="post">
+                                            @Html.HiddenFor(model => model.D.NUM_DOC)
+                                            @Html.HiddenFor(model => model.D.LIGADA)
+                                            <div class="input-field col s6">
+                                                <input type="text" value="@Model.D.DOCUMENTOLs.FirstOrDefault().BACKORDER" class="precio" id="BACKORDER" name="BACKORDER" onchange="this.value = toShow(this.value);" onfocus="this.select();" />
+                                                <label for="BACKORDER">BackOrder</label>
+                                            </div>
+                                            <div class="col s12 m12 right-align">
+                                                <input type="submit" value="Recalcular" class="btn-small" />
+                                            </div>
+                                        </form>
+                                        <script>
+                                            //function calcValor() {
+                                            ////var venta = ((document.getElementById("MONTO_DOC_MD").value) / (document.getElementById("PORC_APOYO").value)) * 100;
+                                            ////document.getElementById("txt_venta").value = venta;
+                                            //}
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    <div class="col s12">
+                        <div class="card-panel">
+                            <div class="row" style="margin-bottom:0">
+                                <h5>Distribución</h5>
+                                <div class="input-field col s12" style="overflow:auto;">
+                                    @if (Model.D.DOCUMENTOPs.Count > 0)
+                                    {
+                                        <table style="font-size: 12px;" id="ctlDis" class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Vigencia de</th>
+                                                    <th>Vigencia a</th>
+                                                    @if (Model.D.DOCUMENTOPs.First().MATNR != "")
+                                                    {
+                                                        <th>Material</th>
+                                                    }
+                                                    else
+                                                    {
+                                                        <th>Categoría</th>
+                                                    }
+                                                    <th>Descripción</th>
+                                                    <th>Precio unitario</th>
+                                                    <th>% apoyo</th>
+                                                    <th>Apoyo por pieza</th>
+                                                    <th>Precio sugerido</th>
+                                                    @if (Model.D.TSOL.FACTURA == false)
+                                                    {
+                                                        <th>Volumen estimado</th>
+                                                        <th>Estimado apoyo</th>
+                                                    }
+                                                    else
+                                                    {
+                                                        <th>Volumen real</th>
+                                                        <th>Apoyo real</th>
+                                                    }
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.D.DOCUMENTOPs.Where(a => a.VIGENCIA_DE != null & (a.MATNR != "" | a.MATKL != null)))
+                                                {
+                                                    <tr id="pos-@item.POS" onclick="muestra(this.id)">
+                                                        <td>
+                                                            @try
+                                                            {@item.VIGENCIA_DE.Value.ToShortDateString()}
+                                                        catch { }
+                                                        </td>
+                                                        <td>
+                                                            @try
+                                                            {@item.VIGENCIA_AL.Value.ToShortDateString()}
+                                                        catch { }
+                                                        </td>
+                                                        @if (item.MATNR != "")
+                                                        {
+                                                            <td>@item.MATNR.TrimStart('0')</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>@item.MATKL</td>
+                                                        }
+                                                        @{
+                                                            using (TAT001.Entities.TruequeEntities db = new TAT001.Entities.TruequeEntities())
+                                                            {
+                                                                if (item.MATNR != "")
+                                                                {
+                                                                    var matnr = db.MATERIALs.Find(item.MATNR);
+                                                                    if (matnr != null)
+                                                                    {
+                                                                        <td>@matnr.MAKTX</td>}
+                                                                    else
+                                                                    {
+                                                                        <td></td>
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    var matkl = db.MATERIALGPs.Find(item.MATKL);
+                                                                    if (matkl != null)
+                                                                    {
+                                                                        <td>@matkl.DESCRIPCION </td>}
+                                                                    else
+                                                                    {
+                                                                        <td></td>
+                                                                    }
+                                                                }
+
+                                                            }
+                                                        }
+
+                                                        @*LEJ 12.07.18 Añadi un identificador para modificarse dinamicamente*@
+                                                        <td class="precio">@Math.Round(item.MONTO, 2)</td>
+                                                        <td class="porcentaje">@Math.Round(item.PORC_APOYO, 2)</td>
+                                                        <td class="precio">@Math.Round(item.MONTO_APOYO, 2)</td>
+                                                        <td class="precio">@Math.Round(item.PRECIO_SUG, 2)</td>
+                                                        @if (Model.D.TSOL.FACTURA == false)
+                                                        {
+                                                            <td class="numero">@Math.Round(item.VOLUMEN_EST, 2)</td>
+                                                            <td class="precio">@Math.Round((decimal)item.APOYO_EST, 2)</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td class="numero">@Math.Round((decimal)item.VOLUMEN_REAL, 2)</td>
+                                                            <td class="precio">@Math.Round(((decimal)item.APOYO_REAL), 2)</td>
+                                                        }
+                                                    </tr>
+                                                    @*LEJ 12.07.18 Añadi un identificador para modificarse dinamicamente*@
+                                                    foreach (var mat in item.DOCUMENTOMs)
+                                                    {
+                                                        <tr class="mat-@mat.POS_ID grey lighten-4" style="display:none;">
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td>@mat.MATNR.TrimStart('0')</td>
+                                                            @{
+                                                                using (TAT001.Entities.TruequeEntities db = new TAT001.Entities.TruequeEntities())
+                                                                {
+                                                                    if (mat.MATNR != "")
+                                                                    {
+                                                                        var matnr = db.MATERIALs.Find(mat.MATNR);
+                                                                        if (matnr != null)
+                                                                        {
+                                                                            <td>@matnr.MAKTX</td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td></td>
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            @if (Model.D.TSOL.FACTURA == false)
+                                                            {
+                                                                <td class="precio">@Math.Round((decimal)mat.APOYO_EST, 2)</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td class="precio">
+                                                                    @Math.Round((decimal)mat.APOYO_REAL, 2)
+                                                                </td>
+                                                            }
+                                                        </tr>
+
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script src="~/Scripts/formatos.js"></script>
+                <script>
+                    function muestra(id) {
+                        var ii = id.split('-')[1];
+                        var clas = $("#" + id).hasClass("m");
+                        if (!clas) {
+                            var a = document.getElementsByClassName("mat-" + ii);
+                            var i;
+                            for (i = 0; i < a.length; i++) {
+                                a[i].style.display = "table-row";
+                            }
+                            document.getElementById("pos-" + ii).classList.add("m");
+                        }
+                        else {
+                            var a = document.getElementsByClassName("mat-" + ii);
+                            var i;
+                            for (i = 0; i < a.length; i++) {
+                                a[i].style.display = "none";
+                            }
+                            document.getElementById("pos-" + ii).classList.remove("m");
+                        }
+
+                    }
+                </script>
+            </div>
+        </div>
+        <script>
+            var el = document.getElementById("tab");
+            options = [];
+            var instance = M.Tabs.init(el, options);
+        </script>
+    </div>
+    if (ViewBag.workflow.Count != 0)
+    {
+        <div class="row" style="font-size:12px;">
+            <div class="col s12">
+                <div class="card-panel">
+                    <div class="row" style="margin-bottom:0">
+                        <h5>Workflow</h5>
+                        @*
+                            <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+                            <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+                            <script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+                            <link href="~/Content/dataTable.css" rel="stylesheet" />
+                            <link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />*@
+                        <table class="table highlight responsive-table" id="table">
+                            <thead>
+                                <tr>
+                                    <th width="">
+                                        Usuario
+                                    </th>
+                                    <th width="">
+                                        Evento
+                                    </th>
+                                    <th width=""> Fecha inicio</th>
+                                    <th width=""> Hora inicio</th>
+                                    <th width=""> Fecha término</th>
+                                    <th width=""> Hora término</th>
+                                    <th width="">
+                                        Estatus
+                                    </th>
+                                    <th width="30%">
+                                        Comentario
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (TAT001.Entities.FLUJO f in ViewBag.workflow)
+                                {
+                                    <tr>
+                                        <td width=""> @Html.DisplayFor(modelItem => f.USUARIOA_ID) - @Html.DisplayFor(modelItem => f.USUARIO.NOMBRE) @Html.DisplayFor(modelItem => f.USUARIO.APELLIDO_P) @Html.DisplayFor(modelItem => f.USUARIO.APELLIDO_M) </td>
+                                        <td width=""> @Html.DisplayFor(modelItem => f.WORKFP.ACCION.ACCIONTs.Where(a => a.SPRAS_ID == Session["spras"].ToString()).FirstOrDefault().TXT050) </td>
+                                        <td width=""> @f.FECHAC.Value.ToShortDateString() </td>
+                                        <td width=""> @f.FECHAC.Value.TimeOfDay.ToString().Split('.')[0] </td>
+                                        <td width=""> @f.FECHAM.Value.ToShortDateString() </td>
+                                        <td width=""> @f.FECHAM.Value.TimeOfDay.ToString().Split('.')[0] </td>
+                                        <td width=""> @Html.DisplayFor(modelItem => f.ESTATUS) </td>
+                                        <td width="30%"> @Html.DisplayFor(modelItem => f.COMENTARIO) </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+}
+catch (Exception ee)
+{
+    Session["error"] = ee.Message.ToString();
+    <script>
+        document.location.replace("../../Home/Index");
+    </script>
+}
+@*<p>
+    @Html.ActionLink("Details", "Edit", new { id = Model.D.NUM_DOC })
+</p>*@
+@if (TempData["error"] != null)
+{
+    @*<div class="row red-text">
+            @ViewBag.Error
+        </div>*@
+
+    if (TempData["error"].ToString() != "")
+    {
+        <script>
+                /**/
+                /**/
+                M.toast({ html: '@TempData["error"]', classes: '' });
+                /**/
+                /**/
+        </script>
+    }
+}
+@* LEJ 09.07.18 *@
+<script>
+    $(document).ready(function () {
+        $('.collapsible').collapsible();
+                });
+
+    function ligada() {
+        var a = '@Model.D.LIGADA';
+
+        return (a=="True");
+    }
+</script>

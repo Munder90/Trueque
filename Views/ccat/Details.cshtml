@@ -1,0 +1,55 @@
+﻿@model TAT001.Entities.CONFDIST_CAT
+
+@{
+    //ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 872;
+    ViewBag.carpeta_r = 100;
+    var pad = @ViewBag.porcad;
+}
+<div class="row">
+    <div class="col s12 right-align">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.SOCIEDAD_ID, cp = Model.CAMPO, pr = Model.PERIODOS }, new { @id = "lblEditar", @class="btn-small" })
+    </div>
+</div>
+<div>
+    <div class="row">
+        <div class="col s12 m12 l6">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="col s12">
+                        <div class="col l12 m12 s12">
+                            <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                @Html.EditorFor(model => model.SOCIEDAD_ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                @Html.LabelFor(model => model.SOCIEDAD_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "thsoc" })
+                            </div>
+                        </div>
+                        <div class="col l12 m12 s12">
+                            <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                @Html.EditorFor(model => model.CAMPO, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                @Html.LabelFor(model => model.CAMPO, htmlAttributes: new { @class = "control-label col-md-2", @id = "thdes" })
+                            </div>
+                        </div>
+                        @*</div>
+                            <div class="col s6 m6 l6">*@
+                        <div class="col l12 m12 s12">
+                            <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                @Html.EditorFor(model => model.PERIODOS, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                @Html.LabelFor(model => model.PERIODOS, htmlAttributes: new { @class = "control-label col-md-2", @id = "thper" })
+                            </div>
+                        </div>
+                        @*<div class="col l12 m12 s12">
+                            <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                <input type="text" class="form-control" id="crimeRef" value="@pad" readonly="readonly" />
+                                @Html.LabelFor(model => model.PORC_AD, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblPorcad" })
+                            </div>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index","Sociedades", null, new { @id = "lblRegresar" })
+</p>

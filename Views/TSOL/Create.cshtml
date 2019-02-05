@@ -1,0 +1,187 @@
+﻿@model TAT001.Entities.TSOL
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 791;
+    ViewBag.carpeta_r = 500;
+    List<TAT001.Entities.SPRA> spras = ViewBag.SPRAS as List<TAT001.Entities.SPRA>;
+    List<TAT001.Entities.TSOLT> lstTXT = new List<TAT001.Entities.TSOLT>();
+
+    List<TAT001.Entities.SPRA> spras2 = new List<TAT001.Entities.SPRA>();
+    foreach (var item in Model.TSOLTs)
+    {
+        TAT001.Entities.TSOLT txt = new TAT001.Entities.TSOLT();
+        txt.SPRAS_ID = item.SPRAS_ID;
+        txt.TSOL_ID = item.TSOL_ID;
+        txt.TXT50 = item.TXT50;
+        lstTXT.Add(txt);
+    }
+    for (int i = 0; i < spras.Count; i++)
+    {
+        TAT001.Entities.TSOLT x2 = lstTXT.Where(a => a.SPRAS_ID == spras[i].ID).FirstOrDefault();
+        if (x2 == null)
+        {
+            spras2.Add(spras[i]);
+        }
+    }
+}
+@*<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>*@
+<script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+@using (Html.BeginForm("Create", "TSOL", FormMethod.Post, new { id="create"}))
+{
+    @Html.AntiForgeryToken()
+    <div class="col s12 l12 right-align">
+        <button type="submit" id="btn_guardar" class="btn btn-default"></button>
+    </div>
+    <div class="row">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="col l6 s12">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.ID, new { htmlAttributes = new { required = true, maxlength = "10" } })
+                        @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.DESCRIPCION, new { htmlAttributes = new { @class = "form-control", maxlength = "60", required = true } })
+                        @Html.LabelFor(model => model.DESCRIPCION, htmlAttributes: new { @class = "control-label col-md-2", id = "lbl_descripcion" })
+                        @Html.ValidationMessageFor(model => model.DESCRIPCION, "", new { @class = "text-danger" })
+                    </div>
+
+                    @*<div class="input-field col l12">
+                        @Html.EditorFor(model => model.TSOLR, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.LabelFor(model => model.TSOLR, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.ValidationMessageFor(model => model.TSOLR, "", new { @class = "text-danger" })
+                    </div>*@
+
+                    <div class="input-field col s12">
+                        @Html.DropDownList("RANGO_ID", null, new { htmlAttributes = new { @class = "", required = true } })
+                        @Html.LabelFor(model => model.RANGO_ID, htmlAttributes: new { @class = "", id = "lblRangoId" })
+                        @Html.ValidationMessageFor(model => model.RANGO_ID, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col s6">
+                        <div class="form-group">
+                            <label>
+                                @Html.CheckBox("ESTATUS", new { htmlAttributes = new { @class = "" } })
+                                <span id="lbl_estatus"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                @Html.CheckBox("ACTIVO", new { htmlAttributes = new { @class = "" } })
+                                <span id="lbl_activo"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col l6 s12">
+            <div class="card-panel">
+                <div class="row">
+
+                    @*<div class="input-field col l12">
+            @Html.EditorFor(model => model.TSOLM, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.LabelFor(model => model.TSOLM, htmlAttributes: new { @class = "control-label col-md-2", id = "lbl_tsolm" })
+            @Html.ValidationMessageFor(model => model.TSOLM, "", new { @class = "text-danger" })
+        </div>*@
+
+                    @*<div class="input-field col l12">
+            @Html.EditorFor(model => model.TSOLC, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.LabelFor(model => model.TSOLC, htmlAttributes: new { @class = "control-label col-md-2", id = "lbl_tsolc" })
+            @Html.ValidationMessageFor(model => model.TSOLC, "", new { @class = "text-danger" })
+        </div>*@
+
+                    @*<div class="input-field col l12">
+            @Html.EditorFor(model => model.TRECU, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.LabelFor(model => model.TRECU, htmlAttributes: new { @class = "control-label col-md-2", id = "lbl_trecu" })
+            @Html.ValidationMessageFor(model => model.TRECU, "", new { @class = "text-danger" })
+        </div>*@
+                    <div class="col s6">
+                        <div class="form-group">
+                            <label>
+                                <input name="group1" type="radio" value="FACTURA" required />
+                                <span id="lbl_factura"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input name="group1" type="radio" value="PADRE" required />
+                                <span id="lbl_padre"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input name="group1" type="radio" value="REVERSO" required />
+                                <span id="lbl_reverso"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col s6">
+                        <div class="form-group">
+                            <label>
+                                @Html.CheckBoxFor(model => model.NEGO, htmlAttributes: new {  })
+                                <span id="lbl_tnego"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                @Html.CheckBoxFor(model => model.CARTA, htmlAttributes: new {  })
+                                <span id="lbl_tcarta"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                @Html.CheckBoxFor(model => model.ADICIONA, htmlAttributes: new {  })
+                                <span id="lbl_adiciona"></span>
+                            </label>
+                        </div>
+                        </div>
+                        @*<div class="form-group">
+                <label>
+                    @Html.CheckBox("ACTIVO", htmlAttributes: new { required = true })
+                    <span id="lbl_activo"></span>
+                </label>
+            </div>*@
+                    </div>
+                </div>
+        </div>
+        <div class="col s12 l6 ">
+            <div class="card-panel">
+                <h5>Traducciones</h5>
+                <div class="row">
+                    @foreach (var item in Model.TSOLTs)
+                    {
+                        <div class=" input-field col s12">
+                            @Html.EditorFor(modelItem => item.TXT50, null, "txval", new { htmlAttributes = new { @id = item.SPRAS_ID, required = true } })
+                            <label for="@("A"+item.SPRAS_ID)">@item.SPRA.DESCRIPCION</label>
+                        </div>
+                    }
+                    @foreach (var item in spras2)
+                    {
+                        <div class=" input-field col s12 pr1">
+                            @Html.Editor("Editor", null, "txval", new { htmlAttributes = new { required=true} })
+                            <label for="Editor">@item.DESCRIPCION</label>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { id = "lblRegresar" })
+</div>
+<script>
+    var elem = document.querySelectorAll('select');
+    var instance = M.FormSelect.init(elem, []);
+    $("input[type='hidden']").each(function (index, element) {
+        $(this).appendTo($(element).parent());
+    });
+    $(document).ready(function () {
+        $('select').select();
+    });
+    fnCommon.formValidation('create');
+</script>

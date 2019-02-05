@@ -1,0 +1,105 @@
+﻿@model TAT001.Entities.TCAMBIO
+@{
+    //ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 834;
+    ViewBag.carpeta_r = 500;
+}
+<script src="~/Scripts/ValidarTCambio.js"></script>
+@if (ViewBag.error != "")
+{
+    <script>
+        $(document).ready(function () {
+        $(document).ready(function () {
+            function errorMessage(msg) {
+                M.toast({ html: msg });
+            }
+
+            var message = '@ViewBag.error';
+
+            if (message != "")
+            {
+                // do drop down loic
+                errorMessage(message);
+            }
+            });
+        });
+
+    </script>
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="">
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button id="btnSubmit " type="submit" value="Create" style="float:right;" class="btn btn-default"></button>
+                </div>
+            </div>
+        </div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="col 12 s12 ">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="input-field col l12">
+                        @Html.DropDownList("FCURR", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.LabelFor(model => model.FCURR, "FCURR", htmlAttributes: new { @class = "control-label col-md-2", @id = "thFcurr" })
+                        @Html.ValidationMessageFor(model => model.FCURR, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="input-field col l12">
+                        @Html.DropDownList("TCURR", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.LabelFor(model => model.TCURR, "TCURR", htmlAttributes: new { @class = "control-label col-md-2", @id = "thTcurr" })
+                        @Html.ValidationMessageFor(model => model.TCURR, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="input-field col l12">
+                        <i class="material-icons prefix">date_range</i>
+                        @Html.EditorFor(model => model.GDATU, new { htmlAttributes = new { @id = "fechac_vig", @class = "form-control datepicker", @onkeyup = "borrar(this);", @type = "text" } })
+                        @Html.LabelFor(model => model.GDATU, "Fecha", htmlAttributes: new { @for = "fechac_vig", @class = "control-label col-md-2", @id = "thGdatu" })
+                        @*@Html.ValidationMessageFor(model => model.GDATU, "", new { @class = "text-danger" })*@
+                    </div>
+                    <script>
+                        var elemth = document.querySelector('#fechac_vig');
+                        var optionsth = { //format: 'dd - mm - yy'
+                            //format: 'yyyy-mm-dd',
+                            format: 'dd/mm/yyyy',
+                            i18n: {
+                                clear: 'Limpiar',
+                                today: 'Hoy',
+                                done: 'Seleccionar',
+                                previousMonth: '‹',
+                                nextMonth: '›',
+                                months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                                monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                                weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                                weekdays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                                weekdaysAbbrev: ['D', 'L', 'M', 'X', 'J', 'V', 'S']
+                            }
+                        };
+                        var instanceth = M.Datepicker.init(elemth, optionsth);
+                        function borrar(field) {
+                            field.value = "";
+                        }
+
+                    </script>
+                    <div class="input-field col l12">
+                        @Html.LabelFor(model => model.UKURS, htmlAttributes: new { @id = "thUkurss", @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.UKURS, new { htmlAttributes = new { @id = "txtukurss", @for = "thUkurss" } })
+                        @Html.ValidationMessageFor(model => model.UKURS, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var elem = document.querySelectorAll('select');
+            var instance = M.FormSelect.init(elem, []);
+            var d = new Date();
+            document.getElementById('fechac_vig').value = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+        </script>
+
+    </div>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { id = "lblRegresar" })
+</div>

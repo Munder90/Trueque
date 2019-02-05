@@ -1,0 +1,317 @@
+﻿@model TAT001.Entities.DOCUMENTO
+@{ 
+    if (ViewBag.x_ligada == null) { ViewBag.x_ligada = false; }
+    bool _ligada = ViewBag.x_ligada;//LEJ 23.07.2018
+}
+<div id="Distribucion_cont">
+    <div class="row">
+        <div class="col s12 m6 l6">
+            <div class="card-panel">
+                <input type="text" id="catmat" name="catmat" value="@ViewBag.CATMAT" hidden />
+                <h5 id="lbl_tipodis">Distribución</h5>
+                <div class="row" style="margin-bottom:0">
+                    <div class="col s12">
+                        <label>
+                            @if (Model.DOCUMENTO_REF == null)
+                            {
+                                if (_ligada == true)//LEJ 23.07.2018
+                                {
+                                    <input checked type="checkbox" name="chk_ligada" id="chk_ligada" onchange="cambiaLigada(this);" />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" name="chk_ligada" id="chk_ligada" onchange="cambiaLigada(this);" />
+                                }
+                            }
+                            else
+                            {
+                                if (_ligada == true)//LEJ 23.07.2018
+                                {
+                                    <input checked type="checkbox" name="chk_ligada" id="chk_ligada" onchange="cambiaLigada(this);" disabled="disabled" />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" name="chk_ligada" id="chk_ligada" onchange="cambiaLigada(this);" disabled="disabled" />
+                                }
+                            }
+                            <span id="span_ligada">Solicitud ligada a facturación </span>
+                        </label>
+                        <script>
+                            var elem = document.getElementById("span_ligada");
+                            if (elem != undefined) {
+                                var wa = "Se calcula al cierre del periodo.";
+                                var options = {
+                                    html: wa,
+                                    position: "right"
+                                };
+                                var instance = M.Tooltip.init(elem, options);
+                            }
+                        </script>
+                    </div>
+                    @*<input type="button" id="matcat" value="Get materiales cat" />*@
+                    <input type="hidden" id="select_negi" name="select_negi" value="@ViewBag.SEL_NEG" />
+                    <input type="hidden" id="select_disi" name="select_disi" value="@ViewBag.SEL_DIS" />
+
+                    <div class="input-field col s6">
+                        <select id="select_neg" name="select_neg" onchange="selectDis(this.value)" disabled>
+                            <option value="M">Monto</option>
+                            <option value="P">Porcentaje</option>
+                        </select>
+                        <label id="lbl_tiponeg">Tipo de negociación</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select id="select_dis" name="select_dis" onchange="selectMonto(this.value,'X')">
+                            <option value="M">Material</option>
+                            <option value="C">Categoría</option>
+                        </select>
+                        <label id="lbl_tipodis">Distribución</label>
+                    </div>
+                    @if (ViewBag.relacionadan != "" & ViewBag.reversan != "X" & Model.DOCUMENTO_REF == null)
+                    {
+                        <div id="div_categoria" class="form-group col s6 div_categoria" style="display:none">
+                            @Html.LabelFor(model => model.TSOL_ID, "Categoría", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("CATEGORIA_ID", null, htmlAttributes: new { @id = "select_categoria", @class = "form-control" })
+                            </div>
+                        </div>
+                    }
+                        @if (Model.DOCUMENTO_REF != null)
+                        {
+                            <script>
+                                $("#select_neg").prop("disabled", "disabled");
+                                $("#select_dis").prop("disabled", "disabled");
+                                //$("#select_dis").change();
+
+                                var elem = document.getElementById('select_neg');
+                                var instance = M.FormSelect.init(elem, []);
+                                elem = document.getElementById('select_dis');
+                                instance = M.FormSelect.init(elem, []);
+                            </script>
+                        }
+                    </div>
+            </div>
+        </div>
+        <div id="div_montobase" class="col s12 m6 l6" style="display:none">
+            <div class="card-panel">
+                <h5 id="head_montob">Monto Base</h5>
+                <div class="row" style="margin-bottom:0">
+                    <div class="input-field col s6">
+                        <input value="@ViewBag.MONTO_DIS" id="monto_dis" type="text" class=" @ViewBag.reversa" />
+                        <label for="monto_dis" id="monto_dis">Monto</label>
+                    </div>
+                    <div class="input-field col s6">
+                        @*<div class="form-group">*@
+                        @*<div class="col-md-10">*@
+                        <input type="text" id="moneda_dis" name="monedadis" value="@ViewBag.moneda_dis" disabled="disabled" hidden /> @*//B20180625 MGC 2018.06.28*@
+                        @if (Model.DOCUMENTO_REF == null)
+                        {
+                            @Html.DropDownList("MONEDA", null, htmlAttributes: new { @id = "monedadis_id", @class = "form-control" })
+                        }
+                        else
+                        {
+                            @Html.DropDownList("MONEDA", null, htmlAttributes: new { @id = "monedadis_id", @class = "form-control", @disabled = "disabled" })
+                        }
+                        @Html.LabelFor(model => model.MONEDA_ID, "Moneda", htmlAttributes: new { @for = "monedadis_id" })
+                        @*</div>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="div_apoyobase" class="col s12 m6 l6" style="display:none">
+            <div class="card-panel">
+                <h5 id="head_baseaplicar">Base para aplicar %</h5>
+                <div class="row" style="margin-bottom:0">
+                    <div class="input-field col s6">
+                        <input value="@ViewBag.BMONTO_APOYO" id="bmonto_apoyo" type="text" class="" name="bmonto_apoyo" />
+                        <label for="bmonto_apoyo" id="thead_disporc">% Apoyo</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s12">
+            <div class="card-panel">
+                <h5 id="head_mecnegociacion">Mecánica de Negociación</h5>
+                <div class="row" style="margin-bottom:0;overflow-x:auto;">
+                    @*@if (ViewBag.relacionadan == "")*@
+                    @if (ViewBag.relacionadan != "" & ViewBag.reversan != "X" & (Model.DOCUMENTO_REF == null | Model.TSOL.ADICIONA))
+                    {
+                        <input type="hidden" id="txt_addrowt" name="txt_addrowt" value="@ViewBag.addrowt" hidden /> @*//Add RSG 2018.11.05*@
+                        <div class="file-field input-field" id="cargar_excel" style="display:none">
+                            <div class="btn">
+                                <span id="span_fileload">Examinar</span>
+                                <input id="file_dis" type="file">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path " type="text">
+                            </div>
+                        </div>
+                        <div id="div_btns_row" style="display:none">
+                            <a class="btn" id="addRowB"><i class="material-icons left">add</i><span id="addRow">Registros</span></a>  @*B20180801 MGC Textos*@
+                            <a class="btn" id="delRowB"><i class="material-icons left">clear</i><span id="delRow">Registro</span></a>  @*B20180801 MGC Textos*@
+                        </div>
+                    }
+                    <div id="div_picker"></div>
+                    <table id="table_dis" class="display" cellspacing="0" width="100%" style="display:none">
+                        <thead>
+                            <tr>
+                                <th></th> @*ID*@
+                                <th></th> @*Detalle*@
+                                <th></th> @*Seleccionar*@
+                                <th>Vigencia De</th>
+                                <th>Vigencia Al</th>
+                                <th>Material</th>
+                                <th>Categoría</th>
+                                <th>Descripción</th>
+                                <th>Costo unitario</th>
+                                <th>% Apoyo</th>
+                                <th>Apoyo por pieza</th>
+                                <th>Costo con apoyo</th>
+                                <th>Precio sugerido</th>
+                                <th id="lbl_volumen">Volumen estimado</th>
+                                @*<th id="lbl_apoyoee">Estimado apoyo</th>*@<!--RSG 05.06.2018-->
+                                <th id="lbl_apoyo">Estimado apoyo</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot id="tfoot_dis" style="">
+                            @*//display:none*@
+                            <tr>
+                                @*<th colspan="14" style="text-align:right">Total:</th>*@<!--RSG 05.06.2018-->
+                                <th colspan="14" style="text-align:right">Total:</th>
+                                <th id="total_dis"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            @*Tabla para ser enviada siempre está oculta*@
+            <table id="table_dish" class="display" cellspacing="0" width="100%" style="display:none">
+                @*
+                    <thead>
+                        <tr>
+                            <th>Pos</th>
+                            <th>Vigencia De</th>
+                            <th>Vigencia Al</th>
+                            <th>Material</th>
+                            <th>Categoría</th>
+                            <th>Categoría ID</th>
+                            <th>Costo unitario</th>
+                            <th>% Apoyo</th>
+                            <th>Apoyo por pieza</th>
+                            <th>Precio sugerido</th>
+                            <th>Volumen estimado</th>
+                            <th>Volumen real</th>
+                            <th>Apoyo estimado</th>
+                            <th>Apoyo real</th>
+                        </tr>
+                    </thead>*@
+                <tbody>
+                    @if (Model.DOCUMENTOP != null)
+                    {
+                        for (var i = 0; i < Model.DOCUMENTOP.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.EditorFor(m => m.DOCUMENTOP[i].POS)
+                                </td>
+                                <td>
+                                    @Html.EditorFor(m => m.DOCUMENTOP[i].VIGENCIA_DE)
+                                </td>
+                                <td>
+                                    @Html.EditorFor(m => m.DOCUMENTOP[i].VIGENCIA_AL)
+                                </td>
+                                <td>
+                                    @Html.EditorFor(m => m.DOCUMENTOP[i].MATNR)
+                                </td>
+                                <td>
+                                    @Html.EditorFor(m => m.DOCUMENTOP[i].MATKL)
+                                </td>
+                                <td>
+                                    @Html.EditorFor(m => m.DOCUMENTOP[i].MATKL_ID)
+                                </td>
+                                <td>
+                                    @Html.EditorFor(m => m.DOCUMENTOP[i].MONTO)
+                                </td>
+                                <td>
+                                    @Html.EditorFor(m => m.DOCUMENTOP[i].PORC_APOYO)
+                                </td>
+                                <td>
+                                    @Html.EditorFor(m => m.DOCUMENTOP[i].MONTO_APOYO)
+                                </td>
+                                <td>
+                                    @Html.EditorFor(m => m.DOCUMENTOP[i].PRECIO_SUG)
+                                </td>
+                                <td>
+                                    @Html.EditorFor(m => m.DOCUMENTOP[i].VOLUMEN_EST)
+                                </td>
+                                <td>
+                                    @Html.EditorFor(m => m.DOCUMENTOP[i].VOLUMEN_REAL)
+                                </td>
+                                <td>
+                                    @Html.EditorFor(m => m.DOCUMENTOP[i].APOYO_EST)
+                                </td>
+                                <td>
+                                    @Html.EditorFor(m => m.DOCUMENTOP[i].APOYO_REAL)
+                                </td>
+                                <td>
+                                    @Html.EditorFor(m => m.DOCUMENTOP[i].ORIGINAL)
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            @*Tabla para ser enviada siempre está oculta*@
+        </div>
+    </div>
+</div>
+
+
+                        @if (Model.DOCUMENTO_REF == null)
+                        {
+                            <script>
+                                function cambiaLigada(campo) {
+                                    if (campo.checked) {
+                                        $("#select_neg").val("P");
+                                        $("#select_negi").val("P");
+                                        $("#select_neg").prop("disabled", "disabled");
+                                        $("#select_neg").change();
+                                        $("#div_objq").removeClass("hide");
+                                        $("#txt_ligada").val("X");
+                                    } else {
+                                        $("#select_neg").prop("disabled", false);
+                                        $("#select_neg").change();
+                                        $("#div_objq").addClass("hide");
+                                        $("#txt_ligada").val("");
+                                        cambiaCheckRec(false);
+                                    }
+
+                                    var elem = document.getElementById('select_neg');
+                                    var instance = M.FormSelect.init(elem, []);
+                                }
+                                var elem = document.getElementById('select_neg');
+                                var instance = M.FormSelect.init(elem, []);
+                                elem = document.getElementById('select_dis');
+                                instance = M.FormSelect.init(elem, []);
+                                cambiaCheckRec(true);
+                            </script>
+                        }
+                        else
+                        {
+                            <script>
+                                function cambiaLigada(campo) {
+                                    if (campo.checked) {
+                                        $("#select_neg").val("P");
+                                        $("#select_dis").val("C");
+                                        $("#select_negi").val("P");
+                                        $("#select_disi").val("C");
+                                        $("#div_objq").removeClass("hide");
+                                        $("#txt_ligada").val("X");
+                                    } else {
+                                        $("#div_objq").addClass("hide");
+                                        $("#txt_ligada").val("");
+                                    }
+                                }
+                            </script>
+                        }

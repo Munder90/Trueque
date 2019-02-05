@@ -1,0 +1,93 @@
+﻿@model IEnumerable<TAT001.Entities.DOCUMENTO>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <style>
+
+        .texto {
+            text-align: left;
+        }
+
+        .th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            color: black;
+        }
+
+        .table {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .borde {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #table1 tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #table1 tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div style="height:48px; background-color:#d11d53; width:100%; z-index:1000;top:0px;left:0px; position:fixed;">
+    </div>
+    <div style="margin-top:20px;">
+        <br />
+        <p>
+            Estimado/a @Model.FirstOrDefault().PAYER_NOMBRE,<br />
+            A continuación compartimos con usted listado de todas las negociaciones de descuentos vigentes y comprometidas con usted por parte de Kellogg’s en el periodo comprendido del @ViewBag.first al @ViewBag.last
+            La presente conciliación se comparte con fines de validación y aprobación de su parte. En caso de detectar alguna omisión o desviación, le solicitamos que nos envíe sus comentarios en un plazo no mayor de 3 días hábiles contados a partir de la fecha de recepción del presente correo. En el supuesto de no recibir ningún comentario, se entenderá que usted está de acuerdo con la información señalada.
+        </p>
+    </div>
+    <div style="margin-top:90px; width:75%; margin-left:20px;">
+        <table style="width:100%;" id="table1" class="table borde">
+            <thead>
+                <tr>
+                    <th class="texto th borde">
+                        @Html.DisplayNameFor(model => model.NUM_DOC)
+                    </th>
+                    <th class="texto th borde">
+                        @Html.DisplayNameFor(model => model.CONCEPTO)
+                    </th>
+                    <th class="texto th borde">
+                        @Html.DisplayNameFor(model => model.TSOL.DESCRIPCION)
+                    </th>
+                    <th class="texto th borde">
+                        @Html.DisplayNameFor(model => model.FECHAC)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="borde">
+                            @item.NUM_DOC
+                        </td>
+                        <td class="borde">
+                            @Html.DisplayFor(modelItem => item.CONCEPTO)
+                        </td>
+                        <td class="borde">
+                            @Html.DisplayFor(modelItem => item.TSOL.DESCRIPCION)
+                        </td>
+                        <td class="borde">
+                            @Html.DisplayFor(modelItem => item.FECHAC)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

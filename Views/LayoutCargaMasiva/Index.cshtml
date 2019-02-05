@@ -1,0 +1,153 @@
+﻿@using TAT001.Entities;
+@model TAT001.Models.LayoutCargaMasivaViewModels
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 550;
+    ViewBag.carpeta_r = 500;
+}
+<style>
+    .text-left th {
+        text-align: left !important;
+    }
+
+    .text-left td {
+        text-align: left !important;
+    }
+
+    .dataTables_length {
+        display: none;
+    }
+
+    .dataTables_filter {
+        display: none;
+    }
+
+    .dataTables_scrollHeadInner, .mdl-data-table {
+        width: 100%;
+    }
+
+    .modal {
+        background-color: #B90C46;
+        height: 150px;
+        width: 250px;
+    }
+</style>
+<link href="~/Content/dataTable.css" rel="stylesheet" />
+<link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+<div class="row">
+    <div class="col s12">
+        <div class="card-panel">
+            <div class="row">
+                <div class="col s12 right-align">
+                    <a class="btn-small" id="btn_create" href="@Url.Action("Create")"></a>
+                </div>
+                <div class="row" style="margin-bottom:0;">
+                    <div class="input-field col s3 m3 l3">
+                        <select id="cmbPagLayouts">
+                            <option value="10" selected>10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <label class="btn_length"></label>
+                    </div>
+                    <div class="input-field col s3 m3 l3 offset-l6 offset-m6">
+                        <input type="text" class="global_filter" id="gfilterLayouts">
+                        <label for="gfilterLayouts" class="lbl_search"></label>
+                    </div>
+                </div>
+                <div style="width:100%;">
+                    <table class="table mdl-data-table striped" id="tableLayouts" style="width:100%; overflow-x: scroll;">
+                        <thead>
+                            <tr class="text-left">
+                                <th id="lbl_sociedad"></th>
+                                <th id="lbl_pais"></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.layouts)
+                            {
+                                string spras_id = ViewBag.spras_id;
+
+                            <tr class="text-left">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SOCIEDAD.BUKRS)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PAI.LANDX)
+                                </td>
+                                <td style="text-align: right !important;">
+                                    <a href="@Url.Action("Edit", "LayoutCargaMasiva", new { Id = item.ID})">
+                                        <i class='material-icons green-text'>edit</i>
+                                    </a>
+                                    <a href="@Url.Action("Details", "LayoutCargaMasiva", new { Id = item.ID})">
+                                        <i class='material-icons blue-text'>search</i>
+                                    </a>
+
+                                    <a id="@item.ID" href="#" onclick="descargarArchivo(this)"><i class='material-icons green-text'>archive</i></a>
+                                    @* <a class="modal-trigger" href="#modal1"><i class='material-icons red-text'>delete</i></a>
+            <a id="actionDelete_@item.ID" href="@Url.Action("Delete", "LayoutCargaMasiva", new { layout_id = item.ID})"></a>
+            <!-- Modal Delete -->
+            <div id="modal1" class="modal">
+                <div class="modal-content">
+                    <p style="color: white;font-size: 16px;" class="lbl_eliminar"></p>
+                </div>
+                <div class="modal-footer">
+                    <a class="modal-close waves-effect  btn-flat"><label class="lbl_eliminarNo"></label></a>
+                    <a onclick="eliminarLayout('actionDelete_@item.ID')" class="modal-close waves-effect  btn-flat"><label class="lbl_eliminarSi"></label></a>
+                </div>
+            </div>*@
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+<script>
+     //---- Inicializador de componentes Materialize----
+    fnCommon.materializeInit('select');
+    fnCommon.materializeInit('modal');
+
+    function eliminarLayout(idLink) {
+        $('#' + idLink).get(0).click().click();
+    }
+
+    function dismiss(classe) {
+        var toastElement = document.querySelectorAll('.' + classe);
+        for (var i = 0; i < toastElement.length; i++) {
+            var toastInstance = M.Toast.getInstance(toastElement[i]);
+            toastInstance.dismiss();
+        }
+    }
+    //----- Configuracion de Tablas-----
+    $(document).ready(function () {
+        var root = "@Url.Content("~")",
+        spras_id = "@ViewBag.spras_id",
+        urlLanguage = root + "/Scripts/lang/" + spras_id + ".json";
+        fnCommon.configurarTable('tableLayouts', '50vh', '50vh', urlLanguage, 'cmbPagLayouts','gfilterLayouts',[0,1]);
+    });
+
+    var root = "@Url.Content("~")";
+
+    function descargarArchivo(me) {
+        var form = document.createElement("form"),
+            Id = document.createElement("input");
+        form.method = "POST";
+        form.action = root + 'LayoutCargaMasiva/Descargar';
+        Id.value = me.id * 1;
+        Id.name = "idLayout";
+        form.appendChild(Id);
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>

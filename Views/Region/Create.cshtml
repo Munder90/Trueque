@@ -1,0 +1,55 @@
+﻿@model TAT001.Entities.REGION
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 951;
+    ViewBag.carpeta_r = 500;
+}
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+<div class="row right col m6">
+        <div class="col-md-offset-10 col-md-10">
+            <button type="submit" id="btn_guardar" class="btn btn-default" />
+        </div>
+</div>
+<div class="row">
+    <div class="col m6">
+        <div class="card-panel">
+            @if(TempData["MensajeExiste"]!=null)
+            {
+                <p id="MensajeExiste" class="red-text darken-2">@TempData["MensajeExiste"]</p>
+            }
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.REGION1, htmlAttributes: new { @class = "control-label col-md-2",id="lblRegion" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.REGION1, new { htmlAttributes = new { @class = "form-control",@maxlength="6", required=true, style = "text-transform:uppercase" } })
+                    @Html.ValidationMessageFor(model => model.REGION1, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SOCIEDAD, htmlAttributes: new { @class = "control-label col-md-2",id="lblCoCode" })
+                <div class="col-md-10">
+                    @Html.DropDownList("SOCIEDAD", null, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SOCIEDAD, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index",null, new { id="btn_regresar"})
+</div>
+<script>
+    $("input[type='hidden']").each(function (index, element) {
+        $(this).appendTo($(element).parent());
+    });
+    $(document).ready(function () {
+        $('select').formSelect();
+    });
+</script>

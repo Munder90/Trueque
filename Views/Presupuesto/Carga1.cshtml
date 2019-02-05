@@ -1,0 +1,766 @@
+﻿@model TAT001.Models.DatosPresupuesto
+@{
+    /**/
+
+    //ViewBag.Title = "Carga";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 302;
+    ViewBag.carpeta_r = 300;
+}
+
+@using (Html.BeginForm("Carga", "Presupuesto", FormMethod.Post, new { enctype = "multipart/form-data", id = "formulario" }))
+{
+    <script type="text/javascript" src="~/Scripts/jquery-3.0.0.min.js"></script>
+    @*
+        <script type="text/javascript" src="~/Scripts/materialize.js"></script>*@
+    <script type="text/javascript" src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/dataTables.material.min.js"></script>
+    <link href="~/Content/dataTable.css" rel="stylesheet" />
+    <link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#footer').on('click', '#acept', function () {
+                acept = true;
+                hilo = false;
+                $('#Button2 ').trigger('click');
+            });
+            $('#footer').on('click', '#cance', function () {
+                hilo = false;
+            });
+            //$('#chksociedad').on('click', function () {
+            //    if ($(this).is(':checked')) {
+            //        // Hacer algo si el checkbox ha sido seleccionado
+            //        $('[name="sociedadcpt"] option').each(function () {
+            //            $(this).attr('selected', '');
+            //        });
+            //    } else {
+            //        // Hacer algo si el checkbox ha sido deseleccionado
+            //        $('[name="sociedadcpt"] option').each(function () {
+            //            $(this).removeAttr("selected");
+            //        });
+            //    }
+            //    var elem = document.getElementsByName("sociedadcpt")
+            //    instance = M.FormSelect.init(elem, []);
+            //});
+            //$('#chkperiodo').on('click', function () {
+            //    if ($(this).is(':checked')) {
+            //        // Hacer algo si el checkbox ha sido seleccionado
+            //        $('[name="periodocpt"] option').each(function () {
+            //            $(this).attr('selected', '');
+            //        });
+            //    } else {
+            //        // Hacer algo si el checkbox ha sido deseleccionado
+            //        $('[name="periodocpt"] option').each(function () {
+            //            $(this).removeAttr("selected");
+            //        });
+            //    }
+            //    var elem = document.getElementsByName("periodocpt")
+            //    instance = M.FormSelect.init(elem, []);
+            //});
+        });
+
+        function filterGlobal2() {
+            $('#table2').DataTable().search(
+                $('#global_filter2').val()).draw();
+        }
+        function filterGlobal() {
+            $('#table').DataTable().search(
+                $('#global_filter').val()).draw();
+        }
+    </script>
+
+
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Confirmación</h4>
+            <p id="mensaje"></p>
+        </div>
+        <div class="modal-footer" id="footer">
+            <!-- aqui se genera codigo dinamico de los botones para el dialoogo -->
+        </div>
+    </div>
+    <style>
+        .dataTables_length {
+            display: none;
+        }
+
+        .dataTables_filter {
+            display: none;
+        }
+
+        .dataTables_scrollHeadInner, .mdl-data-table {
+            width: 100%;
+        }
+    </style>
+    <button id="dialogo" data-target="modal1" class="btn modal-trigger" style="display:none;"></button>
+
+    <div class=" row right-align">
+        <input id="Button2" class="btn-small blue-grey" type="submit" value="Cargar" name="enviar" />
+        <hr />
+    </div>
+
+    string[] defaul = new string[1];
+    System.Globalization.TextInfo myTI = new System.Globalization.CultureInfo("en-US", false).TextInfo;
+    System.Globalization.DateTimeFormatInfo formatoFecha = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat;
+    DateTime anio = DateTime.Today; int j = 0;
+    <div class="row">
+        <div class="center-block">
+            <div class="col  s12">
+                <div class="card-panel">
+                    <h5>CPT</h5>
+                    <div class="row">
+                        @*<label class="col s4 right-align">
+                                <input id="chksociedad" type="checkbox" checked="checked" />
+                                <span>Seleccionar todas las sociedades</span>
+                            </label>
+                            <label class="col s5 offset-s3 right-align">
+                                <input id="chkperiodo" type="checkbox" checked="checked" />
+                                <span>Seleccionar todos los periodos</span>
+                            </label>*@
+                        <div class="input-field col s4 f" name="sociedad">
+                            <select multiple name="sociedadcpt" id="selec">
+                                @try
+                                {
+                                    defaul = Session["Sociedadcpt"] as string[];
+                                }
+                                catch (Exception)
+                                { }
+                                @try
+                                {
+                                    j = 0;
+                                    if (defaul == null)
+                                    {
+                                        defaul = new string[1];
+                                    }
+                                    for (int i = 0; i < Model.sociedad.Count; i++)
+                                    {
+                                        if (ViewBag.sociedadcpt != null)
+                                        {
+                                            if (defaul[j] == Model.sociedad[i].REGION)
+                                            {
+                                                <option value="@Model.sociedad[i].REGION" selected="selected">@Model.sociedad[i].BUKRS</option>
+                                                if (j < (defaul.Length - 1))
+                                                {
+                                                    j++;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="@Model.sociedad[i].REGION">@Model.sociedad[i].BUKRS</option>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <option value="@Model.sociedad[i].REGION">@Model.sociedad[i].BUKRS</option>
+                                        }
+                                    }
+                                }
+                                catch (Exception)
+                                {
+                                    <option value="" disabled></option>
+                                }
+                            </select>
+                            <label>Co. Code</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <select name="aniocpt">
+                                @if (Session["Aniocpt"] != null)
+                                {
+                                    j = 0;
+                                    string[] arranio = Session["Aniocpt"] as string[];
+                                    for (int i = 0; i < 2; i++)
+                                    {
+                                        if (anio.Year.ToString() == arranio[j])
+                                        {
+                                            <option value="@anio.Year">@anio.Year</option>
+                                        }
+                                        anio = anio.AddYears(1);
+                                        if (j < (arranio.Length - 1))
+                                        {
+                                            j++;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    for (int i = 0; i < 2; i++)
+                                    {
+                                        if (i == 0)
+                                        {
+                                            <option value="@anio.Year" selected>@anio.Year</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@anio.Year">@anio.Year</option>
+                                        }
+                                        anio = anio.AddYears(1);
+                                    }
+                                }
+                            </select>
+                            <label>Año</label>
+                        </div>
+                        @if (Session["Periodocpt"] != null)
+                        {
+                            string[] periodo = Session["Periodocpt"] as string[];
+                            j = 0;
+                            <div class="input-field col s5 f" name="periodo">
+                                <select multiple name="periodocpt">
+                                    @if (periodo == null)
+                                    {
+                                        <option value="" disabled selected>Seleccione periodos</option>
+                                    }
+
+                                    @for (int i = 1; i < 13; i++)
+                                    {
+                                        if (i.ToString() == periodo[j])
+                                        {
+                                            <option selected value="@i">@myTI.ToTitleCase(formatoFecha.GetMonthName(i))</option>
+                                            if (j < (periodo.Length - 1))
+                                            {
+                                                j++;
+                                            }
+                                        }
+                                    }
+                                </select>
+                                <label>Periodo</label>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="input-field col s5 f" name="periodo">
+                                <select multiple name="periodocpt">
+                                    <option value="1">Enero</option>
+                                    <option value="2">Febrero</option>
+                                    <option value="3">Marzo</option>
+                                    <option value="4">Abril</option>
+                                    <option value="5">Mayo</option>
+                                    <option value="6">Junio</option>
+                                    <option value="7">Julio</option>
+                                    <option value="8">Agosto</option>
+                                    <option value="9">Septiembre</option>
+                                    <option value="10">Octubre</option>
+                                    <option value="11">Noviembre</option>
+                                    <option value="12">Diciembre</option>
+                                </select>
+                                <label>Periodo</label>
+                            </div>
+                        }
+                        <div class="col s12">
+                            <div class="file-field input-field">
+                                <div class="btn blue-grey">
+                                    <span>Seleccionar archivo CPT</span>
+                                    <input id="CPT" type="file" name="fileCPT" accept=".txt">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col  s12">
+                <div class="card-panel">
+                    <h5>SAP</h5>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <select name="sociedadsap" id="selec">
+                                @try
+                                {
+                                    defaul = Session["Sociedadsap"] as string[];
+                                }
+                                catch (Exception)
+                                {
+                                    <option value="" disabled selected></option>
+                                }
+                                @try
+                                {
+                                    j = 0;
+                                    if (defaul == null)
+                                    {
+                                        defaul = new string[1];
+                                        @*<option value="" disabled selected></option>*@
+                                    }
+                                    for (int i = 0; i < Model.sociedad.Count; i++)
+                                    {
+                                        if (defaul[0] == "")
+                                        {
+                                            if (i == 0)
+                                            {
+                                                <option selected value="@Model.sociedad[i].BUKRS">@Model.sociedad[i].BUKRS</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@Model.sociedad[i].BUKRS">@Model.sociedad[i].BUKRS</option>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (defaul[j] == Model.sociedad[i].BUKRS)
+                                            {
+                                                <option value="@Model.sociedad[i].BUKRS" selected="selected">@Model.sociedad[i].BUKRS</option>
+                                                if (j < (defaul.Length - 1))
+                                                {
+                                                    j++;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="@Model.sociedad[i].BUKRS">@Model.sociedad[i].BUKRS</option>
+                                            }
+                                        }
+
+                                    }
+                                }
+                                catch (Exception)
+                                {
+                                    <option value="" disabled></option>
+                                }
+                            </select>
+                            <label>Co. Code</label>
+                        </div>
+
+                        <div class="input-field col s3">
+                            <select name="aniosap">
+                                @if (Session["Aniosap"] != null)
+                                {
+                                    anio = DateTime.Today;
+                                    j = 0;
+                                    string[] arranio = Session["Aniosap"] as string[];
+                                    for (int i = 0; i < 2; i++)
+                                    {
+                                        <option value="@anio.Year">@anio.Year</option>
+                                        anio = anio.AddYears(1);
+                                        if (j < (arranio.Length - 1))
+                                        {
+                                            j++;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    anio = DateTime.Today;
+                                    <option value="@anio.Year">@anio.Year</option>
+                                    <option value="@anio.AddYears(1).Year">@anio.AddYears(1).Year</option>
+                                }
+                            </select>
+                            <label>Año</label>
+                        </div>
+                        @if (Session["Periodosap"] != null)
+                        {
+                            string[] periodo = Session["Periodosap"] as string[];
+                            j = 0;
+                            <div class="input-field col s5">
+                                <select name="periodosap">
+                                    @if (periodo == null)
+                                    {
+                                        <option value="" disabled selected></option>
+                                    }
+                                    @for (int i = 1; i < 13; i++)
+                                    {
+                                        if (i.ToString() == periodo[j])
+                                        {
+                                            <option selected value="@i">@myTI.ToTitleCase(formatoFecha.GetMonthName(i))</option>
+                                            if (j < (periodo.Length - 1))
+                                            {
+                                                j++;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <option value="@i">@myTI.ToTitleCase(formatoFecha.GetMonthName(i))</option>
+                                        }
+                                    }
+                                </select>
+                                <label>Periodo</label>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="input-field col s5">
+                                <select name="periodosap">
+                                    <option value="1" selected>Enero</option>
+                                    <option value="2">Febrero</option>
+                                    <option value="3">Marzo</option>
+                                    <option value="4">Abril</option>
+                                    <option value="5">Mayo</option>
+                                    <option value="6">Junio</option>
+                                    <option value="7">Julio</option>
+                                    <option value="8">Agosto</option>
+                                    <option value="9">Septiembre</option>
+                                    <option value="10">Octubre</option>
+                                    <option value="11">Noviembre</option>
+                                    <option value="12">Diciembre</option>
+                                </select>
+                                <label>Periodo</label>
+                            </div>
+                        }
+                        <div class="col s12">
+                            <div class="file-field input-field">
+                                <div class="btn btn blue-grey">
+                                    <span>Seleccionar archivo SAP</span>
+                                    <input id="SAP" type="file" name="fileSAP" accept=".csv">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@try
+{
+    if (Model.presupuestoCPT.Count > 0)
+    {
+        <script>
+            M.toast({ html: 'Carga preliminar efectuada, revisar y guardar', classes: 'green' });
+        </script>
+        <div class="row">
+            @using (Html.BeginForm())
+            {
+                <div class="col s12 right-align">
+                    <input id="Button1" class="btn-small blue-grey" type="submit" value="Guardar" name="guardar" onclick="document.getElementById('loader').style.display ='initial'" />
+                    @*if (Model != null)
+                        {
+                        for (var i = 0; i < Model.Count; i++)
+                        {
+                        @Html.HiddenFor(m => Model[i])
+                        }
+                        }*@
+                    <input id="Button1" class="btn-small blue-grey" type="submit" value="Cancelar" name="cancelar" />
+                </div>
+            }
+            <div class="row" style="margin-bottom:0;">
+                <div class="input-field col s3 m3 l3">
+                    <select id="selecc">
+                        <option value="10" selected>10</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                        <option value="30">30</option>
+                    </select>
+                    <label>Ver por página</label>
+                </div>
+                <div class="input-field col s3 m3 l3 offset-l6 offset-m6">
+                    <input type="text" class="global_filter" id="global_filter">
+                    <label for="global_filter">Buscar</label>
+                </div>
+            </div>
+            <script>
+                var elem = document.querySelector('#selecc');
+                var options = [];
+                var instance = M.FormSelect.init(elem, options);
+            </script>
+            <table id="table" class="table mdl-data-table table-striped">
+                <thead>
+                    <tr>
+                        <th>Año</th>
+                        <th>Mes</th>
+                        @*
+                            <th>Version</th>*@
+                        <th>País</th>
+                        <th>Moneda</th>
+                        <th>Num. Material</th>
+                        <th>Clase</th>
+                        <th>NETLB</th>
+                        <th>TOTCS</th>
+                        <th>ADVER</th>
+                        <th>DIRLB</th>
+                        <th>OVHDF</th>
+                        <th>OVHDV</th>
+                        <th>PKGMT</th>
+                        <th>RAWMT</th>
+                        <th>CONPR</th>
+                        <th>POP  </th>
+                        <th>DSTRB</th>
+                        <th>GRSLS</th>
+                        <th>CSHDC</th>
+                        <th>FREEG</th>
+                        <th>PMVAR</th>
+                        <th>PURCH</th>
+                        <th>RECUN</th>
+                        <th>RSRDV</th>
+                    </tr>
+                </thead>
+
+                @for (int i = 0; i < 50; i++)
+                {
+                    if (i <= Model.presupuestoCPT.Count)
+                    {
+                        <tr>
+                            <td>@Model.presupuestoCPT[i].ANIO</td>
+                            <td>@Model.presupuestoCPT[i].MES</td>
+                            @*
+                                <td>@Model.presupuestoCPT[i].VERSION</td>*@
+                            <td>@Model.presupuestoCPT[i].PAIS</td>
+                            <td>@Model.presupuestoCPT[i].MONEDA</td>
+                            <td>@Model.presupuestoCPT[i].MATERIAL</td>
+                            <td>@Model.presupuestoCPT[i].BANNER</td>
+                            <td>@Model.presupuestoCPT[i].NETLB</td>
+                            <td>@Model.presupuestoCPT[i].TOTCS</td>
+                            <td>@Model.presupuestoCPT[i].ADVER</td>
+                            <td>@Model.presupuestoCPT[i].DIRLB</td>
+                            <td>@Model.presupuestoCPT[i].OVHDF</td>
+                            <td>@Model.presupuestoCPT[i].OVHDV</td>
+                            <td>@Model.presupuestoCPT[i].PKGMT</td>
+                            <td>@Model.presupuestoCPT[i].RAWMT</td>
+                            <td>@Model.presupuestoCPT[i].CONPR</td>
+                            <td>@Model.presupuestoCPT[i].POP</td>
+                            <td>@Model.presupuestoCPT[i].DSTRB</td>
+                            <td>@Model.presupuestoCPT[i].GRSLS</td>
+                            <td>@Model.presupuestoCPT[i].CSHDC</td>
+                            <td>@Model.presupuestoCPT[i].FREEG</td>
+                            <td>@Model.presupuestoCPT[i].PMVAR</td>
+                            <td>@Model.presupuestoCPT[i].PURCH</td>
+                            <td>@Model.presupuestoCPT[i].RECUN</td>
+                            <td>@Model.presupuestoCPT[i].RSRDV</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        i = Model.presupuestoCPT.Count;
+                    }
+                }
+            </table>
+        </div>
+    }
+}
+catch (Exception)
+{
+}
+@*<div class="center-align"><h5>@ViewBag.MensajeC</h5> </div>*@
+@if (Model.bannerscanal.Count > 0)
+{
+    <div>
+        @using (Html.BeginForm("Descargar", "Presupuesto", FormMethod.Post))
+        {
+            <button id="lbl_cargar" name="excel" class="btn-small" type="submit" value="Excel">
+                Generar Excel
+            </button>
+        }
+        <table id="table3" class="table mdl-data-table table-striped">
+            <thead>
+                <tr>
+                    <th>Banners sin asignar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.bannerscanal.Count; i++)
+                {
+                    <tr>
+                        <td>@Model.bannerscanal[i]</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+@try
+{
+    if (Model.presupuestoSAP.Count > 0)
+    {
+        <div class="row">
+            @using (Html.BeginForm())
+            {
+                <div class="col s12 right-align">
+                    <input id="Button1" class="btn-small blue-grey" type="submit" value="Guardar" name="guardar" onclick="document.getElementById('loader').style.display ='initial'" />
+                    @*if (Model != null)
+                        {
+                        for (var i = 0; i < Model.Count; i++)
+                        {
+                        @Html.HiddenFor(m => Model[i])
+                        }
+                        }*@
+                    <input id="Button1" class="btn-small blue-grey" type="submit" value="Cancelar" name="cancelar" />
+                </div>
+            }
+            <div class="row" style="margin-bottom:0;">
+                <div class="input-field col s3 m3 l3">
+                    <select id="selecc2">
+                        <option value="10" selected>10</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                        <option value="30">30</option>
+                    </select>
+                    <label>Ver por página</label>
+                </div>
+                <div id="serch" class="input-field col s3 m3 l3 offset-l6 offset-m6">
+                    <input type="text" class="global_filter" id="global_filter2">
+                    <label for="global_filter">Buscar</label>
+                </div>
+            </div>
+            <script>
+                var elem = document.querySelector('#selecc2');
+                var options = [];
+                var instance = M.FormSelect.init(elem, options);
+            </script>
+            <table id="table2" class="table mdl-data-table table-striped">
+                <thead>
+                    <tr>
+                        <th>Año</th>
+                        <th>Periodo</th>
+                        <th>Record Type</th>
+                        <th>Co. Code</th>
+                        <th>Organización de ventas</th>
+                        <th>Canal de distribución</th>
+                        <th>Sector</th>
+                        <th>Oficina de ventas</th>
+                        <th>Grupo de vendedores</th>
+                        <th>Zona de ventas</th>
+                        <th>Material</th>
+                        <th>Product hierarchy</th>
+                        <th>Customer</th>
+                        <th>Sold To</th>
+                        <th>Banner  </th>
+                        <th>CalcBanner</th>
+                        <th>Player</th>
+                        <th>Posting date</th>
+                        <th>Created by</th>
+                        <th>Reference document</th>
+                        <th>VVX17</th>
+                        <th>CSHDC</th>
+                        <th>RECUN</th>
+                        <th>DSTRB</th>
+                        <th>OTHTA</th>
+                        <th>ADVER</th>
+                        <th>CORPM</th>
+                        <th>POP  </th>
+                        <th>PMVAR</th>
+                        <th>CONPR</th>
+                        <th>RSRDV</th>
+                        <th>SPA  </th>
+                        <th>FREEG</th>
+                    </tr>
+                </thead>
+
+                @for (int i = 0; i < 50; i++)
+                {
+                    if (i < Model.presupuestoSAP.Count)
+                    {
+                        <tr>
+                            <td>@Model.presupuestoSAP[i].ANIO</td>
+                            <td>@Model.presupuestoSAP[i].PERIOD </td>
+                            <td>@Model.presupuestoSAP[i].TYPE</td>
+                            <td>@Model.presupuestoSAP[i].BUKRS</td>
+                            <td>@Model.presupuestoSAP[i].VKORG</td>
+                            <td>@Model.presupuestoSAP[i].VTWEG</td>
+                            <td>@Model.presupuestoSAP[i].SPART</td>
+                            <td>@Model.presupuestoSAP[i].VKBUR</td>
+                            <td>@Model.presupuestoSAP[i].VKGRP</td>
+                            <td>@Model.presupuestoSAP[i].BZIRK</td>
+                            <td>@Model.presupuestoSAP[i].MATNR</td>
+                            <td>@Model.presupuestoSAP[i].PRDHA</td>
+                            <td>@Model.presupuestoSAP[i].KUNNR</td>
+                            <td>@Model.presupuestoSAP[i].KUNNR_P</td>
+                            <td>@Model.presupuestoSAP[i].BANNER</td>
+                            <td>@Model.presupuestoSAP[i].BANNER_CALC</td>
+                            <td>@Model.presupuestoSAP[i].KUNNR_PAY</td>
+                            <td>@Model.presupuestoSAP[i].FECHAP</td>
+                            <td>@Model.presupuestoSAP[i].UNAME</td>
+                            <td>@Model.presupuestoSAP[i].XBLNR</td>
+                            @*<td>@Model.presupuestoSAP[i].GRSLS</td>
+                                <td>@Model.presupuestoSAP[i].RECSL</td>
+                                <td>@Model.presupuestoSAP[i].INDLB</td>
+                                <td>@Model.presupuestoSAP[i].FRGHT</td>
+                                <td>@Model.presupuestoSAP[i].PURCH</td>
+                                <td>@Model.presupuestoSAP[i].RAWMT</td>
+                                <td>@Model.presupuestoSAP[i].PKGMT</td>
+                                <td>@Model.presupuestoSAP[i].OVHDV</td>
+                                <td>@Model.presupuestoSAP[i].OVHDF</td>
+                                <td>@Model.presupuestoSAP[i].DIRLB</td>*@
+                            <td>@Model.presupuestoSAP[i].VVX17</td>
+                            <td>@Model.presupuestoSAP[i].CSHDC</td>
+                            <td>@Model.presupuestoSAP[i].RECUN</td>
+                            <td>@Model.presupuestoSAP[i].DSTRB</td>
+                            <td>@Model.presupuestoSAP[i].OTHTA</td>
+                            <td>@Model.presupuestoSAP[i].ADVER</td>
+                            <td>@Model.presupuestoSAP[i].CORPM</td>
+                            <td>@Model.presupuestoSAP[i].POP  </td>
+                            <td>@Model.presupuestoSAP[i].PMVAR</td>
+                            <td>@Model.presupuestoSAP[i].CONPR</td>
+                            <td>@Model.presupuestoSAP[i].RSRDV</td>
+                            <td>@Model.presupuestoSAP[i].SPA  </td>
+                            <td>@Model.presupuestoSAP[i].FREEG</td>
+                            @*<td>@Model.presupuestoSAP[i].PKGDS</td>*@
+                            @*<td>@Model.presupuestoSAP[i].NETLB</td>
+                                <td>@Model.presupuestoSAP[i].SLLBS</td>
+                                <td>@Model.presupuestoSAP[i].SLCAS</td>
+                                <td>@Model.presupuestoSAP[i].PRCAS</td>
+                                <td>@Model.presupuestoSAP[i].NPCAS</td>*@
+
+                            @*<td>@Model.presupuestoSAP[i].ILVAR</td>
+                                <td>@Model.presupuestoSAP[i].BILBK</td>
+                                <td>@Model.presupuestoSAP[i].OVHVV</td>*@
+                        </tr>
+                    }
+                    else
+                    {
+                        i = 50;
+                    }
+                }
+            </table>
+        </div>
+    }
+}
+catch (Exception)
+{
+}
+
+<script>
+    var elem = document.querySelectorAll('select');
+    var options = [];
+    var instance = M.FormSelect.init(elem, options);
+</script>
+@*<div class="center-align"><h5>@ViewBag.MensajeS</h5> </div>
+    <div class="center-align"><h5>@ViewBag.MensajeG</h5> </div>*@
+@if (@ViewBag.MensajeS != null)
+{
+    if (@ViewBag.MensajeS != "")
+    {
+        <script>
+                    /**/
+                    M.toast({ html: '@ViewBag.MensajeS', classes: 'green' });
+                    /**/
+        </script>
+    }
+}
+@if (@ViewBag.MensajeGE != null)
+{
+    if (@ViewBag.MensajeGE != "")
+    {
+        <script>
+                    /**/
+                    M.toast({ html: '@ViewBag.MensajeGE', classes: 'red' });
+                    /**/
+        </script>
+    }
+}
+@if (@ViewBag.MensajeGI != null)
+{
+    if (@ViewBag.MensajeGI != "")
+    {
+        <script>
+                            /**/
+                    M.toast({ html: '@ViewBag.MensajeGI', classes: 'green' });
+                            /**/
+        </script>
+    }
+}
+@if (@ViewBag.MensajeC != null)
+{
+    if (@ViewBag.MensajeC != "")
+    {
+        <script>
+                    /**/
+                    M.toast({ html: '@ViewBag.MensajeC', classes: 'green' });
+                    /**/
+        </script>
+    }
+}
+<script type="text/javascript" src="~/Scripts/CargaPresupuesto.js"></script>
+
+
+

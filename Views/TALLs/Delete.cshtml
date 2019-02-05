@@ -1,0 +1,76 @@
+﻿@model TAT001.Entities.TALL
+
+@{
+    ViewBag.pagina_r = 791;
+    ViewBag.carpeta_r = 500;
+    // ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<TAT001.Entities.SPRA> spras = ViewBag.SPRAS as List<TAT001.Entities.SPRA>;
+    List<TAT001.Entities.TALLT> lstTXT = new List<TAT001.Entities.TALLT>();
+
+    List<TAT001.Entities.SPRA> spras2 = new List<TAT001.Entities.SPRA>();
+    foreach (var item in Model.TALLTs)
+    {
+        TAT001.Entities.TALLT txt = new TAT001.Entities.TALLT();
+        txt.SPRAS_ID = item.SPRAS_ID;
+        txt.TALL_ID = item.TALL_ID;
+        txt.TXT50 = item.TXT50;
+        lstTXT.Add(txt);
+    }
+    for (int i = 0; i < spras.Count; i++)
+    {
+        TAT001.Entities.TALLT x2 = lstTXT.Where(a => a.SPRAS_ID == spras[i].ID).FirstOrDefault();
+        if (x2 == null)
+        {
+            spras2.Add(spras[i]);
+        }
+    }
+}
+
+
+<div class="row">
+    <div class="col s12 right-align">
+        <button type="submit" id="btnDel" value="Delete" class="btn btn-default">Delete</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col s6 ">
+        <div class="card-panel">
+            <div class="row">
+                <div class="input-field col s12">
+                    @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblId" })
+                    @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col s6 ">
+        <div class="card-panel">
+            <div class="row">
+                @foreach (var item in Model.TALLTs)
+                {
+                    <div class=" input-field col s12">
+                        @Html.EditorFor(modelItem => item.TXT50, null, item.TXT50, new { htmlAttributes = new { @id = "A" + item.SPRAS_ID, @readonly = "readonly" } })
+                        <label for="@("A" + item.TXT50)">@item.SPRA.DESCRIPCION</label>
+                    </div>
+                }
+                @foreach (var item in spras2)
+                {
+                    <div class=" input-field col s12 pr1">
+                        @Html.Editor("Editor", null, "txval", new { htmlAttributes = new { @readonly = "readonly" } })
+                        <label for="Editor">@item.DESCRIPCION</label>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color">
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

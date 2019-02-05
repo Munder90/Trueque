@@ -1,0 +1,34 @@
+﻿@model TAT001.Entities.IMPUESTO
+
+@{
+    //ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 745;
+    ViewBag.carpeta_r = 500;
+}
+<div>
+    <div class="row">
+        <button id="btnDel" type="submit" value="Submit" class="btn btn-default" style="float:right;"></button>
+    </div>
+    <div class="row">
+        <div class="card-panel">
+            <div class="row">
+                <div class="col l10">
+                    <div class="col s8">
+                        @Html.LabelFor(model => model.MWSKZ, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblMWSKZ" })
+                        @Html.EditorFor(model => model.MWSKZ, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Back to List", "Index", null, new { id = "btnReg" })
+        </div>
+    }
+</div>

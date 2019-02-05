@@ -1,0 +1,409 @@
+﻿@model TAT001.Models.DocumentoFlujo
+
+@{
+    //ViewBag.Title = "Páginas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 201;
+    ViewBag.carpeta_r = 200;
+}
+<div class="row" style="margin-bottom:0">
+    <div class="col s12 m5 l5">
+        <div class="row" style="margin-bottom:0">
+            <div class="input-field col s4">
+                @Html.EditorFor(model => model.D.USUARIOC_ID, new { htmlAttributes = new { @disabled = "disabled" } })
+                @Html.LabelFor(model => model.D.USUARIOC_ID, new { @id = "lbl_userid" })
+            </div>
+            <div class="input-field col s4">
+                @*<input type="text" id="txt_user" value="@ViewBag.usuario.MANAGER" disabled="disabled" />
+                    <label for="txt_user">Manager</label>*@
+                @Html.EditorFor(model => model.D.USUARIO.MANAGER, new { htmlAttributes = new { @disabled = "disabled" } })
+                @Html.LabelFor(model => model.D.USUARIO.MANAGER, new { @id = "lbl_manager" })
+            </div>
+            <div class="input-field col s4">
+                @Html.EditorFor(model => model.D.USUARIO.BACKUP_ID, new { htmlAttributes = new { @disabled = "disabled" } })
+                @Html.LabelFor(model => model.D.USUARIO.BACKUP_ID, new { @id = "lbl_backup" })
+                @*<input type="text" id="txt_user" value="@ViewBag.usuario.BACKUP_ID" disabled="disabled" />
+                    <label for="txt_user">Backup</label>*@
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m2 l2">
+        <div class="input-field col s6">
+            @*<input type="text" id="txt_user" value="PRGA" disabled="disabled" />
+                <label for="txt_user">BU</label>*@
+            @Html.EditorFor(model => model.D.USUARIO.BUNIT, new { htmlAttributes = new { @disabled = "disabled" } })
+            @Html.LabelFor(model => model.D.USUARIO.BUNIT, "Sociedad", new { @id = "lbl_bu" })
+        </div>
+        <div class="input-field col s6">
+            @if (Model.D.ESTATUS == "N")
+            {
+                <input type="text" id="txt_status" value="Nuevo" disabled="disabled" />
+                <label for="txt_status" id="lbl_status">Estatus</label>
+            }
+        </div>
+    </div>
+    <div class="col s12 m5 l5">
+        <div class="row right">
+            @if (ViewBag.acciones != null & ViewBag.accion == "A")
+            {
+                @*<button type="button" class="btn-small" id="btn_workf">Acciones</button>*@
+                <div class="fixed-action-btn" id="lbl_wf">
+                    <a class="btn-floating btn-large blue">
+                        <i class="large material-icons">work</i>
+                    </a>
+                    <ul>
+                        <li><a id="lbl_wfa" class="btn-floating green" href="@Url.Action("Procesa", "Flujos", new { id = Model.D.NUM_DOC, accion = "A" })"><i class="material-icons">check</i></a></li>
+                        <li><a id="lbl_wfr" class="btn-floating red" href="@Url.Action("Procesa", "Flujos", new { id = Model.D.NUM_DOC, accion = "R" })"><i class="material-icons">close</i></a></li>
+                    </ul>
+                </div>
+                <script>
+
+                    var elem = document.querySelector('.fixed-action-btn');
+                    var options = {
+                        direction: 'left',
+                        hoverEnabled: false,
+                        toolbarEnabled: false
+                    };
+                    var instance = M.FloatingActionButton.init(elem, options);
+                </script>
+                @*<a id="lbl_wfa" class="btn-small" href="@Url.Action("Procesa", "Flujos", new { id = Model.D.NUM_DOC, accion = "A" })">Aprobar</a>
+                    <a id="lbl_wfr" class="btn-small" href="@Url.Action("Procesa", "Flujos", new { id = Model.D.NUM_DOC, accion = "R" })">Rechazar</a>*@
+                <a class="waves-effect waves-light btn modal-trigger" href="#modal1" onclick="aprobar()">Aprobar</a>
+                <a class="waves-effect waves-light btn modal-trigger" href="#modal1" onclick="rechazar()">Rechazar</a>
+
+                <div id="modal1" class="modal  bottom-sheet">
+                    @using (Html.BeginForm("Procesa", "Flujos"))
+                    {
+                        @Html.AntiForgeryToken()
+
+                    <div class="modal-content">
+                        <div class="row">
+                            <h4 id="txt_app" style="display:none">Aprobar solicitud</h4>
+                            <h4 id="txt_rec" style="display:none">Rechazar solicitud</h4>
+                            <br />
+                        </div>
+                        <div class="row" style="">
+                            <div class="col s12 m12 l12">
+                                <div class="row" style="margin-bottom:0">
+
+                                    @Html.HiddenFor(model => model.F.WORKF_ID, new { htmlAttributes = new { @disabled = "disabled" } })
+                                    @*@Html.LabelFor(model => model.F.WORKF_ID, new { @id = "lbl_userid" })*@
+
+                                    @Html.HiddenFor(model => model.F.WF_VERSION, new { htmlAttributes = new { @disabled = "disabled" } })
+                                    @*@Html.LabelFor(model => model.F.WF_VERSION, new { @id = "lbl_userid" })*@
+
+                                    @Html.HiddenFor(model => model.F.WF_POS, new { htmlAttributes = new { @disabled = "disabled" } })
+                                    @*@Html.LabelFor(model => model.F.WF_POS, new { @id = "lbl_userid" })*@
+
+                                    @Html.HiddenFor(model => model.F.NUM_DOC, new { htmlAttributes = new { @disabled = "disabled" } })
+                                    @*@Html.LabelFor(model => model.F.NUM_DOC, new { @id = "lbl_userid" })*@
+
+                                    @Html.HiddenFor(model => model.F.LOOP, new { htmlAttributes = new { @disabled = "disabled" } })
+                                    @*@Html.LabelFor(model => model.F.LOOP, new { @id = "lbl_userid" })*@
+
+                                    @Html.HiddenFor(model => model.F.ESTATUS, new { htmlAttributes = new { @disabled = "disabled" } })
+                                    @*@Html.LabelFor(model => model.F.ESTATUS, new { @id = "lbl_userid" })*@
+
+                                    <div class="input-field col s10 offset-s1">
+                                        @Html.TextAreaFor(model => model.F.COMENTARIO, new { @class = "materialize-textarea", @id = "txt_comentario" })
+                                        @Html.LabelFor(model => model.F.COMENTARIO, new { @id = "lbl_userid" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="modal-fixed-footer right">
+                            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                            <input type="submit" value="Aceptar" class="modal-action modal-close waves-effect waves-green btn-flat" />
+                            @*<a class="btn btn-default" href="@Url.Action("Details", "Solicitudes", new { id= Model.F.NUM_DOC})">Cancelar</a>*@
+                        </div>
+                    }
+                </div>
+                <script>
+
+                    var elem = document.getElementById('modal1');
+                    var instance = M.Modal.init(elem, []);
+
+                    function aprobar() {
+                        document.getElementById("txt_app").style.display = 'initial';
+                        document.getElementById("txt_rec").style.display = 'none';
+                        document.getElementById("txt_comentario").value = '';
+                    }
+                    function rechazar() {
+                        document.getElementById("txt_rec").style.display = 'initial';
+                        document.getElementById("txt_app").style.display = 'none';
+                        document.getElementById("txt_comentario").value = '';
+                    }
+                </script>
+            }
+            else if (ViewBag.acciones != null & ViewBag.accion == "N")
+            {
+                <div class="fixed-action-btn" id="lbl_wf">
+                    <a class="btn-floating btn-large blue">
+                        <i class="large material-icons">work</i>
+                    </a>
+                    <ul>
+                        <li><a id="lbl_wfn" class="btn-floating yellow darken-1" href="@Url.Action("Procesa", "Flujos", new { id = Model.D.NUM_DOC, accion = "N" })"><i class="material-icons">play_arrow</i></a></li>
+                    </ul>
+                </div>
+                <script>
+
+                    var elem = document.querySelector('.fixed-action-btn');
+                    var options = {
+                        direction: 'left',
+                        hoverEnabled: false,
+                        toolbarEnabled: false
+                    };
+                    var instance = M.FloatingActionButton.init(elem, options);
+                </script>
+                <a id="lbl_wfn" class="btn-small" href="@Url.Action("Procesa", "Flujos", new { id = Model.D.NUM_DOC, accion = "N" })">Siguiente</a>
+            }
+            else
+            {<button type="button" class="btn-small" data-target="list_carta" id="btn_carta">Carta</button>
+                <button type="button" class="btn-small" id="btn_cancel">Cancelar</button>
+                <ul id='list_carta' class='dropdown-content'>
+                    <li><a href="@Url.Action("Index", "CartaF", new { id = Model.D.NUM_DOC })" id="lbl_list">Ver cartas</a></li>
+                    @if (Model.D.DOCUMENTOPs.Count().Equals(0))
+                    {
+                        <li><a href="@Url.Action("Create", "CartaF", new { id = Model.D.NUM_DOC })" id="lbl_genc">Generar carta</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@Url.Action("Create", "CartaV", new { id = Model.D.NUM_DOC })" id="lbl_genc">Generar carta</a></li>
+                    }
+                </ul>
+                <script>
+                    var elem = document.getElementById('btn_carta');
+                    var options = {
+                        constrainWidth: false
+                        //,hover: true
+                    };
+                    var instance = M.Dropdown.init(elem, options);
+                </script>
+            }
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col s12">
+        <ul class="tabs" id="tab">
+            <li class="tab col s2"><a class="active" href="#info" id="lbl_info">Información</a></li>
+            <li class="tab col s2"><a href="#temp" id="lbl_temp">Temporalidad</a></li>
+            <li class="tab col s2"><a href="#supp" id="lbl_supp">Soporte</a></li>
+            <li class="tab col s2"><a href="#fina" id="lbl_fina">Financiera</a></li>
+            @*<li class="tab col s2"><a href="#dist" id="lbl_dist">Distribución</a></li>*@
+        </ul>
+    </div>
+    <div id="info" class="col s12" style="font-size:12px;">
+        <div class="row">
+            <div class="col s12 m6 l6">
+                <div class="card-panel">
+                    <div class="row" style="margin-bottom:0">
+                        @*<div class="input-field col s12">
+                                @Html.EditorFor(model => model.D.NUM_DOC, new { htmlAttributes = new { @disabled = "disabled" } })
+                                @Html.LabelFor(model => model.D.NUM_DOC)
+                            </div>*@
+                        <div class="input-field col s12">
+                            @Html.EditorFor(model => model.D.TSOL.TSOLTs.Where(a => a.SPRAS_ID.Equals(model.D.USUARIO.SPRAS_ID)).FirstOrDefault().TXT020, new { htmlAttributes = new { @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.D.TSOL, "Tipo de solicitud", new { @id = "lbl_tsol" })
+                        </div>
+                        <div class="input-field col s12">
+                            @Html.EditorFor(model => model.D.TALL.TALLTs.Where(a => a.SPRAS_ID.Equals(model.D.USUARIO.SPRAS_ID)).FirstOrDefault().TXT50, new { htmlAttributes = new { @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.D.TALL, "Tipo de allowance", new { @id = "lbl_tall" })
+                        </div>
+                    </div>
+                </div>
+                <div class="card-panel">
+                    <h5>Datos país</h5>
+                    <div class="row" style="margin-bottom:0">
+
+                        <div class="input-field col s6">
+                            @Html.EditorFor(model => model.D.SOCIEDAD_ID, new { htmlAttributes = new { @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.D.SOCIEDAD, "Sociedad", new { @id = "lbl_bukrs" })
+                        </div>
+                        <div class="input-field col s6">
+                            @Html.EditorFor(model => model.D.PAIS_ID, new { htmlAttributes = new { @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.D.PAIS_ID, "País", new { @id = "lbl_land" })
+                        </div>
+                        <div class="input-field col s6">
+                            @Html.EditorFor(model => model.D.ESTADO, new { htmlAttributes = new { @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.D.ESTADO, "Estado", new { @id = "lbl_state" })
+                        </div>
+                        <div class="input-field col s6">
+                            @Html.EditorFor(model => model.D.CIUDAD, new { htmlAttributes = new { @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.D.CIUDAD, "Ciudad", new { @id = "lbl_city" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 l6">
+                <div class="row" style="margin-bottom:0">
+                    <div class="card-panel">
+                        <div class="row" style="margin-bottom:0">
+                            <h5>Información general</h5>
+                            <div class="input-field col s12">
+                                @Html.EditorFor(model => model.D.FECHAC, new { htmlAttributes = new { @disabled = "disabled", @type = "text" } })
+                                @Html.LabelFor(model => model.D.FECHAC, "Fecha", new { @id = "lbl_fechac" })
+                            </div>
+                            <div class="input-field col s6 l6">
+                                @Html.EditorFor(model => model.D.PERIODO, new { htmlAttributes = new { @disabled = "disabled", @type = "text" } })
+                                @Html.LabelFor(model => model.D.PERIODO, "Periodo", new { @id = "lbl_periodo" })
+                            </div>
+                            <div class="input-field col s6">
+                                @Html.EditorFor(model => model.D.EJERCICIO, new { htmlAttributes = new { @disabled = "disabled", @type = "text" } })
+                                @Html.LabelFor(model => model.D.EJERCICIO, "Ejercicio", new { @id = "lbl_ejer" })
+                            </div>
+                            <div class="input-field col s12">
+                                @Html.EditorFor(model => model.D.CONCEPTO, new { htmlAttributes = new { @disabled = "disabled" } })
+                                @Html.LabelFor(model => model.D.CONCEPTO, "Concepto", new { @id = "lbl_conce" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom:0">
+                    <div class="card-panel">
+                        <h5>Cliente @*@Html.DisplayFor(model => model.D.CLIENTE.KUNNR)*@</h5>
+                        <div class="row" style="margin-bottom:0">
+                            <div class="input-field col s12">
+                                @Html.EditorFor(model => model.D.CLIENTE.KUNNR, new { htmlAttributes = new { @disabled = "disabled" } })
+                                @Html.LabelFor(model => model.D.CLIENTE.KUNNR)
+                            </div>
+                            <div class="input-field col s12">
+                                @Html.EditorFor(model => model.D.CLIENTE.NAME1, new { htmlAttributes = new { @disabled = "disabled" } })
+                                @Html.LabelFor(model => model.D.CLIENTE.NAME1, "Nombre", new { @id = "lbl_name" })
+                            </div>
+                            <div class="input-field col s12">
+                                @Html.EditorFor(model => model.D.CLIENTE.STCD1, new { htmlAttributes = new { @disabled = "disabled" } })
+                                @Html.LabelFor(model => model.D.CLIENTE.STCD1, "Taxid", new { @id = "lbl_stcd1" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="temp" class="col s12">
+        <div class="row">
+            <div class="card-panel">
+                <div class="row" style="margin-bottom:0">
+                    <h5>Vigencia</h5>
+                    @*<div class="input-field col s12">
+                            @Html.EditorFor(model => model.D.NUM_DOC, new { htmlAttributes = new { @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.D.NUM_DOC)
+                        </div>*@
+                    <div class="input-field col s6">
+                        @Html.EditorFor(model => model.D.FECHAI_VIG, new { htmlAttributes = new { @disabled = "disabled", @type = "text" } })
+                        @Html.LabelFor(model => model.D.FECHAI_VIG, "De", new { @id = "lbl_fechai" })
+                    </div>
+                    <div class="input-field col s6">
+                        @Html.EditorFor(model => model.D.FECHAF_VIG, new { htmlAttributes = new { @disabled = "disabled", @type = "text" } })
+                        @Html.LabelFor(model => model.D.FECHAF_VIG, "A", new { @id = "lbl_fechaf" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="supp" class="col s12"></div>
+    <div id="fina" class="col s12">
+        <div class="row">
+            <div class="col s12 m6 l6">
+                <div class="card-panel">
+                    <div class="row" style="margin-bottom:0">
+                        <div class="input-field col s8">
+                            @if (ViewBag.accion == "N")
+                            {
+                                @Html.EditorFor(model => model.D.MONTO_DOC_MD)
+                            }
+                            @Html.EditorFor(model => model.D.MONTO_DOC_MD, new { htmlAttributes = new { @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.D.MONTO_DOC_MD, "Monto", new { @id = "lbl_montomd" })
+                        </div>
+                        <div class="input-field col s4">
+                            @Html.EditorFor(model => model.D.MONEDA_ID, new { htmlAttributes = new { @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.D.MONEDA_ID, "Moneda", new { @id = "lbl_waers" })
+                        </div>
+                        <div class="input-field col s6">
+                            @Html.EditorFor(model => model.D.TIPO_CAMBIO, new { htmlAttributes = new { @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.D.TIPO_CAMBIO, "Tipo de cambio", new { @id = "lbl_tcambio" })
+                        </div>
+                        <div class="input-field col s6">
+                            @Html.EditorFor(model => model.D.MONTO_DOC_ML, new { htmlAttributes = new { @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.D.MONTO_DOC_ML, "Estado", new { @id = "lbl_state" })
+                        </div>
+                        <div class="input-field col s12">
+                            @Html.TextAreaFor(model => model.D.NOTAS, new { @id = "txt_notas", @class = "materialize-textarea", @style = "height:500px;", @disabled = "disabled" })
+                            @Html.LabelFor(model => model.D.NOTAS, "Notas", new { @id = "lbl_state" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 l6">
+                <div class="card-panel">
+                    <div class="row" style="margin-bottom:0">
+                        <h5>Análisis presupuesto</h5>
+                        <p>Presupuesto canal: 25,000.00</p>
+                        <h5>Análisis solicitud</h5>
+                        <p>importe Solicitud</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<div id="dist" class="col s12">Test 4</div>*@
+</div>
+<script>
+    var el = document.getElementById("tab");
+    options = [];
+    var instance = M.Tabs.init(el, options);
+</script>
+
+@if (ViewBag.workflow.Count != 0)
+{
+    <div class="row" style="font-size:12px;">
+        <div class="col s12">
+            <div class="row" style="margin-bottom:0">
+                <div class="card-panel">
+                    <h5>Workflow</h5>
+                    @*<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+                        <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+                        <script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+                        <link href="~/Content/dataTable.css" rel="stylesheet" />
+                        <link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />*@
+                    <table class="table highlight" id="table">
+                        <thead>
+                            <tr>
+                                <th width="">Usuario</th>
+                                <th width="">Evento</th>
+                                <th width="">Fecha</th>
+                                <th width="">Fecha Procesada</th>
+                                <th width="">Estatus</th>
+                                <th width="30%">Comentario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (TAT001.Entities.FLUJO f in ViewBag.workflow)
+                            {
+                                <tr>
+                                    <td width="">@Html.DisplayFor(modelItem => f.USUARIOA_ID) - @Html.DisplayFor(modelItem => f.USUARIO.NOMBRE) @Html.DisplayFor(modelItem => f.USUARIO.APELLIDO_P) @Html.DisplayFor(modelItem => f.USUARIO.APELLIDO_M)</td>
+                                    <td width="">@Html.DisplayFor(modelItem => f.WORKFP.ACCION.ACCIONTs.Where(a => a.SPRAS_ID == Session["spras"].ToString()).FirstOrDefault().TXT050)</td>
+                                    <td width="">@Html.DisplayFor(modelItem => f.FECHAC)</td>
+                                    <td width="">@Html.DisplayFor(modelItem => f.FECHAM)</td>
+                                    <td width="">@Html.DisplayFor(modelItem => f.ESTATUS)</td>
+                                    <td width="30%">@Html.DisplayFor(modelItem => f.COMENTARIO)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.D.NUM_DOC }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+<script>
+                                                //$('#txt_notas').addClass("materialize-textarea");
+                                                                        //M.textareaAutoResize($('#txt_notas'));
+</script>

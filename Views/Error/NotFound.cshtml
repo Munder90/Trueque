@@ -1,0 +1,39 @@
+﻿@model string
+@{
+    ViewBag.Title = "NotFound";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div class="row">
+    <div class="col l9 m12 s12 offset-l3">
+      
+        <div class="card" style="height:80vh;">
+            <div class="card-image waves-effect waves-block waves-light">
+            </div>
+            <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">
+                    @Model  Not found
+                    <i class="material-icons right">more_vert</i>
+                </span>
+                <div class="row">
+                    <h2 class="text-danger">Page Not found</h2>
+                    <p>
+                        Page Not found
+                    </p>
+                </div>
+                <div class="row right-aligned">
+                    <div class="col s12">
+                        <a href="@Url.Action("Index","home")" class="btn-small">Home</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">An error occurred while processing your request.<i class="material-icons right">close</i></span>
+                <p>
+                    Page Not found
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>

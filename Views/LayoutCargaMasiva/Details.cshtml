@@ -1,0 +1,70 @@
+﻿@model TAT001.Models.LayoutCargaMasivaViewModels
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 553;
+    ViewBag.carpeta_r = 500;
+}
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div class="col s12 right-align">
+    <a href="@Url.Action("Edit", "LayoutCargaMasiva", new { id = Model.layoutMasiva.ID })" id="btn_edit" class="btn btn-default">Editar</a>
+</div>
+    <div class="card-panel">
+        <div class="row">
+            <div class="col s4">
+                <div class="form-group">
+                    <label id="lbl_sociedad"></label>
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.layoutMasiva.SOCIEDAD_ID, Model.sociedades, "", new { @disabled = true })
+                    </div>
+                </div>
+            </div>
+            <div class="col s2">
+                <div class="form-group">
+                    <label id="lbl_pais"></label>
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.layoutMasiva.LAND, Model.paises, "", new { @disabled = true })
+                    </div>
+                </div>
+            </div>
+            <div class="col s4">
+                <div class="form-group">
+                    <label id="lbl_Archivo"></label>
+                    <div class="col-md-10">
+                        @{
+                            string archivo = "";
+                            archivo = ViewBag.NombreArchivo;
+                        }
+                        @Html.TextBox("NombreArchivo", archivo, new { @disabled = true })
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button id="btn_descarga" name="archivo" class="btn lbl_cargar" type="button" value="@Model.layoutMasiva.ID" onclick="descargarArchivo(this)"></button>
+            </div>
+        </div>
+    </div>
+}
+<div class="col s12">
+    <a id="btn_return" href="@Url.Action("Index")"></a>
+</div>
+<script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+<script>
+    //---- Inicializador de componentes Materialize----
+    fnCommon.materializeInit('select');
+    var root = "@Url.Content("~")";
+
+    function descargarArchivo(me) {
+        var form = document.createElement("form"),
+            Id = document.createElement("input");
+        form.method = "POST";
+        form.action = root + 'LayoutCargaMasiva/Descargar';
+        Id.value = me.value*1;
+        Id.name = "idLayout";
+        form.appendChild(Id);
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>

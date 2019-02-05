@@ -1,0 +1,45 @@
+﻿@model TAT001.Entities.PROVEEDOR
+@{
+    ViewBag.pagina_r = 502;
+    ViewBag.carpeta_r = 500;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="card-panel">
+        <div class="row">
+            <div class="row">
+                <div class="input-field col l6 m6" style="margin-bottom:0;">
+                    @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblId" })
+                </div>
+                <div class="input-field col l6 m6" style="margin-bottom:0;">
+                    @Html.EditorFor(model => model.NOMBRE, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.LabelFor(model => model.NOMBRE, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblNombre" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col l6 m6" style="margin-bottom:0;">
+                    @Html.EditorFor(model => model.SOCIEDAD_ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.LabelFor(model => model.SOCIEDAD_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblSociedadId" })
+                </div>
+                <div class="input-field col l6 m6" style="margin-bottom:0;">
+                    @Html.EditorFor(model => model.PAIS_ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.LabelFor(model => model.PAIS_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblPais" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col l6 m6" style="margin-bottom:0;">
+                    @if ((bool)Model.ACTIVO == true)
+                    {
+                    <span id="lblActivo"></span><i class='material-icons green-text'>check</i>}
+                    else
+                    {
+                    <span id="lblActivo"></span><i class='material-icons red-text'>clear</i>}
+                </div>
+            </div>
+    </div>
+</div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.ID, sc = Model.SOCIEDAD_ID }, new { id = "lblEditar" }) |*@
+    @Html.ActionLink("Back to List", "Index", null, new { id = "lblRegresar" })
+</p>

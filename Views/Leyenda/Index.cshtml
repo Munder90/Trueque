@@ -1,0 +1,157 @@
+﻿@model IEnumerable<TAT001.Entities.LEYENDA>
+@{
+    ViewBag.pagina_r = 751;
+    ViewBag.carpeta_r = 500;
+    //ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col s12 right-align">
+        @Html.ActionLink("Agregar Pagina", "Create", "Proveedor", new { @class = "btn-small", @id = "btnCrear" })
+    </div>
+</div>
+<div class="row" style="margin-bottom:0;">
+    <div class="input-field col s3 m3 l3">
+        <select id="selecc">
+            <option value="10" selected>10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+        <label id="lbl_length">Ver por página</label>
+    </div>
+    <div class="input-field col s5 m3 l3 offset-l6 offset-m6 offset-s4">
+        <input type="text" class="global_filter" id="global_filter">
+        <label for="global_filter" id="lbl_search">Buscar</label>
+    </div>
+</div>
+<script>
+    var elem = document.querySelector('select');
+    var options = [];
+    var instance = M.FormSelect.init(elem, options);
+</script>
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+<link href="~/Content/dataTable.css" rel="stylesheet" />
+<link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+<table class="table mdl-data-table striped" id="table" style="width:100%;">
+    <thead>
+        <tr>
+            <th id="lblLey" style="text-align:left;">
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+
+            <th id="lblPais" style="text-align:left;">
+                @Html.DisplayNameFor(model => model.PAI.LAND)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td  style="text-align:left;">
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td  style="text-align:left;">
+                    @Html.DisplayFor(modelItem => item.PAI.LAND)
+                </td>
+                <td>
+                    <a data-form-method="post" href="@Url.Action("Edit", "Leyenda", new { id = item.ID})">
+                        <i class='material-icons green-text'>edit</i>
+                    </a>
+                    <a data-form-method="post" href="@Url.Action("Details", "Leyenda", new { id = item.ID})">
+                        <i class='material-icons blue-text'>search</i>
+                    </a>
+                    <a data-form-method="post" href="@Url.Action("Delete", "Leyenda",new { id = item.ID})">
+                        <i class='material-icons red-text'>delete</i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#table').DataTable({
+            scrollX: "50vh",
+            scrollY: "50vh",
+            scrollCollapse: true,
+            language: {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            }, columnDefs: [
+                {
+                    targets: "_all",
+                    className: 'mdl-data-table__cell--non-numeric'
+                }
+            ],
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var select = $('<select style="display:initial;" class="browser-default"><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+                    column.cells('', column[0]).render('display').sort().unique().each(function (d, j) {
+                        var val = $('<div/>').html(d).text();
+                        select.append('<option value="' + val + '">' + val + '</option>');
+                    });
+                });
+            }
+        });
+
+        var a = $('#selecc').val();
+        table.page.len(a).draw();
+        $('#selecc').on('change', function () {
+            table.page.len(this.value).draw();
+        });
+
+        $('input.global_filter').on('keyup click', function () {
+            filterGlobal();
+        });
+
+        $('#table tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                var child = format(row.data(), row, tr);
+                if (child != undefined) {
+                }
+            }
+        });
+    });
+    function filterGlobal() {
+        $('#table').DataTable().search(
+            $('#global_filter').val()).draw();
+    }
+</script>
+<style>
+    .dataTables_length {
+        display: none;
+    }
+
+    .dataTables_filter {
+        display: none;
+    }
+
+    .dataTables_scrollHeadInner, .mdl-data-table {
+        width: 100%;
+    }
+</style>

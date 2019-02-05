@@ -1,0 +1,89 @@
+﻿@model TAT001.Entities.DOCTOAYUDA
+
+@{
+    ViewBag.pagina_r = 1507;
+    ViewBag.carpeta_r = 1200;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm(Html.BeginForm("Edit", "Ayuda", FormMethod.Post, new { enctype = "multipart/form-data" })))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-offset-2 col-md-10">
+            <button id="btn_guardar" value="Guardar" type="submit" class="btn btn-default" style="float: right;" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="card-panel">
+            <div class="row">
+                <div class="form-horizontal">
+                    @if (TempData["Extension"] != null)
+                    {
+                        <p class="red-text text-darken-2" id="Extension"></p>
+                    }
+                    @if (TempData["Filesize"] != null)
+                    {
+                        <p class="red-text text-darken-2" id="Filesize"></p>
+                    }
+                    @Html.HiddenFor(model => model.ID_DOCUMENTO)
+                    @Html.HiddenFor(model => model.ID_CLASIFICACION)
+                    <div class="row">
+                        <div class="input-field col l6 m6" style="margin-bottom:0;">
+                            @Html.LabelFor(model => model.ID_DOCUMENTO, htmlAttributes: new { @class = "control-label col-md-2", id = "lbl_iddocumento" })
+                            @Html.EditorFor(model => model.ID_DOCUMENTO, new { htmlAttributes = new { @class = "form-control", @disabled = true } })
+                            @Html.ValidationMessageFor(model => model.ID_DOCUMENTO, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="input-field col l6 m6" style="margin-bottom:0;">
+                            @Html.LabelFor(model => model.ID_CLASIFICACION, htmlAttributes: new { @class = "control-label col-md-2", id = "lbl_clasificacion" })
+                            @{string texto = Model.DOCTOCLASIF.DOCTOCLASIFTs.Where(t => t.ID_CLASIFICACION == Model.ID_CLASIFICACION && t.SPRAS_ID == ViewBag.spras_id).First().TEXTO;
+                                    }
+                                @Html.EditorFor(model=>model.DOCTOCLASIF.CLASIFICACION_DSC, new { htmlAttributes = new { @class = "form-control", @disabled = true, @Value=texto } })
+                            @Html.ValidationMessageFor(model => model.ID_CLASIFICACION, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="input-field col l6 m6" style="margin-bottom:0;">
+                            @Html.LabelFor(model => model.NOMBRE, htmlAttributes: new { @class = "control-label col-md-2", id = "lbl_nombre" })
+                            @Html.EditorFor(model => model.NOMBRE, new { htmlAttributes = new { @class = "form-control", required = true, @maxlength = "50" } })
+                            @Html.ValidationMessageFor(model => model.NOMBRE, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="input-field col l6 m6" style="margin-bottom:0;">
+                            <label>
+                                @Html.CheckBoxFor(model => model.ACTIVO)
+                                <span id="lbl_activo">Activo</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col l6 m6" style="margin-bottom:0;">
+                            @Html.LabelFor(model => model.RUTA_DOCUMENTO, htmlAttributes: new { @class = "control-label col-md-2 active", id = "lbl_ruta" })
+                            <div class="file-field input-field">
+                                <div class="btn">
+                                    <span id="lbl_file">File</span>
+                                    @Html.EditorFor(model => model.RUTA_DOCUMENTO, new { htmlAttributes = new { @class = "form-control", required = true, @type = "file", @Value = Model.RUTA_DOCUMENTO } })
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text" value="@Model.RUTA_DOCUMENTO">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { id = "lblregresar" })
+</div>
+<script>
+    $("input[type='hidden']").each(function (index, element) {
+        $(this).appendTo($(element).parent());
+    });
+    $(document).ready(function () {
+        if ($('#RUTA_DOCUMENTO').attr("value") != "") {
+            $('#RUTA_DOCUMENTO').removeAttr("required");
+        }
+    });
+</script>

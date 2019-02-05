@@ -1,0 +1,164 @@
+﻿@using TAT001.Entities;
+@using PagedList.Mvc
+@model TAT001.Models.Calendario445ViewModel
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<table class="table mdl-data-table striped" id="table" style="width:100%;">
+    <thead>
+        <tr class="header">
+            <th>
+                @Html.ActionLink("SOCIEDAD_ID", "ListEx", new { colOrden = "SOCIEDAD_ID", ordenActual = Model.ordenActual, numRegistros = Model.numRegistrosEx, buscar = Model.buscar })
+            </th>
+            <th>
+                @Html.ActionLink("PERIODO", "ListEx", new { colOrden = "PERIODO", ordenActual = Model.ordenActual, numRegistros = Model.numRegistrosEx, buscar = Model.buscar })
+            </th>
+            <th>
+                @Html.ActionLink("TSOL_ID", "ListEx", new { colOrden = "TSOL_ID", ordenActual = Model.ordenActual, numRegistros = Model.numRegistrosEx, buscar = Model.buscar })
+            </th>
+            <th>
+                @Html.ActionLink("USUARIO_ID", "ListEx", new { colOrden = "USUARIO_ID", ordenActual = Model.ordenActual, numRegistros = Model.numRegistrosEx, buscar = Model.buscar })
+            </th>
+            <th>
+                @Html.ActionLink("EX_FROMF", "ListEx", new { colOrden = "EX_FROMF", ordenActual = Model.ordenActual, numRegistros = Model.numRegistrosEx, buscar = Model.buscar })
+            </th>
+            <th>
+                @Html.ActionLink("EX_FROMH", "ListEx", new { colOrden = "EX_FROMH", ordenActual = Model.ordenActual, numRegistros = Model.numRegistrosEx, buscar = Model.buscar })
+            </th>
+            <th>
+                @Html.ActionLink("EX_TOF", "ListEx", new { colOrden = "EX_TOF", ordenActual = Model.ordenActual, numRegistros = Model.numRegistrosEx, buscar = Model.buscar })
+            </th>
+            <th>
+                @Html.ActionLink("EX_TOH", "ListEx", new { colOrden = "EX_TOH", ordenActual = Model.ordenActual, numRegistros = Model.numRegistrosEx, buscar = Model.buscar })
+            </th>
+           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.calendariosEx445)
+        {
+        <tr class="text-left">
+            <td>
+                @Html.DisplayFor(modelItem => item.SOCIEDAD_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PERIODO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TSOL_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.USUARIO.ID)
+            </td>
+            <td>
+                @Convert.ToDateTime(item.EX_FROMF).ToString("dd/MM/yyyy")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EX_FROMH)
+            </td>
+            <td>
+                @Convert.ToDateTime(item.EX_TOF).ToString("dd/MM/yyyy")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EX_TOH)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", "CalendarioEx445", new { ejercicio=item.EJERCICIO,  periodo= item.PERIODO,  sociedad_id= item.SOCIEDAD_ID,  tsol_id= item.TSOL_ID,usuario_id=item.USUARIO_ID , paginaIndex = "Calendario445"})"><i class='material-icons green-text'>edit</i></a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<div id='Paging' style="text-align: center">
+    @(Model.calendariosEx445.PageCount < Model.calendariosEx445.PageNumber ? 0 : Model.calendariosEx445.PageNumber)
+    - @Model.calendariosEx445.PageCount
+
+    @Html.PagedListPager(Model.calendariosEx445, page => Url.Action("ListEx", new { pagina = page, numRegistros = Model.numRegistrosEx, buscar = Model.buscar, colOrden = Model.ordenActual }))
+</div>
+<script>
+    //-----Sort
+    function sort() {
+        var sortLink = $('#listEx').find('.header>th>a');
+        for (var i = 0; i < sortLink.length; i++) {
+            var url = sortLink.get(i).getAttribute("href");
+            var id = 'link_hEx' + i;
+            if (url) {
+                sortLink.get(i).setAttribute("id", id);
+                sortLink.get(i).setAttribute("url", url);
+                $('#' + id).click(function (me) {
+                    fnCommon.showProcess(true);
+                    $.ajax({
+                        url: me.target.getAttribute('url'),
+                        success: function (resultView) {
+                           if (resultView.isRedirect) {
+                                window.location = resultView.redirectUrl;
+                            } else {
+                            fnCommon.showProcess(false);
+                            $('#listEx').html(resultView);
+                            sort();
+                          }
+                        }
+                    });
+                });
+            }
+            sortLink.get(i).removeAttribute("href");
+        }
+    }
+    sort();
+        //-----Pagination
+    function pagination() {
+        var paginationLink = $('#listEx').find('.pagination>li>a');
+        for (var i = 0; i < paginationLink.length; i++) {
+            var url = paginationLink.get(i).getAttribute("href");
+            var id = 'link_hEx' + i;
+            if (url) {
+                paginationLink.get(i).setAttribute("id", id);
+                paginationLink.get(i).setAttribute("url", url);
+                $('#' + id).click(function (me) {
+                    fnCommon.showProcess(true);
+                    $.ajax({
+                        url: me.target.getAttribute('url'),
+                        success: function (resultView) {
+                            if (resultView.isRedirect) {
+                                window.location = resultView.redirectUrl;
+                            } else {
+                            fnCommon.showProcess(false);
+                            $('#listEx').html(resultView);
+                            pagination();
+                            }
+                        }
+                    });
+                });
+            }
+            paginationLink.get(i).removeAttribute("href");
+        }
+    }
+    pagination();
+
+</script>
+<div>
+
+    @if (ViewBag.textos != null)
+    {
+        foreach (TEXTO t in ViewBag.textos)
+        {
+            <script>
+                try {
+                    var elem = document.getElementById("@t.CAMPO_ID");
+                    if (elem.nodeName != 'INPUT' & elem.nodeName != 'SELECT' & elem.nodeName != 'TABLE' & elem.nodeName != 'TEXTAREA')
+                    elem.innerHTML = "@t.TEXTOS";
+                } catch (e) {
+                    try {
+                        var divs = document.getElementsByClassName("@t.CAMPO_ID");
+                        [].slice.call(divs).forEach(function (div) {
+                            if (div.nodeName != 'INPUT' & div.nodeName != 'SELECT' & div.nodeName != 'TABLE' & div.nodeName != 'TEXTAREA')
+                            div.innerHTML = "@t.TEXTOS";
+                        });
+                    }
+                    catch (ee) {
+
+                    }
+                 }
+            </script>
+        }
+    }
+</div>

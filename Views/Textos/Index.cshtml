@@ -1,0 +1,135 @@
+﻿@model IEnumerable<TAT001.Entities.TEXTO>
+
+@{
+    //ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 502;
+    ViewBag.carpeta_r = 500;
+}
+<div class="row">
+    <div class="col s12 right-align">
+        @*@Html.ActionLink("Create New", "Create")*@
+        <a href="@Url.Action("Create", "Textos", new { id = TempData["id"].ToString()})" class="btn-small">
+            <span id="btn_create">Crear</span>
+        </a>
+    </div>
+</div>
+<div class="card-panel">
+    <div class="row" style="margin-bottom:0;">
+        <div class="input-field col s3 m3 l3">
+            <select id="selecc">
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <option value="30">30</option>
+            </select>
+            <label>Ver por página</label>
+        </div>
+        <div class="input-field col s3 m3 l3 offset-l6 offset-m6">
+            <input type="text" class="global_filter" id="global_filter">
+            <label for="global_filter">Buscar</label>
+        </div>
+    </div>
+    <script>
+        var elem = document.querySelector('select');
+        var options = [];
+        var instance = M.FormSelect.init(elem, options);
+    </script>
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+    @*<link href="//cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css" rel="stylesheet" />*@
+    <link href="~/Content/dataTable.css" rel="stylesheet" />
+    <link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+
+    <table class="table mdl-data-table" id="table">
+        <thead>
+            <tr>
+                <th id="lbl_url">
+                    @Html.DisplayNameFor(model => model.CAMPOS.PAGINA.URL)
+                </th>
+                <th id="lbl_campo">
+                    @Html.DisplayNameFor(model => model.CAMPOS.ID)
+                </th>
+                <th id="lbl_texto">
+                    @Html.DisplayNameFor(model => model.TEXTOS)
+                </th>
+                <th id="lbl_spras">
+                    @Html.DisplayNameFor(model => model.SPRAS_ID)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CAMPOS.PAGINA.URL)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CAMPOS.ID)
+                    </td>
+                    <td>
+                        @if (item.TEXTOS.ToString().Length > 70)
+                        {
+                            <span>@(item.TEXTOS.ToString().Substring(0, 70) + "...")</span>
+                        }
+                        else
+                        {@Html.Raw(item.TEXTOS)}
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SPRAS_ID)
+                    </td>
+                    <td>
+                        @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                        <a href="@Url.Action("Edit", "Textos", new { SPRAS_ID = item.SPRAS_ID, PAGINA_ID = item.PAGINA_ID, CAMPO_ID = item.CAMPO_ID })">
+                            <i class="material-icons grey-text">edit</i>
+                        </a>
+                        <a href="@Url.Action("Details", "Textos", new { SPRAS_ID = item.SPRAS_ID, PAGINA_ID = item.PAGINA_ID, CAMPO_ID = item.CAMPO_ID })">
+                            <i class="material-icons grey-text">description</i>
+                        </a>
+                        @*<a href="@Url.Action("Delete", "Textos", new { SPRAS_ID = item.SPRAS_ID, PAGINA_ID = item.PAGINA_ID, CAMPO_ID = item.CAMPO_ID })">
+                                <i class="material-icons grey-text">delete</i>
+                            </a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>
+<script>
+    $(document).ready(function () {
+        var table = $('#table').DataTable();
+
+        $('#selecc').on('change', function () {
+            table.page.len(this.value).draw();
+        });
+
+        $('input.global_filter').on('keyup click', function () {
+            filterGlobal();
+        });
+    });
+
+    function filterGlobal() {
+        $('#table').DataTable().search(
+            $('#global_filter').val()).draw();
+    }
+</script>
+<style>
+    .dataTables_length {
+        display: none;
+    }
+
+    .dataTables_filter {
+        display: none;
+    }
+</style>
+
+<a href="@Url.Action("Index", "Paginas", new { @*id =TempData["id"].ToString()*@})" class="">
+    <span id="btn_return">Regresar</span>
+</a>

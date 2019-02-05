@@ -1,0 +1,476 @@
+﻿@model List<TAT001.Entities.CSP_DOCUMENTOSXUSER2_Result>
+@using TAT001.Entities
+@using TAT001.Services
+
+@{
+    Layout = null;
+    ViewBag.Title = "Solicitud ";
+}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style>
+        body {
+            font-family: Tahoma;
+            font-size: 12px;
+        }
+
+        .divs {
+            width: 800px;
+            height: 100px;
+            margin-right: 10px;
+            margin-bottom: 30px;
+            float: left;
+        }
+
+        .child_div_1 {
+            float: left;
+            margin-top: 30px;
+            margin-right: 5px;
+            height: 100px;
+        }
+
+        .row {
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 5px;
+        }
+
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+
+            .row .col {
+                float: left;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                padding: 0 0.75rem;
+                min-height: 1px;
+            }
+
+                .row .col[class*="push-"], .row .col[class*="pull-"] {
+                    position: relative;
+                }
+
+                .row .col.s1 {
+                    width: 8.3333333333%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s2 {
+                    width: 16.6666666667%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s3 {
+                    width: 25%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s4 {
+                    width: 33.3333333333%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s5 {
+                    width: 41.6666666667%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s6 {
+                    width: 50%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s7 {
+                    width: 58.3333333333%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s8 {
+                    width: 66.6666666667%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s9 {
+                    width: 75%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s10 {
+                    width: 83.3333333333%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s11 {
+                    width: 91.6666666667%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s12 {
+                    width: 100%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.offset-s1 {
+                    margin-left: 8.3333333333%;
+                }
+
+                .row .col.pull-s1 {
+                    right: 8.3333333333%;
+                }
+
+                .row .col.push-s1 {
+                    left: 8.3333333333%;
+                }
+
+                .row .col.offset-s2 {
+                    margin-left: 16.6666666667%;
+                }
+
+                .row .col.pull-s2 {
+                    right: 16.6666666667%;
+                }
+
+                .row .col.push-s2 {
+                    left: 16.6666666667%;
+                }
+
+                .row .col.offset-s3 {
+                    margin-left: 25%;
+                }
+
+                .row .col.pull-s3 {
+                    right: 25%;
+                }
+
+                .row .col.push-s3 {
+                    left: 25%;
+                }
+
+                .row .col.offset-s4 {
+                    margin-left: 33.3333333333%;
+                }
+
+                .row .col.pull-s4 {
+                    right: 33.3333333333%;
+                }
+
+                .row .col.push-s4 {
+                    left: 33.3333333333%;
+                }
+
+                .row .col.offset-s5 {
+                    margin-left: 41.6666666667%;
+                }
+
+                .row .col.pull-s5 {
+                    right: 41.6666666667%;
+                }
+
+                .row .col.push-s5 {
+                    left: 41.6666666667%;
+                }
+
+                .row .col.offset-s6 {
+                    margin-left: 50%;
+                }
+
+                .row .col.pull-s6 {
+                    right: 50%;
+                }
+
+                .row .col.push-s6 {
+                    left: 50%;
+                }
+
+                .row .col.offset-s7 {
+                    margin-left: 58.3333333333%;
+                }
+
+                .row .col.pull-s7 {
+                    right: 58.3333333333%;
+                }
+
+                .row .col.push-s7 {
+                    left: 58.3333333333%;
+                }
+
+                .row .col.offset-s8 {
+                    margin-left: 66.6666666667%;
+                }
+
+                .row .col.pull-s8 {
+                    right: 66.6666666667%;
+                }
+
+                .row .col.push-s8 {
+                    left: 66.6666666667%;
+                }
+
+                .row .col.offset-s9 {
+                    margin-left: 75%;
+                }
+
+                .row .col.pull-s9 {
+                    right: 75%;
+                }
+
+                .row .col.push-s9 {
+                    left: 75%;
+                }
+
+                .row .col.offset-s10 {
+                    margin-left: 83.3333333333%;
+                }
+
+                .row .col.pull-s10 {
+                    right: 83.3333333333%;
+                }
+
+                .row .col.push-s10 {
+                    left: 83.3333333333%;
+                }
+
+                .row .col.offset-s11 {
+                    margin-left: 91.6666666667%;
+                }
+
+                .row .col.pull-s11 {
+                    right: 91.6666666667%;
+                }
+
+                .row .col.push-s11 {
+                    left: 91.6666666667%;
+                }
+
+                .row .col.offset-s12 {
+                    margin-left: 100%;
+                }
+
+                .row .col.pull-s12 {
+                    right: 100%;
+                }
+
+                .row .col.push-s12 {
+                    left: 100%;
+                }
+
+        #container {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            right: 2px;
+        }
+
+        #navi,
+        #infoi {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #infoi {
+            z-index: 10;
+        }
+    </style>
+    <script type="text/javascript">
+        function f1() {
+            document.getElementById("btn_comm").href = "";
+        }
+    </script>
+</head>
+<body>
+    @{ TruequeEntities db = new TruequeEntities();
+       Estatus est = new Estatus();
+       FormatosC fc = new FormatosC();
+    }
+    @{
+        string cabecera = ViewBag.tituloBajoCabecera;
+        string idUsuario = ViewBag.idUsuario;
+        string nombreUsuario = ViewBag.nombreUsuario;
+
+        USUARIO u = db.USUARIOs.Where(x => x.ID == idUsuario).FirstOrDefault();
+        List<string> coCodes = new List<string>();
+
+        foreach (var kk in u.SOCIEDADs)
+        {
+            coCodes.Add(kk.BUKRS);
+        }
+        string cadenaCoCodes = string.Join(",", coCodes.ToArray());
+
+
+        cabecera = cabecera.Replace("a1", nombreUsuario).Replace("b1", idUsuario).Replace("c1", cadenaCoCodes);
+
+    }
+    @*//B20180803 MGC Correos......................................*@
+    @* ------------------------------------------------------------------------LEJ 09-07-18 *@
+    <input id="miles" name="miles" type="hidden" value="@ViewBag.miles">
+    <input id="dec" name="dec" type="hidden" value="@ViewBag.dec">
+    @* ------------------------------------------------------------------------LEJ 09-07-18 *@
+    @*//B20180803 MGC Correos......................................*@
+
+    <table class="tg" style="width:100%; height:50px; border-collapse:collapse; background-color:#d11d53;">
+        <tr>
+            <td>
+                <div class="row" style="margin-bottom:0">
+                    <table class="tg" style="width: 100%;border-collapse: collapse;">
+                        <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                            <td>
+                                @{ string mail = ViewBag.mail;}
+                                @if (mail == "X")
+                                {
+                                    <img src="miimg_id" />
+                                }
+                                else
+                                {
+                                    <img src="~/images/logo-kellogg2.png" />
+                                }
+                            </td>
+                            <td style="text-align:center;">
+                                <h1 style="color:white;">@ViewBag.tituloCabecera</h1>
+                            </td>
+                            <td>
+                                <img src="miflag_id" style="margin-right:10px;" align="right" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    @*DIV CON EL CONTENIDO DEL CUERPO DEL CORREO*@
+    <table class="tg" style="width: 100%; border-collapse: collapse;">
+        <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td>
+                <p>
+                    <h4 style="margin-bottom:0px;">@cabecera</h4>
+                </p>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="card-panel" style="transition: box-shadow .25s, -webkit-box-shadow .25s;
+                                padding: 24px;margin: 0.5rem 0 1rem 0;border-radius: 2px;
+                                background-color:#fff;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);">
+
+                    <div class="row" style="margin-bottom:0">
+                        <table class="table striped" id="table" style="width:100%;">
+                            <thead>
+                                <tr class="header">
+                                    <th>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.headNum</label>
+                                    </th>
+                                    <th>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.headCocode</label>
+                                    </th>
+                                    <th>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.headPeriodo</label>
+                                    </th>
+                                    <th>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.headEstatus</label>
+                                    </th>
+                                    <th>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.headClienteId</label>
+                                    </th>
+                                    <th>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.headClienteNombre</label>
+                                    </th>
+                                    <th>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.headTsol</label>
+                                    </th>
+                                    <th>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.headClasificacion</label>
+                                    </th>
+                                    <th>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.headImporte</label>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody style="text-align:center;">
+                                @foreach (CSP_DOCUMENTOSXUSER2_Result item in Model)
+                                {
+                                    string land = db.SOCIEDADs.Where(x => x.BUKRS == item.SOCIEDAD_ID).FirstOrDefault().LAND;
+                                    <tr>
+                                        <td>
+                                            @item.NUM_DOC
+                                        </td>
+                                        <td>
+                                            @item.SOCIEDAD_ID
+                                        </td>
+                                        <td>
+                                            @item.PERIODO
+                                        </td>
+                                        <td>
+                                            @est.getText(item.NUM_DOC, u.SPRAS_ID)
+                                        </td>
+                                        <td>
+                                            @item.PAYER_ID
+                                        </td>
+                                        <td>
+                                            @item.NAME1
+                                        </td>
+                                        <td>
+                                            @item.TXT020
+                                        </td>
+                                        <td>
+                                            @item.TXT50
+                                        </td>
+                                        <td>
+                                            @fc.toShow(Convert.ToDecimal(item.MONTO_DOC_MD), db.PAIS.Where(x => x.LAND == land).FirstOrDefault().DECIMAL)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <span style="font-weight:bold;">@ViewBag.pie</span>
+                <a href="@ViewBag.url@Url.Action("Login","Account")">
+                    Link.
+                </a>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

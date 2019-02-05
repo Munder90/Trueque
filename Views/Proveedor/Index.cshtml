@@ -1,0 +1,73 @@
+﻿@model TAT001.Models.ProveedorViewModel
+@{
+    ViewBag.pagina_r = 771;
+    ViewBag.carpeta_r = 500;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col s12 right-align">
+        @*@Html.ActionLink("Agregar Pagina", "Create", "Proveedor", new { @class = "btn-small", @id = "btnAdd" })*@
+        @using (Html.BeginForm("Descargar", "Proveedor", FormMethod.Post, new { @style = "display:initial;" }))
+        {
+            <button id="btnExport" name="excel" class="btn-small" type="submit" value="Excel"></button>
+        }
+    </div>
+</div>
+<div class="card-panel">
+    <div class="row" style="margin-bottom:0;">
+        <div class="input-field col s3 m3 l3">
+            @Html.DropDownListFor(model => model.numRegistros, Model.pageSizes, "")
+            <label id="lbl_length"></label>
+        </div>
+        <div class="input-field col s5 m3 l3 offset-l6 offset-m6 offset-s4">
+            @Html.TextBoxFor(model => model.buscar, new { @class = "global_filter", @id = "global_filter", @maxlength = 50 })
+            <label for="global_filter" id="lbl_search">Buscar</label>
+        </div>
+    </div>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+        <link href="~/Content/dataTable.css" rel="stylesheet" />
+        <link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+        <div id="list">
+            @Html.Partial("List", Model)
+        </div>
+    </div>
+<script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+<script>
+    var root = '@Url.Content("~")';
+    //---- Inicializador de componentes Materialize----
+    fnCommon.materializeInit('select');
+
+    //------Actualizar numero de registros en paginación
+    $('#numRegistros').change(function () {
+        fnCommon.showProcess(true);
+        $.ajax({
+            url: root + 'Proveedor/List?numRegistros=' + $('#numRegistros').val() + '&&buscar=' + $('input.global_filter').val(),
+            success: function (resultView) {
+                if (resultView.isRedirect) {
+                    window.location = resultView.redirectUrl;
+                } else {
+                    fnCommon.showProcess(false);
+                    $('#list').html(resultView);
+                }
+            }
+        });
+    });
+
+    //------Actualizar registros por busqueda
+    $('input.global_filter').keyup(function () {
+        var buscar = $('input.global_filter').val();
+         $.ajax({
+             url: root+'Proveedor/List?numRegistros=' + $('#numRegistros').val() + '&&buscar=' + $('input.global_filter').val(),
+             success: function (resultView) {
+                 if (resultView.isRedirect) {
+                     window.location = resultView.redirectUrl;
+                 } else {
+                     $('#list').html(resultView);
+                 }
+            }
+        });
+    });
+    
+</script>

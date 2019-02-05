@@ -1,0 +1,332 @@
+﻿@model TAT001.Entities.FACTURASCONF
+
+@{
+    ViewBag.pagina_r = 1211;
+    ViewBag.carpeta_r = 500;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+@using (Html.BeginForm("Create", "DocRelacion", FormMethod.Post, new { @id = "docRelacionForm" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button id="btnGuardar" type="submit"  style="float:right;" class="btn btn-default"></button>
+            </div>
+        </div>
+    </div>
+    <div class="col 12 s12 ">
+        <div class="card-panel">
+            <div class="row">
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="form-group col s4">
+                            @Html.LabelFor(model => model.SOCIEDAD_ID, "Co. Code", htmlAttributes: new { @class = "control-label col-md-2 active", @id = "lblSociedadId" })
+                            @Html.EditorFor(model => model.SOCIEDAD_ID, new { htmlAttributes = new { @class = "form-control", @required = "", @maxlength = 50 } })
+                        </div>
+                        <div class="form-group col s4">
+                            @Html.LabelFor(model => model.PAIS_ID, "PAIS_ID", htmlAttributes: new { @class = "control-label col-md-2 active", @id = "lblPais" })
+                            @Html.EditorFor(model => model.PAIS_ID, new { htmlAttributes = new { @class = "form-control", @required = "", @maxlength = 50 } })
+                        </div>
+                        <div class="form-group col s4">
+                            @Html.LabelFor(model => model.TSOL, "TSOL", htmlAttributes: new { @class = "control-label col-md-2 active", @id = "lblTsol" })
+                            @Html.EditorFor(model => model.TSOL, new { htmlAttributes = new { @class = "form-control", @required = "", @maxlength = 50 } })
+                        </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="row">
+                            <div class="col s4" style="margin-bottom:0;">
+                                @Html.HiddenFor(model => model.FACTURA, new { @id = "idfac" } )
+                                    <label>
+                                        <input type="checkbox" name="selectedCustomers" value="true" id="fac" onclick="check()" />
+                                        <span id="lblFactura"></span>
+                                    </label>
+                            </div>
+                            <div class="col s4" style="margin-bottom:0;">
+                                @Html.HiddenFor(model => model.FECHA, new { @id = "idfec" })
+                                    <label>
+                                        <input type="checkbox" name="selectedCustomers" value="true" id="fec" onclick="check()" />
+                                        <span id = "lblFecha"></span>
+                                    </label>
+                            </div>
+                            <div class="col s4" style="margin-bottom:0;">
+                                @Html.HiddenFor(model => model.ACTIVO, new { @id = "idact" })
+                                    <label>
+                                        <input type="checkbox" name="selectedCustomers" value="true" id="act" onclick="check()" />
+                                        <span id = "lblActivo"></span>
+                                    </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s4" style="margin-bottom:0;">
+                                @Html.HiddenFor(model => model.PROVEEDOR, new { @id = "idprov" })
+                                    <label>
+                                        <input type="checkbox" name="selectedCustomers" value="true" id="prov" onclick="check()" />
+                                        <span id = "lblProveedor"></span>
+                                    </label>
+                            </div>
+
+                            <div class="col s4" style="margin-bottom:0;">
+                                @Html.HiddenFor(model => model.CONTROL, new { @id = "idcon" })
+                                    <label>
+                                        <input type="checkbox" name="selectedCustomers" value="true" id="con" onclick="check()" />
+                                        <span id = "lblControl"></span>
+                                    </label>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col s4" style="margin-bottom:0;">
+                                @Html.HiddenFor(model => model.AUTORIZACION, new { @id = "idauto" })
+                                    <label>
+                                        <input type="checkbox" name="selectedCustomers" value="true" id="auto" onclick="check()" />
+                                        <span id = "lblAutorizacion"></span>
+                                    </label>
+                            </div>
+
+                            <div class="col s4" style="margin-bottom:0;">
+                                @Html.HiddenFor(model => model.VENCIMIENTO, new { @id = "idvenc" })
+                                    <label>
+                                        <input type="checkbox" name="selectedCustomers" value="true" id="venc" onclick="check()" />
+                                        <span id = "lblVenc"></span>
+                                    </label>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col s4" style="margin-bottom:0;">
+                                @Html.HiddenFor(model => model.FACTURAK, new { @id = "idfactk" })
+                                    <label>
+                                        <input type="checkbox" name="selectedCustomers" value="true" id="factk" onclick="check()" />
+                                        <span id="lblFactK"></span>
+                                    </label>
+                            </div>
+
+                            <div class="col s4" style="margin-bottom:0;">
+                                @Html.HiddenFor(model => model.EJERCICIOK, new { @id = "idejek" })
+                                    <label>
+                                        <input type="checkbox" name="selectedCustomers" value="true" id="ejek" onclick="check()" />
+                                        <span id="lblEjeK"></span>
+                                    </label>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col s4" style="margin-bottom:0;">
+                                @Html.HiddenFor(model => model.BILL_DOC, new { @id = "idbill" })
+                                    <label>
+                                        <input type="checkbox" name="selectedCustomers" value="true" id="bill" onclick="check()" />
+                                        <span id = "lblBill"></span>
+                                    </label>
+                            </div>
+
+                            <div class="col s4" style="margin-bottom:0;">
+                                @Html.HiddenFor(model => model.BELNR, new { @id = "idbellnr" })
+                                    <label>
+                                        <input type="checkbox" name="selectedCustomers" value="true" id="bellnr" onclick="check()" />
+                                        <span id = "lblBell"></span>
+                                    </label>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col s4" style="margin-bottom:0;">
+                                @Html.HiddenFor(model => model.IMPORTE_FAC, new { @id = "idimpo" })
+                                    <label>
+                                        <input type="checkbox" name="selectedCustomers" value="true" id="impo" onclick="check()" />
+                                        <span id = "lblImporte"></span>
+                                    </label>
+                            </div>
+                            <div class="col s4" style="margin-bottom:0;">
+                                @Html.HiddenFor(model => model.PAYER, new { @id = "idpay" })
+                                    <label>
+                                        <input type="checkbox" name="selectedCustomers" value="true" id="pay" onclick="check()" />
+                                        <span id = "lblPayer"></span>
+                                    </label>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col s4" style="margin-bottom:0;">
+                                @Html.HiddenFor(model => model.DESCRIPCION, new { @id = "iddes" })
+                                    <label>
+                                        <input type="checkbox" name="selectedCustomers" value="true" id="des" onclick="check()" />
+                                        <span id = "lblDesc"></span>
+                                    </label>
+                            </div>
+                            @*input-field*@
+                            <div class="col s4" style="margin-bottom:0;">
+                                @Html.HiddenFor(model => model.SOCIEDAD, new { @id = "idsoc" })
+                                    <label>
+                                        <input type="checkbox" name="selectedCustomers" value="true" id="soc" onclick="check()" />
+                                        <span id="lblSoci" ></span>
+                                    </label>
+                            </div>
+                        </div>
+
+                       
+                    </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="col s12">
+    <a id="btnRegresar" href="@Url.Action("Index")"></a>
+</div>
+
+<script>
+    function check() {
+        if ($("#fac").prop('checked'))
+            $("#idfac").prop('value', true);
+        else
+            $("#idfac").prop('value', false);
+
+        if ($("#fec").prop('checked'))
+            $("#idfec").prop('value', true);
+        else
+            $("#idfec").prop('value', false);
+
+        if ($("#prov").prop('checked'))
+            $("#idprov").prop('value', true);
+        else
+            $("#idprov").prop('value', false);
+
+        if ($("#con").prop('checked'))
+            $("#idcon").prop('value', true);
+        else
+            $("#idcon").prop('value', false);
+
+        if ($("#auto").prop('checked'))
+            $("#idauto").prop('value', true);
+        else
+            $("#idauto").prop('value', false);
+
+        if ($("#venc").prop('checked'))
+            $("#idvenc").prop('value', true);
+        else
+            $("#idvenc").prop('value', false);
+
+        if ($("#factk").prop('checked'))
+            $("#idfactk").prop('value', true);
+        else
+            $("#idfactk").prop('value', false);
+
+        if ($("#ejek").prop('checked'))
+            $("#idejek").prop('value', true);
+        else
+            $("#idejek").prop('value', false);
+
+        if ($("#bill").prop('checked'))
+            $("#idbill").prop('value', true);
+        else
+            $("#idbill").prop('value', false);
+
+        if ($("#bellnr").prop('checked'))
+            $("#idbellnr").prop('value', true);
+        else
+            $("#idbellnr").prop('value', false);
+
+        if ($("#impo").prop('checked'))
+            $("#idimpo").prop('value', true);
+        else
+            $("#idimpo").prop('value', false);
+
+        if ($("#pay").prop('checked'))
+            $("#idpay").prop('value', true);
+        else
+            $("#idpay").prop('value', false);
+
+        if ($("#des").prop('checked'))
+            $("#iddes").prop('value', true);
+        else
+            $("#iddes").prop('value', false);
+
+        if ($("#soc").prop('checked'))
+            $("#idsoc").prop('value', true);
+        else
+            $("#idsoc").prop('value', false);
+
+        if ($("#act").prop('checked'))
+            $("#idact").prop('value', true);
+        else
+            $("#idact").prop('value', false);
+    }
+</script>
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+<script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+<script>
+    var root = "@Url.Content("~")";
+    fnCommon.formValidation('docRelacionForm');
+</script>
+
+<link href="~/Content/autocomplete.css" rel="stylesheet" />
+<script src="~/Scripts/autocomplete1.11.4.js"></script>
+        <script>
+    var auto = $.noConflict(true);
+        auto(document).ready(function () {
+            auto("#SOCIEDAD_ID").autocomplete({
+                source: function (request, response) {
+                    fnCommon.autoAjax(root + "Listas/Sociedades", response, { Prefix: request.term }, function (item) { return { label: item.BUKRS, value: item.BUKRS }; });
+                },
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) { }
+                },
+                select: function (event, ui) {
+                    var label = ui.item.label;
+                    var value = ui.item.value;
+                },
+                change: function (e, ui) {
+                    if (!(ui.item)) {
+                        e.target.value = "";
+                    }
+                }
+            });
+            auto("#TSOL").autocomplete({
+                source: function (request, response) {
+                    fnCommon.autoAjax(root + "Listas/tiposSolicitud", response, { Prefix: request.term }, function (item) { return { label: item.TXT50, value: item.TSOL_ID }; });
+                },
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) { }
+                },
+                select: function (event, ui) {
+                    var label = ui.item.label;
+                    var value = ui.item.value;
+                },
+                change: function (e, ui) {
+                    if (!(ui.item)) {
+                        e.target.value = "";
+                    }
+                }
+            });
+            auto("#PAIS_ID").autocomplete(
+                {
+                    source: function (request, response) {
+                        fnCommon.autoAjax(root + "Listas/Paises", response, { Prefix: request.term }, function (item) { return { label: item.LANDX, value: item.LAND }; });
+                    },
+                    messages: {
+                        noResults: '',
+                        results: function (resultsCount) { }
+                    },
+                    select: function (event, ui) {
+                        var label = ui.item.label;
+                        var value = ui.item.value;
+                    },
+                    change: function (e, ui) {
+                        if (!(ui.item)) {
+                            e.target.value = "";
+                        }
+                    }
+                });
+        });
+</script>

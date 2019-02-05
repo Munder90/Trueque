@@ -1,0 +1,82 @@
+﻿@model TAT001.Entities.WARNING
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 502;
+    ViewBag.carpeta_r = 500;
+}
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col s12 right-align">
+                <button type="submit" id="btnGuardar" class="btn btn-default"></button>
+            </div>
+        </div>
+
+        <div class="col s12">
+
+            <div class="card-panel">
+                <div class="row">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.PAGINA_ID, new { htmlAttributes = new { @class = "hidden" } })
+                        <div class="input-field col s12 l6">
+                            @Html.DropDownList("CAMPO_ID", null, htmlAttributes: new { @id = "sel-campo" })
+                            @Html.LabelFor(model => model.CAMPO_ID, htmlAttributes: new { @id = "lblCampo" })
+                            @Html.ValidationMessageFor(model => model.CAMPO_ID, "", new { @class = "text-danger" })
+                        </div>
+                        <script>
+                            var elem = document.getElementById('sel-campo');
+                            var options = [];
+                            var instance = M.FormSelect.init(elem, options);
+                        </script>
+                        <div class="input-field col s12 l6">
+                            @Html.DropDownList("SPRAS_ID", null, htmlAttributes: new { @id = "sel-spras" })
+                            @Html.LabelFor(model => model.SPRAS_ID, htmlAttributes: new { @id = "lblIdioma" })
+                            @Html.ValidationMessageFor(model => model.SPRAS_ID, "", new { @class = "text-danger" })
+                        </div>
+                        <script>
+                            var elem = document.getElementById('sel-spras');
+                            var options = [];
+                            var instance = M.FormSelect.init(elem, options);
+                        </script>
+
+                        <div class="input-field col s12 l6">
+                            @Html.TextAreaFor(model => model.WARNING1, new { @class = "materialize-textarea", @required = "required" })
+                            @Html.LabelFor(model => model.WARNING1, htmlAttributes: new { @class = "control-label col-md-2",@id= "lblDesc" })
+                            @Html.ValidationMessageFor(model => model.WARNING1, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="input-field col s12 l6">
+                            @Html.DropDownList("POSICION", null, htmlAttributes: new { @id = "sel-posi" })
+                            @Html.LabelFor(model => model.POSICION, htmlAttributes: new { @class = "control-label col-md-2", @id= "lblPos" })
+                            @Html.ValidationMessageFor(model => model.POSICION, "", new { @class = "text-danger" })
+                        </div>
+                    <div class="input-field col l1 m10 right" style="margin-bottom:0;">
+                        <label>
+                            <input type="checkbox" name="ACTIVO" value="true" checked />
+                            <span id="lblActivo"></span>
+
+                        </label>
+                    </div>
+                        <script>
+                            var elem = document.getElementById('sel-posi');
+                            var options = [];
+                            var instance = M.FormSelect.init(elem, options);
+                        </script>
+                    </div>
+                </div>
+            </div>
+        if (ViewBag.Error != null)
+        {
+            <script>
+            M.toast({ html: '@ViewBag.Error' });
+            </script>
+        }
+    }
+</div>
+    <div class="col s12">
+        <a id="btnRegresar" href="@Url.Action("Index",new { id=Model.PAGINA_ID })"></a>
+    </div>

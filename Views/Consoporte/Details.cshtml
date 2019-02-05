@@ -1,0 +1,75 @@
+﻿@model TAT001.Entities.CONSOPORTE
+
+@{
+    ViewBag.pagina_r = 843;
+    ViewBag.carpeta_r = 500;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col s12 right-align">
+        <a href="@Url.Action("Edit", "Consoporte",new { tsol = Model.TSOL_ID, tsopo = Model.TSOPORTE_ID })" id="btnEditar" class="btn btn-default"></a>
+    </div>
+</div>
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        string tipoSoporte = Model.TSOPORTE.DESCRIPCION;
+        string tipoSolicitud = Model.TSOL.ID + " - " + Model.TSOL.DESCRIPCION;
+        if (Model.TSOPORTE.TSOPORTETs.Any(x => x.SPRAS_ID == "ES"))
+        {
+            tipoSoporte = Model.TSOPORTE.TSOPORTETs.First(x => x.SPRAS_ID == "ES").TXT50;
+        }
+        if (Model.TSOL.TSOLTs.Any(x => x.SPRAS_ID == "ES"))
+        {
+            tipoSolicitud = Model.TSOL.ID + " - " + Model.TSOL.TSOLTs.First(x => x.SPRAS_ID == "ES").TXT50;
+        }
+        <div class="col s12">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="col s6">
+                        <div class="form-horizontal">
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.TSOPORTE.DESCRIPCION, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblTipoSop" })
+                                @Html.EditorFor(model => model.TSOPORTE.DESCRIPCION, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = tipoSoporte } })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.TSOL.DESCRIPCION, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblTipoSol" })
+                                @Html.EditorFor(model => model.TSOL.DESCRIPCION, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = tipoSolicitud } })
+                            </div>
+
+                            <div class="input-field col l4 m10 right" style="margin-bottom:0;">
+                                <label>
+                                    @if ((bool)Model.ACTIVO == true)
+                                    {
+                                        <i class='material-icons green-text'>check</i>}
+                                    else
+                                    {
+                                        <i class='material-icons red-text'>clear</i>}
+                                    @Html.LabelFor(model => model.ACTIVO, htmlAttributes: new { @class = "control-label col-md-10", @id = "lblActivo" })
+                                </label>
+                            </div>
+                            <div class="input-field col l4 m10 right" style="margin-bottom:0;">
+                                <label>
+                                    @if ((bool)Model.OBLIGATORIO == true)
+                                    {
+                                        <i class='material-icons green-text'>check</i>}
+                                    else
+                                    {
+                                        <i class='material-icons red-text'>clear</i>}
+                                    @Html.LabelFor(model => model.OBLIGATORIO, htmlAttributes: new { @class = "control-label col-md-10", @id = "lblObliga" })
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    }
+</div>
+
+<div class="col s12">
+    <a id="btnRegresar" href="@Url.Action("Index")"></a>
+    </div>

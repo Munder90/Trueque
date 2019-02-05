@@ -1,0 +1,920 @@
+﻿@model TAT001.Entities.DOCUMENTO
+@using TAT001.Entities;
+@using TAT001.Controllers;
+@{
+    ViewBag.pagina_r = 221;
+    ViewBag.carpeta_r = 200;
+    //ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    var elem = document.querySelector('select');
+    var options = [];
+    //var instance = M.FormSelect.init(elem, options);
+</script>
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+<link href="~/Content/dataTable.css" rel="stylesheet" />
+<link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+@*<script>
+            $(document).ready(function () {
+                $('#shi').click(function () {
+                    $(this).prop("disabled", true);
+                    if (!$('form').valid())
+                    {
+                        $(this).prop("disabled",false);
+                        return false;
+                    }
+                    $('form').submit();
+                });
+            });
+    </script>*@
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    List<string> err = new List<string>();
+    int colHoja1 = ViewBag.data1.Tables[0].Columns.Count;
+    int colHoja2 = ViewBag.data2.Tables[0].Columns.Count;
+    int colHoja3 = ViewBag.data3.Tables[0].Columns.Count;
+    int colHoja4 = ViewBag.data4.Tables[0].Columns.Count;
+    int colHoja5 = ViewBag.data5.Tables[0].Columns.Count;
+
+    if (colHoja1 > 15) { err.Add("Hoja 1, Formato incorrecto"); }
+    if (colHoja2 > 10) { err.Add("Hoja 2, Formato incorrecto"); }
+    if (colHoja3 > 11) { err.Add("Hoja 3, Formato incorrecto"); }
+    if (colHoja4 > 3) { err.Add("Hoja 4, Formato incorrecto"); }
+    if (colHoja5 > 7) { err.Add("Hoja 5, Formato incorrecto"); }
+
+    <div>
+        @if (err.Count() > 0)
+        {
+            foreach (var a in err)
+            {
+                <script>
+                    $(document).ready(function () {
+                        function docMessage(msg) {
+                            M.toast({ html: msg });
+                        }
+
+                        var messages = '@a';
+
+                        if (messages != "") {
+                            docMessage(messages);
+                        }
+                    });
+                </script>
+            }
+        }
+    </div>
+
+    <div class="row">
+        <div class="row right">
+            <div class="col l12 m12 right">
+                <a href="@Url.Action("Index", "Excel")" class="waves-effect waves-light btn">Regresar</a>
+                @if (err.Count() > 0)
+                {
+                    @*<input type="submit" value="Guardar" class="btn btn-default" id="shi"/>*@
+                    <a href="@Url.Action("Details", "Excel")" class="waves-effect waves-light btn">Guardar</a>
+                }
+                else
+                {
+                    <a data-form-method="post" href="@Url.Action("Details", "Excel", new { rutaExcel = ViewBag.ruta })" class="waves-effect waves-light btn">Guardar</a>
+                }
+                @*<a data-form-method="post" href="@Url.Action("Details", "Excel", new { doc = p, a = "hola" })" class="waves-effect waves-light btn">Guardar</a>*@
+                @*<input type="submit" value="Guardar" class="btn btn-default" />*@
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="row" style="height:10px;width:100%;">
+            <div class="col l7 pink darken-1" style="height:10px;padding:0;"></div>
+            <div class="col l3 pink darken-4" style="height:10px;padding:0;">
+                <div class="col l3 pink darken-4" style="height:10px;padding:0;"></div>
+                <div class="col l8 orange" style="height:10px;padding:0;"></div>
+                <div class="col l1 red" style="height:10px;padding:0;"></div>
+            </div>
+            <div class="col l2 yellow" style="height:10px;padding:0;"></div>
+        </div>
+    </div>
+
+    if (ViewBag.data1.Tables[0].Columns.Count == 15)
+    {
+        <table class="table mdl-data-table striped" id="table" style="width:100%;">
+            <thead>
+                <tr class="header" style="background-color:#CCCCCC">
+                    <th style="text-align:center">D Relacionada2</th>
+                    <th style="text-align:center">D Relacionada</th>
+                    <th style="text-align:center">F Relacionada</th>
+                    <th style="text-align:center">Materiales</th>
+                    <th>
+                        @ViewBag.data1.Tables[0].Rows[0][0].ToString()
+                    </th>
+                    <th>
+                        @ViewBag.data1.Tables[0].Rows[0][1].ToString()
+                    </th>
+                    <th>
+                        @ViewBag.data1.Tables[0].Rows[0][2].ToString()
+                    </th>
+                    <th>
+                        @ViewBag.data1.Tables[0].Rows[0][3].ToString()
+                    </th>
+                    <th>
+                        @ViewBag.data1.Tables[0].Rows[0][4].ToString()
+                    </th>
+                    <th>
+                        @ViewBag.data1.Tables[0].Rows[0][5].ToString()
+                    </th>
+                    <th>
+                        @ViewBag.data1.Tables[0].Rows[0][6].ToString()
+                    </th>
+                    <th>
+                        @ViewBag.data1.Tables[0].Rows[0][7].ToString()
+                    </th>
+                    <th>
+                        @ViewBag.data1.Tables[0].Rows[0][8].ToString()
+                    </th>
+                    <th>
+                        @ViewBag.data1.Tables[0].Rows[0][9].ToString()
+                    </th>
+                    <th>
+                        @ViewBag.data1.Tables[0].Rows[0][10].ToString()
+                    </th>
+                    <th>
+                        @ViewBag.data1.Tables[0].Rows[0][11].ToString()
+                    </th>
+                    <th>
+                        @ViewBag.data1.Tables[0].Rows[0][12].ToString()
+                    </th>
+                    <th>
+                        @ViewBag.data1.Tables[0].Rows[0][13].ToString()
+                    </th>
+                    <th>
+                        @ViewBag.data1.Tables[0].Rows[0][14].ToString()
+                    </th>
+                </tr>
+            </thead>
+            @using (TruequeEntities db = new TruequeEntities())
+            {
+                <tbody>
+                    @for (int i = 1; i < ViewBag.data1.Tables[0].Rows.Count; i++)
+                    {
+                        ExcelController ec = new ExcelController();
+                        string numDoc = ViewBag.data1.Tables[0].Rows[i][0].ToString();
+                        string a = ViewBag.data1.Tables[0].Rows[i][1].ToString();
+                        string b = ViewBag.data1.Tables[0].Rows[i][2].ToString();
+                        b = Server.HtmlDecode(b);
+                        b = db.TALLs.Where(x => x.DESCRIPCION == b & x.ACTIVO == true).Select(x => x.GALL_ID).FirstOrDefault();
+                        string c = ViewBag.data1.Tables[0].Rows[i][3].ToString();
+                        string d = ViewBag.data1.Tables[0].Rows[i][4].ToString();
+                        d = db.PAIS.Where(x => x.LANDX == d).Select(x => x.LAND).FirstOrDefault();
+                        string k = ViewBag.data1.Tables[0].Rows[i][14].ToString();
+                        var e = db.TSOLs.Where(x => x.ID == a).Select(x => x.ID);
+                        var f = db.GALLs.Where(x => x.ID == b).Select(x => x.ID);
+                        var g = db.SOCIEDADs.Where(x => x.BUKRS == c).Select(x => x.BUKRS);
+                        var h = db.PAIS.Where(x => x.LAND == d).Select(x => x.LAND);
+                        var kk = db.MONEDAs.Where(x => x.WAERS == k).Select(x => x.WAERS);
+
+                        string dd = ViewBag.data1.Tables[0].Rows[i][9].ToString();
+                        var ee = db.CLIENTEs.Where(x => x.KUNNR == dd);
+
+                        var u = ViewBag.usuario;
+                        string IdU = u.ID;
+
+                        var per = from P in db.PAIS
+                                  join C in db.CREADOR2 on P.LAND equals C.LAND
+                                  where P.ACTIVO == true
+                                  & C.ID == IdU & C.ACTIVO == true
+                                  select P;
+
+                        string mi1 = ViewBag.data1.Tables[0].Rows[i][3].ToString();
+                        string mi2 = d;
+                        var perm = per.Where(x => x.SOCIEDAD_ID == mi1 & x.LAND == mi2).FirstOrDefault();
+
+                        string fechI = ViewBag.data1.Tables[0].Rows[i][12].ToString();
+                        string fechF = ViewBag.data1.Tables[0].Rows[i][13].ToString();
+                        if (fechI.Length > 10) { fechI = fechI.Substring(0, 10); }
+                        if (fechF.Length > 10) { fechF = fechF.Substring(0, 10); }
+
+                        if (e.Count() > 0 && f.Count() > 0 && g.Count() > 0 && h.Count() > 0 & ee.Count() > 0 & kk.Count() > 0)
+                        {
+                            if (perm != null)
+                            {
+                                if (ec.IsNumeric(numDoc))
+                                {
+                                    <tr class="green white-text">
+                                        <td class="details-control4" style="cursor:pointer; text-align:center">
+                                            <i class="material-icons">expand_more</i>
+                                        </td>
+                                        <td class="details-control3" style="cursor:pointer; text-align:center">
+                                            <i class="material-icons"><span class="details-list3">expand_more</span></i>
+                                        </td>
+                                        <td id="cam" class="details-control2" style="cursor:pointer; text-align:center">
+                                            <i class="material-icons"><span class="details-list2">expand_more</span></i>
+                                        </td>
+                                        <td class="details-control" style="cursor:pointer; text-align:center">
+                                            <i class="material-icons"><span class="details-list">expand_more</span></i>
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][0].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][1].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][2].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][3].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][4].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][5].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][6].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][7].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][8].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][9].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][10].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][11].ToString()
+                                        </td>
+                                        <td>
+                                            @fechI
+                                        </td>
+                                        <td>
+                                            @fechF
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][14].ToString()
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td class="details-control4" style="cursor:pointer; text-align:center">
+                                            <i class="material-icons">expand_more</i>
+                                        </td>
+                                        <td class="details-control3" style="cursor:pointer; text-align:center">
+                                            <i class="material-icons"><span class="details-list3">expand_more</span></i>
+                                        </td>
+                                        <td id="cam" class="details-control2" style="cursor:pointer; text-align:center">
+                                            <i class="material-icons"><span class="details-list2">expand_more</span></i>
+                                        </td>
+                                        <td class="details-control" style="cursor:pointer; text-align:center">
+                                            <i class="material-icons"><span class="details-list">expand_more</span></i>
+                                        </td>
+                                        <td class="red white-text">
+                                            @ViewBag.data1.Tables[0].Rows[i][0].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][1].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][2].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][3].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][4].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][5].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][6].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][7].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][8].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][9].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][10].ToString()
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][11].ToString()
+                                        </td>
+                                        <td>
+                                            @fechI
+                                        </td>
+                                        <td>
+                                            @fechF
+                                        </td>
+                                        <td>
+                                            @ViewBag.data1.Tables[0].Rows[i][14].ToString()
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr class="red white-text">
+                                    <td class="details-control4" style="cursor:pointer; text-align:center">
+                                        <i class="material-icons">expand_more</i>
+                                    </td>
+                                    <td class="details-control3" style="cursor:pointer; text-align:center">
+                                        <i class="material-icons"><span class="details-list3">expand_more</span></i>
+                                    </td>
+                                    <td id="cam" class="details-control2" style="cursor:pointer; text-align:center">
+                                        <i class="material-icons"><span class="details-list2">expand_more</span></i>
+                                    </td>
+                                    <td class="details-control" style="cursor:pointer; text-align:center">
+                                        <i class="material-icons"><span class="details-list">expand_more</span></i>
+                                    </td>
+                                    <td>
+                                        @ViewBag.data1.Tables[0].Rows[i][0].ToString()
+                                    </td>
+                                    <td>
+                                        @ViewBag.data1.Tables[0].Rows[i][1].ToString()
+                                    </td>
+                                    <td>
+                                        @ViewBag.data1.Tables[0].Rows[i][2].ToString()
+                                    </td>
+                                    <td>
+                                        @ViewBag.data1.Tables[0].Rows[i][3].ToString()
+                                    </td>
+                                    <td>
+                                        @ViewBag.data1.Tables[0].Rows[i][4].ToString()
+                                    </td>
+                                    <td>
+                                        @ViewBag.data1.Tables[0].Rows[i][5].ToString()
+                                    </td>
+                                    <td>
+                                        @ViewBag.data1.Tables[0].Rows[i][6].ToString()
+                                    </td>
+                                    <td>
+                                        @ViewBag.data1.Tables[0].Rows[i][7].ToString()
+                                    </td>
+                                    <td>
+                                        @ViewBag.data1.Tables[0].Rows[i][8].ToString()
+                                    </td>
+                                    <td>
+                                        @ViewBag.data1.Tables[0].Rows[i][9].ToString()
+                                    </td>
+                                    <td>
+                                        @ViewBag.data1.Tables[0].Rows[i][10].ToString()
+                                    </td>
+                                    <td>
+                                        @ViewBag.data1.Tables[0].Rows[i][11].ToString()
+                                    </td>
+                                    <td>
+                                        @fechI
+                                    </td>
+                                    <td>
+                                        @fechF
+                                    </td>
+                                    <td>
+                                        @ViewBag.data1.Tables[0].Rows[i][14].ToString()
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="details-control4" style="cursor:pointer; text-align:center">
+                                    <i class="material-icons">expand_more</i>
+                                </td>
+                                <td class="details-control3" style="cursor:pointer; text-align:center">
+                                    <i class="material-icons"><span class="details-list3">expand_more</span></i>
+                                </td>
+                                <td id="cam" class="details-control2" style="cursor:pointer; text-align:center">
+                                    <i class="material-icons"><span class="details-list2">expand_more</span></i>
+                                </td>
+                                <td class="details-control" style="cursor:pointer; text-align:center">
+                                    <i class="material-icons"><span class="details-list">expand_more</span></i>
+                                </td>
+                                <td>
+                                    @ViewBag.data1.Tables[0].Rows[i][0].ToString()
+                                </td>
+                                @if (e.Count() > 0)
+                                {
+                                    <td>@ViewBag.data1.Tables[0].Rows[i][1].ToString()</td>}
+                                else
+                                {
+                                    <td class="red white-text">@ViewBag.data1.Tables[0].Rows[i][1].ToString()</td>}
+                                @if (f.Count() > 0)
+                                {
+                                    <td>@ViewBag.data1.Tables[0].Rows[i][2].ToString()</td>}
+                                else
+                                {
+                                    <td class="red white-text">@ViewBag.data1.Tables[0].Rows[i][2].ToString()</td>}
+                                @if (g.Count() > 0)
+                                {
+                                    <td>@ViewBag.data1.Tables[0].Rows[i][3].ToString()</td>}
+                                else
+                                {
+                                    <td class="red white-text">@ViewBag.data1.Tables[0].Rows[i][3].ToString()</td>}
+                                @if (h.Count() > 0)
+                                {
+                                    <td>@ViewBag.data1.Tables[0].Rows[i][4].ToString()</td>}
+                                else
+                                {
+                                    <td class="red white-text">@ViewBag.data1.Tables[0].Rows[i][4].ToString()</td>}
+                                <td>
+                                    @ViewBag.data1.Tables[0].Rows[i][5].ToString()
+                                </td>
+                                <td>
+                                    @ViewBag.data1.Tables[0].Rows[i][6].ToString()
+                                </td>
+                                <td>
+                                    @ViewBag.data1.Tables[0].Rows[i][7].ToString()
+                                </td>
+                                <td>
+                                    @ViewBag.data1.Tables[0].Rows[i][8].ToString()
+                                </td>
+                                @if (ee.Count() > 0)
+                                {
+                                    <td>
+                                        @ViewBag.data1.Tables[0].Rows[i][9].ToString()
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="red white-text">
+                                        @ViewBag.data1.Tables[0].Rows[i][9].ToString()
+                                    </td>
+                                }
+                                <td>
+                                    @ViewBag.data1.Tables[0].Rows[i][10].ToString()
+                                </td>
+                                <td>
+                                    @ViewBag.data1.Tables[0].Rows[i][11].ToString()
+                                </td>
+                                <td>
+                                    @fechI
+                                </td>
+                                <td>
+                                    @fechF
+                                </td>
+                                @if (kk.Count() > 0)
+                                {
+                                    <td>@ViewBag.data1.Tables[0].Rows[i][14].ToString()</td>}
+                                else
+                                {
+                                    <td class="red white-text">@ViewBag.data1.Tables[0].Rows[i][14].ToString()</td>}
+                            </tr>
+                        }
+                    }
+                </tbody>
+            }
+        </table>
+    }
+}
+<script type="text/javascript">
+    $("a[data-form-method='post']").click(function (event) {
+        event.preventDefault();
+        var element = $(this);
+        var action = element.attr("href");
+        element.closest("form").each(function () {
+            var form = $(this);
+            form.attr("action", action);
+            form.submit();
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        var table = $('#table').DataTable({
+            scrollX: "50vh",
+            scrollY: "50vh",
+            scrollCollapse: true,
+            order: [[4, "desc"], [5, "desc"], [1, "desc"]],
+            language: {
+                "url": "../Scripts/lang/@Session["spras"].ToString()" + ".json"
+            },
+            columnDefs: [
+                {
+                    targets: [1, 2, 3, 4, 5, 6],
+                    className: 'mdl-data-table__cell--non-numeric'
+                }
+            ],
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var select = $('<select style="display:initial;" class="browser-default"><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            )
+                            ;
+
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+
+                    column.cells('', column[0]).render('display').sort().unique().each(function (d, j) {
+                        var val = $('<div/>').html(d).text();
+                        select.append('<option value="' + val + '">' + val + '</option>');
+                    });
+                });
+            }
+        });
+
+        $('#selecc').on('change', function () {
+            table.page.len(this.value).draw();
+        });
+
+        $('input.global_filter').on('keyup click', function () {
+            filterGlobal();
+        });
+
+        $('#table tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                $(this, ' details-control').children().text('expand_more')
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                //row.child(format(row.data())).show();
+                //tr.addClass('shown');
+                // Open this row
+                $(this, ' details-control').children().text('expand_less')
+                var child = format(row.data(), row, tr);
+                if (child != undefined) {
+                }
+            }
+        });
+
+        $('#table tbody').on('click', 'td.details-control2', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                $(this, ' details-control2').children().text('expand_more')
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                $(this, ' details-control2').children().text('expand_less')
+                var child = format2(row.data(), row, tr);
+                if (child != undefined) {
+                }
+            }
+        });
+
+        $('#table tbody').on('click', 'td.details-control3', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                $(this, ' details-control3').children().text('expand_more')
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                $(this, ' details-control3').children().text('expand_less')
+                var child = format3(row.data(), row, tr);
+                if (child != undefined) {
+                }
+            }
+        });
+
+        $('#table tbody').on('click', 'td.details-control4', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                $(this, ' details-control4').children().text('expand_more')
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                $(this, ' details-control4').children().text('expand_less')
+                var child = format4(row.data(), row, tr);
+                if (child != undefined) {
+                }
+            }
+        });
+    });
+
+    function filterGlobal() {
+        $('#table').DataTable().search(
+            $('#global_filter').val()).draw();
+    }
+
+    function convert(str) {
+        var date = new Date(str),
+            mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+            day = ("0" + date.getDate()).slice(-2);
+        return [day, mnth, date.getFullYear()].join("/");
+    }
+
+    function format(d, row, tr) {
+        $.ajax({
+            url: "Doc",
+            type: "GET",
+            async: false,
+            timeout: 30000,
+            dataType: "json",
+            data: { num_doc: d[4] },
+            success: function (data) {
+                var ldp = ($.map(data, function (item) {
+                    return { label: item, value: item };
+                }))
+                var ret = "<table class='table mdl-data-table striped'>";
+                for (var i = 0; i < data.length; i++) {
+                    var matTam = data[i].MATNR.substr(0, 4);
+                    var catTam = data[i].MATKL.substr(0, 4);
+
+                    var dd, dd2;
+                    var fechaJS = new Date(parseInt(data[i].VIGENCIA_DE.replace(/[^0-9 +]/g, '')));
+                    var fechaJS2 = new Date(parseInt(data[i].VIGENCIA_AL.replace(/[^0-9 +]/g, '')));
+                    if (fechaJS > fechaJS2) {
+                        dd = "<td class='red white-text'>" + convert(fechaJS) + "</td>";
+                        dd2 = "<td class='red white-text'>" + convert(fechaJS2) + "</td>";
+                    }
+                    else {
+                        dd = "<td>" + convert(fechaJS) + "</td>";
+                        dd2 = "<td>" + convert(fechaJS2) + "</td>";
+                    }
+
+                    if (matTam == "<td>" & catTam == "<td>" & dd.substr(0, 4) == "<td>" & dd2.substr(0, 4) == "<td>") {
+                        ret += "<tr class='green white-text'>";
+                    }
+                    else {
+                        ret += "<tr>";
+                    }
+                    ret += "<td>" + data[i].NUM_DOC + "</td>";
+                    //ret += "<td>" + data[i].POS + "</td>";
+                    ret += data[i].MATNR;
+                    ret += data[i].MATKL;
+                    ret += "<td>$" + parseFloat(data[i].MONTO).toFixed(2) + "</td>";
+                    ret += "<td>%" + parseFloat(data[i].PORC_APOYO).toFixed(2) + "</td>";
+                    ret += "<td>$" + parseFloat(data[i].PRECIO_SUG).toFixed(2) + "</td>";
+                    ret += "<td>" + parseFloat(data[i].VOLUMEN_EST).toFixed(2) + "</td>";
+                    ret += "<td>$" + parseFloat(data[i].APOYO_EST).toFixed(2) + "</td>";
+                    ret += dd;
+                    ret += dd2;
+
+                }
+                ret += "</tr></table>"
+
+                row.child(ret).show();
+                tr.addClass('shown');
+
+                return ret;
+            },
+            error: function (e, ew) {
+            }
+        });
+    }
+
+
+    function format2(d, row, tr) {
+        $.ajax({
+            url: "Hoja3",
+            type: "GET",
+            async: false,
+            timeout: 30000,
+            dataType: "json",
+            data: { num_doc: d[4], a: d[5], c: d[7], d: d[8] },
+            success: function (data) {
+                var ldf = ($.map(data, function (item) {
+                    return { label: item, value: item };
+                }))
+
+                var paisA = data.pop();
+                //var paisA2 = data.pop();
+                var ret = "<table class='table mdl-data-table striped'>";
+                for (var i = 0; i < paisA.length; i++) {
+                    var fecha, vencimiento;
+
+                    if (data[i].FECHA != null) { fecha = new Date(parseInt(data[i].FECHA.replace(/[^0-9 +]/g, ''))); }
+                    else { fecha = null }
+
+                    if (data[i].VENCIMIENTO != null) { vencimiento = new Date(parseInt(data[i].VENCIMIENTO.replace(/[^0-9 +]/g, ''))); }
+                    else { vencimiento = null }
+
+                    //paisA --> Pais clave
+                    //d[3] --> Tipo de solicitud
+
+                    if (data.length > 1) {
+                        ret += "<tr class='red white-text'>";
+                    }
+                    else {
+                        ret += paisA[i];
+                    }
+                    //ret += paisA[i];
+                    ret += "<td>" + data[i].NUM_DOC + "</td>";
+                    //ret += "<td>" + data[i].POS + "</td>";
+                    ret += "<td>" + data[i].FACTURA + "</td>";
+                    if (fecha == null) { ret += "<td>0</td>"; }
+                    else { ret += "<td>" + convert(fecha) + "</td>"; }
+                    ret += "<td>" + data[i].PROVEEDOR + "</td>";
+                    ret += "<td>" + data[i].CONTROL + "</td>";
+                    ret += "<td>" + data[i].AUTORIZACION + "</td>";
+                    if (vencimiento == null) { ret += "<td>0</td>"; }
+                    else { ret += "<td>" + convert(vencimiento) + "</td>"; }
+                    ret += "<td>" + data[i].FACTURAK + "</td>";
+                    ret += "<td>" + data[i].EJERCICIOK + "</td>";
+                    ret += "<td>" + data[i].BILL_DOC + "</td>";
+                    ret += "<td>" + data[i].BELNR + "</td>";
+                }
+                ret += "</tr></table>"
+
+                row.child(ret).show();
+                tr.addClass('shown');
+
+                return ret;
+            },
+            error: function (e, ew) {
+            }
+        });
+    }
+
+    function format3(d, row, tr) {
+        $.ajax({
+            url: "Hoja4",
+            type: "GET",
+            async: false,
+            timeout: 30000,
+            dataType: "json",
+            data: { num_doc: d[4] },
+            success: function (data) {
+                var lda = ($.map(data, function (item) {
+                    return { label: item, value: item };
+                }))
+
+                var arr = data.pop();
+
+                var ret = "<table class='table mdl-data-table striped'>";
+                for (var i = 0; i < data.length; i++) {
+                    var tsop = data[i].USUARIO_ID;
+                    var rut = data[i].PATH;
+
+                    if (arr[i][0] == "" & arr[i][1] == "") {
+                        ret += "<tr class='green white-text'>";
+                    } else {
+                        ret += "<tr>";
+                    }
+
+                    ret += "<td style='text-align:center'>" + data[i].NUM_DOC + "</td>";
+                    if (tsop.substr(0, 1) == '<') {
+                        ret += "<td class='red white-text' style='text-align:center'>" + tsop.replace("<", "") + "</td>";
+                    }
+                    else {
+                        ret += "<td style='text-align:center'>" + tsop + "</td>";
+                    }
+
+                    if (rut.substr(0, 1) == '<') {
+                        ret += "<td class='red white-text' style='text-align:center'>" + rut.replace("<", "") + "</td>";
+                    }
+                    else {
+                        ret += "<td style='text-align:center'>" + rut + "</td>";
+                    }
+                }
+                ret += "</tr></table>"
+
+                row.child(ret).show();
+                tr.addClass('shown');
+
+                return ret;
+            },
+            error: function (e, ew) {
+            }
+        });
+    }
+
+    function format4(d, row, tr) {
+        $.ajax({
+            url: "Hoja5",
+            type: "GET",
+            async: false,
+            timeout: 30000,
+            dataType: "json",
+            data: { num_doc: d[4] },
+            success: function (data) {
+                var lda = ($.map(data, function (item) {
+                    return { label: item, value: item };
+                }))
+
+                var ja = data.pop();
+                var valida1 = data.pop();
+                var letlelo = data.pop();
+                var ret = "<table class='table mdl-data-table striped'>";
+                for (var i = 0; i < data.length; i++) {
+                    var valida11 = valida1[i][6];
+
+                    ////if (data.length > 1) {
+                    ////    if (valida11 == "") {
+                    ////        ret += "<tr class='green white-text' style='text-align:center'>";
+                    ////    }
+                    ////    else {
+                    ////        ret += "<tr class='red white-text' style='text-align:center'>";
+                    ////    }
+                    ////} else {
+                    ////    ret += "<tr class='red white-text' style='text-align:center'>";
+                    ////}
+
+
+                    if (ja != "") {
+                        ret += "<tr class='red white-text' style='text-align:center'>";
+                    } else {
+                        if (data.length <= 1) {
+                            ret += "<tr class='red white-text' style='text-align:center'>";
+                        }
+                        else if (valida11 == "") {
+                            ret += "<tr class='green white-text' style='text-align:center'>";
+                        }
+                        else {
+                            ret += "<tr style='text-align:center'>";
+                        }
+                    }
+
+                    //if (data.length <= 1) {
+                    //    ret += "<tr class='red white-text' style='text-align:center'>";
+                    //}
+                    //else if (valida11 == "") {
+                    //    ret += "<tr class='green white-text' style='text-align:center'>";
+                    //}
+                    //else {
+                    //    ret += "<tr style='text-align:center'>";
+                    //}
+
+                    ret += "<td style='text-align:center'>" + data[i].NUM_DOC + "</td>";
+                    if (valida1[i][0] == 'red') {
+                        ret += "<td class='red white-text'>" + data[i].FACTURA + "</td>";
+                    }
+                    else { ret += "<td>" + data[i].FACTURA + "</td>"; }
+
+                    if (valida1[i][1] == 'red') {
+                        ret += "<td class='red white-text'>" + data[i].BILL_DOC + "</td>";
+                    }
+                    else { ret += "<td>" + data[i].BILL_DOC + "</td>"; }
+
+                    if (valida1[i][2] == 'red') {
+                        ret += "<td class='red white-text'>" + data[i].EJERCICIOK + "</td>";
+                    }
+                    else { ret += "<td>" + data[i].EJERCICIOK + "</td>"; }
+
+                    if (valida1[i][3] == 'red') {
+                        ret += "<td class='red white-text'>" + data[i].PAYER + "</td>";
+                    }
+                    else { ret += "<td>" + data[i].PAYER + "</td>"; }
+
+                    ret += "<td style='text-align:center'>" + letlelo[i] + "</td>";
+
+                    if (valida1[i][4] == 'red') {
+                        ret += "<td class='red white-text'>" + data[i].IMPORTE_FAC + "</td>";
+                    }
+                    else { ret += "<td>" + parseFloat(data[i].IMPORTE_FAC).toFixed(2) + "</td>"; }
+
+                    if (valida1[i][5] == 'red') {
+                        ret += "<td class='red white-text'>" + data[i].BELNR + "</td>";
+                    }
+                    else { ret += "<td>" + data[i].BELNR + "</td>"; }
+                }
+                ret += "</tr></table>"
+
+                row.child(ret).show();
+                tr.addClass('shown');
+
+                return ret;
+            },
+            error: function (e, ew) {
+            }
+        });
+    }
+</script>
+<style>
+    .dataTables_lengtah {
+        display: none;
+    }
+
+    .dataTables_filter {
+        display: none;
+    }
+
+    .dataTables_scrollHeadInner, .mdl-data-table {
+        width: 100%;
+    }
+</style>

@@ -1,0 +1,90 @@
+﻿@model TAT001.Entities.TS_CAMPO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 1313;
+    ViewBag.carpeta_r = 500;
+}
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/ValidarProv.js"></script>
+<div class="row">
+    <div class="col s12 right-align">
+
+    </div>
+</div>
+<div class="row">
+    @using (Html.BeginForm("Edit", "DesviacionesTS", FormMethod.Post, new { @id = "desviacionesForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row" style="margin-bottom:0%;">
+            <div class="row right">
+                <div class="col l12 m12">
+                    <input type="submit" value="Guardar" id="btnGuardar" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <div class="col s6">
+                <div class="card-panel">
+                    <div class="row">
+                        @foreach (var item in Model.TS_FORM)
+                        {
+                            <div class="input-field col l12 m12" style="margin-bottom:0;">
+                                @Html.LabelFor(model => item.BUKRS_ID, "BUKRS_ID", htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_sociedad" })
+                                @Html.EditorFor(model => item.SOCIEDAD.BUKRS, new { htmlAttributes = new { @class = "form-control", @required = "", @maxlength = 50, @readonly = "readonly" } })
+                            </div>
+                        }
+                        <div class="input-field col l12 m12" style="margin-bottom:0;">
+                            <h5>Traducciones</h5>
+                        </div>
+                        @{ 
+                            string txtEn = Model.TS_FORMT.First(x => x.SPRAS_ID == "EN").TXT100;
+                            string txtEs = Model.TS_FORMT.First(x => x.SPRAS_ID == "ES").TXT100;
+
+                        <div class="input-field col l12 m12" style="margin-bottom:0;">
+                            @Html.Editor("EN", new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @required = "", @Value = txtEn } })
+                            <label id="lblIngles">EN</label>
+                        </div>
+                        <div class="input-field col l12 m12" style="margin-bottom:0;">
+                            @Html.Editor("ES", new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @required = "", @Value = txtEs } })
+                            <label id="lblEspa">ES</label>
+                        </div>
+                            }
+                        <div class="input-field col l2 m12 right">
+                            <label>
+                                @if (Model.ACTIVO)
+                                {
+                                    <input type="checkbox" name="ACTIVO" value="true" id="fac" onclick="check()" checked />
+                                    <span style="height:0" id="lblActivo"></span>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" name="ACTIVO" value="true" id="fac" onclick="check()" />
+                                    <span id="lblActivo"></span>
+                                }
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            }
+        </div>
+        <div style="color:black">
+            @Html.ActionLink("Regresar", "Index")
+        </div>
+        <script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+        <script>
+            function check() {
+                if ($("#fac").prop('checked'))
+                    $("#idfac").prop('checked', true);
+                else
+                    $("#idfac").prop('checked', false);
+            }
+
+
+            var elem = document.querySelectorAll('select');
+            var instance = M.FormSelect.init(elem, []);
+            fnCommon.formValidation('desviacionesForm');
+        </script>

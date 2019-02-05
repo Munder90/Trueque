@@ -1,0 +1,99 @@
+﻿@model TAT001.Entities.FLUJO
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>FLUJO</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LOOP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LOOP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ESTATUS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ESTATUS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FECHAC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FECHAC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HORAC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HORAC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FECHAM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FECHAM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HORAM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HORAM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DOCUMENTO.TSOL_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DOCUMENTO.TSOL_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.USUARIO.PASS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.USUARIO.PASS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.USUARIO1.PASS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.USUARIO1.PASS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WORKFP.EMAIL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WORKFP.EMAIL)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

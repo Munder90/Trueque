@@ -1,0 +1,45 @@
+﻿@model TAT001.Entities.NEGOCIACION
+
+@{
+    ViewBag.pagina_r = 751;
+    ViewBag.carpeta_r = 500;
+    //  ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <button id="btnDel" type="submit" value="Submit" class="btn btn-default" style="float:right;"></button>
+        </div>
+        <div class="row">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="col l12">
+                        <div class="col l6">
+                            @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblId" })
+                            @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        </div>
+                        <div class="col l6">
+                            @Html.LabelFor(model => model.FECHAI, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblDesde" })
+                            @Html.EditorFor(model => model.FECHAI, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        </div>
+                        <div class="col l6">
+                            @Html.LabelFor(model => model.FECHAF, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblHasta" })
+                            @Html.EditorFor(model => model.FECHAF, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        </div>
+                        <div class="col l6">
+                            @Html.LabelFor(model => model.FECHAN, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblEnvio" })
+                            @Html.EditorFor(model => model.FECHAN, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Back to List", "Index", null, new { id="lblRegresar"})
+        </div>
+    }
+</div>

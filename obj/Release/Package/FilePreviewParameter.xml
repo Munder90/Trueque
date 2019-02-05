@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="TAT" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\Documents\\GitHub\\TAT-2\.0\\TAT004-20180913-RSG\\TAT004-20180913-RSG\\TAT001\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^D:\\Documents\\GitHub\\TAT-2\.0\\TAT004-20180913-RSG\\TAT004-20180913-RSG\\TAT001\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="TAT001Entities-Web.config Connection String" description="" value="metadata=res://*/Entities.TAT001.csdl|res://*/Entities.TAT001.ssdl|res://*/Entities.TAT001.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=200.57.115.214;initial catalog=TAT004;persist security info=True;user id=admins;password=admin;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="">
+    <parameterEntry kind="XmlFile" scope="D:\\Documents\\GitHub\\TAT-2\.0\\TAT004-20180913-RSG\\TAT004-20180913-RSG\\TAT001\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='TAT001Entities']/@connectionString" />
+  </parameter>
+</parameters>

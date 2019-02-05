@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="500c8f54e03b4a9f9bfa8b291fa4c920" Name="Diagram1" ZoomLevel="41">
+        <EntityTypeShape EntityType="TruequeModel.ACCION" Width="1.5" PointX="27" PointY="82.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.ACCIONT" Width="1.5" PointX="3" PointY="103.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.APPSETTING" Width="1.5" PointX="7.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CALENDARIO_AC" Width="1.5" PointX="12" PointY="119.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CALENDARIO_EX" Width="1.5" PointX="14.25" PointY="93.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CAMPOS" Width="1.5" PointX="0.75" PointY="112.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CAMPOZKE24" Width="1.5" PointX="0.75" PointY="109.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CAMPOZKE24T" Width="1.5" PointX="3" PointY="100.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CANAL" Width="1.5" PointX="9.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CARPETA" Width="1.5" PointX="1.5" PointY="83.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CARPETAT" Width="1.5" PointX="3" PointY="106.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CARTA" Width="1.5" PointX="17.25" PointY="88.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CARTAP" Width="1.5" PointX="19.5" PointY="102.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CATEGORIA" Width="1.5" PointX="3.75" PointY="119.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CATEGORIAT" Width="1.5" PointX="6" PointY="103.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CITy" Width="1.5" PointX="12.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CLIENTE" Width="1.5" PointX="12" PointY="66.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CLIENTEF" Width="1.5" PointX="14.25" PointY="66.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CLIENTEI" Width="1.5" PointX="17.25" PointY="69.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CONDICION" Width="1.5" PointX="3.75" PointY="116.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CONDICIONT" Width="1.5" PointX="6" PointY="100.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CONFDIST_CAT" Width="1.5" PointX="15" PointY="84.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CONMAIL" Width="1.5" PointX="11.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CONPOSAPH" Width="1.5" PointX="12" PointY="77" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CONPOSAPP" Width="1.5" PointX="7.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CONSOPORTE" Width="1.5" PointX="30.5" PointY="106.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CONTACTOC" Width="1.5" PointX="14.25" PointY="74.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.COUNTRy" Width="1.5" PointX="7.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CUENTA" Width="1.5" PointX="23.25" PointY="80.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CUENTAA" Width="1.5" PointX="13.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CUENTAGL" Width="1.5" PointX="21" PointY="86" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DELEGAR" Width="1.5" PointX="14.25" PointY="102.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DET_AGENTE" Width="1.5" PointX="20" PointY="78.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DET_AGENTEC" Width="1.5" PointX="14.25" PointY="88.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DET_AGENTEH" Width="1.5" PointX="20.25" PointY="94.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DET_AGENTEP" Width="1.5" PointX="28.5" PointY="94" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DET_APROB" Width="1.5" PointX="15" PointY="80.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DET_APROBH" Width="1.5" PointX="17" PointY="76.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DET_APROBP" Width="1.5" PointX="19.25" PointY="73.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DET_TAX" Width="1.5" PointX="13.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DET_TAXEO" Width="1.5" PointX="20.25" PointY="90.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DET_TAXEOC" Width="1.5" PointX="12" PointY="62" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCTOAYUDA" Width="1.5" PointX="13" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCTOCLASIF" Width="1.5" PointX="10.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCTOCLASIFT" Width="1.5" PointX="13" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTBORR" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTO" Width="1.5" PointX="23.25" PointY="85.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTOA" Width="1.5" PointX="28.5" PointY="90.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTOBORRF" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTOBORRM" Width="1.5" PointX="5.25" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTOBORRN" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTOBORRP" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTOBORRREC" Width="1.5" PointX="3" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTOF" Width="1.5" PointX="25.5" PointY="87" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTOL" Width="1.5" PointX="25.5" PointY="91.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTOM" Width="1.5" PointX="27.75" PointY="98.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTON" Width="1.5" PointX="25.5" PointY="94.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTOP" Width="1.5" PointX="25.5" PointY="97.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTOR" Width="1.5" PointX="30.5" PointY="98.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTORAN" Width="1.5" PointX="27.75" PointY="106.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTOREC" Width="1.5" PointX="25.5" PointY="105.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTOSAP" Width="1.5" PointX="25.5" PointY="110.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTOT" Width="1.5" PointX="31.5" PointY="94.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.ESTATU" Width="1.5" PointX="3.75" PointY="79.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.ESTATUSR" Width="1.5" PointX="6" PointY="81.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.ESTATUST" Width="1.5" PointX="6" PointY="106.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.FACTURASCONF" Width="1.5" PointX="12" PointY="125.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.FLUJNEGO" Width="1.5" PointX="14.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.FLUJO" Width="1.5" PointX="31.5" PointY="88.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.GALL" Width="1.5" PointX="21" PointY="82.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.GALLT" Width="1.5" PointX="3" PointY="97.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.GAUTORIZACION" Width="1.5" PointX="9.75" PointY="88.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.Grupo" Width="1.5" PointX="9.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.GrupoCat" Width="1.5" PointX="15.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.IIMPUESTO" Width="1.5" PointX="15" PointY="63.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.IMPUESTO" Width="1.5" PointX="12.75" PointY="58.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.LAYOUT_CARGA" Width="1.5" PointX="17" PointY="73.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.LEYENDA" Width="1.5" PointX="12" PointY="82.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.MATERIAL" Width="1.5" PointX="6.75" PointY="127.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.MATERIALGP" Width="1.5" PointX="4.5" PointY="124.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.MATERIALGPT" Width="1.5" PointX="3" PointY="109.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.MATERIALT" Width="1.5" PointX="9" PointY="103.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.MATERIALVKE" Width="1.5" PointX="9" PointY="129.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.MENSAJE" Width="1.5" PointX="15.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.MIEMBRO" Width="1.5" PointX="14.25" PointY="98.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.MONEDA" Width="1.5" PointX="7.5" PointY="78.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.NEGOCIACION" Width="1.5" PointX="15.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.NEGOCIACION2" Width="1.5" PointX="15.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.NOTICIA" Width="1.5" PointX="14.25" PointY="146.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.PAGINA" Width="1.5" PointX="3.75" PointY="82.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.PAGINAT" Width="1.5" PointX="6" PointY="97.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.PAI" Width="1.5" PointX="9.75" PointY="66.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.PERIODO" Width="1.5" PointX="9.75" PointY="117.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.PERIODO445" Width="1.5" PointX="16.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.PERIODOT" Width="1.5" PointX="6" PointY="109.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.PERMISO_PAGINA" Width="1.5" PointX="22" PointY="75.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.POSICION" Width="1.5" PointX="9.75" PointY="126.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.PRESUPSAPH" Width="1.5" PointX="14.25" PointY="152.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.PRESUPSAPP" Width="1.5" PointX="16.5" PointY="149.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.PRESUPUESTOH" Width="1.5" PointX="14.25" PointY="161.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.PRESUPUESTOP" Width="1.5" PointX="16.5" PointY="159" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.PROVEEDOR" Width="1.5" PointX="9.75" PointY="72.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.PUESTO" Width="1.5" PointX="9.75" PointY="84.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.PUESTOT" Width="1.5" PointX="9" PointY="100.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.RANGO" Width="1.5" PointX="7.5" PointY="122" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.REGION" Width="1.5" PointX="15.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.RETENCION" Width="1.5" PointX="6.75" PointY="115.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.RETENCIONT" Width="1.5" PointX="9" PointY="106.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.ROL" Width="1.5" PointX="12" PointY="88.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.ROLT" Width="1.5" PointX="9" PointY="97.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.SOCIEDAD" Width="1.5" PointX="9.75" PointY="76.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.SPRA" Width="1.5" PointX="0.75" PointY="101.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.STATE" Width="1.5" PointX="10" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TAB" Width="1.5" PointX="5.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TALL" Width="1.5" PointX="21" PointY="108.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TALLT" Width="1.5" PointX="9" PointY="109.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TAX_LAND" Width="1.5" PointX="12" PointY="85.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TAXEOH" Width="1.5" PointX="17.25" PointY="81.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TAXEOP" Width="1.5" PointX="30.5" PointY="101.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TCAMBIO" Width="1.5" PointX="9.75" PointY="63.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TCLIENTE" Width="1.5" PointX="0.75" PointY="95.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TCLIENTET" Width="1.5" PointX="3" PointY="94.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TEXTO" Width="1.5" PointX="3" PointY="112.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TEXTOCV" Width="1.5" PointX="3" PointY="149.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TRETENCION" Width="1.5" PointX="3.75" PointY="88.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TRETENCIONT" Width="1.5" PointX="6" PointY="94.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TREVERSA" Width="1.5" PointX="28.25" PointY="102.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TREVERSAT" Width="1.5" PointX="6" PointY="112.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TS_CAMPO" Width="1.5" PointX="29.25" PointY="86.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TS_FORM" Width="1.5" PointX="31.5" PointY="76.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TS_FORMT" Width="1.5" PointX="12" PointY="103.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TSOL" Width="1.5" PointX="9.75" PointY="120.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TSOL_GROUP" Width="1.5" PointX="17.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TSOL_GROUPT" Width="1.5" PointX="17.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TSOL_TREE" Width="1.5" PointX="17.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TSOL_XG" Width="1.5" PointX="9.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TSOLT" Width="1.5" PointX="12" PointY="100.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TSOPORTE" Width="1.5" PointX="26.25" PointY="79.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TSOPORTET" Width="1.5" PointX="12" PointY="106.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TX_CONCEPTO" Width="1.5" PointX="6.75" PointY="91.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TX_CONCEPTOT" Width="1.5" PointX="9" PointY="94.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TX_NOTAT" Width="1.5" PointX="9" PointY="112.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TX_TNOTA" Width="1.5" PointX="6.75" PointY="118.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.UMEDIDA" Width="1.5" PointX="4.5" PointY="128" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.UMEDIDAT" Width="1.5" PointX="12" PointY="109.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.USUARIO" Width="1.5" PointX="12" PointY="91.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.USUARIOF" Width="1.5" PointX="20.25" PointY="98" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.USUARIOLOG" Width="1.5" PointX="14.25" PointY="171.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.USUARIOSAP" Width="1.5" PointX="11.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.WARNING" Width="1.5" PointX="12" PointY="113.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.WARNING_COND" Width="1.5" PointX="6" PointY="135.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.WARNINGP" Width="1.5" PointX="8" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.WARNINGPT" Width="1.5" PointX="3" PointY="206.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.WORKFH" Width="1.5" PointX="1.5" PointY="87.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.WORKFP" Width="1.5" PointX="29.25" PointY="81.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.WORKFT" Width="1.5" PointX="3" PointY="91.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.WORKFV" Width="1.5" PointX="0.75" PointY="91.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.ZBRAND" Width="1.5" PointX="4.5" PointY="130.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.ZCTGR" Width="1.5" PointX="4.5" PointY="132.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.TAB_CAMPO" Width="1.5" PointX="8" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CARPETAV" Width="1.5" PointX="17.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CREADOR" Width="1.5" PointX="17.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.CREADOR2" Width="1.5" PointX="19.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DET_APROBV" Width="1.5" PointX="18.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.DOCUMENTOV" Width="1.5" PointX="0.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.PAGINAV" Width="1.5" PointX="2.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TruequeModel.WARNINGV" Width="1.5" PointX="4.75" PointY="19.75" IsExpanded="true" />
+        <AssociationConnector Association="TruequeModel.FK_ACCIONT_ACCION" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_WORKFP_ACCION" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_ACCIONT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CALENDARIO_AC_PERIODO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CALENDARIO_AC_SOCIEDAD" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CALENDARIO_AC_TSOL" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CALENDARIO_EX_CALENDARIO_AC" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CALENDARIO_EX_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CAMPOS_PAGINA" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TEXTO_CAMPOS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_WARNING_CAMPOS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CAMPOZKE24T_CAMPOZKE24" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CONFDIST_CAT_CAMPOZKE24" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CAMPOZKE24T_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CARPETAT_CARPETA" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_PAGINA_CARPETA" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CARPETAT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CARTA_DOCUMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CARTA_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CARTAP_CARTA" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CATEGORIAT_CATEGORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CATEGORIAT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CITIES_STATES" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CLIENTE_PAIS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CLIENTE_PROVEEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CLIENTE_TCLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CLIENTEF_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CLIENTEI_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CONTACTOC_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_AGENTEC_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTO_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TAXEOH_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_USUARIOF_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CLIENTEI_IMPUESTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CONDICIONT_CONDICION" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_WARNING_COND_CONDICION" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CONDICIONT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CONFDIST_CAT_SOCIEDAD" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CONPOSAPH_SOCIEDAD" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CONSOPORTE_TSOL" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CONSOPORTE_TSOPORTE" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_STATES_COUNTRIES" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CUENTA_CUENTAGL" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CUENTA_CUENTAGL1" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CUENTA_CUENTAGL2" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CUENTA_PAIS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CUENTA_SOCIEDAD" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_CUENTA_TALL" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTO_CUENTAGL" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTO_CUENTAGL1" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DELEGAR_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DELEGAR_USUARIO1" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_AGENTE_GAUTORIZACION" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_AGENTE_PUESTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_AGENTE_PUESTO1" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_AGENTEC_PAIS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_AGENTEC_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_AGENTEC_USUARIO1" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_AGENTEH_GAUTORIZACION" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_AGENTEH_PUESTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_AGENTEH_SOCIEDAD" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_AGENTEH_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_AGENTEP_DET_AGENTEH" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_AGENTEP_PUESTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_AGENTEP_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_APROB_PUESTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_APROB_PUESTO1" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_APROB_SOCIEDAD" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_APROBH_PUESTO1" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_APROBH_SOCIEDAD1" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_APROBP_DET_APROBH" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_TAXEO_PUESTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_TAXEO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DET_TAXEOC_PAIS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCTOAYUDA_DOCTOCLASIF" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCTOCLASIFT_DOCTOCLASIF" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTOBORRF_DOCUMENTBORR" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTOBORRN_DOCUMENTBORR" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTOBORRP_DOCUMENTBORR" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTOBORRREC_DOCUMENTBORR" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTO_GALL" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTO_PAIS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTO_SOCIEDAD" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTO_TALL" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTO_TSOL" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTOA_DOCUMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTOF_DOCUMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTOL_DOCUMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTON_DOCUMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTOP_DOCUMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTOR_DOCUMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTOREC_DOCUMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTOSAP_DOCUMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTOTS_DOCUMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_FLUJO_DOCUMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTOA_TSOPORTE" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTOBORRM_DOCUMENTOBORRP" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTOM_DOCUMENTOP" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTOR_TREVERSA" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTORAN_DOCUMENTOREC" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_DOCUMENTOTS_TS_CAMPO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_ESTATUSR_ESTATUS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_ESTATUST_ESTATUS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_ESTATUST_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_FACTURASCONF_SOCIEDAD" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_FLUJO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_FLUJO_USUARIO1" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_FLUJO_WORKFP" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_GALLT_GALL" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TALL_GALL" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_GALLT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_GAUTORIZACION_SOCIEDAD" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_IIMPUESTO_IMPUESTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_IIMPUESTO_PAIS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TAXEOH_IMPUESTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_LAYOUT_CARGA_PAIS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_LAYOUT_CARGA_SOCIEDAD" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_LEYENDA_PAIS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_MATERIAL_CTGR" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_MATERIAL_MARCA" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_MATERIAL_MATERIALGP" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_MATERIAL_UMEDIDA" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_MATERIALT_MATERIAL" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_MATERIALVKE_MATERIAL" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_MATERIALGPT_MATERIALGP" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_MATERIALGPT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_MATERIALT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_MIEMBROS_ROL" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_MIEMBROS_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_SOCIEDAD_MONEDA" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TCAMBIO_MONEDA" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TCAMBIO_MONEDA1" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_NOTICIA_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_PAGINAT_PAGINA" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_PERMISO_PAGINA_PAGINA" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_PAGINAT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_PAIS_SOCIEDAD" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TAX_LAND_PAIS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TAXEOH_PAIS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TS_FORM_PAIS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_PERIODOT_PERIODO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_PERIODOT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_PERMISO_PAGINA_PUESTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_WARNING_POSICION" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_PRESUPSAPH_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_PRESUPSAPP_PRESUPSAPH" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_PRESUPUESTOH_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_PRESUPUESTOP_PRESUPUESTOH" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_PUESTOT_PUESTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_USUARIO_PUESTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_PUESTOT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TSOL_RANGO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_RETENCIONT_RETENCION" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TAXEOP_RETENCION" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_RETENCIONT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_ROLT_ROL" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_ROLT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TAXEOH_SOCIEDAD" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TS_FORM_SOCIEDAD" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_USUARIO_SOCIEDAD" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_SPRAS_SPRAS_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TALLT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TCLIENTET_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TEXTO_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TRETENCIONT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TREVERSAT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TS_FORMT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TSOLT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TSOPORTET_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TX_CONCEPTOT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TX_NOTAT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_UMEDIDAT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_USUARIO_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_WARNING_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_WARNINGPT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_WORKFT_SPRAS" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TAB_CAMPO_TAB" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_WARNINGP_TAB" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TALLT_TALL" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TAXEOH_TX_CONCEPTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TAXEOH_TX_TNOTA" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TAXEOP_TAXEOH" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TAXEOP_TRETENCION" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TCLIENTET_TCLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TRETENCIONT_TRETENCION" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TREVERSAT_TREVERSA" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TS_FORM_TS_CAMPO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TS_FORMT_TS_CAMPO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TSOL_TSOL" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TSOLT_TSOL" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TSOPORTET_TSOPORTE" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TX_CONCEPTOT_TX_CONCEPTO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_TX_NOTAT_TX_TNOTA" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_UMEDIDAT_UMEDIDA" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_USUARIOF_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_USUARIOLOG_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_WORKV_WORKFH" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_WORKFP_WORKFV" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.FK_WORKFT_WORKFV" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.USUARIOGA" ManuallyRouted="false" />
+        <AssociationConnector Association="TruequeModel.USUARIOSOC" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

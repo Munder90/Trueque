@@ -1,0 +1,77 @@
+﻿@model TAT001.Entities.DOCUMENTO
+@{
+    /**/
+
+    ViewBag.Title = "Reversa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 201;
+    ViewBag.carpeta_r = 200;
+    ViewBag.enter = true;
+}
+<script>
+    var root = "@Url.Content("~")";
+</script>
+<input id="miles" name="miles" type="hidden" value="@ViewBag.miles">
+<input id="dec" name="dec" type="hidden" value="@ViewBag.dec">
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h4>Cerrar provisión</h4>
+        <p>¿Se desea cerrar la provisión?</p>
+        <div class="row right-align">Monto a reversar: <span class="text-accent-1 precio">@ViewBag.resto</span></div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close btn-flat" id="btn_no">NO</a>
+        <a href="@Url.Action("Reversar",new { id = Model.NUM_DOC, tsol=Model.TSOL.TSOLR})" class="btn-flat" onclick="clickAndDisable(this);">SI</a>
+    </div>
+</div>
+<div id="modal2" class="modal" hidden>
+    <div class="modal-content">
+        <h4>Comentario</h4>
+        <div class="input-field col s12">
+            <textarea class="materialize-textarea" id="txt_comentario" maxlength="255"></textarea>
+        </div>
+        <a id="btn_guardar" href="@Url.Action("Index")" class="btn-flat">Guardar</a>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.getElementById('modal1');
+        var instances = M.Modal.init(elems, { dismissible: false });
+        instances.open();
+
+    });
+    $(document).ready(function () {
+        $('#btn_no').click(function () {
+            var elems2 = document.getElementById('modal2');
+            var instances2 = M.Modal.init(elems2, { dismissible: false });
+            instances2.open();
+            $('modal2').show();
+            $('#txt_comentario').val("");
+        });
+
+        $('#btn_guardar').click(function () {
+            var text = $('#txt_comentario').val();
+            if (text !== "" && text !== " ") {
+                $('#txt_comentario').removeClass("invalid");
+                $.ajax({
+                type: "POST",
+                url: root +'Solicitudes/GuardarComentario',
+                dataType: "json",
+                data: { 'num_docu': ""+@Model.NUM_DOC, 'comentario': $('#txt_comentario').val() },
+                success: function (data) {
+                    if (data !== null || data !== "") {
+                        console.log(JSON.stringify(data));
+                    }
+                },
+                error: function (xhr, httpStatusMessage, customErrorMessage) {
+                },
+                async: false
+            });
+            } else {
+                $('#txt_comentario').addClass("invalid");
+                event.preventDefault();
+            }
+        });
+    });
+</script>
+<script src="~/Scripts/formatos.js"></script>

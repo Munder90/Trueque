@@ -1,0 +1,218 @@
+﻿@model TAT001.Entities.DOCUMENTO
+
+<div id="Soporte_cont">
+    <div class="row">
+        <div class="col s12 m6 l6">
+            @if (ViewBag.reversan != "X" & ViewBag.reversan == "X")
+            {
+
+                <div class="card-panel">
+                    <h5 id="DocumentoSop2">Documentos de Soporte2</h5>
+                    <label id="lblCamposObli">* Campos obligatorios</label>
+                    <div class="row" style="margin-bottom:0">
+                        <div class="col s12">
+                            <form action="#">
+                                <div class="row" id="div_soportes">
+                                </div>
+                                <!--RSG 23.05.2018-->
+                                <script>
+                                    /**/
+                                    soportes(document.getElementById("tsol_id").value, '@Session["spras"].ToString()');
+                                    /**/
+                                </script>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+            <input type="hidden" id="txt_sop_borr" name="txt_sop_borr" />
+            @if (!Model.TSOL.REVERSO)
+            {
+                List<TAT001.Entities.DOCUMENTOA> archivo = ViewBag.files as List<TAT001.Entities.DOCUMENTOA>;
+                if (ViewBag.relacionadan != "" && archivo.Count >= 0)
+                {
+                    string[] nombrefile;
+                    <div class="card-panel">
+                        <h5>Documentos de Soporte @ViewBag.relacionadan</h5>
+                        <div class="row" style="margin-bottom:0">
+                            @*@using (Html.BeginForm("Descargar", "Solicitudes", FormMethod.Post))
+                                {*@
+                            @try
+                            {
+                                foreach (TAT001.Models.Soporte item in ViewBag.soportes)
+                                {
+                                    bool tiene = false;
+                                    for (int i = 0; i < archivo.Count; i++)
+                                    {
+                                        if (item.TSOPORTE_ID == archivo[i].CLASE & archivo[i].ACTIVO)
+                                        {
+                                            nombrefile = archivo[i].PATH.Split('\\');
+                                            tiene = true;
+                                            <div class="" id="desc-@item.TSOPORTE_ID">
+                                                <div class="col s11">
+                                                    <div class="col s12">@item.TXT50</div>
+                                                    <div class="file-field input-field">
+                                                        <input type="hidden" id="desc-@i" value="@archivo[i].PATH" />
+                                                        <a id="lbl_cargara-@i" name="archivo" class="btn-small" style="float:left;" @*type="submit"*@ value="@archivo[i].PATH" onclick="descargar(this.id)">DESCARGAR</a>
+                                                        <div class="file-path-wrapper">
+                                                            <input disabled value="@nombrefile[nombrefile.Length - 1]" id="disabled" type="text" class="file-path ">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col s1" style="padding-top:19px;">
+                                                    <a href="#" class="red-text" id="elim-@item.TSOPORTE_ID" onclick="borraDescarga(this.id)">
+                                                        <i class="material-icons prefix">clear</i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col s11 hidden" id="sube-@item.TSOPORTE_ID">
+                                                <div class="col s12">
+                                                    @item.TXT50
+                                                    @if (item.OBLIGATORIO)
+                                                    {
+                                                        <span>*</span>
+                                                    }
+                                                </div>
+                                                <input type="text" value="@item.TXT50" name="labels_soporte" hidden />
+                                                <div class="file-field input-field">
+                                                    <div class="btn-small" style="float:left;">
+                                                        <span id="span_fileload">Examinar</span>
+                                                        @if (item.OBLIGATORIO)
+                                                        {
+                                                            <input class="file_soporte ne" name="files_soporte" id="file_@item.TSOPORTE_ID" type="file" onchange="changeFile(this)">
+                                                        }
+                                                        else
+                                                        {
+                                                            <input class="file_soporte" name="files_soporte" id="file_@item.TSOPORTE_ID" type="file" onchange="changeFile(this)">
+                                                        }
+                                                    </div>
+                                                    <div class="file-path-wrapper">
+                                                        <input class="file-path " type="text">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    if (!tiene)
+                                    {
+                                        <div class="col s11">
+                                            <div class="col s12">
+                                                @item.TXT50
+                                                @if (item.OBLIGATORIO)
+                                                {
+                                                    <span>*</span>
+                                                }
+                                            </div>
+                                            <input type="text" value="@item.TXT50" name="labels_soporte" hidden />
+                                            <div class="file-field input-field">
+                                                <div class="btn-small" style="float:left;">
+                                                    <span id="span_fileload">Examinar</span>
+                                                    @if (item.OBLIGATORIO)
+                                                    {
+                                                        <input class="file_soporte nec" name="files_soporte" id="file_@item.TSOPORTE_ID" type="file" onchange="changeFile(this)">
+                                                    }
+                                                    else
+                                                    {
+                                                        <input class="file_soporte" name="files_soporte" id="file_@item.TSOPORTE_ID" type="file" onchange="changeFile(this)">
+                                                    }
+                                                </div>
+                                                <div class="file-path-wrapper">
+                                                    <input class="file-path " type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                            }
+                            @*}*@
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="col s12 m6 l6">
+            @*@if (ViewBag.reversan != "X")
+                {
+                    <div class="card-panel">
+                        <h5>Notas</h5>
+                        <div class="row" style="margin-bottom:0">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea id="notas_soporte" name="notas_soporte" class="materialize-textarea" onkeyup="maxchar_notas();">@ViewBag.notas_soporte</textarea>
+                                    <label for="notas_soporte"></label>
+                                </div>
+                            </div>
+                            <script>
+                                function maxchar_notas() {
+                                    var maxLength = 500;
+                                    var text = $('#notas_soporte').val();
+                                    var textLength = text.length;
+                                    if (textLength > (maxLength)) {
+                                        $('#notas_soporte').val(text.substring(0, ((maxLength))));
+                                        var msg = 'Número máximo para la nota es ' + maxLength;
+                                        M.toast({ html: msg });
+                                    }
+                                }
+                            </script>
+                        </div>
+                    </div>
+                }*@
+            @if (ViewBag.reversan == "X")
+            {
+                <input type="hidden" id="txt_rev" name="txt_rev" value="@ViewBag.reversa" disabled="disabled" />
+                <div class="card-panel">
+                    <h5 id="lblSoRe">Soporte de reverso</h5>
+                    <div class="row" style="margin-bottom:0">
+                        <div class="col s12">
+                            <label name="labels_soporte2" hidden>Carta</label><label class="lbl_nec" hidden></label>
+                            <input type="text" value="Reverso" id="lblReverso" name="Sop" hidden />
+                            <div class="file-field input-field">
+                                <div class="btn-small" style="float:left;">
+                                    <span id="span_fileload">Examinar</span>
+                                    <input class="file_soporte" name="files_soporte" id="file_rev" type="file">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path " type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">date_range</i>
+                            @Html.Hidden("FECHAD_REV")
+                            <input value="@ViewBag.FECHAD_REV" id="fechad" type="text" class="" disabled="disabled" />
+                            <label for="fechad" id="lbl_rec_fecha">Fecha</label>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <textarea id="notas_soporte" name="notas_soporte" class="materialize-textarea" onkeyup="maxchar_notas();">@ViewBag.notas_soporte</textarea>
+                                <label for="notas_soporte" id="lblRazonRev">Razón del reverso</label>
+                            </div>
+                        </div>
+                        <script>
+                                        function maxchar_notas() {
+                                            var maxLength = 500;
+                                            var text = $('#notas_soporte').val();
+                                            var textLength = text.length;
+                                            if (textLength > (maxLength)) {
+                                                $('#notas_soporte').val(text.substring(0, ((maxLength))));
+                                                var msg = 'Número máximo para la nota es ' + maxLength;
+                                                M.toast({ html: msg });
+                                            }
+                                        }
+                        </script>
+                        <div class="form-group col s12">
+                            @Html.Label("TREVERSA", "Tipo de reverso", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("TREVERSA", null, "", htmlAttributes: new { @id = "treversa_id", @class = "form-control", onchange = @"selectTsolr(this.value)" })
+                            </div>
+                        </div>
+                        @*<a id="btn_guardarr" class="btn waves-effect waves-light btn-small disabled">Enviar</a>*@
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

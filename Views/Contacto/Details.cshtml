@@ -1,0 +1,80 @@
+﻿@model TAT001.Models.Contactoc
+@{
+    ViewBag.pagina_r = 642;
+    ViewBag.carpeta_r = 500;
+    //ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .pnl-cli {
+        background-color: white;
+        padding: 5px 15px 5px 15px;
+        border-radius: 5px;
+    }
+</style>
+<div class="row">
+    <div class="row left pnl-cli">
+        <h6>@ViewBag.NoCliente - @ViewBag.Cliente</h6>
+    </div>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col s12 m12 l6">
+            <div class="card-panel">
+                <div class="row">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    @*<div class="row" style="height:10px;width:100%;">
+                            <div class="col l7 pink darken-1" style="height:10px;padding:0;"></div>
+                            <div class="col l3 pink darken-4" style="height:10px;padding:0;">
+                                <div class="col l3 pink darken-4" style="height:10px;padding:0;"></div>
+                                <div class="col l8 orange" style="height:10px;padding:0;"></div>
+                                <div class="col l1 red" style="height:10px;padding:0;"></div>
+                            </div>
+                            <div class="col l2 yellow" style="height:10px;padding:0;"></div>
+                        </div>*@
+
+                    <div class="input-field col s12" style="margin-bottom:0;">
+                        @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_nombre" })
+                    </div>
+
+                    <div class="input-field col s12 m6" style="margin-bottom:0;">
+                        @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.LabelFor(model => model.telefono, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_telefono" })
+                    </div>
+
+                    <div class="input-field col s12" style="margin-bottom:0;">
+                        @Html.EditorFor(model => model.correo, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.LabelFor(model => model.correo, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_correo" })
+                    </div>
+
+                    <div class="input-field col s12" style="margin-bottom:0;">
+                        <p>
+                            <label>
+                                <input type="checkbox" name="defecto" value="true" disabled="disabled" id="defecto" @Html.Raw((Model.defecto) ? "checked=\"checked\"" : "") />
+                                <span style="height:0; position: relative;top: -18px;"></span>
+                            </label>
+                            @Html.LabelFor(model => model.defecto, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_defecto" })
+                        </p>
+                        <p>
+                            <label>
+                                <input type="checkbox" name="carta" value="true" disabled="disabled" id="carta" @Html.Raw((Model.carta) ? "checked=\"checked\"" : "") />
+                                <span style="height:0; position: relative;top: -18px;"></span>
+                            </label>
+                            @Html.LabelFor(model => model.carta, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_carta" })
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        @Html.ActionLink("Back to List", "Index", new { vko = Model.vkorg, vtw = Model.vtweg, kun = Model.kunnr, spa = Model.spart }, new { id = "lblRegresar" })
+    </div>
+}
+

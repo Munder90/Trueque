@@ -1,0 +1,207 @@
+﻿@model TAT001.Entities.SOCIEDAD
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 922;
+    ViewBag.carpeta_r = 500;
+}
+<style>
+    .select-wrapper input.select-dropdown {
+        z-index: 0 !important;
+    }
+
+    label .invalid {
+        display: none !important;
+    }
+    /*Para uso Html.CheckBoxFor con Materialize css*/
+    [type="checkbox"] + [type="hidden"] + span:not(.lever) {
+        position: relative;
+        padding-left: 35px;
+        cursor: pointer;
+        display: inline-block;
+        height: 25px;
+        line-height: 25px;
+        font-size: 1rem;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+        [type="checkbox"] + [type="hidden"] + span:not(.lever)::before, [type="checkbox"]:not(.filled-in) + [type="hidden"] + span:not(.lever)::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 18px;
+            height: 18px;
+            z-index: 0;
+            border: 2px solid #5a5a5a;
+            border-radius: 1px;
+            margin-top: 3px;
+            -webkit-transition: .2s;
+            transition: .2s;
+        }
+
+    [type="checkbox"]:not(.filled-in) + [type="hidden"] + span:not(.lever)::after {
+        border: 0;
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    }
+
+    [type="checkbox"] + [type="hidden"] + span:not(.lever)::before, [type="checkbox"]:not(.filled-in) + [type="hidden"] + span:not(.lever)::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 18px;
+        height: 18px;
+        z-index: 0;
+        border: 2px solid #5a5a5a;
+        border-radius: 1px;
+        margin-top: 3px;
+        -webkit-transition: .2s;
+        transition: .2s;
+    }
+
+    [type="checkbox"]:checked + [type="hidden"] + span:not(.lever)::before {
+        top: -4px;
+        left: -5px;
+        width: 12px;
+        height: 22px;
+        border-top: 2px solid transparent;
+        border-left: 2px solid transparent;
+        border-right: 2px solid #26a69a;
+        border-bottom: 2px solid #26a69a;
+        -webkit-transform: rotate(40deg);
+        transform: rotate(40deg);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transform-origin: 100% 100%;
+        transform-origin: 100% 100%;
+    }
+
+    [type="checkbox"] + [type="hidden"] + span:not(.lever)::before, [type="checkbox"]:not(.filled-in) + [type="hidden"] + span:not(.lever)::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 18px;
+        height: 18px;
+        z-index: 0;
+        border: 2px solid #5a5a5a;
+        border-top-color: rgb(90, 90, 90);
+        border-top-style: solid;
+        border-top-width: 2px;
+        border-right-color: rgb(90, 90, 90);
+        border-right-style: solid;
+        border-right-width: 2px;
+        border-bottom-color: rgb(90, 90, 90);
+        border-bottom-style: solid;
+        border-bottom-width: 2px;
+        border-left-color: rgb(90, 90, 90);
+        border-left-style: solid;
+        border-left-width: 2px;
+        border-radius: 1px;
+        margin-top: 3px;
+        -webkit-transition: .2s;
+        transition: .2s;
+    }
+</style>
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+<script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col s12 l12 right-align">
+        <button type="submit" id="btn_save" class="btn btn-default"></button>
+    </div>
+    <div class="row">
+        <div class="col s12 l6">
+            <div class="card-panel">
+                @Html.HiddenFor(model => model.BUKRS)
+                @Html.HiddenFor(model => model.BUTXT)
+                @Html.HiddenFor(model => model.ORT01)
+                @Html.HiddenFor(model => model.LAND)
+                @Html.HiddenFor(model => model.SUBREGIO)
+                @Html.HiddenFor(model => model.WAERS)
+                @Html.HiddenFor(model => model.SPRAS)
+                @Html.HiddenFor(model => model.NAME1)
+                @Html.HiddenFor(model => model.KTOPL)
+                <div class="row">
+                    <div class="col s12">
+                        <div class="input-field col s6">
+                            @Html.EditorFor(model => model.BUKRS, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                            <label id="lbl_coCode"></label>
+                        </div>
+                        <div class="input-field col s12">
+                            @Html.EditorFor(model => model.BUTXT, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                            <label id="lbl_Compania"></label>
+                        </div>
+                        <div class="input-field col s6">
+                            @Html.EditorFor(model => model.WAERS, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                            <label id="lbl_Moneda"></label>
+                        </div>
+                        <div class="input-field col s12">
+                            @Html.EditorFor(model => model.SPRAS, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                            <label id="lbl_Idioma"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12 l6">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="input-field col s12 l6">
+                        @Html.EditorFor(model => model.LAND, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                        <label id="lbl_Pais"></label>
+                    </div>
+                    <div class="input-field col s12 l6">
+                        @Html.EditorFor(model => model.ORT01, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                        <label id="lbl_Estado"></label>
+                    </div>
+
+                    <div class="input-field col s12 l6">
+                        @Html.EditorFor(model => model.SUBREGIO, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                        <label id="lbl_subRegion"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12 l6">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="input-field col s12 l6">
+                        @*@Html.DropDownListFor(model=>model.REGION, null,"")*@
+                        @Html.EditorFor(model => model.REGION, new { htmlAttributes = new { @class = "form-control", @maxlength = "10" } })
+                        <label id="lbl_Region"></label>
+                    </div>
+                    <div class="col s12 l12">
+                        <label>
+                            @Html.CheckBoxFor(model => model.ACTIVO)
+                            <span id="lbl_Activo"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="col s12">
+    <a id="btn_return" href="@Url.Action("Index")"></a>
+</div>
+
+<script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+<script>
+    //---- Inicializador de componentes Materialize----
+    fnCommon.materializeInit('.datepicker', 'datepicker');
+    fnCommon.materializeInit('.timepicker', 'timepicker');
+    fnCommon.materializeInit('select', 'select');
+
+
+</script>
+

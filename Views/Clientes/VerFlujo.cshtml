@@ -1,0 +1,115 @@
+﻿@model TAT001.Entities.CLIENTEF
+@{
+    ViewBag.pagina_r = 604;
+    ViewBag.carpeta_r = 500;
+}
+
+<div>
+    <center><h4 id="lbl_flujo">Flujo </h4></center>
+    <div class="card-panel">
+        <form>
+            <fieldset style="border-color:#fafafa; border-width:1px">
+                <legend></legend>
+                <h5><label class="lbl_cliente2"></label></h5>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CLIENTE.NAME1, new { htmlAttributes = new { @class = "form-control", disabled = true, @Value = Model.KUNNR + " - " + Model.CLIENTE.NAME1 } })
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="card-panel">
+        <form>
+            <fieldset style="border-color:#fafafa; border-width:1px">
+                <legend></legend>
+                <h5><label class="lbl_aprobadores"></label></h5>
+                <br />
+                <h5 class="ligero"><label class="lbl_n1"></label></h5>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.USUARIO1_ID, new { htmlAttributes = new { @class = "form-control", disabled = true, @Value = ViewBag.Usuario1 } })
+                    </div>
+                </div>
+                <h5 class="ligero"><label class="lbl_n2"></label></h5>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.USUARIO2_ID, new { htmlAttributes = new { @class = "form-control", disabled = true, @Value = ViewBag.Usuario2 } })
+                    </div>
+                </div>
+                <h5 class="ligero"><label class="lbl_n3"></label></h5>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.USUARIO3_ID, new { htmlAttributes = new { @class = "form-control", disabled = true, @Value = ViewBag.Usuario3 } })
+                    </div>
+                </div>
+                <h5 class="ligero"><label class="lbl_n4"></label></h5>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.USUARIO4_ID, new { htmlAttributes = new { @class = "form-control", disabled = true, @Value = ViewBag.Usuario4 } })
+                    </div>
+                </div>
+                <h5 class="ligero"><label class="lbl_n5"></label></h5>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.USUARIO5_ID, new { htmlAttributes = new { @class = "form-control", disabled = true, @Value = ViewBag.Usuario5 } })
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+        <br />
+        <form>
+            <fieldset style="border-color:#fafafa; border-width:1px">
+                <h5><label class="lbl_n6"></label></h5>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.USUARIO6_ID, new { htmlAttributes = new { @class = "form-control", disabled = true, @Value = ViewBag.Usuario6 } })
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+        <br />
+        <form>
+            <fieldset style="border-color:#fafafa; border-width:1px">
+                <h5><label class="lbl_n7"></label></h5>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.USUARIO7_ID, new { htmlAttributes = new { @class = "form-control", disabled = true, @Value = ViewBag.Usuario7 } })
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<style>
+    .ligero {
+        font-weight: normal !important;
+    }
+</style>
+@using TAT001.Entities;
+@if (ViewBag.textos != null)
+{
+    foreach (TEXTO t in ViewBag.textos)
+    {
+        <script>
+                try {
+                    var elem = document.getElementById("@t.CAMPO_ID");
+                    if (elem.nodeName != 'INPUT' & elem.nodeName != 'SELECT' & elem.nodeName != 'TABLE' & elem.nodeName != 'TEXTAREA')
+                    elem.innerHTML = "@t.TEXTOS";
+                } catch (e) {
+                    try {
+                        var divs = document.getElementsByClassName("@t.CAMPO_ID");
+                        [].slice.call(divs).forEach(function (div) {
+                            if (div.nodeName != 'INPUT' & div.nodeName != 'SELECT' & div.nodeName != 'TABLE' & div.nodeName != 'TEXTAREA')
+                            div.innerHTML = "@t.TEXTOS";
+                        });
+                    }
+                    catch (ee) {
+
+                    }
+                 }
+        </script>
+    }
+}
+
+

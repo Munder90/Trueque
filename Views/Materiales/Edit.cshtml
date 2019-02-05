@@ -1,0 +1,83 @@
+﻿@model TAT001.Entities.MATERIAL
+@{
+    ViewBag.pagina_r = 664;
+    ViewBag.carpeta_r = 500;
+    //ViewBag.Title = "Páginas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col s12 l12 right-align">
+        <button type="submit" id="btn_save" class="btn btn-default"></button>
+    </div>
+    <div class="row">
+        <div class="col s12 m6">
+            <div class="card-panel">
+                @*<div class="row" style="height:10px;width:100%;">
+                        <div class="col l7 pink darken-1" style="height:10px;padding:0;"></div>
+                        <div class="col l3 pink darken-4" style="height:10px;padding:0;">
+                            <div class="col l3 pink darken-4" style="height:10px;padding:0;"></div>
+                            <div class="col l8 orange" style="height:10px;padding:0;"></div>
+                            <div class="col l1 red" style="height:10px;padding:0;"></div>
+                        </div>
+                        <div class="col l2 yellow" style="height:10px;padding:0;"></div>
+                    </div>*@
+                @Html.HiddenFor(model => model.ID)
+                @Html.HiddenFor(model => model.MTART)
+                @Html.HiddenFor(model => model.MATKL_ID)
+                @Html.HiddenFor(model => model.MAKTX)
+                @Html.HiddenFor(model => model.MAKTG)
+                @Html.HiddenFor(model => model.MEINS)
+                @Html.HiddenFor(model => model.PUNIT)
+                @Html.HiddenFor(model => model.ACTIVO)
+                @Html.HiddenFor(model => model.CTGR)
+                @Html.HiddenFor(model => model.BRAND)
+                @Html.HiddenFor(model => model.MATERIALGP_ID)
+                <div class="row">
+                    <div class="input-field col s12" style="margin-bottom:0;">
+                        @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                        @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_id" })
+                    </div>
+
+                    <div class="input-field col s12" style="margin-bottom:0;">
+                        @Html.EditorFor(model => model.MATERIALGP.DESCRIPCION, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                        @Html.LabelFor(model => model.MATERIALGP.DESCRIPCION, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_MatGroup" })
+                    </div>
+
+                    @*<div class="input-field col l10 m10" style="margin-bottom:0;">
+                            @if ((bool)Model.ACTIVO == true)
+                            {
+                                <i class='material-icons green-text'>check</i>}
+                            else
+                            {
+                                <i class='material-icons red-text'>clear</i>}
+                            @Html.LabelFor(model => model.ACTIVO, htmlAttributes: new { @class = "control-label col-md-2 active", @id = "lbl_Activo" })
+                        </div>*@
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="input-field col s12" style="margin-bottom:0;">
+                        @Html.Editor("EN", new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+                        @Html.LabelFor(model => model.MAKTX, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_DscEN" })
+                    </div>
+                    <div class="input-field col s12" style="margin-bottom:0;">
+                        @Html.Editor("ES", new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+                        @Html.LabelFor(model => model.MAKTX, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_DscES" })
+                    </div>
+                    <div class="input-field col s12" style="margin-bottom:0;">
+                        @Html.Editor("PT", new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+                        @Html.LabelFor(model => model.MAKTX, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_DscPT" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="col s12">
+    <a id="btn_return" href="@Url.Action("Index")"></a>
+</div>

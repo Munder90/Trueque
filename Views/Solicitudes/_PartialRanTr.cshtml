@@ -1,0 +1,26 @@
+﻿@model TAT001.Entities.DOCUMENTO
+
+@if (Model.DOCUMENTORAN != null)
+{
+    for (var i = 0; i < Model.DOCUMENTORAN.Count; i++)
+    {
+        <tr>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTORAN[i].NUM_DOC)
+            </td>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTORAN[i].POS)
+            </td>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTORAN[i].LIN)
+            </td>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTORAN[i].OBJETIVOI)
+            </td>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTORAN[i].PORCENTAJE)
+            </td>
+        </tr>
+    }
+}
+}

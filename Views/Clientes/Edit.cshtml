@@ -1,0 +1,346 @@
+﻿@model TAT001.Entities.CLIENTE
+
+@{
+    ViewBag.pagina_r = 635;
+    ViewBag.carpeta_r = 500;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="row right-align">
+            <div class="col l12 m12 right">
+                <a href="@Url.Action("Index", "Taxeoh", new {vko = Model.VKORG, vtw = Model.VTWEG,  kun = Model.KUNNR,  spa = Model.SPART})" class="btn-small" id="taxeo">Taxeo</a>
+                @*<a href="@Url.Action("Index", "Clientes")" class="btn-small">Lista</a>*@
+                <input type="submit" value="Guardar" class="btn-small" />
+            </div>
+        </div>
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.VKORG)
+
+        @Html.HiddenFor(model => model.VTWEG)
+
+        @Html.HiddenFor(model => model.SPART)
+
+        @Html.HiddenFor(model => model.KUNNR)
+
+        <div class="row">
+            <div class="col s12 m6">
+                <div class="card-panel">
+                    <div class="row">
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.Editor("KUNNR1", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = Model.KUNNR.TrimStart('0') } })
+                            @Html.LabelFor(model => model.KUNNR, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_KUNNR" })
+                        </div>
+
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.NAME1, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.LabelFor(model => model.NAME1, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_nombre" })
+                        </div>
+
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.STCD1, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.LabelFor(model => model.STCD1, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_identificador" })
+                        </div>
+
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.STCD2, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.LabelFor(model => model.STCD2, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_identificador2" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 right">
+                <div class="card-panel">
+                    <div class="row">
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @*@Html.DropDownList("LAND", null, htmlAttributes: new { @id = "sel-land", @readonly = "readonly" })*@
+                            @Html.EditorFor(model => model.LAND, new { htmlAttributes = new { @class = "form-control", @id = "input_pais" } })
+                            @Html.LabelFor(model => model.LAND, "LAND", htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_pais" })
+                            @Html.ValidationMessageFor(model => model.LAND, "", new { @class = "text-danger" })
+                        </div>
+                        @*<script>
+                            var elem = document.getElementById('sel-land');
+                            var options = [];
+                            var instance = M.FormSelect.init(elem, options);
+                        </script>*@
+
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.REGION, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.LabelFor(model => model.REGION, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_region" })
+                        </div>
+
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.SUBREGION, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.LabelFor(model => model.SUBREGION, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_subreg" })
+                        </div>
+
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.REGIO, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.LabelFor(model => model.REGIO, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_estado" })
+                        </div>
+
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.ORT01, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.LabelFor(model => model.ORT01, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_ciudad" })
+                        </div>
+
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.STRAS_GP, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.LabelFor(model => model.STRAS_GP, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_direccion" })
+                        </div>
+
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.PSTLZ, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.LabelFor(model => model.PSTLZ, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_cp" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="col s12 m6">
+                    <div class="card-panel">
+                        <div class="row">
+                            <div class="input-field col s12" style="margin-bottom:0;">
+                                @Html.EditorFor(model => model.CONTAC, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.LabelFor(model => model.CONTAC, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_contacto" })
+                            </div>
+
+                            <div class="input-field col s12" style="margin-bottom:0;">
+                                @Html.EditorFor(model => model.CONT_EMAIL, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.LabelFor(model => model.CONT_EMAIL, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_email" })
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+            <div class="col s12 m6">
+                <div class="card-panel">
+                    <div class="row">
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @*@Html.DropDownList("PARVW", null, htmlAttributes: new { @id = "sel-par" })*@
+                            @Html.EditorFor(model => model.PARVW, new { htmlAttributes = new { @class = "form-control", @id = "input_tcliente", @readonly = "readonly" } })
+                            @Html.LabelFor(model => model.PARVW, "PARVW", htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_tipocli" })
+                            @Html.ValidationMessageFor(model => model.PARVW, "", new { @class = "text-danger" })
+                        </div>
+                        @*<script>
+            var elem = document.getElementById('sel-par');
+            var options = [];
+            var instance = M.FormSelect.init(elem, options);
+        </script>*@
+
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.PAYER, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.LabelFor(model => model.PAYER, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_payer" })
+                        </div>
+
+                        @*<div class="input-field col s12" style="margin-bottom:0;">
+            @Html.EditorFor(model => model.GRUPO, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.LabelFor(model => model.GRUPO, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_grupo" })
+        </div>*@
+
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.SPRAS, new { htmlAttributes = new { @class = "form-control", @id = "input_idioma", @readonly = "readonly" } })
+                            @Html.LabelFor(model => model.SPRAS, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_idioma" })
+                        </div>
+
+                        @*<div class="input-field col s12" style="margin-bottom:0;">
+            @Html.EditorFor(model => model.BDESCRIPCION, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.LabelFor(model => model.BDESCRIPCION, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_bdescrip" })
+        </div>*@
+
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.BANNER, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.LabelFor(model => model.BANNER, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_banner" })
+                        </div>
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @*@Html.DropDownList("PROVEEDOR_ID", null, htmlAttributes: new { id = "sel-vendor" })*@
+                            @Html.EditorFor(model => model.PROVEEDOR_ID, new { htmlAttributes = new { @class = "form-control", @id = "input_proveedor" } })
+                            @Html.LabelFor(model => model.PROVEEDOR_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_proveedor" })
+                        </div>
+                        @*<script>
+            $(document).ready(function () {
+                $('#sel-vendor').siblings('ul').prepend("<li id=sm_select_all><span id='filters_all'></span></li>");
+            });
+            var elem = document.getElementById('sel-vendor');
+            var options = [];
+            var instance = M.FormSelect.init(elem, options);
+        </script>*@
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @*@Html.DropDownList("CANAL", null, htmlAttributes: new { id = "sel-canal" })*@
+                            @Html.EditorFor(model => model.CANAL, new { htmlAttributes = new { @class = "form-control", @id = "input_canal" } })
+                            @Html.LabelFor(model => model.CANAL, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_canal" })
+                        </div>
+                        @*<script>
+            var elem = document.getElementById('sel-canal');
+            var options = [];
+            var instance = M.FormSelect.init(elem, options);
+        </script>*@
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            <label>
+                                @Html.CheckBoxFor(model => model.ACTIVO)
+                                <span id="lbl_activo"></span>
+                            </label>
+                        </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="col s12 m6">
+                <div class="card-panel">
+                    <div class="row">
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.BZIRK, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.LabelFor(model => model.BZIRK, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_distritov" })
+                        </div>
+
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.KONDA, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.LabelFor(model => model.KONDA, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_preciog" })
+                        </div>
+
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.VKGRP, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.LabelFor(model => model.VKGRP, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_ventasg" })
+                        </div>
+
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.VKBUR, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.LabelFor(model => model.VKBUR, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_oficinav" })
+                        </div>
+
+                        <div class="input-field col s12" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.BANNERG, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.LabelFor(model => model.BANNERG, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_bannergr" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="@Url.Action("Index", "Clientes")" id="lbl_regresar"> </a>
+</div>
+
+<script src="~/Scripts/autocomplete1.10.2.js"></script>
+<script src="~/Scripts/autocomplete1.11.4.js"></script>
+<link href="~/Content/autocomplete.css" rel="stylesheet" />
+<script>
+    var root = '@Url.Content("~")';
+
+    $("input[type='hidden']").each(function (index, element) {
+        $(this).appendTo($(element).parent());
+    });
+    var pais = $("#input_pais").val();
+    if (pais != "CO") {
+        $("#taxeo").hide();
+    }
+
+    $('body').on('keydown.autocomplete', '#input_proveedor', function () {
+
+        auto(this).autocomplete({
+            source: function (request, response) {
+                auto.ajax({
+                    type: "GET",
+                    url: root+'Listas/Vendors',
+                    dataType: "json",
+                    data: { "Prefix": request.term },
+                    success: function (data) {
+                        response(auto.map(data, function (item) {
+                            return { label: item.ID + " | " + item.NOMBRE, value: item.ID };
+                        }))
+                    }
+                })
+            },
+            messages: {
+                noResults: '',
+                results: function (resultsCount) { }
+            },
+            change: function (e, ui) {
+                if (!(ui.item) && $("#input_proveedor").val() === "") {
+                    e.target.value = "";
+                }
+            },
+
+            select: function (event, ui) {
+            }
+        });
+    });
+
+    $('body').on('keydown.autocomplete', '#input_canal', function () {
+
+        auto(this).autocomplete({
+            source: function (request, response) {
+                auto.ajax({
+                    type: "GET",
+                    url: root+'Listas/Canales',
+                    dataType: "json",
+                    data: { "Prefix": request.term },
+                    success: function (data) {
+                        response(auto.map(data, function (item) {
+                            return { label: item.CANAL1 + " | " + item.CDESCRIPCION, value: item.CANAL1 };
+                        }))
+                    }
+                })
+            },
+
+            messages: {
+                noResults: '',
+                results: function (resultsCount) { }
+            },
+
+            change: function (e, ui) {
+                if (!(ui.item) && $("#input_canal").val() === "") {
+                    e.target.value = "";
+                }
+            },
+
+            select: function (event, ui) {
+            }
+        });
+    });
+    
+    $('body').on('keydown.autocomplete', '#input_pais', function () {
+
+        auto(this).autocomplete({
+            source: function (request, response) {
+                auto.ajax({
+                    type: "GET",
+                    url: root+'Listas/Paises',
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response(auto.map(data, function (item) {
+                            return { label: item.LAND + " | " + item.LANDX, value: item.LAND };
+                        }))
+                    }
+                })
+            },
+
+            messages: {
+                noResults: '',
+                results: function (resultsCount) { }
+            },
+
+            change: function (e, ui) {
+                if (!(ui.item) && $("#input_pais").val() === "") {
+                    e.target.value = "";
+                }
+            },
+
+            select: function (event, ui) {
+            }
+        });
+    });
+    
+</script>
+<script>
+    var auto = $.noConflict();
+    $("#files").on("click", function () {
+        $("#files").val('');
+    });
+</script>

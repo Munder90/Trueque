@@ -1,0 +1,37 @@
+﻿@model TAT001.Entities.NOTICIA
+@using System.Web.Hosting;
+@{
+    ViewBag.pagina_r = 741;
+    ViewBag.carpeta_r = 500;
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col l12 m12 s12">
+            <button id="btnEliminar" type="submit" style="float:right;" value="Delete" class="btn btn-default"></button>
+        </div>
+    </div>
+    <div>
+        @if (ViewBag.imgnoticia != null)
+        {
+            if (String.IsNullOrEmpty(ViewBag.imgnoticia) == false)
+            {
+                <div class="parallax-container" style="height:250px;">
+                    <div class="@*parallax*@">
+                        @if (Request.Url.PathAndQuery != "/")
+                        {
+                            <img src="@Request.Url.OriginalString.Replace(Request.Url.PathAndQuery, "")@HostingEnvironment.ApplicationVirtualPath/@ViewBag.imgnoticia" style="height: 200px; position:absolute; width:100%;" />
+                        }
+                        else
+                        {
+                            <img src="@Request.Url.OriginalString@HostingEnvironment.ApplicationVirtualPath/@ViewBag.imgnoticia" style="height: 200px; position:absolute; width:100%;" />
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </div>
+}

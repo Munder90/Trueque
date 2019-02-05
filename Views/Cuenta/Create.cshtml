@@ -1,0 +1,214 @@
+﻿@model TAT001.Entities.CUENTA
+@{
+    ViewBag.pagina_r = 693;
+    ViewBag.carpeta_r = 500;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+<link href="~/Content/autocomplete.css" rel="stylesheet" />
+<script src="~/Scripts/autocomplete1.11.4.js"></script>
+
+@using (Html.BeginForm("Create", "Cuenta", FormMethod.Post, new { @id = "cuentasForm" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="row right">
+            <div class="col l12 m12 right">
+                <button type="submit" id="btn_guardar" class="btn btn-default"></button>
+            </div>
+        </div>
+    </div>
+    <div class="card-panel">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="form-group col m6" style="margin-bottom:0;">
+                    @Html.LabelFor(model => model.SOCIEDAD_ID, "SOCIEDAD_ID", htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_sociedad" })
+                    @Html.EditorFor(model => model.SOCIEDAD_ID, new { htmlAttributes = new { @class = "form-control", @required = "", @maxlength = 50 } })
+                </div>
+                
+
+                <div class="form-group col m4" style="margin-bottom:0;">
+                    @Html.LabelFor(model => model.PAIS_ID, "PAIS_ID", htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_pais" })
+                    @Html.EditorFor(model => model.PAIS_ID, new { htmlAttributes = new { @class = "form-control", @required = "", @maxlength = 50 } })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col m6" style="margin-bottom:0;">
+                    @Html.LabelFor(model => model.TALL_ID, "TALL_ID", htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_gal" })
+                    @Html.EditorFor(model => model.TALL_ID, new { htmlAttributes = new { @class = "form-control", @required = "", @maxlength = 50 } })
+
+                </div>
+                <div class="form-group col m4" style="margin-bottom:0;">
+                    @Html.LabelFor(model => model.EJERCICIO, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_ejercicio" })
+                    @Html.DropDownList("EJERCICIO", new SelectList(Enumerable.Range(DateTime.Now.Year, 10).ToList()), htmlAttributes: new { @class = "form-control", @id = "sel-ano" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col m4" style="margin-bottom:0;">
+                    @Html.LabelFor(model => model.ABONO, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_abono" })
+                    @Html.EditorFor(model => model.ABONO, new { htmlAttributes = new { @class = "form-control", @required = "", @maxlength = 50 } })
+
+                </div>
+
+                <div class="form-group col m4" style="margin-bottom:0;">
+                    @Html.LabelFor(model => model.CARGO, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_cargo" })
+                    @Html.EditorFor(model => model.CARGO, new { htmlAttributes = new { @class = "form-control", @required = "", @maxlength = 50 } })
+                </div>
+
+                <div class="form-group col m4" style="margin-bottom:0;">
+                    @Html.LabelFor(model => model.CLEARING, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_cargofv" })
+                    @Html.EditorFor(model => model.CLEARING, new { htmlAttributes = new { @class = "form-control", @maxlength = 50 } })
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Regresar", "Index", new { }, new { id = "lblRegresar" })
+</div>
+
+<script type="text/javascript">
+    var elem = document.querySelectorAll('select');
+    var instance = M.FormSelect.init(elem, []);
+    function ponerCeros(num) {
+        while (num.value.length < 10)
+            num.value = '0' + num.value;
+    }
+    var elem = document.querySelectorAll('select');
+    var instance = M.FormSelect.init(elem, []);
+    $("input[type='hidden']").each(function (index, element) {
+        $(this).appendTo($(element).parent());
+    });
+</script>
+
+<script type="text/javascript">
+    function soloNumeros(e) {
+        var key = window.Event ? e.which : e.keyCode
+        return (key >= 48 && key <= 57)
+    }
+</script>
+<script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+<script>
+    var root = "@Url.Content("~")";
+
+    fnCommon.formValidation('cuentasForm');
+
+    var auto = $.noConflict(true);
+    auto(document).ready(function () {
+        auto("#SOCIEDAD_ID").autocomplete({
+            source: function (request, response) {
+                fnCommon.autoAjax(root + "Listas/Sociedades", response, { Prefix: request.term }, function (item) { return { label: item.BUKRS, value: item.BUKRS }; });
+            },
+            messages: {
+                noResults: '',
+                results: function (resultsCount) { }
+            },
+            select: function (event, ui) {
+                var label = ui.item.label;
+                var value = ui.item.value;
+            },
+            change: function (e, ui) {
+                if (!(ui.item)) {
+                    e.target.value = "";
+                }
+            }
+        });
+        auto("#PAIS_ID").autocomplete({
+                source: function (request, response) {
+                    fnCommon.autoAjax(root + "Listas/Paises", response, { Prefix: request.term }, function (item) { return { label: item.LAND+" - "+item.LANDX, value: item.LAND }; });
+            },
+            messages: {
+                noResults: '',
+                results: function (resultsCount) { }
+            },
+            select: function (event, ui) {
+                var label = ui.item.label;
+                var value = ui.item.value;
+            },
+            change: function (e, ui) {
+                if (!(ui.item)) {
+                    e.target.value = "";
+                }
+            }
+            });
+        auto("#TALL_ID").autocomplete({
+            source: function (request, response) {
+                fnCommon.autoAjax(root + "Listas/tipoAllowance", response, { Prefix: request.term }, function (item) { return { label: item.TXT50, value: item.ID }; });
+            },
+            messages: {
+                noResults: '',
+                results: function (resultsCount) { }
+            },
+            select: function (event, ui) {
+                var label = ui.item.label;
+                var value = ui.item.value;
+            },
+            change: function (e, ui) {
+                if (!(ui.item)) {
+                    e.target.value = "";
+                }
+            }
+        });
+        auto("#ABONO").autocomplete({
+            source: function (request, response) {
+                fnCommon.autoAjax(root + "Listas/cuentas", response, { Prefix: request.term }, function (item) { return { label: item.TXT50, value: item.ID }; });
+            },
+            messages: {
+                noResults: '',
+                results: function (resultsCount) { }
+            },
+            select: function (event, ui) {
+                var label = ui.item.label;
+                var value = ui.item.value;
+            },
+            change: function (e, ui) {
+                if (!(ui.item)) {
+                    e.target.value = "";
+                }
+            }
+        });
+        auto("#CARGO").autocomplete({
+            source: function (request, response) {
+                fnCommon.autoAjax(root + "Listas/cuentas", response, { Prefix: request.term }, function (item) { return { label: item.TXT50, value: item.ID }; });
+            },
+            messages: {
+                noResults: '',
+                results: function (resultsCount) { }
+            },
+            select: function (event, ui) {
+                var label = ui.item.label;
+                var value = ui.item.value;
+            },
+            change: function (e, ui) {
+                if (!(ui.item)) {
+                    e.target.value = "";
+                }
+            }
+        });
+        auto("#CLEARING").autocomplete({
+            source: function (request, response) {
+                fnCommon.autoAjax(root + "Listas/cuentas", response, { Prefix: request.term }, function (item) { return { label: item.TXT50, value: item.ID }; });
+            },
+            messages: {
+                noResults: '',
+                results: function (resultsCount) { }
+            },
+            select: function (event, ui) {
+                var label = ui.item.label;
+                var value = ui.item.value;
+            },
+            change: function (e, ui) {
+                if (!(ui.item)) {
+                    e.target.value = "";
+                }
+            }
+        });
+    });
+    // Valida si ocurrio un error al intentar crear el layout.
+        var mnjError = '@ViewBag.mnjError';
+        if (mnjError) {
+            M.toast({ html: mnjError });
+        }
+    
+</script>

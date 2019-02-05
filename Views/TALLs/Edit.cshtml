@@ -1,0 +1,131 @@
+﻿@model TAT001.Entities.TALL
+
+@{
+    //ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 883;
+    ViewBag.carpeta_r = 500;
+    var lan = ViewBag.lan;
+    List<TAT001.Entities.SPRA> spras = ViewBag.SPRAS as List<TAT001.Entities.SPRA>;
+    List<TAT001.Entities.TALLT> lstTXT = new List<TAT001.Entities.TALLT>();
+
+    List<TAT001.Entities.SPRA> spras2 = new List<TAT001.Entities.SPRA>();
+    foreach (var item in Model.TALLTs)
+    {
+        TAT001.Entities.TALLT txt = new TAT001.Entities.TALLT();
+        txt.SPRAS_ID = item.SPRAS_ID;
+        txt.TALL_ID = item.TALL_ID;
+        txt.TXT50 = item.TXT50;
+        lstTXT.Add(txt);
+    }
+    for (int i = 0; i < spras.Count; i++)
+    {
+        TAT001.Entities.TALLT x2 = lstTXT.Where(a => a.SPRAS_ID == spras[i].ID).FirstOrDefault();
+        if (x2 == null)
+        {
+            spras2.Add(spras[i]);
+        }
+    }
+}
+
+
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+@using (Html.BeginForm("Edit", "TALLs", FormMethod.Post, new { @id = "tallsForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col s12 right-align">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Guardar" id="btnGuardar" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12 m12 l6">
+            <div class="card-panel">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ID)
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblID" })
+                        @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                     </div>
+                    <div class="input-field col s12">
+                        @Html.LabelFor(model => model.DESCRIPCION, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblDes" })
+                        @Html.EditorFor(model => model.DESCRIPCION, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.DropDownList("GALL_ID", null, htmlAttributes: new { @class = "form-control", @id = "dpGall" })
+                        @Html.LabelFor(model => model.GALL_ID, "Grupos de Allowance", htmlAttributes: new { @class = "control-label col-md-2", @readonly = "readonly", @id = "lblGall" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 l6 ">
+            <div class="card-panel">
+                <div class="row">
+                    @foreach (var item in Model.TALLTs)
+                    {
+                        <div class=" input-field col s12">
+                            @Html.EditorFor(modelItem => item.TXT50, null, "A" + item.SPRAS_ID, new { htmlAttributes = new { maxlength = "50", @id = "A" + item.SPRAS_ID, @name = "A" + item.SPRAS_ID, @required = "" } })
+                            <label for="@("A"+item.SPRAS_ID)">@item.SPRA.DESCRIPCION</label>
+                        </div>
+                        //Escondo el spraid para insertarlo posteriormente
+                        <div class=" input-field col 12">
+                            @Html.EditorFor(modelItem => item.SPRAS_ID, null, "sp", new { htmlAttributes = new { @id = item.SPRAS_ID, style = "display:none" } })
+                            @Html.HiddenFor(modelItem => item.SPRAS_ID)
+                        </div>
+                    }
+                    @foreach (var item in spras2)
+                    {
+                        <div class=" input-field col s12 pr1">
+                            @Html.Editor("Editor", null, "txval", new { htmlAttributes = new {} })
+                            <label for="Editor">@item.DESCRIPCION</label>
+                        </div>
+                    }
+
+                    <div class="input-field col l4 m10 right" style="margin-bottom:0;">
+                        <label>
+                            @if (Model.ACTIVO != null && (bool)Model.ACTIVO == true)
+                            {
+                                <input type="checkbox" name="ACTIVO" value="true" id="fac" onclick="check()" checked />
+                                <span style="height:0" id="lblActivo"></span>
+                            }
+                            else
+                            {
+                                <input type="checkbox" name="ACTIVO" value="true" id="fac" onclick="check()" />
+                                <span id="lblActivo"></span>
+                            }
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    function check() {
+        if ($("#act").prop('checked'))
+            $("#idact").prop('checked', true);
+        else
+            $("#idact").prop('checked', false);
+    }
+
+    var elem = document.querySelectorAll('select');
+    var instance = M.FormSelect.init(elem, []);
+
+</script>
+
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>
+
+<script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+<script>
+    fnCommon.formValidation('tallsForm');
+</script>
+

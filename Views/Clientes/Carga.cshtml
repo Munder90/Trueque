@@ -1,0 +1,140 @@
+﻿@model TAT001.Models.Cliente
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 631;
+    ViewBag.carpeta_r = 500;
+}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.2.6/css/fixedColumns.dataTables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/fixedcolumns/3.2.6/js/dataTables.fixedColumns.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+<link href="~/Content/dataTable.css" rel="stylesheet" />
+<link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+
+<style>
+    .dataTables_length {
+        display: none;
+    }
+
+    .dataTables_filter {
+        display: none;
+    }
+
+    .dataTables_scrollHeadInner, .mdl-data-table {
+        width: 100%;
+    }
+</style>
+
+
+<div class="row right-align">
+    <div class="col s12">
+        <button id="idAgregar" class="btn btn-small" onclick="Carga();">Guardar</button>
+        <input type="button" id="idLimpiar" value="Limpiar" class="btn btn-small" onclick="Limpiar()" />
+        @*<input type="button" value="Habilitar" class="btn btn-small" onclick="habilitar()" />*@
+    </div>
+</div>
+@Html.AntiForgeryToken()
+<div class="card-panel">
+    <div class="row">
+        <div class="file-field input-field col s12 m12 l6">
+            <div class="btn-small" style="float:left;">
+                <span id="idFile">File</span>
+                <input type="file" id="files" name="files">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
+            *Máximo 2,000 Registros
+        </div>
+    </div>
+    <div class="row">
+        <div class="row right-align">
+            <div class="col s12">
+                <input type="button" id="idBorrar" value="Borrar" class="btn btn-small" onclick="Borrar()" disabled="disabled" />
+            </div>
+        </div>
+        @using (Html.BeginForm("Carga", "Clientes", FormMethod.Post, new { enctype = "multipart/form-data", id = "tabla" }))
+        {
+            <div class="col s12 ">
+                <form id="tabla" action="" method="post">
+                    <table class="table mdl-data-table striped" id="table" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th><label><input class='input_bor' type='checkbox' id='borrar' name='borrar' onclick="check();" /><span></span></label></th>
+                                <th id="thead_cocode">CoCode</th>
+                                <th id="thead_pais">País</th>
+                                <th id="thead_cliente">Cliente</th>
+                                <th id="thead_nombre_cliente" style="text-align: left;">Nombre cliente</th>
+                                <th id="thead_nivel0">Nivel 0</th>
+                                <th id="thead_nivel1">Nivel 1</th>
+                                <th id="thead_nivel2">Nivel 2</th>
+                                <th id="thead_nivel3">Nivel 3</th>
+                                <th id="thead_nivel4">Nivel 4</th>
+                                <th id="thead_nivel5">Nivel 5</th>
+                                <th id="thead_nivel6">Nivel 6</th>
+                                <th id="thead_nivel7">Nivel 7</th>
+                                <th id="thead_vendor">Vendor</th>
+                                <th id="thead_banner">Banner</th>
+                                <th id="thead_banner_agrupador">Banner Agrupador</th>
+                                <th id="thead_canal">Canal</th>
+                                <th id="thead_exportador">Exportacion</th>
+                                <th id="thead_contacto" style="text-align: left;">Contacto</th>
+                                <th id="thead_email_contacto" style="text-align: left;">Email Contacto</th>
+                                <th id="thead_mensaje" style="text-align: left;">Mensaje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><input class='input_cli' style='font-size:12px;' type='text' id='' name='cli' value='' onkeyup='if(event.keyCode == 13) Actualizar()' /></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        }
+    </div>
+</div>
+<script>
+    var spras = "@ViewBag.spras_id";
+    var root = '@Url.Content("~")';
+</script>
+<script src="~/Scripts/autocomplete1.10.2.js"></script>
+<script src="~/Scripts/autocomplete1.11.4.js"></script>
+<script src="~/Scripts/CargaClientes.js"></script>
+<link href="~/Content/autocomplete.css" rel="stylesheet" />
+
+<script>
+    var auto = $.noConflict();
+    $("#files").on("click", function () {
+        $("#files").val('');
+    });
+</script>
+

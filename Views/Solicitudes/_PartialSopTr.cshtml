@@ -1,0 +1,59 @@
+﻿@model TAT001.Entities.DOCUMENTO
+
+@if (Model.DOCUMENTOF != null)
+{
+
+    for (var i = 0; i < Model.DOCUMENTOF.Count; i++)
+    {
+<tr>
+    <td>
+        @Html.EditorFor(m => m.DOCUMENTOF[i].POS)
+    </td>
+    <td>
+        @Html.EditorFor(m => m.DOCUMENTOF[i].SOCIEDAD)
+    </td>
+    <td>
+        @Html.EditorFor(m => m.DOCUMENTOF[i].FACTURA)
+    </td>
+    <td>
+        @Html.EditorFor(m => m.DOCUMENTOF[i].FECHA)
+    </td>
+    <td>
+        @Html.EditorFor(m => m.DOCUMENTOF[i].BILL_DOC)
+    </td>
+    <td>
+        @Html.EditorFor(m => m.DOCUMENTOF[i].PROVEEDOR)
+    </td>
+    <td>
+        @Html.EditorFor(m => m.DOCUMENTOF[i].PROVEEDOR)
+    </td>
+    <td>
+        @Html.EditorFor(m => m.DOCUMENTOF[i].CONTROL)
+    </td>
+    <td>
+        @Html.EditorFor(m => m.DOCUMENTOF[i].AUTORIZACION)
+    </td>
+    <td>
+        @Html.EditorFor(m => m.DOCUMENTOF[i].VENCIMIENTO)
+    </td>
+    <td>
+        @Html.EditorFor(m => m.DOCUMENTOF[i].FACTURAK)
+    </td>
+    <td>
+        @Html.EditorFor(m => m.DOCUMENTOF[i].EJERCICIOK)
+    </td>
+    <td>
+        @Html.EditorFor(m => m.DOCUMENTOF[i].PAYER)@*18-07-2018 jemo *@
+    </td>
+    <td>
+        @Html.EditorFor(m => m.DOCUMENTOF[i].DESCRIPCION)@*18-07-2018 jemo *@
+    </td>
+    <td>
+        @Html.EditorFor(m => m.DOCUMENTOF[i].IMPORTE_FAC)@*18-07-2018 jemo *@
+    </td>
+    <td>
+        @Html.EditorFor(m => m.DOCUMENTOF[i].BELNR)
+    </td>
+</tr>
+    }
+}

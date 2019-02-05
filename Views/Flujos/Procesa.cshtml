@@ -1,0 +1,47 @@
+﻿@model TAT001.Entities.FLUJO
+@{
+    //ViewBag.Title = "Páginas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 201;
+    ViewBag.carpeta_r = 200;
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row right">
+        <div class="col s12">
+            <input type="submit" value="Aceptar" class="btn btn-default" />
+            <a class="btn btn-default" href="@Url.Action("Details", "Solicitudes", new { id= Model.NUM_DOC})">Cancelar</a>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom:0">
+        <div class="col s12 m12 l12">
+            <div class="row" style="margin-bottom:0">
+
+                @Html.HiddenFor(model => model.WORKF_ID, new { htmlAttributes = new { @disabled = "disabled" } })
+                @*@Html.LabelFor(model => model.WORKF_ID, new { @id = "lbl_userid" })*@
+
+                @Html.HiddenFor(model => model.WF_VERSION, new { htmlAttributes = new { @disabled = "disabled" } })
+                @*@Html.LabelFor(model => model.WF_VERSION, new { @id = "lbl_userid" })*@
+
+                @Html.HiddenFor(model => model.WF_POS, new { htmlAttributes = new { @disabled = "disabled" } })
+                @*@Html.LabelFor(model => model.WF_POS, new { @id = "lbl_userid" })*@
+
+                @Html.HiddenFor(model => model.NUM_DOC, new { htmlAttributes = new { @disabled = "disabled" } })
+                @*@Html.LabelFor(model => model.NUM_DOC, new { @id = "lbl_userid" })*@
+
+                @Html.HiddenFor(model => model.LOOP, new { htmlAttributes = new { @disabled = "disabled" } })
+                @*@Html.LabelFor(model => model.LOOP, new { @id = "lbl_userid" })*@
+
+                @Html.HiddenFor(model => model.ESTATUS, new { htmlAttributes = new { @disabled = "disabled" } })
+                @*@Html.LabelFor(model => model.ESTATUS, new { @id = "lbl_userid" })*@
+
+                <div class="input-field col s10 offset-s1">
+                    @Html.TextAreaFor(model => model.COMENTARIO, new { @class = "materialize-textarea" })
+                    @Html.LabelFor(model => model.COMENTARIO, new { @id = "lbl_userid" })
+                </div>
+            </div>
+        </div>
+    </div>
+}

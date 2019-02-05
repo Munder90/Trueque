@@ -1,0 +1,209 @@
+﻿@model IEnumerable<TAT001.Entities.TAXEOH>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 851;
+    ViewBag.carpeta_r = 500;
+}
+<style>
+    .pnl-cli {
+        background-color: white;
+        padding: 5px 15px 5px 15px;
+        border-radius: 5px;
+    }
+</style>
+<div class="row">
+    <div class="row left pnl-cli">
+        <h6>@ViewBag.NoCliente - @ViewBag.Cliente</h6>
+    </div>
+    <div class="row right">
+        <div class="col s12 right-align">
+            @Html.ActionLink("Crear Registro", "Create", "Taxeoh", new { kun = @ViewBag.kun, vko = @ViewBag.vko, vtw = @ViewBag.vtw, spa = @ViewBag.spa }, new { @class = "btn-small", @id = "btnCreate" })
+            @using (Html.BeginForm("Descargar", "Taxeoh", FormMethod.Post, new { @style = "display:initial;" }))
+            {
+                <input type="hidden" id="vk" name="vk" value="@ViewBag.vko">
+                <input type="hidden" id="kun" name="kun" value="@ViewBag.kun">
+                <input type="hidden" id="vt" name="vt" value="@ViewBag.vtw">
+                <input type="hidden" id="sp" name="sp" value="@ViewBag.spa">
+                <button id="btnExport" name="excel" class="btn-small" type="submit" value="Excel"></button>
+            }
+            <a class="btn-small" href="@Url.Action("Index", "Clientes")" id="lbl_returnC">Clientes</a>
+        </div>
+        </div>
+    </div>
+    <div class="card-panel">
+        <div class="row" style="margin-bottom:0;">
+            <div class="input-field col s3 m3 l3">
+                <select id="selecc">
+                    <option value="10" selected>10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                <label id="lbl_length">Ver por página</label>
+            </div>
+            <div class="input-field col s5 m3 l3 offset-l6 offset-m6 offset-s4">
+                <input type="text" class="global_filter" id="global_filter">
+                <label for="global_filter" id="lbl_search">Buscar</label>
+            </div>
+        </div>
+        <script>
+            var elem = document.querySelector('select');
+            var options = [];
+            var instance = M.FormSelect.init(elem, options);
+        </script>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+        <link href="~/Content/dataTable.css" rel="stylesheet" />
+        <link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+        <table class="table mdl-data-table striped" id="table" style="width:100%;">
+            <thead>
+                <tr>
+                    <th id="lblSocId">
+                        @Html.DisplayNameFor(model => model.SOCIEDAD_ID)
+                    </th>
+                    <th id="lblVorkg">
+                        @Html.DisplayNameFor(model => model.VKORG)
+                    </th>
+                    <th id="lvlVtweg">
+                        @Html.DisplayNameFor(model => model.VTWEG)
+                    </th>
+                    <th id="lblSpart">
+                        @Html.DisplayNameFor(model => model.SPART)
+                    </th>
+                    <th id="lblKun">
+                        @Html.DisplayNameFor(model => model.KUNNR)
+                    </th>
+                    <th id="lblConId">
+                        @Html.DisplayNameFor(model => model.CONCEPTO_ID)
+                    </th>
+                    <th id="lblImpId">
+                        @Html.DisplayNameFor(model => model.IMPUESTO_ID)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SOCIEDAD_ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.VKORG)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.VTWEG)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SPART)
+                        </td>
+                        <td>
+                            @item.KUNNR.TrimStart('0')
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TX_CONCEPTO.DESCRIPCION)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IMPUESTO_ID)
+                        </td>
+                        <td>
+                            <a data-form-method="post" href="@Url.Action("Edit", "Taxeoh",new { kun=item.KUNNR,vk=item.VKORG,con=item.CONCEPTO_ID})">
+                                <i class='material-icons green-text'>edit</i>
+                            </a>
+                            <a data-form-method="post" href="@Url.Action("Details", "Taxeoh",new { kun=item.KUNNR,vk=item.VKORG,con=item.CONCEPTO_ID,sc=item.SOCIEDAD_ID})">
+                                <i class='material-icons blue-text'>search</i>
+                            </a>
+                            <a data-form-method="post" href="@Url.Action("Delete", "Taxeoh",new { kun=item.KUNNR,vk=item.VKORG,con=item.CONCEPTO_ID})">
+                                <i class='material-icons red-text'>delete</i>
+                            </a>
+                            <a data-form-method="post" href="@Url.Action("Index", "Taxeop",new { sc=item.SOCIEDAD_ID,ld=item.PAIS_ID,kun=item.KUNNR,vk=item.VKORG,vtw=item.VTWEG,sp=item.SPART,con=item.CONCEPTO_ID})">
+                                <i class='material-icons orange-text'>details</i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <script>
+            var root = '@Url.Content("~")';
+        $(document).ready(function () {
+            var table = $('#table').DataTable({
+                scrollX: "50vh",
+                scrollY: "50vh",
+                scrollCollapse: true,
+                language: {
+                    "url": root+"Scripts/lang/@ViewBag.spras_id"+".json"
+                },
+                order: [[4, "asc"]],
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        var column = this;
+                        var select = $('<select style="display:initial;" class="browser-default"><option value=""></option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+                                column
+                                    .search(val ? '^' + val + '$' : '', true, false)
+                                    .draw();
+                            });
+                        column.cells('', column[0]).render('display').sort().unique().each(function (d, j) {
+                            var val = $('<div/>').html(d).text();
+                            select.append('<option value="' + val + '">' + val + '</option>');
+                        });
+                    });
+                }
+            });
+
+            var a = $('#selecc').val();
+            table.page.len(a).draw();
+            $('#selecc').on('change', function () {
+                table.page.len(this.value).draw();
+            });
+
+            $('input.global_filter').on('keyup click', function () {
+                filterGlobal();
+            });
+
+            $('#table tbody').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    // Open this row
+                    var child = format(row.data(), row, tr);
+                    if (child != undefined) {
+                    }
+                }
+            });
+        });
+        function filterGlobal() {
+            $('#table').DataTable().search(
+                $('#global_filter').val()).draw();
+        }
+        </script>
+        <style>
+            .dataTables_length {
+                display: none;
+            }
+
+            .dataTables_filter {
+                display: none;
+            }
+
+            .dataTables_scrollHeadInner, .mdl-data-table {
+                width: 100%;
+            }
+        </style>
+    </div>
+    <div>
+        <a href="@Url.Action("Edit", "Clientes", new { vko = Request.QueryString["vko"], vtw = Request.QueryString["vtw"], spa = Request.QueryString["spa"], kun = Request.QueryString["kun"] })" id="lblRegresar"> </a>
+    </div>

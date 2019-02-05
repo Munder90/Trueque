@@ -1,0 +1,137 @@
+﻿@model TAT001.Models.ModificacionesGlobalesViewModel
+@using TAT001.Entities
+@using (Html.BeginForm("ListModAutorizador", "ModificacionesGlobales", FormMethod.Post, new { @id = "modAutorizadoForm" }))
+{
+    <div class="col s12 l12 right-align">
+        <a id="btn_save_a" class="btn btn-small modal-trigger" href="#modal1"  disabled></a>
+    </div>
+    <table class="table mdl-data-table striped" id="tableModAutorizador" style="width:100%; overflow-x: scroll;">
+        <thead>
+            <tr class="text-left">
+                <th id="lbl_num_doc">Num Doc</th>
+                <th id="lbl_usuario">Usuario</th>
+                <th id="lbl_autorizador">Autorizador</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.solicitudPorAprobar.Count > 0)
+            {
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    @Html.EditorFor(model => Model.solicitudPorAprobar[0].USUARIOA_ID_NUEVO, new { htmlAttributes = new { @style = "width: 250px;", @maxlength = 18, @id = "USUARIOA_ID_NUEVO",@Value="" } })
+                </td>
+            </tr>
+            }
+            @for (int i = 0; i < Model.solicitudPorAprobar.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.HiddenFor(model => Model.solicitudPorAprobar[i].NUM_DOC)
+                        @Model.solicitudPorAprobar[i].NUM_DOC
+                    </td>
+                    <td>
+                        @Model.solicitudPorAprobar[i].USUARIOD_ID - @Model.solicitudPorAprobar[i].USUARIOD_NOMBRE
+                    </td>
+                    <td>
+                        @Model.solicitudPorAprobar[i].USUARIOA_ID - @Model.solicitudPorAprobar[i].USUARIOA_NOMBRE
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+<div id="modal1" class="modal" style=" background-color: #fff; height: 200px; width: 450px;">
+    <div class="modal-content">
+        <p style="font-size: 16px;" class="lbl_actualizar"></p>
+    </div>
+    <div class="modal-footer">
+        <a class="modal-close waves-effect  btn-flat"><label class="lbl_No"></label></a>
+        <a onclick="actualizarAutorizador()" class="modal-close waves-effect  btn-flat"><label class="lbl_Si"></label></a>
+    </div>
+</div>
+<div>
+    @if (ViewBag.textos != null)
+    {
+        foreach (TEXTO t in ViewBag.textos)
+        {
+    <script>
+        try {
+            var elem = document.getElementById("@t.CAMPO_ID");
+            if (elem.nodeName != 'INPUT' & elem.nodeName != 'SELECT' & elem.nodeName != 'TABLE' & elem.nodeName != 'TEXTAREA')
+                elem.innerHTML = "@t.TEXTOS";
+        } catch (e) {
+            try {
+                var divs = document.getElementsByClassName("@t.CAMPO_ID");
+                [].slice.call(divs).forEach(function (div) {
+                    if (div.nodeName != 'INPUT' & div.nodeName != 'SELECT' & div.nodeName != 'TABLE' & div.nodeName != 'TEXTAREA')
+                        div.innerHTML = "@t.TEXTOS";
+                });
+            }
+            catch (ee) {
+
+            }
+        }
+    </script>
+        }
+    }
+</div>
+}
+<script>
+    var registros = "@Model.solicitudPorAprobar.Count"*1;
+    //---- Inicializador de componentes Materialize----
+    fnCommon.materializeInit('modal');
+
+    //----- Configuracion de Tablas-----
+    var root = "@Url.Content("~")",
+    spras_id = "@ViewBag.spras_id",
+    urlLanguage = root + "Scripts/lang/" + spras_id + ".json";
+    fnCommon.configurarTableNoPagNoBusq('tableModAutorizador', '50vh', '50vh', urlLanguage,[0]);
+       
+    function actualizarAutorizador() {
+        var esCambio = $("#USUARIOA_ID_NUEVO").val() !== "";      
+        if (esCambio) {
+            $("#USUARIOA_ID_NUEVO").removeClass("invalid");
+            document.getElementById("loader").style.display = "flex";
+            $('#modAutorizadoForm').submit();
+        } else {
+            $("#USUARIOA_ID_NUEVO").addClass("invalid");
+            $('#btn_save_a').removeAttr('disabled');
+        }
+    }
+
+
+</script>
+<script>
+    auto(document).ready(function () {
+        $("#USUARIOA_ID_NUEVO").autocomplete({
+                source: function (request, response) {
+                    var sociedad_id = $("#SOCIEDAD_ID_2").val();
+                    fnCommon.autoAjax(root + "Listas/Usuarios", response, { Prefix: request.term, autorizador: 2, sociedad_id: sociedad_id }, function (item) { return { label: (item.ID + " - " + item.NOMBRE + " " + item.APELLIDO_P + " " + (item.APELLIDO_M == null ? "" : item.APELLIDO_M)), value: item.ID }; });
+                },
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) { }
+            },
+            change: function (e, ui) {
+                if (!(ui.item)) {
+                    e.target.value = "";
+                    $('#btn_save_a').attr('disabled', 'disabled');
+                }
+            },
+            select: function (e, ui) {
+                    var label = ui.item.label;
+                var value = ui.item.value;
+                var usuarioa_id = $("#USUARIOA_ID_2").val();
+                if (usuarioa_id == value) {
+                    e.target.value = "";
+                    $('#btn_save_a').attr('disabled', 'disabled');
+                    e.preventDefault();
+                } else {
+                    $('#btn_save_a').removeAttr('disabled');
+                }
+                }
+            });
+    })  
+</script>

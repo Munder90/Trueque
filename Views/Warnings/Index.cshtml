@@ -1,0 +1,123 @@
+﻿@model IEnumerable<TAT001.Entities.WARNING>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 502;
+    ViewBag.carpeta_r = 500;
+}
+<div class="row right-align">
+    <div class="col s12 right-align">
+        <a href="@Url.Action("Create", "Warnings",new { id = TempData["id"].ToString()})" id="btnCrear" class="waves-effect waves-light btn"></a>
+    </div>
+</div>
+<div class="row" style="margin-bottom:0;">
+    <div class="input-field col s3 m3 l3">
+        <select id="selecc">
+            <option value="10" selected>10</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+            <option value="30">30</option>
+        </select>
+        <label id="btn_length">Ver por página</label>
+    </div>
+    <div class="input-field col s3 m3 l3 offset-l6 offset-m6">
+        <input type="text" class="global_filter" id="global_filter">
+        <label for="global_filter" id="lbl_search">Buscar</label>
+    </div>
+</div>
+<script>
+    var elem = document.querySelector('select');
+    var options = [];
+    var instance = M.FormSelect.init(elem, options);
+</script>
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+<link href="~/Content/dataTable.css" rel="stylesheet" />
+<link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+
+<table class="table mdl-data-table" id="table">
+    <thead>
+        <tr>
+            <th id="lblPagina">
+            </th>
+            <th id="lblDesc">
+            </th>
+            <th id="lblPos">
+            </th>
+            <th id="lblCampo">
+            </th>
+            <th id="lblIdioma">
+            </th>
+            <th id="lblActivo">
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CAMPOS.PAGINA.URL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CAMPOS.DESCRIPCION)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.POSICION)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CAMPOS.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SPRAS_ID)
+            </td>
+            @if (item.ACTIVO != null && (bool)item.ACTIVO == true)
+                {
+                <td style="align-items:center"><i class='material-icons green-text'>check</i></td>
+            }
+            else
+            {
+                <td style="align-items:center;"><i class='material-icons red-text'>clear</i></td>
+            }
+            <td>
+                <a href="@Url.Action("Edit", "Warnings", new { SPRAS_ID = item.SPRAS_ID, PAGINA_ID = item.PAGINA_ID, CAMPO_ID = item.CAMPO_ID })">
+                    <i class="material-icons green-text">edit</i>
+                </a>
+                <a href="@Url.Action("Details", "Warnings", new { SPRAS_ID = item.SPRAS_ID, PAGINA_ID = item.PAGINA_ID, CAMPO_ID = item.CAMPO_ID })">
+                    <i class="material-icons blue-text">search</i>
+                </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#table').DataTable();
+
+        $('#selecc').on('change', function () {
+            table.page.len(this.value).draw();
+        });
+
+        $('input.global_filter').on('keyup click', function () {
+            filterGlobal();
+        });
+    });
+
+    function filterGlobal() {
+        $('#table').DataTable().search(
+            $('#global_filter').val()).draw();
+    }
+</script>
+<style>
+    .dataTables_length {
+        display: none;
+    }
+
+    .dataTables_filter {
+        display: none;
+    }
+</style>

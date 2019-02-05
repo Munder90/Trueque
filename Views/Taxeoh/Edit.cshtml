@@ -1,0 +1,129 @@
+﻿@model TAT001.Entities.TAXEOH
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 853;
+    ViewBag.carpeta_r = 500;
+}
+<style>
+    .pnl-cli {
+        background-color: white;
+        padding: 5px 15px 5px 15px;
+        border-radius: 5px;
+    }
+</style>
+<script src="~/Scripts/validarTaxeoh.js"></script>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(t => t.CONCEPTO_ID)
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="row left pnl-cli">
+            <h6>@ViewBag.NoCliente - @ViewBag.Cliente</h6>
+        </div>
+        <div class="row right">
+            <div class="col s12">
+                @*<a href="@Url.Action("Index", "Taxeoh", new { kun = Model.KUNNR, vko = Model.VKORG, vtw = Model.VTWEG, spa = Model.SPART })" id="lblRegresar" class="btn-small"></a>*@
+                <button id="btnGEd" type="submit" value="Submit" class="btn-small">Submit</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="card-panel">
+            <div class="row">
+                <div class="col s6 m6 l6">
+                    <div class="col l12 m12 s12">
+                        @Html.LabelFor(model => model.KUNNR, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblKun" })
+                        @Html.EditorFor(model => model.KUNNR, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
+                    <div class="col l12 m12 s12">
+                        @Html.LabelFor(model => model.CONCEPTO_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblConId" })
+                        @Html.EditorFor(model => model.TX_CONCEPTO.DESCRIPCION, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
+                    <div class="col l12 m12 s12">
+                        @Html.LabelFor(model => model.SPART, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblSpart" })
+                        @Html.EditorFor(model => model.SPART, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
+                    <div class="col l12 m12 s12">
+                        @Html.LabelFor(model => model.IMPUESTO_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblImpId" })
+                        @*@Html.DropDownList("MWSKZ", null, htmlAttributes: new { @class = "form-control" })*@
+                        @Html.EditorFor(model => model.IMPUESTO_ID, new { htmlAttributes = new { @class = "form-control", @id = "input_impuesto" } })
+                        @Html.ValidationMessageFor(model => model.IMPUESTO_ID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col s6 m6 l6">
+                    <div class="col l12 m12 s12">
+                        @Html.LabelFor(model => model.VKORG, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblVorkg" })
+                        @Html.EditorFor(model => model.VKORG, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
+                    <div class="col l12 m12 s12">
+                        @Html.LabelFor(model => model.VTWEG, htmlAttributes: new { @class = "control-label col-md-2", @id = "lvlVtweg" })
+                        @Html.EditorFor(model => model.VTWEG, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
+                    <div class="col l12 m12 s12">
+                        @Html.LabelFor(model => model.SOCIEDAD_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblSocId" })
+                        @Html.EditorFor(model => model.SOCIEDAD_ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
+                    <div class="col l12 m12 s12">
+                        @Html.LabelFor(model => model.PAY_T, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblPayId" })
+                        @Html.EditorFor(model => model.PAY_T, new { htmlAttributes = new { @class = "form-control", @maxlength = "4", @id = "txtPay" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+<script>
+    var elem = document.querySelectorAll('select');
+    var instance = M.FormSelect.init(elem, []);
+</script>
+<div>
+    @Html.ActionLink("Back to List", "Index", new { vko = Model.VKORG, vtw = Model.VTWEG, kun = Model.KUNNR, spa = Model.SPART }, new { id = "lblRegresar" })
+</div>
+
+<script src="~/Scripts/autocomplete1.10.2.js"></script>
+<script src="~/Scripts/autocomplete1.11.4.js"></script>
+<link href="~/Content/autocomplete.css" rel="stylesheet" />
+<script>
+    $('body').on('keydown.autocomplete', '#input_impuesto', function () {
+
+        auto(this).autocomplete({
+            source: function (request, response) {
+                auto.ajax({
+                    type: "POST",
+                    url: 'Impuesto',
+                    dataType: "json",
+                    data: { "Prefix": request.term },
+                    success: function (data) {
+                        response(auto.map(data, function (item) {
+                            return { label: item.MWSKZ, value: item.MWSKZ };
+                        }))
+                    }
+                })
+            },
+
+            messages: {
+                noResults: '',
+                results: function (resultsCount) { }
+            },
+
+            change: function (e, ui) {
+                if (!(ui.item)) {
+                    e.target.value = "";
+                }
+            },
+
+            select: function (event, ui) {
+            }
+        });
+    });
+</script>
+<script>
+    var auto = $.noConflict();
+    $("#files").on("click", function () {
+        $("#files").val('');
+    });
+</script>

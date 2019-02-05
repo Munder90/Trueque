@@ -1,0 +1,782 @@
+@model TAT001.Models.DocumentoFlujo
+@using TAT001.Entities
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 201;
+    ViewBag.carpeta_r = 200;
+}
+<script>
+    var root = "@Url.Content("~")";
+</script>
+@try
+{
+
+    <link t href="~/Content/dropdowntree.css" rel="stylesheet" />
+    <script src="~/Scripts/dropdowntree.js"></script>
+    <script src="~/Scripts/materialize2.js"></script>
+    <script src="~/Scripts/listas.js"></script>
+    <input id="miles" name="miles" type="hidden" value="@ViewBag.miles">//LEJ 09.07.18
+    <input id="dec" name="dec" type="hidden" value="@ViewBag.dec">//LEJ 09.07.18
+    <script src="~/Scripts/formatos.js"></script>
+    <span class="lbl_cabono" style="display:none;"></span>
+    <span class="lbl_ccargo" style="display:none;"></span>
+    <span class="lbl_cclear" style="display:none;"></span>
+    <span class="lbl_cpayer" style="display:none;">Payer</span>
+    <style>
+        #lbl_sap {
+            font-size: 12px !important;
+        }
+
+        #txt_notas {
+            min-height: 90px;
+        }
+    </style>
+    <div class="row" style="margin-bottom:0">
+        @* ---DRS 3.10.2018--- *@
+        <div class="col s12 m7">
+            <div class="row" style="margin-bottom:0">
+                @* ---DRS 3.10.2018--- *@
+                <div class="input-field col s4 m2">
+                    @Html.EditorFor(model => model.D.USUARIOC_ID, new { htmlAttributes = new { @disabled = "disabled" } })
+                    @Html.LabelFor(model => model.D.USUARIOC_ID, new { @id = "lbl_userid" })
+                </div>
+                @* ---DRS 3.10.2018--- *@
+                <div class="input-field col s4 m2">
+                    @{ string manager = "";
+                        try
+                        {
+                            DET_APROBH dah = Model.D.USUARIO.PUESTO.DET_APROBH.Where(a => a.SOCIEDAD_ID == Model.D.SOCIEDAD_ID && a.ACTIVO)
+                                                .OrderByDescending(a => a.VERSION).FirstOrDefault();
+                            if (dah != null)
+                            {
+                                CLIENTEF cf = Model.D.CLIENTE.CLIENTEFs.Where(a => a.ACTIVO).OrderByDescending(a => a.VERSION).FirstOrDefault();
+                                TAT001.Services.ProcesaFlujo pf = new TAT001.Services.ProcesaFlujo();
+                                manager = pf.determinaAgenteI(cf, dah).USUARIOA_ID;
+                            }
+                        }
+                        catch { }
+                        //string manager = Model.D.CLIENTE.CLIENTEFs.Any(x => x.ACTIVO) ? Model.D.CLIENTE.CLIENTEFs.First(x => x.ACTIVO).USUARIO1_ID : "";
+                        @Html.EditorFor(model => model.D.USUARIO.MANAGER, new { htmlAttributes = new { @disabled = "disabled", @Value = manager } })
+                        @Html.LabelFor(model => model.D.USUARIO.MANAGER, "Manager", new { @id = "lbl_manager" })
+                    }
+                </div>
+                @* ---DRS 3.10.2018--- *@
+                <div class="input-field col s4 m2">
+                    @Html.EditorFor(model => model.D.USUARIO.BACKUP_ID, "BACKUP", new { htmlAttributes = new { @disabled = "disabled" } })
+                    @Html.LabelFor(model => model.D.USUARIO.BACKUP_ID, "Backup", new { @id = "lbl_backup" })
+                </div>
+                @* ---DRS 3.10.2018--- *@
+                <div class="input-field col s4 m2">
+                    @Html.EditorFor(model => model.D.USUARIO.BUNIT, "BU", new { htmlAttributes = new { @disabled = "disabled", @Value = Model.D.SOCIEDAD_ID } })
+                    @Html.LabelFor(model => model.D.USUARIO.BUNIT, "BU", new { @class = "lbl_bu" })
+                </div>
+                @* ---DRS 3.10.2018--- *@
+                <div class="input-field col s8 m4">
+                    @if (Model.D.ESTATUS == "N" | Model.D.ESTATUS != "N")
+                    {
+                        TAT001.Services.Estatus es = new TAT001.Services.Estatus();//ADD RSG 25.10.2018
+                        string status = es.getText(Model.D.NUM_DOC, Session["spras"].ToString());//ADD RSG 25.10.2018
+                        <input type="text" id="txt_status" value="@status" disabled="disabled" />@*//ADD RSG 25.10.2018*@
+                        <label for="txt_status" id="lbl_status">Estatus</label>
+                    }
+                </div>
+            </div>
+        </div>
+
+        @* ---DRS 13.10.2018--- *@
+        <div class="col s12 m5">
+            <div class="row right">
+                @if (Model.D.ESTATUS_C != "C")
+                {
+                    if (Model.D.LIGADA == true && (Model.D.ESTATUS_SAP == null || Model.D.ESTATUS_SAP == "P") && (Model.D.TIPO_RECURRENTE == "7" || Model.D.TIPO_RECURRENTE == "8") && ViewBag.accion != null)
+                    {
+                        <a class="btn-small" id="lbl_calc" href="@Url.Action("Calcular", "Recurrencias", new { id_d = Model.D.NUM_DOC })">Calcular</a><!--RSG 31.10.2018-->
+                    }
+                    if (Model.D.TSOL.CARTA)
+                    {
+                        @* ---DRS 13.10.2018--- *@
+                        <button type="button" class="btn-small" data-target="list_carta" id="btn_carta">Carta</button>
+                        <ul id='list_carta' class='dropdown-content'>
+                            @*
+
+                                @* ---DRS 14.10.2018--- *@
+                            <li><a href="@Url.Action("Lista", "CartaV", new { id = Model.D.NUM_DOC, swf = Model.D.ESTATUS_WF })" id="lbl_list">Lista de cartas</a></li> @*//B20180720P MGC Guardar Carta*@
+                            @*@if (Model.D.ESTATUS_WF.Equals("S") && (Model.D.USUARIOD_ID == User.Identity.Name))*@
+                            @if (Model.D.ESTATUS_WF.Equals("S") && (ViewBag.acciones.USUARIOA_ID.ToUpper() == User.Identity.Name))
+                            {
+                                <li><a href="@Url.Action("Create", "CartaV", new { id = Model.D.NUM_DOC })" id="lbl_genc">Generar carta</a></li>
+                            }
+                            else if (Model.D.ESTATUS_WF.Equals("F") || Model.D.ESTATUS_WF.Equals("P") || Model.D.ESTATUS_WF.Equals("S") || Model.D.ESTATUS_WF.Equals("R"))
+                            {
+                                <li><a href="@Url.Action("Create", "CartaD", new { id = Model.D.NUM_DOC })" id="lbl_genc">Imprimir</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="@Url.Action("Create", "CartaD", new { id = Model.D.NUM_DOC })" id="lbl_genc">Imprimir draft</a></li>
+                            }
+                        </ul>
+                        <script>
+                            var elem = document.getElementById('btn_carta');
+                            var options = {
+                                constrainWidth: false
+                                //,hover: true
+                            };
+                            var instance = M.Dropdown.init(elem, options);
+                        </script>
+                    }
+                    if (ViewBag.acciones != null)
+                    {
+                        if (ViewBag.accion == "A" | ViewBag.accion == "R")
+                        {
+                            @*<button type="button" class="btn-small  " id="btn_workf">Acciones</button>*@
+                            <div class="fixed-action-btn" id="lbl_wf">
+                                <a class="btn-floating btn-large blue">
+                                    <i class="large material-icons">work</i>
+                                </a>
+                                <ul>
+                                    <li><a id="lbl_wfa" class="btn-floating green modal-trigger" href="#modal1" onclick="aprobar()"><i class="material-icons">check</i></a></li>
+                                    <li><a id="lbl_wfr" class="btn-floating red modal-trigger" href="#modal1" onclick="rechazar()"><i class="material-icons">close</i></a></li>
+                                </ul>
+                            </div>
+                            <script>
+
+                                var elem = document.querySelector('.fixed-action-btn');
+                                var options = {
+                                    direction: 'left',
+                                    hoverEnabled: false,
+                                    toolbarEnabled: false
+                                };
+                                var instance = M.FloatingActionButton.init(elem, options);
+                            </script>
+                            @*<a id="lbl_wfa" class="btn-small  " href="@Url.Action(" Procesa", "Flujos" , new { id=Model.D.NUM_DOC, accion="A" })">Aprobar</a>
+                                <a id="lbl_wfr" class="btn-small  " href="@Url.Action(" Procesa", "Flujos" , new { id=Model.D.NUM_DOC, accion="R" })">Rechazar</a>*@
+                            <a class="btn-small modal-trigger" href="#modal1" onclick="aprobar()">Aprobar</a>
+                            <a class="btn-small modal-trigger" href="#modal1" onclick="rechazar()">Rechazar</a>
+                        }
+                        else if (ViewBag.accion == "N" | ViewBag.accion == "M")
+                        {
+                            <div class="fixed-action-btn" id="lbl_wf">
+                                <a class="btn-floating btn-large blue">
+                                    <i class="large material-icons">work</i>
+                                </a>
+                                <ul>
+                                    <li>@*<a id="lbl_wfn" class="btn-floating yellow darken-1 modal-trigger" href="#modal1" onclick="siguiente()"><i class="material-icons">play_arrow</i></a>*@</li>
+                                    <li><a data-form-method="post" id="lbl_wfn" class="btn-floating yellow darken-1 @*modal-trigger*@" href="@Url.Action("Edit", "Solicitudes", new { id_d = Model.D.NUM_DOC })"><i class="material-icons">edit</i></a></li>
+                                </ul>
+                            </div>
+                            <script>
+
+                                var elem = document.querySelector('.fixed-action-btn');
+                                var options = {
+                                    direction: 'left',
+                                    hoverEnabled: false,
+                                    toolbarEnabled: false
+                                };
+                                var instance = M.FloatingActionButton.init(elem, options);
+                            </script>
+                            if (Model.D.USUARIOC_ID == ViewBag.usuario.ID | Model.D.USUARIOD_ID == ViewBag.usuario.ID | true)
+                            {
+                                <a class="btn-small modal-trigger" id="btn_cancel" href="#modal2">Cancelar</a>
+                                <div id="modal2" class="modal">
+                                    <div class="modal-content">
+                                        <div class="row">
+                                            <h4 id="txt_can"></h4>
+                                            <br />
+                                        </div>
+                                        <div class="row" style="">
+                                            <div class="col s12 m12 l12">
+                                                <div class="row" style="margin-bottom:0">
+                                                    <span id="span_confcancelacion"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer right">
+                                        <a href="#!" class="modal-action modal-close btn-flat" id="btn_no"></a>
+                                        <a class="modal-action btn-flat" id="btn_si" href="@Url.Action("Cancelar", "Solicitudes", new { id = Model.D.NUM_DOC })"></a>
+                                    </div>
+                                </div>
+                            }
+                            @*<a id="lbl_wfn" class="btn-small  " href="@Url.Action(" Procesa", "Flujos" , new { id=Model.D.NUM_DOC, accion="N" })">Siguiente</a>*@
+                            @*<a id="lbl_wfn" class="btn-small modal-trigger" href="#modal1" onclick="siguiente()">Siguiente</a>*@
+                            <a data-form-method="post" id="lbl_wfn" class="btn-small " href="@Url.Action("Edit", "Solicitudes", new { id_d = Model.D.NUM_DOC })">Editar</a> @*OCG 09-10-18 Se corrige error en la ruta*@
+                        }
+                        else if (ViewBag.accion == "P")
+                        {
+
+                            <div class="fixed-action-btn" id="lbl_wf">
+                                <a class="btn-floating btn-large blue">
+                                    <i class="large material-icons">work</i>
+                                </a>
+                                <ul>
+                                    <li><a id="lbl_wfn" class="btn-floating yellow darken-1 " href="#modal1" onclick="contabilizar()"><i class="material-icons">send</i></a></li> @*OCG 09-10-18 Se corrige error en la ruta*@
+                                </ul>
+                            </div>
+                            <script>
+
+                                var elem = document.querySelector('.fixed-action-btn');
+                                var options = {
+                                    direction: 'left',
+                                    hoverEnabled: false,
+                                    toolbarEnabled: false
+                                };
+                                var instance = M.FloatingActionButton.init(elem, options);
+                            </script>
+                            @*<a id="lbl_wfn" class="btn-small  " href="@Url.Action(" Procesa", "Flujos" , new { id=Model.D.NUM_DOC, accion="N" })">Siguiente</a>*@
+                            <a id="lbl_wfn" class="btn-small modal-trigger" href="#modal1" onclick="contabilizar()">Contabilizar</a>
+                        }
+                        else if (ViewBag.accion == "O")
+                        {
+                            <a href="@Url.Action("Backorder", "Recurrencias", new { id_d = Model.D.NUM_DOC.ToString() })" class="btn-small">Backorder</a>
+                        }
+                        else if (!Model.D.ESTATUS.Equals("A") & !Model.D.ESTATUS.Equals("R"))//RSG 20181002
+                        {
+                            if (Model.D.USUARIOC_ID == ViewBag.usuario.ID | Model.D.USUARIOD_ID == ViewBag.usuario.ID)
+                            {
+                                <a class="btn-small modal-trigger" id="btn_cancel" href="#modal2">Cancelar</a>
+                                <div id="modal2" class="modal">
+                                    <div class="modal-content">
+                                        <div class="row">
+                                            <h4 id="txt_can"></h4>
+                                            <br />
+                                        </div>
+                                        <div class="row" style="">
+                                            <div class="col s12 m12 l12">
+                                                <div class="row" style="margin-bottom:0">
+                                                    <span id="span_confcancelacion"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer right">
+                                        <a href="#!" class="modal-action modal-close btn-flat" id="btn_no"></a>
+                                        <a class="modal-action btn-flat" id="btn_si" href="@Url.Action("Cancelar", "Solicitudes", new { id = Model.D.NUM_DOC })"></a>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                    else if ((Model.D.ESTATUS.Equals("A") /*| Model.D.ESTATUS.Equals("R")*/) && (Model.D.TSOL.PADRE) /*&& Model.D.DOCUMENTORECs.Count < 1 && Model.D.DOCUMENTOLs.Count < 1*/)//RSG 20181002
+                    {
+                        bool un = false;
+                        if (Model.D.DOCUMENTORECs.Count > 1)
+                        {
+                            if (Model.D.DOCUMENTORECs.Any(x => x.DOC_REF == Model.D.NUM_DOC))
+                            {
+                                if (Model.D.DOCUMENTORECs.Where(x => x.DOC_REF == Model.D.NUM_DOC).FirstOrDefault().ESTATUS == "P")
+                                {
+                                    un = true;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            un = true;
+                        }
+                        if (un)
+                        {
+                            using (TruequeEntities db = new TruequeEntities())
+                            {
+                                List<DOCUMENTO> inf = new List<DOCUMENTO>();
+                                inf = db.DOCUMENTOes.Where(x => x.DOCUMENTO_REF == Model.D.NUM_DOC & x.ESTATUS_C != "C" & x.ESTATUS_WF != "B").ToList();
+                                if (inf.Where(x => x.TSOL.REVERSO == true).ToList().Count == 0)
+                                {
+                                    //if (Model.D.USUARIOC_ID == ViewBag.usuario.ID & Model.D.ESTATUS_SAP != null & Model.D.ESTATUS_SAP != "E")
+                                    if (Model.D.USUARIOC_ID == ViewBag.usuario.ID & Model.D.ESTATUS_SAP == "X")
+                                    {
+                                        <div id="div_drop" class="col" style="padding:0 4px;">
+                                            <a href="@Url.Action("Create", "Solicitudes", new { id_d = Model.D.NUM_DOC.ToString(), tsol = Model.D.TSOL.TSOLR })" class="btn-small">Reversar</a>
+                                            @*<button type="button" class="btn-small  " id="btn_cancel">Cancelar</button>*@
+                                            <button type="button" class="btn-small dropdown-trigger">Crear solicitud relacionada</button>
+                                            <div id="list_rela" class="dropdowntree"></div>
+                                        </div>
+                                        <script>
+                                 $('#list_rela').kendoTreeView({
+                                     link: '@Url.Content("~")Solicitudes/Create?id_d=@Model.D.NUM_DOC.ToString()&tsol={val}',
+                                    dataSource:@Html.Raw(Json.Encode(ViewBag.TSOL_RELA))
+                                  });
+                                        </script>
+
+                                    }
+                                }
+                            }
+                        }
+                        if (ViewBag.usuario.PUESTO_ID == 8 & Model.D.DOCUMENTOLs.Count > 0 && Model.D.DOCUMENTORECs.Count > 1)
+                        {
+                            <a href="@Url.Action("Backorder", "Recurrencias", new { id_d = Model.D.NUM_DOC.ToString() })" class="btn-small">Backorder</a>
+                        }
+                        if (Model.D.DOCUMENTORECs.Count() > 1 && Model.D.ESTATUS_WF != "B")
+                        {
+                            if (Model.D.DOCUMENTORECs.FirstOrDefault().NUM_DOC == Model.D.NUM_DOC && Model.D.DOCUMENTORECs.Any(x => x.DOC_REF == 0) && (Model.D.USUARIOC_ID == ViewBag.usuario.ID | Model.D.USUARIOD_ID == ViewBag.usuario.ID))
+                            {
+                                <a href="@Url.Action("Cancelar", "Recurrencias", new { id = Model.D.NUM_DOC })" class="btn-small">Cancelar recurrencia</a>
+                            }
+                        }
+                    }
+                    else if (!Model.D.ESTATUS.Equals("A"))
+                    {
+                        if (Model.D.USUARIOC_ID == ViewBag.usuario.ID | Model.D.USUARIOD_ID == ViewBag.usuario.ID)
+                        {
+                            <a class="btn-small modal-trigger" id="btn_cancel" href="#modal3">Cancelar</a>
+                            <div id="modal3" class="modal">
+                                <div class="modal-content">
+                                    <div class="row">
+                                        <h4 id="txt_can"></h4>
+                                        <br />
+                                    </div>
+                                    <div class="row" style="">
+                                        <div class="col s12 m12 l12">
+                                            <div class="row" style="margin-bottom:0">
+                                                <span id="span_confcancelacion"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer right">
+                                    <a href="#!" class="modal-action modal-close btn-flat">No</a>
+                                    <a class="modal-action btn-flat" href="@Url.Action("Cancelar", "Solicitudes", new { id = Model.D.NUM_DOC })">Si</a>
+                                </div>
+                            </div>
+                            <script>
+                                var elem3 = document.getElementById('modal3');
+                                if (elem3 != undefined)
+                                    M.Modal.init(elem3, []);
+                            </script>
+                            if (Model.D.DOCUMENTORECs.Count() > 1 && Model.D.ESTATUS_WF != "B")
+                            {
+                                if (Model.D.DOCUMENTORECs.FirstOrDefault().NUM_DOC == Model.D.NUM_DOC && Model.D.DOCUMENTORECs.Any(x => x.DOC_REF == 0))
+                                {
+                                    <a href="@Url.Action("Cancelar", "Recurrencias", new { id = Model.D.NUM_DOC })" class="btn-small">Cancelar recurrencia</a>
+                                }
+                            }
+                        }
+                        if (Model.D.ESTATUS_WF == "B")//ADD RSG 30.10.2018
+                        {
+                            <a class="btn-small" id="lbl_wfn" href="@Url.Action("Edit", "Solicitudes", new { id_d = Model.D.NUM_DOC })">Editar</a>
+                        }
+                    }
+
+                }
+                @if (Model.D.USUARIOC_ID == ViewBag.usuario.ID | Model.D.USUARIOD_ID == ViewBag.usuario.ID)
+                {
+                    <a class="btn-small" id="lbl_dupp" href="@Url.Action("Create", "Solicitudes", new { id_d = Model.D.NUM_DOC, tsol = Model.D.TSOL_ID, dp = "X" })">Duplicar</a><!--RSG 31.10.2018-->
+                }
+                @if (Model.D.FLUJOes.Count == 0)
+                {
+                    <a class="btn-small" href="@Url.Action("Nuevo", "Flujos", new { id = Model.D.NUM_DOC })">Enviar</a>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="">
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs" id="tab">
+                    <li class="tab col s2"><a href="#info" id="tab_info">Información</a></li>
+                    @*
+                        <li class="tab col s2"><a href="#temp" id="lbl_temp">Temporalidad</a></li>*@<!--RSG 09.07.2018 DEL-->
+                    @if (ViewBag.acciones != null & ViewBag.accion == "S")
+                    {
+                        <li class="tab col s2"><a href="#supp" id="tab_soporte" class="active">Soporte</a></li>
+                    }
+                    else
+                    {
+                        <li class="tab col s2"><a href="#supp" id="tab_soporte">Soporte</a></li>
+                    }
+                    <li class="tab col s2"><a href="#dist" id="tab_dis">Distribución</a></li>
+                    @if (Model.D.DOCUMENTORECs.Count > 1)
+                    {
+                        <li class="tab col s2"><a href="#recu" id="tab_rec"><span class="tab_recT">Recurrencia</span></a></li><!--RSG 09.07.2018 ADD-->
+                    }
+                    else if (Model.D.DOCUMENTORECs.Count > 0)
+                    {
+                        <li class="tab col s2"><a href="#recu" id="tab_rec"><span class="tab_ligT">Ligada</span></a></li><!--RSG 09.07.2018 ADD-->
+                    }
+                    @if (ViewBag.acciones != null & ViewBag.accion == "T")
+                    {
+                        <li class="tab col s2"><a href="#fina" id="tab_fin" class="active">Financiera</a></li>
+                    }
+                    else
+                    {
+                        <li class="tab col s2"><a href="#fina" id="tab_fin">Financiera</a></li>
+                    }
+                </ul>
+            </div>
+            @*Información*@
+            @Html.Partial("_DetailsTabInfo", Model)
+            @*Soporte*@
+            @Html.Partial("_DetailsTabSop", Model)
+            @*Distribución*@
+            @Html.Partial("_DetailsTabDis", Model)
+            @*Financiera*@
+            @Html.Partial("_DetailsTabFin", Model)
+            @if (Model.D.DOCUMENTORECs.Count > 0)
+            {
+                @*Recurrencia*@
+                @Html.Partial("_DetailsTabRec", Model)
+            }
+        </div>
+        <script>
+            var el = document.getElementById("tab");
+            options = [];
+            var instance = M.Tabs.init(el, options);
+        </script>
+    </div>
+    if (ViewBag.acciones != null)
+    {
+        using (Html.BeginForm("Procesa", "Flujos"))
+        {
+            <div id="modal1" class="modal  bottom-sheet">
+                @Html.AntiForgeryToken()
+                <div class="modal-content">
+                    <div class="row">
+                        <h4 id="txt_app" style="display:none">Aprobar solicitud</h4>
+                        <h4 id="txt_rec" style="display:none">Rechazar solicitud</h4>
+                        <h4 id="txt_nex" style="display:none">Agregar comentario</h4>
+                        <h4 id="txt_cont" style="display:none">
+                            Contabilizar
+                        </h4>
+                        <br />
+                    </div>
+                    <div class="row" style="">
+                        <div class="col s12 m12 l12">
+                            <div class="row" style="margin-bottom:0">
+                                @Html.HiddenFor(model => model.F.WORKF_ID)
+                                @*@Html.LabelFor(model => model.F.WORKF_ID, new { @id = "lbl_userid" })*@
+                                @Html.HiddenFor(model => model.F.WF_VERSION)
+                                @*@Html.LabelFor(model => model.F.WF_VERSION, new { @id = "lbl_userid" })*@
+                                @Html.HiddenFor(model => model.F.WF_POS)
+                                @*@Html.LabelFor(model => model.F.WF_POS, new { @id = "lbl_userid" })*@
+                                @Html.HiddenFor(model => model.F.NUM_DOC)
+                                @*@Html.LabelFor(model => model.F.NUM_DOC, new { @id = "lbl_userid" })*@
+                                @Html.HiddenFor(model => model.F.LOOP)
+                                @*@Html.LabelFor(model => model.F.LOOP, new { @id = "lbl_userid" })*@
+                                @Html.HiddenFor(model => model.F.ESTATUS, new { @id = "wf_estatus" })
+                                @*@Html.LabelFor(model => model.F.ESTATUS, new { @id = "lbl_userid" })*@
+                                <div class="input-field col s10 offset-s1">
+                                    @Html.TextAreaFor(model => model.F.COMENTARIO, new { @class = "materialize-textarea", @id = "txt_comentario", @maxlength = 255 })
+                                    @Html.LabelFor(model => model.F.COMENTARIO, new { @class = "lbl_co" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-fixed-footer right">
+                    <a href="#!" class="modal-action modal-close btn-flat">Cancelar</a>
+                    <input type="submit" value="Aceptar" class="modal-action modal-close btn-flat" onclick="document.getElementById('loader').style.display = 'initial';" />
+                    @*<a class="btn-small btn-default" href="@Url.Action("Details", "Solicitudes" , new { id=Model.F.NUM_DOC})">Cancelar</a>*@
+                </div>
+            </div>
+            if (ViewBag.accion == "R")
+            {
+                <div class="row" style="font-size:12px;">
+                    <div class="col s12">
+                        <div class="row" style="margin-bottom:0">
+                            <div class="card-panel">
+                                <div class="row">
+                                    <h5 id="lblTrade">Trade Spending</h5>
+                                </div>
+                                <div class="row">
+                                    <div class="col l6 m6 s12">
+                                        @foreach (var item in ViewBag.ts)
+                                        {
+                                            <div class="col s12">
+                                                <p style="margin-top:0;">
+                                                    <label>
+                                                        @foreach (var ii in item.TS_CAMPO.TS_FORMT)
+                                                        {
+                                                            if (ii.SPRAS_ID == ViewBag.spras_id)
+                                                            {
+                                                                <input type="checkbox" id="chk-@item.TS_CAMPO.ID" name="chk-@item.TS_CAMPO.ID" class="trade" />
+                                                                <span>@ii.TXT100</span>
+                                                            }
+                                                        }
+                                                    </label>
+                                                </p>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <script>
+
+                var elem = document.getElementById('modal1');
+                M.Modal.init(elem, []);
+                var elem2 = document.getElementById('modal2');
+                if (elem2 != undefined)
+                    M.Modal.init(elem2, []);
+
+
+                function aprobar() {
+                    document.getElementById("txt_app").style.display = 'initial';
+                    document.getElementById("txt_rec").style.display = 'none';
+                    document.getElementById("txt_nex").style.display = 'none';
+                    document.getElementById("txt_cont").style.display = 'none';
+                    document.getElementById("txt_comentario").value = '';
+                    document.getElementById("wf_estatus").value = 'A';
+                }
+                function rechazar() {
+                    document.getElementById("txt_rec").style.display = 'initial';
+                    document.getElementById("txt_app").style.display = 'none';
+                    document.getElementById("txt_nex").style.display = 'none';
+                    document.getElementById("txt_cont").style.display = 'none';
+                    document.getElementById("txt_comentario").value = '';
+                    document.getElementById("wf_estatus").value = 'R';
+                }
+                function siguiente() {
+                    document.getElementById("txt_rec").style.display = 'none';
+                    document.getElementById("txt_app").style.display = 'none';
+                    document.getElementById("txt_nex").style.display = 'initial';
+                    document.getElementById("txt_cont").style.display = 'none';
+                    document.getElementById("txt_comentario").value = '';
+                    document.getElementById("wf_estatus").value = 'A';
+                }
+                function contabilizar() {
+                    document.getElementById("txt_rec").style.display = 'none';
+                    document.getElementById("txt_app").style.display = 'none';
+                    document.getElementById("txt_nex").style.display = 'none';
+                    document.getElementById("txt_cont").style.display = 'initial';
+                    document.getElementById("txt_comentario").value = '';
+                    document.getElementById("wf_estatus").value = 'A';
+                }
+            </script>
+        }
+    }
+    if (ViewBag.tts.Count != 0)
+    {
+
+        <div class="row" style="font-size:12px;">
+            <div class="col s12">
+                <div class="row" style="margin-bottom:0">
+                    <div class="card-panel">
+                        <div class="row">
+                            <h5 id="lblTrade">Trade Spending</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col l4 m4 s12">
+                                @foreach (var item in ViewBag.tts)
+                                {
+                                    <div class="col s12">
+                                        <p style="margin-top:0;">
+                                            <label>
+                                                @foreach (var ii in item.TS_CAMPO.TS_FORMT)
+                                                {
+                                                    if (ii.SPRAS_ID == ViewBag.spras_id)
+                                                    {
+                                                        if (item.CHECKS)
+                                                        {
+                                                            <input type="checkbox" id="chk-@item.TS_CAMPO.ID" name="chk-@item.TS_CAMPO.ID" checked="checked" disabled="disabled" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="checkbox" id="chk-@item.TS_CAMPO.ID" name="chk-@item.TS_CAMPO.ID" disabled="disabled" />
+                                                        }
+                                                        <span>@ii.TXT100</span>
+                                                    }
+                                                }
+                                            </label>
+                                        </p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    if (ViewBag.workflow.Count != 0)
+    {
+        <div class="row" style="font-size:12px;">
+            <div class="col s12">
+                <div class="card-panel">
+                    <div class="row" style="margin-bottom:0">
+                        <h5 id="lblWorkflow">Workflow</h5>
+                        <table class="table highlight responsive-table" id="table">
+                            <thead>
+                                <tr>
+                                    <th width="" id="lbl_us">
+                                        Usuario
+                                    </th>
+                                    <th width="" id="lbl_ev">
+                                        Evento
+                                    </th>
+                                    <th width="" id="lbl_fi"> Fecha inicio</th>
+                                    <th width="" id="lbl_hi"> Hora inicio</th>
+                                    <th width="" id="lbl_ft"> Fecha término</th>
+                                    <th width="" id="lbl_ht"> Hora término</th>
+                                    @* -------DRS 24.09.18------- *@
+                                    <th width="" id="lbl_ew">
+                                        Estatus WF
+                                    </th>
+                                    <th width="" id="lbl_es">
+                                        Estatus
+                                    </th>
+                                    <th width="30%" class="lbl_co">
+                                        Comentario
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (TAT001.Entities.FLUJO f in ViewBag.workflow)
+                                {
+                                    <tr>
+                                        <td width=""> @Html.DisplayFor(modelItem => f.USUARIOA_ID) - @Html.DisplayFor(modelItem => f.USUARIO.NOMBRE) @Html.DisplayFor(modelItem => f.USUARIO.APELLIDO_P) @Html.DisplayFor(modelItem => f.USUARIO.APELLIDO_M) </td>
+                                        <td width=""> @Html.DisplayFor(modelItem => f.WORKFP.ACCION.ACCIONTs.Where(a => a.SPRAS_ID == Session["spras"].ToString()).FirstOrDefault().TXT050)</td>
+                                        <td width=""> @f.FECHAC.Value.ToShortDateString() </td>
+                                        <td width=""> @f.FECHAC.Value.TimeOfDay.ToString().Split('.')[0] </td>
+                                        <td width=""> @f.FECHAM.Value.ToShortDateString() </td>
+                                        <td width=""> @f.FECHAM.Value.TimeOfDay.ToString().Split('.')[0] </td>
+                                        <td width=""> @Html.DisplayFor(modelItem => f.ESTATUS) </td>
+                                        @* ------DRS 24.09.18------ *@
+                                        <td width="">
+                                            @{
+                                                string est = (Html.DisplayFor(modelItem => f.STATUS)).ToString();
+
+                                                TAT001.Services.Estatus c = new TAT001.Services.Estatus();
+                                                //c.getText(est, Model.D.NUM_DOC);
+                                            }
+                                            @c.getText(est, Model.D.NUM_DOC, Session["spras"].ToString())
+
+                                        </td>
+                                        <td width="30%"> @Html.Raw(f.COMENTARIO) </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+}
+catch (Exception ee)
+{
+    TAT001.Common.Log.ErrorLogApp(ee, "View-Details", "");
+    Session["error"] = ee.Message.ToString();
+    <script>
+        document.location.replace(root + "Home/Index");
+    </script>
+}
+<p>
+    @Html.ActionLink("Regresar", "Index")
+</p>
+
+<script src="~/Scripts/formatos.js"></script>
+
+@*///////////////////////////////L.G.P.P MODIFICACIONES INICIO*@
+<script>
+    var canal = $('#vtweg').val();
+    var canal = canal.split('-');
+    canal[0] = $.trim(canal[0]);
+    $('#p_vtweg').text(canal[0]);
+    //Obtener cliente id
+    var kunnr = $('#payer_id').val();
+    //$('#cli_name').val();
+    $('#p_kunnr').text(kunnr);
+    var aaa = document.getElementById("payer_id").value;
+    asignarPresupuesto(aaa);
+
+    function asignarPresupuesto(kunnr) {
+        var periodo = $("#D_PERIODO").val();
+        $.ajax({
+            type: "POST",
+            url: root + 'Listas/getPresupuesto',
+            dataType: "json",
+            data: { "kunnr": kunnr, periodo: periodo },
+
+            success: function (data) {
+
+                if (data !== null || data !== "") {
+
+                    $('#p_vtweg').text(canal[0] + ' ' + data.CANAL);
+                    $('#p_kunnr').text(kunnr.replace(/^0+/, '') + ' ' + data.CLIENTE);
+                    $('#p_canal').text(toShowG(data.P_CANAL));
+                    $('#p_banner').text(toShowG(data.P_BANNER));
+                    $('#pc_c').text(toShowG(data.PC_C * -1));
+                    $('#pc_a').text(toShowG(data.PC_A * -1));
+                    $('#pc_p').text(toShowG(data.PC_P * -1));
+                    $('#pc_t').text(toShowG(data.PC_T * -1));
+                    $('#consu').text(toShowG(data.CONSU));
+                    //LGPP 21.08.2018----------------
+                }
+
+            },
+            error: function (xhr, httpStatusMessage, customErrorMessage) {
+                M.toast({ html: httpStatusMessage });
+            },
+            async: false
+        });
+
+    }
+
+    //M.textareaAutoResize($('#txt_notas'));
+</script>
+@*///////////////////////////////L.G.P.P MODIFICACIONES FIN*@
+@if (TempData["error"] != null)
+{
+    @*<div class="row red-text">
+            @ViewBag.Error
+        </div>*@
+
+    if (TempData["error"].ToString() != "")
+    {
+        <script>
+    /**/
+    /**/
+    /**/
+    /**/
+    M.toast({ html: '@TempData["error"]', classes: '' });
+    /**/
+    /**/
+    /**/
+    /**/
+        </script>
+    }
+}
+@* LEJ 09.07.18 *@
+@*<script src="~/Scripts/ValidarFormatosDec.js"></script>*@
+<script>
+    $(document).ready(function () {
+        $('.collapsible').collapsible();
+
+
+        //OCG 11/10/18
+        var cliente = $("#payer_id").val();
+        var cli = cliente.split("");
+        var con = 0;
+        for (var i = 0; i < 10; i++) {
+            if (cli[i] == 0) {
+                con++;
+            }
+            else {
+                i = 10;
+            }
+        }
+        var clien = cliente.substring(con, 10);
+        $("#payer_id").attr("value", clien);
+
+    });
+
+    function ligada() {
+        /**/
+        /**/
+        var a = '@Model.D.LIGADA';
+        /**/
+        /**/
+
+        return (a == "True");
+    }
+    try {
+        var elem = document.querySelector('select');
+        var options = [];
+        var instance = M.Select.init(elem, options);
+    } catch{ }
+</script>
+

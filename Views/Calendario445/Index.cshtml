@@ -1,0 +1,130 @@
+﻿@model TAT001.Models.Calendario445ViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 530;
+    ViewBag.carpeta_r = 500;
+}
+<style>
+    #list {
+        overflow-x: auto;
+    }
+    th {
+        min-width: 130px;
+        color: gray;
+        text-align: center;
+    }
+   
+</style>
+<div class="row">
+    <div class="col s12">
+        <ul class="tabs">
+            <li class="tab col s3"><a class="active" href="#periodo445"><label id="lbl_calendario445"></label> </a></li>
+            <li class="tab col s3"><a href="#exceptions"><label id="lbl_excepciones"></label></a></li>
+        </ul>
+    </div>
+    <div id="periodo445" class="col s12">
+        <div class="card-panel">
+            <div class="row">
+                <div class="col s12 right-align">
+                    <a class="btn-small" id="btn_create" href="@Url.Action("Create")"></a>
+                </div>
+                <div class="input-field col s3 m3 l3">
+                    @Html.DropDownListFor(model => model.numRegistros, Model.pageSizes, "")
+                    <label id="btn_length"></label>
+                </div>
+                <div class="input-field col s5 m3 l3 offset-l6 offset-m6 offset-s4">
+                    @Html.TextBoxFor(model => model.buscar, new { @class = "global_filter", @id = "global_filter", @maxlength = 50 })
+                    <label for="global_filter" id="lbl_search">Buscar</label>
+                </div>
+            </div>
+            <div id="list" style="overflow-x: auto;">
+                @Html.Partial("List", Model)
+            </div>
+        </div>
+    </div>
+    <div id="exceptions" class="col s12">
+        <div class="card-panel">
+            <div class="row">
+                <div class="input-field col s3 m3 l3">
+                    @Html.DropDownListFor(model => model.numRegistrosEx, Model.pageSizes, "")
+                </div>
+                <div class="input-field col s5 m3 l3 offset-l6 offset-m6 offset-s4">
+                    @Html.TextBoxFor(model => model.buscar, new { @class = "global_filter", @id = "global_filterEx", @maxlength = 50 })
+                    <label for="global_filter" id="lbl_search">Buscar</label>
+                </div>
+            </div>
+            <div id="listEx" style="overflow-x: auto;">
+                @Html.Partial("ListEx", Model)
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+<script>
+   var root = '@Url.Content("~")';
+    //---- Inicializador de componentes Materialize----
+    fnCommon.materializeInit('select');
+    fnCommon.materializeInit('tabs');
+
+    //------Actualizar numero de registros en paginación
+    $('#numRegistros').change(function () {
+        fnCommon.showProcess(true);
+        $.ajax({
+            url: root + 'Calendario445/List?numRegistros=' + $('#numRegistros').val() + '&&buscar=' + $('#global_filter').val(),
+            success: function (resultView) {
+                if (resultView.isRedirect) {
+                    window.location = resultView.redirectUrl;
+                } else {
+                    fnCommon.showProcess(false);
+                    $('#list').html(resultView);
+                }
+            }
+        });
+    });
+
+    //------Actualizar registros por busqueda
+    $('#global_filter').keyup(function () {
+         $.ajax({
+             url: root +'Calendario445/List?numRegistros=' + $('#numRegistros').val() + '&&buscar=' + $('#global_filter').val(),
+             success: function (resultView) {
+                 if (resultView.isRedirect) {
+                     window.location = resultView.redirectUrl;
+                 } else {
+                     $('#list').html(resultView);
+                 }
+             }
+        });
+    });
+
+    //EX445
+    //------Actualizar numero de registros en paginación
+    $('#numRegistrosEx').change(function () {
+        fnCommon.showProcess(true);
+        $.ajax({
+            url: root + 'Calendario445/ListEx?numRegistros=' + $('#numRegistrosEx').val() + '&&buscar=' + $('#global_filterEx').val(),
+            success: function (resultView) {
+                if (resultView.isRedirect) {
+                    window.location = resultView.redirectUrl;
+                } else {
+                    fnCommon.showProcess(false);
+                    $('#listEx').html(resultView);
+                }
+            }
+        });
+    });
+
+    //------Actualizar registros por busqueda
+    $('#global_filterEx').keyup(function () {
+        $.ajax({
+            url: root + 'Calendario445/ListEx?numRegistros=' + $('#numRegistrosEx').val() + '&&buscar=' + $('#global_filterEx').val(),
+            success: function (resultView) {
+                if (resultView.isRedirect) {
+                    window.location = resultView.redirectUrl;
+                } else {
+                    $('#listEx').html(resultView);
+                }
+            }
+        });
+    });
+</script>

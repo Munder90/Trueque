@@ -1,0 +1,50 @@
+﻿@model IEnumerable<TAT001.Entities.PAI>
+@{
+    //ViewBag.Title = "Seleccionar país";
+    ViewBag.pagina_r = 102;
+    ViewBag.carpeta_r = 100;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form runat="server">
+    <div class="row">
+        <div class="col s12 m6 l4">
+            <div class="row">
+            </div>
+        </div>
+        <div class=" col s12 m12 l8">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col s6 m4 l2 center">
+                        <div class="row">
+                            <input id="btn_@item.LAND.ToLower()" type="image" src="~/images/flags/1x1/@item.IMAGE" class="circle" style="height:100px;width:100px;" onclick="location.href='@Url.Action("SelPais", "Home", new {pais=item.LAND,sociedad_id=item.SOCIEDAD_ID , returnUrl = ViewBag.returnUrl})';return false;" />
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="row">
+                @if (ViewBag.delegados != null)
+                {
+                    foreach (var del in ViewBag.delegados)
+                    {
+                        <div class="col s12 m12 l12 center">
+                            <div class="col s12 m12 l12 left-align">
+                                <h5>@del.usuario - @del.nombre</h5>
+                            </div>
+                            @foreach (var item in del.LISTA)
+                            {
+                                <div class="col s6 m4 l2 center">
+                                    <div class="row">
+                                        <input id="btn_@item.LAND.ToLower()" type="image" src="~/images/flags/1x1/@item.IMAGE" class="circle" style="height:100px;width:100px;" onclick="location.href='@Url.Action("SelPais", "Home", new { pais = item.LAND,sociedad_id=item.SOCIEDAD_ID , returnUrl = ViewBag.returnUrl })';return false;" />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,188 @@
+﻿@model TAT001.Entities.TAXEOP
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 863;
+    ViewBag.carpeta_r = 500;
+}
+<script src="~/Scripts/ValidarDecimalesTP.js"></script>
+<script src="~/Scripts/jquery.mask.js"></script>
+<style>
+    .pnl-cli {
+        background-color: white;
+        padding: 5px 15px 5px 15px;
+        border-radius: 5px;
+    }
+</style>
+<div>
+    @using (Html.BeginForm("Create", "Taxeop", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="row left pnl-cli">
+            <h6>@ViewBag.NoCliente - @ViewBag.Cliente</h6>
+        </div>
+        <div class="row right">
+            <button id="btnAgR" type="submit" value="Delete" class="btn btn-default" style="float:right;"></button>
+        </div>
+    </div>
+        <div class="row">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="col s6 m6 l6">
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.SOCIEDAD_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblSociedadId" })
+                            @Html.EditorFor(model => model.SOCIEDAD_ID, null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.KUNNR, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblKun" })
+                            @Html.EditorFor(model => model.KUNNR, null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.CONCEPTO_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblConId" })
+                            @Html.EditorFor(model => model.CONCEPTO_ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l11 m11 s11">
+                            @Html.LabelFor(model => model.RETENCION_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblRetId" })
+                            @Html.DropDownList("RETENCION_ID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.RETENCION_ID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col l1 m1 s1">
+                            <a href="#modalretencion" class="btn-floating modal-trigger" id="newtxc"><i class="material-icons">add</i></a>
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.PORC, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblPorc" })
+                            @Html.EditorFor(model => model.PORC, new { htmlAttributes = new { @class = "form-control", @id = "txtPorc" } })
+                        </div>
+                    </div>
+                    <div class="col s6 m6 l6">
+                        <div class="col l11 m11 s11">
+                            @Html.LabelFor(model => model.TRETENCION_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbltRet" })
+                            @Html.DropDownList("TRETENCION_ID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.TRETENCION_ID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col l1 m1 s1">
+                            <a href="#modaltiporetencion" class="btn-floating modal-trigger" id="newtxc"><i class="material-icons">add</i></a>
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.VKORG, htmlAttributes: new { @class = "control-label col-md-2", @id = "lvlVk" })
+                            @Html.EditorFor(model => model.VKORG, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.VTWEG, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblVt" })
+                            @Html.EditorFor(model => model.VTWEG, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.SPART, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblSp" })
+                            @Html.EditorFor(model => model.SPART, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var elem = document.querySelectorAll('select');
+            var instance = M.FormSelect.init(elem, []);
+            jQuery(function ($) {
+                $("#PORC").mask('#0.00%', { reverse: true });
+                $("#txtPorc").mask('#0.00%', { reverse: true });
+            });
+            $(document).ready(function () {
+                //$('.modal-trigger').click(function () {
+                //    var url = $(this).attr("data-source");
+                //    // use other ajax submission type for post, put ...
+                //    $.get(url, function (data) {
+                //        // use this method you need to handle the response from the view 
+                //        // with rails Server-Generated JavaScript Responses this is portion will be in a .js.erb file  
+                //        $(".modal-content").html(data);
+                //    });
+                //});
+                // opens the modal
+                $('.modal').modal();
+                $("#newconcepto").submit(function (event) {
+                    event.preventDefault(); //prevent default action 
+                    var post_url = $(this).attr("action"); //get form action url
+                    var request_method = $(this).attr("method"); //get form GET/POST method
+                    var form_data = new FormData(this);
+                    $.ajax({
+                        url: post_url,
+                        type: request_method,
+                        data: { DESCRIPCIÓN: $("#DESCRIPCION").val(), PORC: $("#PORC").val() },
+                        success: function (result) {
+                            $("#server-results1").text(result);
+                        }
+                    });
+                });
+                $("#newnota").submit(function (event) {
+                    event.preventDefault(); //prevent default action 
+                    var post_url = $(this).attr("action"); //get form action url
+                    var request_method = $(this).attr("method"); //get form GET/POST method
+                    var form_data = new FormData(this);
+                    $.ajax({
+                        url: post_url,
+                        type: request_method,
+                        data: { DESCRIPCION: $("#DESCRIPCIONTR").val(), ID: $("#ID").val() },
+                        success: function (result) {
+                            $("#server-results2").text(result);
+                        }
+                    });
+                });
+                $('.modal-close').click(function (e) {
+                    window.location.reload();
+                });
+            });
+        </script>
+        <div class="form-actions no-color">
+            @Html.ActionLink("Back to List", "Index", new { kun = @ViewBag.kun, vk = @ViewBag.vk, vtw = @ViewBag.vtw, sp = @ViewBag.sp, sc = @ViewBag.sc, ld = @ViewBag.ld, con = @ViewBag.con }, new { id = "lblRegresar" })
+        </div>
+    }
+</div>
+<div id="modalretencion" class="modal">
+    <div class="modal-content">
+        <h4 id="lbl_nuevaret">Nueva retención</h4>
+        <form id="newconcepto" method="post" action="/Taxeop/CreateR" class="col s12">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="DESCRIPCION" type="text" class="validate" required>
+                    <label for="DESCRIPCION" id="lbl_dscnuevaret">Descripción</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="PORC" type="text" class="validate" required>
+                    <label for="PORC" id="lbl_porcnuevaret">Porcentaje</label>
+                </div>
+            </div>
+            <button id="btnCrearR" type="submit" class="btn btn-default" name="submit" value="Crear" />
+            <div id="server-results1" class="center-align"><!-- For server results --></div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-green btn-flat" id="lbl_cerrar">Cerrar</button>
+    </div>
+</div>
+<div id="modaltiporetencion" class="modal">
+    <div class="modal-content">
+        <h4 id="lbl_nuevotret">Nuevo Tipo Retención</h4>
+        <form id="newnota" method="post" action="/Taxeop/CreateTR" class="col s12">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="ID" type="text" maxlength="2" class="validate" required>
+                    <label for="ID">ID</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="DESCRIPCIONTR" type="text" class="validate">
+                    <label for="DESCRIPCIONTR" id="lbl_nuevotret">Descripción</label>
+                </div>
+            </div>
+            <button id="btnCreateTR" type="submit" class="btn btn-default" name="submit" value="Crear" />
+            <div class="center-align" id="server-results2"><!-- For server results --></div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-green btn-flat" id="lbl_cerrar2">Cerrar</button>
+    </div>
+</div>

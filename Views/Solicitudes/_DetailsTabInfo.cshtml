@@ -1,0 +1,353 @@
+﻿@model TAT001.Models.DocumentoFlujo
+@using TAT001.Entities
+<div id="info" class="col s12" style="font-size:12px;">
+    <div class="row">
+        <div class="col s12 m6 l6">
+            @if (Model.D.DOCUMENTO_REF != null)
+            {
+                <div class="card-panel">
+                    <div class="row" style="margin-bottom:0">
+                        <div class="input-field col s8">
+                            <input type="text" value="@Model.D.DOCUMENTO_REF" disabled="disabled" />
+                            <label for="D_DOCUMENTO_REF" id="lbl_provision"></label>
+                        </div>
+                        <div class="col s4 right-align">
+                            <a href="@Url.Action("Details", new { id = Model.D.DOCUMENTO_REF })" class="btn-small  ">Ver</a>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="card-panel">
+                <h5 id="head_solclas">Tipo de solicitud y Clasificación</h5>
+                <div class="row" style="margin-bottom:0">
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.D.TSOL.TSOLTs.Where(a => a.SPRAS_ID.Equals(model.D.USUARIO.SPRAS_ID)).FirstOrDefault().TXT50, new { htmlAttributes = new { @disabled = "disabled" } })
+                        @Html.LabelFor(model => model.D.TSOL, "Tipo de solicitud", new { @class = "lbl_tiposol" })
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.D.TALL.TALLTs.Where(a => a.SPRAS_ID.Equals(model.D.USUARIO.SPRAS_ID)).FirstOrDefault().TXT50, new { htmlAttributes = new { @disabled = "disabled" } })
+                        @Html.LabelFor(model => model.D.TALL_ID, "Clasificación", new { @id = "lbl_tall" })
+                    </div>
+                    @Html.HiddenFor(model => model.D.GALL_ID, new { @id = "gall_id" })
+                    @Html.HiddenFor(model => model.D.TALL_ID, new { @id = "tall_id" })
+                    @*--------- DRS 24.09.18-------------- *@
+                    @if (ViewBag.nombreC != null)
+                    {
+                        foreach (var cuenta in ViewBag.nombreC)
+                        {
+                            <input id="cuentaNombre" type="hidden" value="@cuenta">
+                        }
+                    }
+                    else
+                    {
+                        <input id="cuentaNombre" type="hidden" value="">
+                    }
+                    @*--------- DRS 24.09.18-------------- *@
+                    @if (ViewBag.nombreC2 != null)
+                    {
+                        foreach (var cuenta2 in ViewBag.nombreC2)
+                        {
+                            <input id="cuentaNombre2" type="hidden" value="@cuenta2">
+                        }
+                    }
+                    else
+                    {
+                        <input id="cuentaNombre2" type="hidden" value="">
+                    }
+                    @Html.HiddenFor(model => model.D.MONTO_DOC_MD, new { @id = "monto_dis" })
+                </div>
+            </div>
+            <div class="card-panel">
+                <h5 id="head_datospais">Datos país</h5>
+                <div class="row" style="margin-bottom:0">
+                    <div class="input-field col s6">
+                        @Html.EditorFor(model => model.D.SOCIEDAD_ID, new { htmlAttributes = new { @disabled = "disabled" } })
+                        @Html.LabelFor(model => model.D.SOCIEDAD, "Sociedad", new { @id = "lbl_sociedad" })
+                    </div>
+                    <div class="input-field col s6">
+                        @Html.EditorFor(model => model.D.PAI.LANDX, new { htmlAttributes = new { @disabled = "disabled" } })
+                        @Html.LabelFor(model => model.D.PAI.LANDX, "País", new { @id = "lbl_paiss" })
+                      </div>
+                    @Html.EditorFor(model => model.D.PAIS_ID, new { htmlAttributes = new { @id = "pais_id", @style = "display:none;" } })
+                </div>
+                <div class="row" style="margin-bottom:0">
+                    <div class="input-field col s6">
+                        @Html.EditorFor(model => model.D.PAI.LANDX, new { htmlAttributes = new { @disabled = "disabled" } })
+                        @Html.LabelFor(model => model.D.PAI.LANDX, "Subregión", new { @id = "lbl_region" })
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom:0">
+                    <div class="input-field col s6">
+                        @Html.EditorFor(model => model.D.ESTADO, new { htmlAttributes = new { @disabled = "disabled" } })
+                        @Html.LabelFor(model => model.D.ESTADO, "Estado", new { @id = "lbl_estado" })
+                    </div>
+                    <div class="input-field col s6">
+                        @Html.EditorFor(model => model.D.CIUDAD, new { htmlAttributes = new { @disabled = "disabled" } })
+                        @Html.LabelFor(model => model.D.CIUDAD, "Ciudad", new { @id = "lbl_ciudad" })
+                    </div>
+                </div>
+            </div>
+            @*<div class="row" style="margin-bottom:0">
+            *@
+            <div class="card-panel">
+                <div class="row" style="margin-bottom:0">
+                    <h5 id="head_geninfo">Información general</h5>
+                    <div class="input-field col s12">
+                        @*@Html.EditorFor(model => model.D.FECHAC, new { htmlAttributes = new { @disabled = "disabled", @type = "text" } })*@
+                        <input type="text" disabled="disabled" value="@Model.D.FECHAC.Value.ToShortDateString()" />
+                        @Html.LabelFor(model => model.D.FECHAC, "Fecha", new { @id = "lbl_fechad" })
+                    </div>
+                    <div class="input-field col s6 l6">
+                        @Html.EditorFor(model => model.D.PERIODO, new { htmlAttributes = new { @disabled = "disabled", @type = "text" } })
+                        @Html.LabelFor(model => model.D.PERIODO, "Periodo", new { @class = "lbl_periodo" })
+                    </div>
+                    <div class="input-field col s6">
+                        @Html.EditorFor(model => model.D.EJERCICIO, new { htmlAttributes = new { @disabled = "disabled", @type = "text" } })
+                        @Html.LabelFor(model => model.D.EJERCICIO, "Ejercicio", new { @class = "lbl_ejercicio" })
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.D.CONCEPTO, new { htmlAttributes = new { @disabled = "disabled" } })
+                        @Html.LabelFor(model => model.D.CONCEPTO, "Concepto", new { @id = "lbl_concepto" })
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.TextAreaFor(model => model.D.NOTAS, new { @id = "txt_notas", @class = "materialize-textarea", @disabled = "disabled" })
+                        @Html.LabelFor(model => model.D.NOTAS, "Mecánica de negociación", new { @id = "lbl_notas" })
+                    </div>
+                </div>
+            </div>
+            @*
+                </div>*@
+            @if (Model.D.DOCUMENTOF != null & !Model.D.TSOL.PADRE & !Model.D.TSOL.REVERSO)
+            {
+                if (Model.D.DOCUMENTOF.Count > 0)
+                {
+                    <div class="card-panel">
+                        <h5 id="head_reffact">Facturas</h5>
+                        <div class="row" style="margin-bottom:0; overflow:auto;">
+                            <div class="col s12">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            @if (Model.D.DOCUMENTOF[0].FACTURA.Trim() != "0")
+                                            {
+                                                <th id="thead_fact">No. Factura Fiscal</th> @*B20180801 MGC Textos*@
+                                            }
+                                            @if (Model.D.DOCUMENTOF[0].FECHA != null)
+                                            {
+                                                <th id="thead_fecha">Fecha Factura</th> @*B20180801 MGC Textos*@
+                                            }
+                                            @if (Model.D.DOCUMENTOF[0].PROVEEDOR.Trim() != "0")
+                                            {
+                                                <th id="thead_prov">Proveedor</th> @*B20180801 MGC Textos*@
+                                                <th id="thead_provdesc">Proveedor Desc</th> @*B20180801 MGC Textos*@
+                                            }
+                                            @if (Model.D.DOCUMENTOF[0].CONTROL.Trim() != "0")
+                                            {
+                                                <th id="thead_control">Control</th> @*B20180801 MGC Textos*@
+                                            }
+                                            @if (Model.D.DOCUMENTOF[0].AUTORIZACION.Trim() != "0")
+                                            {
+                                                <th id="thead_aut">Autorización</th> @*B20180801 MGC Textos*@
+                                            }
+                                            @if (Model.D.DOCUMENTOF[0].VENCIMIENTO != null)
+                                            {
+                                                <th id="thead_ven">Vencimiento</th> @*B20180801 MGC Textos*@
+                                            }
+                                            @if (Model.D.DOCUMENTOF[0].FACTURAK.Trim() != "0")
+                                            {
+                                                <th id="thead_factk">Factura k</th> @*B20180801 MGC Textos*@
+                                            }
+                                            @if (Model.D.DOCUMENTOF[0].EJERCICIOK.Trim() != "0")
+                                            {
+                                                <th id="thead_ejercicio">Año</th> @*B20180801 MGC Textos*@
+                                            }
+                                            @if (Model.D.DOCUMENTOF[0].BILL_DOC != null)
+                                            {
+                                                if (Model.D.DOCUMENTOF[0].BILL_DOC.Trim() != "0")
+                                                {
+                                                    <th id="thead_fact">Billing</th> @*B20180801 MGC Textos*@
+                                                }
+                                            }
+                                            @if (Model.D.DOCUMENTOF[0].BELNR.Trim() != "0")
+                                            {
+                                                <th id="thead_belnr">Folio</th> @*B20180801 MGC Textos*@
+                                            }
+                                            @if (Model.D.DOCUMENTOF[0].PAYER != null)
+                                            {
+                                                if (Model.D.DOCUMENTOF[0].PAYER.Trim() != "0")
+                                                {
+                                                    <th id="thead_payer">Payer</th> @*B20180801 MGC Textos*@@*@18-07-2018 jemo *@
+                                                }
+                                                if (Model.D.DOCUMENTOF[0].PAYER.Trim() != "0")
+                                                {
+                                                    <th id="thead_desc">Customer</th> @*B20180801 MGC Textos*@@*@18-07-2018 jemo *@
+                                                }
+                                            }
+                                            @if (Model.D.DOCUMENTOF[0].IMPORTE_FAC != null & Model.D.DOCUMENTOF[0].IMPORTE_FAC > 0)
+                                            {
+                                                <th id="thead_importe">Importe por Factura</th> @*B20180801 MGC Textos*@@*@18-07-2018 jemo *@
+                                            }
+                                        </tr>
+                                    </thead>
+                                    @using (TruequeEntities db = new TruequeEntities())
+                                    {
+                                        foreach (var item in Model.D.DOCUMENTOF)
+                                        {
+                                            <tr>
+                                                @if (item.FACTURA.Trim() != "0")
+                                                {
+                                                    <td>@item.FACTURA</td>
+                                                }
+                                                @if (item.FECHA != null)
+                                                {
+                                                    string fech = item.FECHA.ToString();
+                                                    fech = fech.Substring(0, 10);
+                                                    <td>@fech</td>
+                                                }
+                                                @if (item.PROVEEDOR.Trim() != "0")
+                                                {
+                                                    <td>@item.PROVEEDOR</td>
+                                                    TAT001.Services.Cadena cad = new TAT001.Services.Cadena();
+                                                    string pro = cad.completaCliente(item.PROVEEDOR.Trim());
+                                                    PROVEEDOR p = db.PROVEEDORs.FirstOrDefault(x => x.ID == pro );
+                                                    if (p != null) {
+                                                    <td>@p.NOMBRE</td>
+                                                    } else
+                                                    {
+                                                    <td></td>
+                                                    }
+                                                }
+                                                @if (item.CONTROL.Trim() != "0")
+                                                {
+                                                    <td>@item.CONTROL</td>
+                                                }
+                                                @if (item.AUTORIZACION.Trim() != "0")
+                                                {
+                                                    <td>@item.AUTORIZACION</td>
+                                                }
+                                                @if (item.VENCIMIENTO != null)
+                                                {
+                                                    string venc = item.VENCIMIENTO.ToString();
+                                                    venc = venc.Substring(0, 10);
+                                                    <td>@venc</td>
+                                                }
+                                                @if (item.FACTURAK.Trim() != "0")
+                                                {
+                                                    <td>@item.FACTURAK</td>
+                                                }
+                                                @if (item.EJERCICIOK.Trim() != "0")
+                                                {
+                                                    <td>@item.EJERCICIOK</td>
+                                                }
+                                                @if (item.BILL_DOC != null)
+                                                {
+                                                    if (item.BILL_DOC.Trim() != "0")
+                                                    {
+                                                        <td>@item.BILL_DOC</td>
+                                                    }
+                                                }
+                                                @if (item.BELNR.Trim() != "0")
+                                                {
+                                                    <td>@item.BELNR</td>
+                                                }
+                                                @if (item.PAYER != null)
+                                                {
+                                                    if (item.PAYER.Trim() != "0")
+                                                    {
+                                                        <td>@item.PAYER</td>
+                                                    }
+                                                    if (item.PAYER.Trim() != "0")
+                                                    {
+                                                        <td>@db.CLIENTEs.Where(x => x.KUNNR == item.PAYER.Trim()).Select(x => x.NAME1).FirstOrDefault()</td>
+                                                    }
+                                                }
+                                                @if (Model.D.DOCUMENTOF[0].IMPORTE_FAC != null & Model.D.DOCUMENTOF[0].IMPORTE_FAC > 0)
+                                                {
+                                                    decimal asd = Convert.ToDecimal(item.IMPORTE_FAC);
+                                                    string impFac = asd.ToString("N2");
+                                                    //double impFac2 = Convert.ToDouble(impFac);
+                                                    <td>$@impFac</td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="col s12 m6 l6">
+            <div class="row" style="margin-bottom:0">
+                <div class="card-panel">
+                    <h5 id="head_infocli">Información del cliente</h5>
+                    <div class="row" style="margin-bottom:0">
+                        <div class="input-field col s12">
+                            @Html.EditorFor(model => model.D.CLIENTE.KUNNR, new { htmlAttributes = new { @disabled = "disabled", @id = "payer_id" } })
+                            @Html.LabelFor(model => model.D.CLIENTE.KUNNR, "Cliente", new { @id = "lbl_payer" })
+                        </div>
+                        <div class="input-field col s12">
+                            @Html.EditorFor(model => model.D.CLIENTE.NAME1, new { htmlAttributes = new { @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.D.CLIENTE.NAME1, "Nombre", new { @id = "lbl_nombrecli" })
+                        </div>
+                        <div class="input-field col s12">
+                            @{
+                                string spras_id = ViewBag.spras_id;
+                                @Html.EditorFor(model => model.D.CLIENTE.TCLIENTE.TCLIENTETs.Where(x => x.SPRAS == spras_id).FirstOrDefault().TXT50, new { htmlAttributes = new { @disabled = "disabled" } })
+                                @Html.LabelFor(model => model.D.CLIENTE.TCLIENTE.TCLIENTETs.Where(x => x.SPRAS == spras_id).FirstOrDefault().TXT50, "Tipo de cliente", new { @id = "lbl_parvwcli" })
+                            }
+                        </div>
+                        <div class="input-field col s12">
+                            @Html.EditorFor(model => model.D.VKORG, new { htmlAttributes = new { @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.D.VKORG, "Razón social", new { @id = "lbl_vkorg" })
+                        </div>
+                        <div class="input-field col s12">
+                            @Html.EditorFor(model => model.D.CLIENTE.STCD1, new { htmlAttributes = new { @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.D.CLIENTE.STCD1, "Taxid", new { @id = "lbl_stcd1" })
+                        </div>
+                        <div class="input-field col s12">
+                            @Html.EditorFor(model => model.D.CLIENTE.CANAL, new { htmlAttributes = new { @disabled = "disabled", @id = "vtweg" } })
+                            @Html.LabelFor(model => model.D.CLIENTE.CANAL, "Canal", new { @id = "lbl_stcd1" })
+                        </div>
+                        <div class="input-field col s12">
+                            @Html.EditorFor(model => model.D.PAYER_NOMBRE, new { htmlAttributes = new { @disabled = "disabled", @id = "payer_nombre" } })
+                            @Html.LabelFor(model => model.D.PAYER_NOMBRE, "Nombre del contacto", htmlAttributes: new { @id = "lbl_payernom" })
+                        </div>
+                        <div class="input-field col s12">
+                            @Html.EditorFor(model => model.D.PAYER_EMAIL, new { htmlAttributes = new { @disabled = "disabled", @id = "PAYER_EMAIL", @type = "email" } })
+                            @Html.LabelFor(model => model.D.PAYER_EMAIL, "Email de contacto", htmlAttributes: new { @id = "lbl_payeremail" })
+                        </div>
+                    </div>
+                </div>
+                @{
+                    string fechai = "", fechaf = "";
+                    if (Model.D.FECHAI_VIG != null)
+                    {
+                        fechai = Model.D.FECHAI_VIG.Value.ToShortDateString();
+                    }
+                    if (Model.D.FECHAI_VIG != null)
+                    {
+                        fechaf = Model.D.FECHAF_VIG.Value.ToShortDateString();
+                    }
+                }
+
+                <div class="card-panel">
+                    <div class="row" style="margin-bottom:0">
+                        <h5 id="head_vigencia">Vigencia</h5>
+                        <div class="input-field col s12">
+                            @*@Html.EditorFor(model => model.D.FECHAI_VIG, new { htmlAttributes = new { @disabled = "disabled", @type = "text", @value=Model.D.FECHAI_VIG.Value.ToShortDateString() } })*@
+                            <input type="text" value="@fechai" disabled="disabled" />
+                            @Html.LabelFor(model => model.D.FECHAI_VIG, "De", new { @id = "lbl_fechade" })
+                        </div>
+                        <div class="input-field col s12">
+                            @*@Html.EditorFor(model => model.D.FECHAF_VIG, new { htmlAttributes = new { @disabled = "disabled", @type = "text" } })*@
+                            <input type="text" value="@fechaf" disabled="disabled" />
+                            @Html.LabelFor(model => model.D.FECHAF_VIG, "A", new { @id = "lbl_fechahasta" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

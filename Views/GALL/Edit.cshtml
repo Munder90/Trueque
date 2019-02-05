@@ -1,0 +1,99 @@
+﻿@model TAT001.Entities.GALL
+
+@{
+    ViewBag.pagina_r = 723;
+    ViewBag.carpeta_r = 500;
+    //ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+<div class="row">
+    @using (Html.BeginForm("Edit", "GALL", FormMethod.Post, new { @id = "gallForm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row right">
+            <div class="col s12 ">
+                <input type="submit" id="btnGuardar" value="Guardar" class="btn btn-default" />
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="col s6 ">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="form-horizontal">
+                        <div class="input-field col s12">
+                            @Html.LabelFor(model => model.DESCRIPCION, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblDes" })
+                            @Html.EditorFor(model => model.DESCRIPCION, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.DESCRIPCION, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s6">
+
+            <div class="card-panel">
+                <h5 id="lblTraduccion">Traducciones</h5>
+
+                <div class="row">
+                    @*@foreach (var item in Model.GALLTs)
+        {*@
+                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                        @Html.Editor("EN", new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @required = "" } })
+                        @*@Html.LabelFor(model => item.TXT100, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_DscEN" })*@
+                        <label id="lblIngles"></label>
+                    </div>
+
+
+                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                        @Html.Editor("ES", new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @required = "" } })
+                        @*@Html.LabelFor(model => item.TXT100, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_DscES" })*@
+                        <label id="lblEspa"></label>
+                        @*<label for="@("A" + Model.TS_FORMT.Where(a => a.SPRAS_ID.Equals(Session["spras"].ToString())).FirstOrDefault().SPRAS_ID)"> @Model.TS_FORMT.Where(a => a.SPRAS_ID.Equals(Session["spras"].ToString())).FirstOrDefault().SPRA.DESCRIPCION</label>*@
+                    </div>
+                    @*}*@
+                    <br />
+                    <div class="input-field col l4 m10 right" style="margin-bottom:0;">
+                        <label>
+                            @if (Model.ACTIVO != null && (bool)Model.ACTIVO == true)
+                            {
+                                <input type="checkbox" name="ACTIVO" value="true" id="fac" onclick="check()" checked />
+                                <span style="height:0" id="lblActivo"></span>
+                            }
+                            else
+                            {
+                                <input type="checkbox" name="ACTIVO" value="true" id="fac" onclick="check()" />
+                                <span id="lblActivo"></span>
+                            }
+                        </label>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+    }
+</div>
+<script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+<script>
+    function check() {
+        if ($("#fac").prop('checked'))
+            $("#idfac").prop('checked', true);
+        else
+            $("#idfac").prop('checked', false);
+    }
+        fnCommon.formValidation('gallForm');
+</script>
+
+<div>
+    @Html.ActionLink("Regresar", "Index", null, new { id = "lblRegresar" })
+</div>

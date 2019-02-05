@@ -1,0 +1,98 @@
+﻿@*@model TAT001.Entities.TEXTO*@
+@model IEnumerable<TAT001.Entities.TEXTO>
+
+@{
+    //ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 502;
+    ViewBag.carpeta_r = 500;
+    var lan = ViewBag.lan;
+    List<TAT001.Entities.SPRA> spras = ViewBag.SPRAS as List<TAT001.Entities.SPRA>;
+    List<TAT001.Entities.TEXTO> lstTXT = new List<TAT001.Entities.TEXTO>();
+
+    List<TAT001.Entities.SPRA> spras2 = new List<TAT001.Entities.SPRA>();
+    foreach (var item in Model)
+    {
+        TAT001.Entities.TEXTO txt = new TAT001.Entities.TEXTO();
+        txt.SPRAS_ID = item.SPRAS_ID;
+        txt.CAMPO_ID = item.CAMPO_ID;
+        txt.TEXTOS = item.TEXTOS;
+        lstTXT.Add(txt);
+    }
+    for (int i = 0; i < spras.Count; i++)
+    {
+        TAT001.Entities.TEXTO x2 = lstTXT.Where(a => a.SPRAS_ID == spras[i].ID).FirstOrDefault();
+        if (x2 == null)
+        {
+            spras2.Add(spras[i]);
+        }
+    }
+}
+
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col s12 right-align">
+                <button type="submit" class="btn-small" id="btn_create">Guardar</button>
+            </div>
+        </div>
+        <div class="col s12 m6 l6">
+            <div class="card-panel">
+                <div class="row">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.First().PAGINA_ID)
+
+                    @Html.HiddenFor(model => model.First().CAMPO_ID)
+
+                    @Html.HiddenFor(model => model.First().SPRAS_ID)
+
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.First().CAMPO_ID, new { htmlAttributes = new { @disabled = "disabled" } })
+                        @Html.LabelFor(model => model.First().CAMPO_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_campo" })
+                    </div>
+                    @*<div class="input-field col s12">
+                            @Html.EditorFor(model => model.SPRAS_ID, new { htmlAttributes = new { @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.SPRAS_ID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+                        <div class="input-field col s12 l12">
+                            @Html.EditorFor(model => model.TEXTOS, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.LabelFor(model => model.TEXTOS, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.ValidationMessageFor(model => model.TEXTOS, "", new { @class = "text-danger" })
+                        </div>*@
+
+                </div>
+            </div>
+        </div>
+        <div class="col s12 l6">
+            <div class="card-panel">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class=" input-field col s12">
+                            @Html.EditorFor(modelItem => item.TEXTOS, null, "A" + item.SPRAS_ID, new { htmlAttributes = new { maxlength = "50", @id = "A" + item.SPRAS_ID, @name = "A" + item.SPRAS_ID, @required = "" } })
+                            <label for="@("A"+item.SPRAS_ID)">@item.SPRA.DESCRIPCION</label>
+                        </div>
+                        //Escondo el spraid para insertarlo posteriormente
+                        <div class=" input-field col 12">
+                            @Html.EditorFor(modelItem => item.SPRAS_ID, null, "sp", new { htmlAttributes = new { @id = item.SPRAS_ID, style = "display:none" } })
+                            @Html.HiddenFor(modelItem => item.SPRAS_ID)
+                        </div>
+                    }
+                    @foreach (var item in spras2)
+                    {
+                        <div class=" input-field col s12 pr1">
+                            @Html.Editor("Editor", null, "A" + item.ID, new { htmlAttributes = new { maxlength = "50", @id = "A" + item.ID, @name = "A" + item.ID, @required = "" } })
+                            <label for="Editor">@item.DESCRIPCION</label>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+@Html.ActionLink("Cancelar", "Index", new { id = Model.First().PAGINA_ID }, new { @class = "", @id = "btn_return" })

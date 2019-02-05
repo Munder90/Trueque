@@ -1,0 +1,75 @@
+﻿@model TAT001.Entities.DOCTOAYUDA
+
+@{
+    ViewBag.pagina_r = 1506;
+    ViewBag.carpeta_r = 1200;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Create", "Ayuda", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+                @Html.AntiForgeryToken()
+                <div class="row">
+        <div class="col-md-offset-2 col-md-10">
+            <button id="btn_guardar" type="submit" class="btn btn-default" style="float: right;"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="card-panel">
+            @if (TempData["Extension"] != null)
+            {
+                <p class="red-text text-darken-2" id="Extension"></p>
+            }
+            @if (TempData["Filesize"] != null)
+            {
+                <p class="red-text text-darken-2" id="Filesize"></p>
+            }
+            @Html.HiddenFor(model => model.ID_DOCUMENTO)
+            <div class="row">
+                <div class="input-field col l6 m6">
+                    @Html.EditorFor(model => model.NOMBRE, new { htmlAttributes = new { @class = "form-control", required = true, placeholder = "", @maxlength = "50" } })
+                    @Html.LabelFor(model => model.NOMBRE, htmlAttributes: new { @class = "control-label col-md-2", id = "lbl_nombre" })
+                    @Html.ValidationMessageFor(model => model.NOMBRE, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-field col l6 m6">
+                    @Html.DropDownList("ID_Clasificacion", null, new { htmlAttributes = new { @class = "form-control", required = true } })
+                    @Html.LabelFor(model => model.ID_CLASIFICACION, htmlAttributes: new { @class = "control-label col-md-2", id = "lbl_clasificacion" })
+                    @Html.ValidationMessageFor(model => model.ID_CLASIFICACION, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col l4 m4">
+                    <label>
+                        @Html.CheckBoxFor(model => model.ACTIVO,new { @checked="checked"})
+                        <span id="lbl_activo">Activo</span>
+                    </label>
+                </div>
+                <div class="input-field col l8 m8">
+                    @Html.LabelFor(model => model.RUTA_DOCUMENTO, htmlAttributes: new { @class = "control-label col-md-2 active", id = "lbl_ruta" })
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span id="lbl_file">File</span>
+                            @Html.EditorFor(model => model.RUTA_DOCUMENTO, new { htmlAttributes = new { @class = "form-control", required = true, @type = "file", name = "archivo" } })
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" value="@Model.RUTA_DOCUMENTO">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { id = "lblregresar" })
+</div>
+<script>
+    $("input[type='hidden']").each(function (index, element) {
+        $(this).appendTo($(element).parent());
+    });
+    $(document).ready(function () {
+        $('select').formSelect();
+    });
+</script>

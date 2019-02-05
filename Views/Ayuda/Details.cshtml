@@ -1,0 +1,51 @@
+﻿@model TAT001.Entities.DOCTOAYUDA
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DOCTOAYUDA</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_Clasificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_Clasificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Activo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ruta_Documento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ruta_Documento)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_Documento }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

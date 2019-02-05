@@ -1,0 +1,134 @@
+﻿@model TAT001.Entities.DOCUMENTO
+<div id="Soporte_cont">
+    <div class="row">
+        <div class="col s12 m6 l6">
+            @if (ViewBag.reversan != "X")
+            {
+
+                <div class="card-panel">
+                    <h5 id="head_docssoporter">Documentos de Soporte2</h5> @*B20180801 MGC Textos*@
+                    @* ----DRS 3.10.2018--- *@
+                    <label id="lbl_camposobl" style="font-size:10px; color:dimgray">* Campos Obligatorios</label> @*B20180801 MGC Textos*@
+                    <div class="row" style="margin-bottom:0">
+                        <div class="col s12">
+                            <form action="#">
+                                <div class="row" id="div_soportes">
+                                </div>
+                                <!--RSG 23.05.2018-->
+                                <script>
+                                                soportes($("#TSOL_ID").val(), '@Session["spras"].ToString()');
+                                </script>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+            @{List<TAT001.Entities.DOCUMENTOA>
+                                                                                                                                                                                                                      archivos = ViewBag.files as List<TAT001.Entities.DOCUMENTOA>
+                                                                                                                                                                                                                          ;
+                if (ViewBag.relacionadan != "" && (archivos != null && archivos.Count > 0))
+                {
+                    string[] nombrefile;
+                    <div class="card-panel">
+                        <h5 id="head_docssoporte">Documentos de Soporte</h5>
+                        <div class="row" style="margin-bottom:0">
+                            @for (int i = 0; i < archivos.Count; i++)
+                                {
+                                    nombrefile = archivos[i].PATH.Split('\\');
+                                    @*string clase = archivos[i].CLASE;
+                                    using (TAT001.Entities.TruequeEntities db = new TAT001.Entities.TruequeEntities())
+                                    {
+                                    <span>@db.TSOPORTETs.Where(x => x.TSOPORTE_ID == clase & x.SPRAS_ID == Session["spras"].ToString()).FirstOrDefault().TXT50</span>
+                                    }*@
+                                <div class="file-field input-field">
+                                    <button name="archivo" class="btn lbl_cargar" type="button" value="@archivos[i].PATH" onclick="descargarArchivo(this)">DESCARGAR</button> @*B20180801 MGC Textos*@
+                                    <div class="file-path-wrapper">
+                                        <input disabled value="@nombrefile[nombrefile.Length - 1]" id="disabled" type="text" class="file-path ">
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="col s12 m6 l6">
+            @if (ViewBag.reversan != "X")
+            {
+                <div class="card-panel">
+                    <h5 id="head_notas">Notas</h5> @*B20180801 MGC Textos*@
+                    <div class="row" style="margin-bottom:0">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <textarea id="notas_soporte" name="notas_soporte" class="materialize-textarea" onkeyup="maxchar_notas();">@ViewBag.notas_soporte</textarea>
+                                <label id="lbl_notassoporte" for="notas_soporte"></label> @*B20180801 MGC Textos*@
+                            </div>
+                        </div>
+                        <script>
+                            function maxchar_notas() {
+                                var maxLength = 500;
+                                var text = $('#notas_soporte').val();
+                                var textLength = text.length;
+                                if (textLength > (maxLength)) {
+                                    $('#notas_soporte').val(text.substring(0, ((maxLength))));
+                                    var msg = 'Número máximo para la nota es ' + maxLength;
+                                    M.toast({ html: msg });
+                                }
+                            }
+                        </script>
+                    </div>
+                </div>
+            }
+            @if (ViewBag.reversan == "X")
+            {
+                <input type="hidden" id="txt_rev" name="txt_rev" value="@ViewBag.reversa" disabled="disabled" />
+                <div class="card-panel">
+                    <h5 id="head_soprev">Soporte de reverso</h5> @*B20180801 MGC Textos*@
+                    <div class="row" style="margin-bottom:0">
+                        <div class="col s12">
+                            <label id="lbl_sopcarta" name="labels_soporte2" hidden>Carta</label><label class="lbl_nec" hidden></label> @*B20180801 MGC Textos*@
+                            <input type="text" value="Reversa" name="labels_soporte" hidden />
+                            <div class="file-field input-field">
+                                <div class="btn-small" style="float:left;">
+                                    <span id="span_filereversa">Examinar</span> @*B20180801 MGC Textos*@
+                                    <input class="file_soporte nec" name="files_soporte" id="file_rev" type="file" onchange="changeFile(this)">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path " type="text" id="fileinput_rev">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">date_range</i>
+                            @Html.Hidden("FECHAD_REV")
+                            <input value="@ViewBag.FECHAD_REV" id="fechad" type="text" class="" disabled="disabled" />
+                            <label id="lbl_fechadrev" for="fechad">Fecha</label> @*B20180801 MGC Textos*@
+                        </div>
+                        @*<div class="row">*@
+                        <div class="input-field col s12">
+                            <textarea id="notas_soporte" name="notas_soporte" class="materialize-textarea" onkeyup="maxchar_notas();">@ViewBag.notas_soporte</textarea>
+                            <label id="lbl_notasrev" for="notas_soporte">Razón del reverso</label> @*B20180801 MGC Textos*@
+                        </div>
+                        @*</div>*@
+                        <script>
+                            function maxchar_notas() {
+                                var maxLength = 500;
+                                var text = $('#notas_soporte').val();
+                                var textLength = text.length;
+                                if (textLength > (maxLength)) {
+                                    $('#notas_soporte').val(text.substring(0, ((maxLength))));
+                                    var msg = 'Número máximo para la nota es ' + maxLength;
+                                    M.toast({ html: msg });
+                                }
+                            }
+                        </script>
+                        <div class="input-field col s12">
+                            @Html.DropDownList("TREVERSA", null, "", htmlAttributes: new { @id = "treversa_id", @class = "form-control", onchange = @"selectTsolr(this.value)" })
+                            @Html.Label("TREVERSA", "Tipo de reverso", htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_tiporev", @for = "treversa_id" }) @*B20180801 MGC Textos*@
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

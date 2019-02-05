@@ -1,0 +1,773 @@
+﻿@model TAT001.Entities.DOCUMENTO
+@{ 
+    TAT001.Models.DocumentoFlujo _df = ViewBag.df as TAT001.Models.DocumentoFlujo;
+}
+@Html.HiddenFor(model => model.NUM_DOC)
+<div id="Informacion_cont" class="col s12" style="font-size:12px;">
+    @*Tipo de solicitud*@
+    <div class="row">
+        <div class="col s12 m6 l6">
+            @if (ViewBag.USUARIOC_ID != null)
+            {
+                <div class="card-panel">
+                    <!--RSG 13.06.2018-->
+                    <div class="row" style="margin-bottom:0;">
+                        <div class="input-field col s12">
+                            @Html.DropDownList("USUARIOC_ID", null, "")
+                            <label for="txt_rel" id="lbl_rel"></label>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="card-panel">
+                <h5 id="lblTipoSol">Tipo de solicitud y Clasificación</h5>
+                <div class="row" style="margin-bottom:0">
+                    <div class="form-group col s12">
+                        @*@Html.LabelFor(model => model.TSOL_ID, "TSOL_ID", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                        @Html.LabelFor(model => model.TSOL_ID, "Tipo de solicitud", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @if (ViewBag.relacionada == "")
+                            {
+                                @Html.DropDownList("TSOL_ID", null, "", htmlAttributes: new { @id = "tsol_id", @class = "form-control", onchange = @"selectTsol(this.value);soportes(this.value, '" + Session["spras"].ToString() + "');" })
+                            }
+                            else
+                            {
+                                @*@Html.HiddenFor(model => model.TSOL_ID, new { @id = "tsol_id" })*@
+                                @Html.HiddenFor(model => model.TSOL_ID, new { @id = "tsol_id", onchange = @"selectTsol(this.value)" })@*@lej 24-07-2018*@
+                                @Html.HiddenFor(model => model.TSOL_ID, new { @id = "TSOL_ID", onchange = @"selectTsol(this.value)" })@*@lej 24-07-2018*@
+
+                                <input type="text" id="tsol_idi" value="@ViewBag.TSOL_IDI" disabled="disabled" />
+                                <input type="text" id="tsolant_id" value="@ViewBag.TSOL_ANT" disabled="disabled" hidden />
+                            }
+                        </div>
+                        @Html.HiddenFor(model => model.DOCUMENTO_REF)
+                        @{string jval = ViewBag.TSOL_VALUES;
+                            @Html.Hidden("TSOL_VALUES", jval)
+                        }
+                        @Html.HiddenFor(model => model.DOCUMENTO_REF)
+                        @{string jval2 = ViewBag.TSOL_VALUES2;
+                            @Html.Hidden("TSOL_VALUES2", jval2)
+                        }
+                    </div>
+                    @*<div class="form-group col s12">
+                            @Html.LabelFor(model => model.TALL_ID, "Clasificación", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @if (ViewBag.relacionada == "")
+                                {
+                                    @Html.DropDownList("GALL_ID", null, "", htmlAttributes: new { @id = "gall_id", @class = "form-control  " + @ViewBag.relacionada, onchange = @"selectTall(this.value)" })
+                                }
+                                else
+                                {
+                                    <input type="hidden" value="@Model.GALL_ID" id="gall_id" />
+                                    <input type="text" value="@ViewBag.GALL_IDI" disabled="disabled" />
+                                    <input class="@ViewBag.relacionada" id="gall_idt" type="text" value="@ViewBag.GALL_IDI_VAL" disabled="disabled" style="display:none" />
+                                }
+                            </div>
+                        </div>*@
+                    @*@Html.HiddenFor(model => model.TALL_ID, new { @id = "tall_id", @class = "form-control" })*@
+                    <div class="form-group col s12">
+                        @Html.LabelFor(model => model.TALL_ID, "Clasificación", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @if (ViewBag.relacionada == "")
+                            {
+                                @Html.DropDownList("TALL_ID", null, "", htmlAttributes: new { @id = "tall_id", @class = "form-control  " + @ViewBag.relacionada })
+                            }
+                            else
+                            {
+                                @*//MGC B20180611 se elimina clasificación*@
+                                <input type="hidden" value="@Model.TALL_ID" id="tall_id" /><!--RSG 23.05.2018-->
+                                <input type="text" value="@ViewBag.TALL_IDI" disabled="disabled" />
+                                @*<input type="text" value="@ViewBag.TALL_IDI" disabled="disabled" />
+                                    <input class="@ViewBag.relacionada" id="gall_idt" type="text" value="@ViewBag.GALL_IDI_VAL" disabled="disabled" style="display:none" />
+                                *@
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*Datos del país*@
+            <div class="card-panel">
+                <h5 id="lblDatosPa">Datos del país</h5>
+                <div class="row" style="margin-bottom:0">
+                    <div class="col s6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SOCIEDAD_ID, "Sociedad", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.SOCIEDAD_ID, new { htmlAttributes = new { @id = "sociedad_id", @class = "form-control", @disabled = "disabled" } })
+                            </div>
+                        </div>
+                    </div>
+                    @{TAT001.Entities.PAI pais = ViewBag.PAIS_ID;
+                        <div class="col s6">
+                            <div class="form-group hidden">
+                                @Html.LabelFor(model => model.PAIS_ID, "Subregión", htmlAttributes: new { @class = "control-label col-md-2 hidden" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.PAIS_ID, new { htmlAttributes = new { @id = "pais_id", @class = "form-control hidden", @disabled = "disabled", @Value = pais.LAND } })
+                                </div>
+                            </div>
+                            <div class="input-field col-md-2">
+                                <input value="@pais.LANDX" id="pais_txt" type="text" class="" disabled="disabled" />
+                                <label for="pais_txt" id="lblSubregion">Subregión</label>
+                            </div>
+                        </div>
+                    }
+                    <div>
+                        <div class="input-field col s6">
+                            @Html.EditorFor(model => model.SOCIEDAD.REGION, new { htmlAttributes = new { @id = "region_id", @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.SOCIEDAD.REGION, "Región", htmlAttributes: new { @for = "region_id" })
+                        </div>
+                    </div>
+                    <div class="input-field col s12">
+                        @if (!Model.TSOL.REVERSO & Model.DOCUMENTO_REF == null)
+                        {
+                            @Html.EditorFor(model => model.ESTADO, new { htmlAttributes = new { @id = "state_id", @class = "form-control " } })
+                        }
+                        else
+                        {
+                            @Html.EditorFor(model => model.ESTADO, new { htmlAttributes = new { @id = "state_id", @class = "form-control ", @disabled = "disabled" } })
+                        }
+                        @Html.LabelFor(model => model.ESTADO, "Estado", htmlAttributes: new { @for = "state_id" })
+                    </div>
+                    <link href="~/Content/autocomplete.css" rel="stylesheet" />
+                    <script src="~/Scripts/autocomplete1.10.2.js"></script>
+                    <script src="~/Scripts/autocomplete1.11.4.js"></script>
+                    <script>
+                            var auto = $.noConflict(true);
+                            auto(document).ready(function () {
+                                var pais = '@ViewBag.pais';
+                            auto("#state_id").autocomplete({
+                                source: function (request, response) {
+                                    auto.ajax({
+                                        url: "../Listas/Estados",
+                                        type: "GET",
+                                        dataType: "json",
+                                        data: { pais: pais, Prefix: request.term },
+                                        success: function (data) {
+                                            response($.map(data, function (item) {
+                                                return { label: item.NAME, value: item.NAME };
+                                            }))
+                                        }
+                                    })
+                                },
+                                messages: {
+                                    noResults: '',
+                                    results: function (resultsCount) { }
+                                },
+                                change: function (e, ui) {
+                                    if (!(ui.item)) {
+                                    }
+                                }
+                            });
+                        })
+                    </script>
+                    <script src="~/Scripts/createa.js"></script>
+                    <div class="input-field col s12">
+                        @if (!Model.TSOL.REVERSO & Model.DOCUMENTO_REF == null)
+                        {
+                            @Html.EditorFor(model => model.CIUDAD, new { htmlAttributes = new { @id = "city_id", @class = "form-control " } })
+                        }
+                        else
+                        {
+                            @Html.EditorFor(model => model.CIUDAD, new { htmlAttributes = new { @id = "city_id", @class = "form-control ", @disabled = "disabled" } })
+                        }
+                        @Html.LabelFor(model => model.CIUDAD, "Ciudad", htmlAttributes: new { @for = "city_id" })
+                    </div>
+                    <script>
+                        auto(document).ready(function () {
+                            auto("#city_id").autocomplete({
+                                source: function (request, response) {
+                                    var estado = $("#state_id").val();
+                                    auto.ajax({
+                                        url: "../Listas/Ciudades",
+                                        type: "GET",
+                                        dataType: "json",
+                                        data: { estado: estado, Prefix: request.term },
+                                        success: function (data) {
+                                            response(auto.map(data, function (item) {
+                                                return { label: item.NAME, value: item.NAME };
+                                            }))
+                                        }
+                                    })
+                                },
+                                messages: {
+                                    noResults: '',
+                                    results: function (resultsCount) { }
+                                },
+                                change: function (e, ui) {
+                                    if (!(ui.item)) {
+
+                                    }
+                                }
+                            });
+                        })
+                    </script>
+                </div>
+            </div>
+            @*Información General*@
+            <div class="card-panel">
+                <h5 id="lblInfGene">Información General</h5>
+                <div class="row" style="margin-bottom:0">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">date_range</i>
+                        @Html.HiddenFor(model => model.FECHAD, new { htmlAttributes = new { @class = "form-control datepicker", onkeyup = "borrar(this);" } })
+                        <input value="@ViewBag.FECHAD" id="fechad" type="text" class="" disabled="disabled" />
+                        <label for="fechad" id="lblFec">Fecha</label>
+                    </div>
+                    <div class="input-field col s6">
+                        @Html.HiddenFor(model => model.PERIODO, new { htmlAttributes = new { @class = "form-control" } })
+                        <input value="@ViewBag.PERIODO" id="periodo" type="text" class="" disabled="disabled" />
+                        <label for="periodo" id="lblPer">Periodo</label>
+                    </div>
+                    <script>
+                        var elemdp = document.querySelector('#fechad');
+                        var optionsdp = {
+                            format: 'dd/mm/yyyy',
+                            onClose: function (e) {
+                                var date = $('#fechad').val();
+                                var periodo = date.split("/");
+                                
+                            },
+                            i18n: {
+                                clear: 'Limpiar',
+                                today: 'Hoy',
+                                done: 'Seleccionar',
+                                previousMonth: '‹',
+                                nextMonth: '›',
+                                months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                                monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                                weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                                weekdays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                                weekdaysAbbrev: ['D', 'L', 'M', 'X', 'J', 'V', 'S']
+                            }
+                        };
+                        var instancedp = M.Datepicker.init(elemdp, optionsdp);
+                        var estatus_wf = "@Model.ESTATUS_WF";
+                        if (estatus_wf == "B") {
+                            periodo();
+                        }
+                    </script>
+                    <div class="input-field col s6">
+                        @Html.HiddenFor(model => model.EJERCICIO, new { htmlAttributes = new { @class = "form-control" } })
+                        <input value="@ViewBag.EJERCICIO" id="ejercicio" type="text" class="" disabled="disabled" />
+                        <label for="ejercicio" id="lblEjer">Ejercicio</label>
+                    </div>
+                    <div class="input-field col s12">
+                        @if (!Model.TSOL.REVERSO & Model.DOCUMENTO_REF == null)
+                        {
+                            @Html.EditorFor(model => model.CONCEPTO, new { htmlAttributes = new { @id = "concepto", @class = "form-control " } })
+                        }
+                        else
+                        {
+                            @Html.EditorFor(model => model.CONCEPTO, new { htmlAttributes = new { @id = "concepto", @class = "form-control ", @disabled = "disabled" } })
+                        }
+                        <label for="concepto" id="lblConcep">Concepto*</label>
+                    </div>
+                    <div class="input-field col s12">
+                        @if (!Model.TSOL.REVERSO & Model.DOCUMENTO_REF == null)
+                        {
+                            @Html.TextAreaFor(model => model.NOTAS, new { @class = "materialize-textarea ", @id = "notas_txt", onkeyup = "maxchar();" })
+                        }
+                        else
+                        {
+                            @Html.TextAreaFor(model => model.NOTAS, new { @class = "materialize-textarea ", @id = "notas_txt", onkeyup = "maxchar();" })
+                        }
+                        @Html.LabelFor(model => model.NOTAS, "Mecánica de negociación", htmlAttributes: new { @class = "active", @for = "notas_txt" })
+                    </div>
+                    <script>
+                        function maxchar(w) {
+                            var maxLength = 255;
+                            var text = $('#notas_txt').val();
+                            var textLength = text.length;
+                            if (textLength > (maxLength)) {
+                                $('#notas_txt').val(text.substring(0, ((maxLength))));
+                                var msg = 'Número máximo para la negociación es ' + maxLength;
+                                M.toast({ html: msg });
+                            }
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6 l6">
+            @*Información Cliente*@
+            <div class="card-panel">
+                <h5 id="lblInfCliente">Información del cliente</h5>
+                <div class="row" style="margin-bottom:0">
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.PAYER_ID, new { htmlAttributes = new { @id = "payer_id1", @disabled = "disabled "@*, @onchange = @"selectCliente(this.value)"*@}
+                })
+                        @Html.LabelFor(model => model.PAYER_ID, "Cliente", htmlAttributes: new { @for = "payer_id" })
+                    </div>
+                    <script>
+                        auto(document).ready(function () {
+                            auto("#payer_id").autocomplete({
+                                source: function (request, response) {
+                                    auto.ajax({
+                                        url: "../Listas/Clientes",
+                                        type: "GET",
+                                        dataType: "json",
+                                        data: { Prefix: request.term },
+                                        success: function (data) {
+                                            response(auto.map(data, function (item) {
+                                                return { label: item.KUNNR + " - " + item.NAME1, value: item.KUNNR };
+                                            }))
+                                        }
+                                    })
+                                },
+                                messages: {
+                                    noResults: '',
+                                    results: function (resultsCount) { }
+                                },
+                                change: function (e, ui) {
+                                    if (!(ui.item)) {
+                                        e.target.value = "";
+                                    }
+                                },
+
+                                select: function (event, ui) {
+
+                                    var label = ui.item.label;
+                                    var value = ui.item.value;
+                                    selectCliente(value);
+                                }
+                            });
+                            //OCG 11/10/18
+                            var cliente = auto("#payer_id1").val();
+                            var cli = cliente.split("");
+                            var con = 0;
+                            for (var i = 0; i < 10; i++) {
+                                if (cli[i] == 0) {
+                                    con++;
+                                }
+                                else {
+                                    i = 9;
+                                }
+                            }
+                            var clien = cliente.substring(con, i);
+                            auto("#payer_id1").attr("value", clien);
+                        })
+                    </script>
+                    <input type="hidden" id="txt_vkorg" />
+                    <input type="hidden" id="txt_vtweg" />
+                    <input type="hidden" id="txt_spras" value="@Session["spras"].ToString()" />
+                    <div class="input-field col s12">
+                        <input type="text" id="cli_name" value="@ViewBag.NAME1" disabled="disabled" />
+                        <label for="cli_name" id="lblNombre">Nombre</label>
+                    </div>
+                    <div class="input-field  col s12">
+                        <input value="@ViewBag.PARVW" id="parvw" type="text" class="" disabled="disabled" />
+                        <label for="parvw" id="lblTipoCliente">Tipo de cliente</label>
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.LabelFor(model => model.VKORG, "Razón Social", htmlAttributes: new { @class = "control-label col-md-2", @for = "vkorg" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.VKORG, new { htmlAttributes = new { @disabled = "disabled", @id = "vkorg", @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="input-field  col s12">
+                        <input value="@ViewBag.STCD1" id="stcd1" type="text" class="" disabled="disabled" />
+                        <label for="stcd1" id="lblTaxId">Tax ID</label>
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.LabelFor(model => model.VTWEG, "Canal", htmlAttributes: new { @class = "control-label col-md-2", @for = "vtweg" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.VTWEG, new { htmlAttributes = new { @disabled = "disabled", @id = "vtweg", @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="input-field col s12">
+                        @if (!Model.TSOL.REVERSO)
+                        {
+                            @Html.EditorFor(model => model.PAYER_NOMBRE, new { htmlAttributes = new { @id = "payer_nombre", @class = "form-control " } })
+                        }
+                        else
+                        {
+                            @Html.EditorFor(model => model.PAYER_NOMBRE, new { htmlAttributes = new { @id = "payer_nombre", @class = "form-control ", @disabled = "disabled" } })
+                        }
+                        @Html.LabelFor(model => model.PAYER_NOMBRE, "Nombre del contacto", htmlAttributes: new { @class = "control-label col-md-2", @for = "payer_nombre" })
+                    </div>
+                    <div class="input-field col s12">
+                        @if (!Model.TSOL.REVERSO)
+                        {
+                            @Html.EditorFor(model => model.PAYER_EMAIL, new { htmlAttributes = new { @id = "PAYER_EMAIL", @class = " ", @type = "text" } })}
+                        else
+                        {
+                            @Html.EditorFor(model => model.PAYER_EMAIL, new { htmlAttributes = new { @id = "PAYER_EMAIL", @class = " ", @type = "text", @disabled = "disabled" } })
+                        }
+                        @Html.LabelFor(model => model.PAYER_EMAIL, "Email de contacto", htmlAttributes: new { @class = "control-label col-md-2", @for = "PAYER_EMAIL" })
+                    </div>
+                    <script>
+                        auto(document).ready(function () {
+                            auto("#payer_nombre").autocomplete({
+                                source: function (request, response) {
+                                    var kunnr = document.getElementById("payer_id").value;
+                                    var vk = document.getElementById("txt_vkorg").value;
+                                    var vt = document.getElementById("txt_vtweg").value;
+
+
+                                    auto.ajax({
+                                        url: root + "Listas/contactos",
+                                        type: "GET",
+                                        dataType: "json",
+                                        data: { Prefix: request.term, vkorg: vk, vtweg: vt, kunnr: kunnr },
+                                        success: function (data) {
+                                            response(auto.map(data, function (item) {
+                                                return { label: item.NOMBRE + " - " + item.EMAIL, value: item.NOMBRE, mail: item.EMAIL };
+                                            }))
+                                        }
+                                    })
+                                },
+                                messages: {
+                                    noResults: '',
+                                    results: function (resultsCount) { }
+                                },
+                                change: function (e, ui) {
+                                    if (!(ui.item)) {
+                                        //e.target.value = "";
+                                    }
+                                },
+
+                                select: function (event, ui) {
+
+                                    var label = ui.item.label;
+                                    var value = ui.item.value;
+                                    var email = ui.item.mail;
+                                    document.getElementById('PAYER_EMAIL').value = email;
+                                    $("#PAYER_EMAIL").trigger('focus');
+                                    $("#PAYER_EMAIL").trigger('focusout');
+                                }
+                            });
+                        })
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6 l6">
+            <div class="card-panel">
+                <h5 id="lblVigencia">Vigencia</h5>
+                <div class="row" style="margin-bottom:0">
+                    <div class="col s12">
+                        <p>
+                            <label>
+                                @if (!Model.TSOL.REVERSO && Model.DOCUMENTO_REF == null)
+                                {
+                                    if (Model.DOCUMENTOREC.Count > 1)
+                                    {
+                                        <input id="check_recurrente" type="checkbox" onchange="cambiaCheckRec(false)" checked="checked" />
+                                    }
+                                    else
+                                    {
+                                        <input id="check_recurrente" type="checkbox" onchange="cambiaCheckRec(false)" />
+                                    }
+                                }
+                                else
+                                {
+                                    if (Model.DOCUMENTOREC.Count > 1)
+                                    {
+                                        <input id="check_recurrente" type="checkbox" disabled="disabled" checked="checked" />
+                                    }
+                                    else
+                                    {
+                                        <input id="check_recurrente" type="checkbox" disabled="disabled" />
+                                    }
+                                }
+                                <span id="span_docrec">Solicitud recurrente</span>
+                            </label>
+                        </p>
+                    </div>
+                    @if (!Model.TSOL.REVERSO && Model.DOCUMENTO_REF == null)
+                    {
+                        <div class="col s12">
+                            <label class="col s6">
+                                @if (Model.FECHAI_VIG != null)
+                                {
+                                <input name="group1" type="radio" checked id="btn-date" onclick="cambiaTemp(this.id)" />
+                                }else{
+                                <input name="group1" type="radio" checked id="btn-date" onclick="cambiaTemp(this.id)" />}
+                                <span id="sPorFecha">Por fecha</span>
+                            </label>
+                            <label class="col s6">
+                                <input name="group1" type="radio" id="btn-peri" onclick="cambiaTemp(this.id)" />
+                                <span id="sPorPeriodo">Por periodo</span>
+                            </label>
+                        </div>
+                        <script>
+                            function cambiaTemp(id) {
+                                var tipo = id.split('-')[1];
+                                if (tipo == "date") {
+                                    document.getElementById("periodoi_id").setAttribute("disabled", "disabled");
+                                    document.getElementById("anioi_id").setAttribute("disabled", "disabled");
+                                    document.getElementById("periodof_id").setAttribute("disabled", "disabled");
+                                    document.getElementById("aniof_id").setAttribute("disabled", "disabled");
+
+                                    document.getElementById("fechai_vig2").removeAttribute("disabled");
+                                    document.getElementById("fechaf_vig2").removeAttribute("disabled");
+                                } else {
+                                    document.getElementById("periodoi_id").removeAttribute("disabled");
+                                    document.getElementById("anioi_id").removeAttribute("disabled");
+                                    document.getElementById("periodof_id").removeAttribute("disabled");
+                                    document.getElementById("aniof_id").removeAttribute("disabled");
+
+                                    document.getElementById("fechai_vig2").setAttribute("disabled", "disabled");
+                                    document.getElementById("fechaf_vig2").setAttribute("disabled", "disabled");
+
+                                }
+                                setDates(tipo);
+                                var elem = document.querySelectorAll('select');
+                                var instance = M.FormSelect.init(elem, []);
+                                pickerFecha2(".format_date");
+                            }
+                        </script>
+                        <div class="col s6">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">date_range</i>
+                                @*@Html.EditorFor(model => model.FECHAI_VIG, new { htmlAttributes = new { @id = "fechai_vig", @class = "form-control datepicker " + @ViewBag.relacionada, @onkeyup = "borrar(this);" } })*@
+                                @Html.HiddenFor(model => model.FECHAI_VIG, new { @id = "fechai_vig", @class = "form-control datepicker " })
+                                @if (Model.FECHAI_VIG != null || Model.FECHAF_VIG != null)
+                                {
+                                <input type="text" class="datepicker" id="fechai_vig2" onkeyup="borrar(this);" onchange="document.getElementById('fechai_vig').value = this.value" />
+                                }
+                                else {
+                                <input type="text" disabled class="datepicker" id="fechai_vig2" onkeyup="borrar(this);" onchange="document.getElementById('fechai_vig').value = this.value" />}
+                                @Html.LabelFor(model => model.FECHAI_VIG, "De", htmlAttributes: new { @class = "active", @for = "fechai_vig2", @id = "lbl_fechade" })
+                            </div>
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">date_range</i>
+                                @*@Html.EditorFor(model => model.FECHAF_VIG, new { htmlAttributes = new { @id = "fechaf_vig", @class = "form-control datepicker " + @ViewBag.relacionada, onkeyup = "borrar(this);" } })*@
+                                @Html.HiddenFor(model => model.FECHAF_VIG, new { @id = "fechaf_vig", @class = "form-control datepicker " })
+                                @if (Model.FECHAI_VIG != null || Model.FECHAF_VIG != null)
+                                {
+                                <input type="text" class="datepicker" id="fechaf_vig2" onkeyup="borrar(this);" onchange="document.getElementById('fechaf_vig').value = this.value" />
+                                }
+                                else {
+                                <input type="text" disabled class="datepicker" id="fechaf_vig2" onkeyup="borrar(this);" onchange="document.getElementById('fechaf_vig').value = this.value" />
+                                }
+                                @Html.LabelFor(model => model.FECHAF_VIG, "Hasta", htmlAttributes: new { @class = "active", @for = "fechaf_vig2", @id = "lbl_fechahasta" })
+                            </div>
+                        </div>
+                        <script>
+                            asignaFechasInit();
+                            function asignaFechasInit() {
+                                var datei = document.getElementById("fechai_vig").value.split(" ")[0];
+                                var datef = document.getElementById("fechaf_vig").value.split(" ")[0];
+                                //var datei = document.getElementById("fechai_vig").value;
+                                //var datef = document.getElementById("fechaf_vig").value;
+
+                                if (datei != "") {
+                                    document.getElementById("fechai_vig2").value = datei;
+                                }
+                                if (datef != "") {
+                                    document.getElementById("fechaf_vig2").value = datef;
+                                }
+                            }
+                        </script>
+                        <div class="col s6">
+                            <div class="col s12">
+                                <div class="input-field col s6">
+                                    @Html.DropDownList("PERIODOS", null, "", htmlAttributes: new { @id = "periodoi_id", @onchange = "setDates('')", @disabled="disabled" })
+                                    <label id="lblDe">De</label>
+                                </div>
+                                <div class="input-field col s3">
+                                    @Html.DropDownList("ANIOS", null, "", htmlAttributes: new { @id = "anioi_id", @onchange = "setDates('')", @disabled = "disabled" })
+                                </div>
+                            </div><div class="col s12">
+                                <div class="input-field col s6">
+                                    @Html.DropDownList("PERIODOSF", null, "", htmlAttributes: new { @id = "periodof_id", @onchange = "setDates('')", @disabled = "disabled" })
+                                    <label id="lblHasta">Hasta</label>
+                                </div>
+                                <div class="input-field col s3">
+                                    @Html.DropDownList("ANIOSF", null, "", htmlAttributes: new { @id = "aniof_id", @onchange = "setDates('')", @disabled = "disabled" })
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            var datei = document.getElementById("fechai_vig").value;
+                            var datef = document.getElementById("fechaf_vig").value;
+                            var elemth = document.querySelector('#fechai_vig2');
+                            var optionsth = {
+                                defaultDate: new Date(datei.split('/')[2], datei.split('/')[1] - 1, datei.split('/')[0]),
+                                format: 'dd/mm/yyyy',
+                                i18n: {
+                                    clear: 'Limpiar',
+                                    today: 'Hoy',
+                                    done: 'Seleccionar',
+                                    previousMonth: '‹',
+                                    nextMonth: '›',
+                                    months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                                    monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                                    weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                                    weekdays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                                    weekdaysAbbrev: ['D', 'L', 'M', 'X', 'J', 'V', 'S']
+                                }
+                            };
+                            var instanceth = M.Datepicker.init(elemth, optionsth);
+
+                            var elemtd = document.querySelector('#fechaf_vig2');
+                            var optionstd = {
+                                defaultDate: new Date(datef.split('/')[2], datef.split('/')[1] - 1, datef.split('/')[0]),
+                                format: 'dd/mm/yyyy',
+                                onClose: function (e) {
+                                    var datei = $('#fechai_vig2').val();
+                                    var datef = $('#fechaf_vig2').val();
+                                    var res = validar_fechas(datei, datef);
+
+                                    if (!res) {
+                                        $('#fechaf_vig2').val("");
+                                        M.toast({ html: 'Las fechas no tienen un secuencia correcta' });
+                                    }
+                                },
+                                i18n: {
+                                    clear: 'Limpiar',
+                                    today: 'Hoy',
+                                    done: 'Seleccionar',
+                                    previousMonth: '‹',
+                                    nextMonth: '›',
+                                    months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                                    monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                                    weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                                    weekdays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                                    weekdaysAbbrev: ['D', 'L', 'M', 'X', 'J', 'V', 'S']
+                                }
+                            };
+                            var instancetd = M.Datepicker.init(elemtd, optionstd);
+
+                            function borrar(field) {
+                                field.value = "";
+                            }
+                            //LEJ 30.07.2018
+                            _ff();
+                        </script>
+                    }
+                    else
+                    { <div class="col s12">
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">date_range</i>
+                                @Html.EditorFor(model => model.FECHAI_VIG, new { htmlAttributes = new { @id = "fechai_vig", @class = "form-control datepicker " + @ViewBag.relacionada, @onkeyup = "borrar(this);" } })
+                                @Html.LabelFor(model => model.FECHAI_VIG, "De", htmlAttributes: new { @class = "active", @for = "fechai_vig2" })
+                            </div>
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">date_range</i>
+                                @Html.EditorFor(model => model.FECHAF_VIG, new { htmlAttributes = new { @id = "fechaf_vig", @class = "form-control datepicker " + @ViewBag.relacionada, onkeyup = "borrar(this);" } })
+                                @Html.LabelFor(model => model.FECHAF_VIG, "Hasta", htmlAttributes: new { @class = "active", @for = "fechaf_vig2" })
+                            </div>
+                        </div>
+                        <input name="group1" type="hidden" id="btn-peri" />
+                        <input name="group1" type="hidden" id="btn-date" />
+                    }
+                </div>
+            </div>
+            <div id="div_picker2"></div><!--RSG 27.05.2017-->
+        </div>
+        <div id="ref_soporte" style="display:table" class="col s12">
+            @*LEJ 26.07.18----I*@
+            <div class="card-panel">
+                <h5 id="lblRefFacturas">Referencia de Facturas</h5>
+                <div class="row" style="margin-bottom:0;">
+                    <p>
+                        <label>
+                            <input id="check_facturas" name="unafact" type="hidden" value="@ViewBag.UNAFACTURA" />
+                            <input id="check_factura" type="checkbox" checked="checked" disabled />
+                            <span id="lblMulFacturas">Multiples Facturas</span>
+                        </label>
+                    </p>
+                    @*Cargar archivo excel soporte*@
+                    <div id="file_facturat" class="file-field input-field" style="display:none">
+                        <div class="btn">
+                            <span id="lblArchivo">File</span>
+                            <input type="file" class="file_sop" id="file_sop">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path  file_sop" type="text">
+                        </div>
+                    </div>
+                    <div class="table_sop" id="" style="display:none">
+                    </div>
+                    @if (_df.D.DOCUMENTOF != null)//LEJ 24.07.18
+                    {
+                        if (_df.D.DOCUMENTOF.Count > 0)//LEJ 24.07.18
+                        {
+                            <table class="table_sop display" id="table_sop" cellspacing="0" style="width:100%;display:none">
+                                <thead>
+                                    <tr>
+                                        <th id="thPos">Pos</th>
+                                        <th id="thCode">Sociedad</th>
+                                        <th id="thFactura">Factura</th>
+                                        <th id="thFechaFact">Fecha Factura</th>
+                                        <th id="thBill">Bill Doc</th>
+                                        <th id="thProv">Proveedor</th>
+                                        <th id="thProvDesc">Proveedor Desc</th>
+                                        <th id="thControl">Control</th>
+                                        <th id="thAutoriza">Autorización</th>
+                                        <th id="thVencimiento">Vencimiento</th>
+                                        <th id="thFacturaK">Factura k</th>
+                                        <th id="thEjercicioK">Ejercicio k</th>
+                                        <th id="thPayer">Payer</th>@*@18-07-2018 jemo *@
+                                        <th id="thDescrip">Descripcion</th>@*@18-07-2018 jemo *@
+                                        <th id="thImporteFac">Importe Factura</th>@*@18-07-2018 jemo *@
+                                        <th id="thBellnr">Belnr</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            @*<a class="waves-light btn-small" id="sendTable"><i class="material-icons left">add</i>Send table to html</a>*@
+                            <table id="table_soph" class="display" cellspacing="0" style="display:none">
+                                <tbody>
+                                    @for (var i = 0; i < _df.D.DOCUMENTOF.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @_df.D.DOCUMENTOF[i].POS
+                                            </td>
+                                            <td>
+                                                @_df.D.DOCUMENTOF[i].SOCIEDAD
+                                            </td>
+                                            <td>
+                                                @_df.D.DOCUMENTOF[i].FACTURA
+                                            </td>
+                                            <td>
+                                                @_df.D.DOCUMENTOF[i].FECHA
+                                            </td>
+                                            <td>
+                                                @_df.D.DOCUMENTOF[i].BILL_DOC
+                                            </td>
+                                            <td>
+                                                @_df.D.DOCUMENTOF[i].PROVEEDOR
+                                            </td>
+                                            <td>
+                                                @_df.D.DOCUMENTOF[i].CONTROL
+                                            </td>
+                                            <td>
+                                                @_df.D.DOCUMENTOF[i].AUTORIZACION
+                                            </td>
+                                            <td>
+                                                @_df.D.DOCUMENTOF[i].VENCIMIENTO
+                                            </td>
+                                            <td>
+                                                @_df.D.DOCUMENTOF[i].FACTURAK
+                                            </td>
+                                            <td>
+                                                @_df.D.DOCUMENTOF[i].EJERCICIOK
+                                            </td>
+                                            <td>
+                                                @_df.D.DOCUMENTOF[i].PAYER
+                                            </td>
+                                            <td>
+                                                @_df.D.DOCUMENTOF[i].DESCRIPCION@*//B20180625 JEMO 2018.06.27*@
+                                            </td>
+                                            <td>
+                                                @_df.D.DOCUMENTOF[i].IMPORTE_FAC
+                                            </td>
+                                            <td>
+                                                @_df.D.DOCUMENTOF[i].BELNR
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    }
+                </div>
+            </div>
+        </div>@*LEJ 26.07.18----T*@
+    </div>
+</div>
+

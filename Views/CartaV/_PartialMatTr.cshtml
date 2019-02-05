@@ -1,0 +1,52 @@
+﻿@model TAT001.Models.CartaV
+
+@if (Model.DOCUMENTOP != null)
+{
+    for (var i = 0; i < Model.DOCUMENTOP.Count; i++)
+    {
+        <tr>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTOP[i].POS)
+            </td>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTOP[i].VIGENCIA_DE)
+            </td>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTOP[i].VIGENCIA_AL)
+            </td>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTOP[i].MATNR)
+            </td>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTOP[i].MATKL)
+            </td>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTOP[i].MATKL_ID)
+            </td>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTOP[i].MONTO)
+            </td>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTOP[i].PORC_APOYO)
+            </td>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTOP[i].MONTO_APOYO)
+            </td>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTOP[i].PRECIO_SUG)
+            </td>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTOP[i].VOLUMEN_EST)
+            </td>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTOP[i].VOLUMEN_REAL)
+            </td>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTOP[i].APOYO_EST)
+            </td>
+            <td>
+                @Html.EditorFor(m => m.DOCUMENTOP[i].APOYO_REAL)
+            </td>
+        </tr>
+    }
+}

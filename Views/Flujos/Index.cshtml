@@ -1,0 +1,90 @@
+﻿@model IEnumerable<TAT001.Entities.FLUJO>
+
+@{
+    //ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 103;
+    ViewBag.carpeta_r = 100;
+}
+
+@*<h2>Index</h2>*@
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LOOP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ESTATUS)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.FECHAC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HORAC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FECHAM)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HORAM)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.DOCUMENTO.TSOL_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.USUARIO.ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.USUARIO1.ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WORKFP.ACCION.ACCIONTs.Where(a => a.SPRAS_ID == Session["spras"].ToString()).FirstOrDefault().TXT050)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LOOP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ESTATUS)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.FECHAC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HORAC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FECHAM)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HORAM)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.DOCUMENTO.TSOL_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.USUARIO.ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.USUARIO1.ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WORKFP.ACCION.ACCIONTs.Where(a => a.SPRAS_ID == Session["spras"].ToString()).FirstOrDefault().TXT050)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

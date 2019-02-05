@@ -1,0 +1,27 @@
+﻿@model TAT001.Entities.IMPUESTO
+
+@{
+    //ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 742;
+    ViewBag.carpeta_r = 500;
+}
+
+<div>
+
+    <div class="col 12 s12 ">
+        <div class="card-panel">
+            <div class="row">
+                <div class="input-field col l4 m6" style="margin-bottom:0;">
+                    @Html.EditorFor(model => model.MWSKZ, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.LabelFor(model => model.MWSKZ, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblMWSKZ" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MWSKZ }, new { id = "btnEdit" }) |
+    @Html.ActionLink("Back to List", "Index", null, new { id = "btnReg" })
+</p>

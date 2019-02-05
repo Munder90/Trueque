@@ -1,0 +1,54 @@
+﻿@model TAT001.Entities.TREVERSA
+@{
+    //ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 783;
+    ViewBag.carpeta_r = 500;
+}
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="col s6 ">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblId" })
+                            @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.USUARIOC_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblUId" })
+                            @Html.EditorFor(model => model.USUARIOC_ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.USUARIOC_ID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s6 ">
+            <div class="card-panel">
+                <h5>Traducciones</h5>
+                <div class="row">
+                    @foreach (var item in Model.TREVERSATs)
+                    {
+                        <div class=" input-field col s12">
+                            @Html.EditorFor(modelItem => item.TXT100, null, item.SPRAS_ID, new { htmlAttributes = new { @id = "A" + item.SPRAS_ID } })
+                            <label for="@("A"+item.SPRAS_ID)">@item.SPRA.DESCRIPCION</label>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { id = "lblRegresar" })
+</div>

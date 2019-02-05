@@ -1,0 +1,63 @@
+﻿@model TAT001.Entities.USUARIOLOG
+@{
+    ViewBag.pagina_r = 101;
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col s12 m12 l6  offset-l3">
+            <div class="card-panel">
+                <h3>Sesión activa</h3>
+                <div class="row">
+                    <div class="input-field col s12" style="margin-bottom:0;">
+                        @Html.EditorFor(model => model.USUARIO_ID,  new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.LabelFor(model => model.USUARIO_ID, "Usuario", htmlAttributes: new { @class = "control-label col-md-2", @id = "" })
+                    </div>
+
+                    <div class="input-field col s12" style="margin-bottom:0;">
+                        @Html.EditorFor(model => model.NAVEGADOR, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.LabelFor(model => model.NAVEGADOR, "Navegador", htmlAttributes: new { @class = "control-label col-md-2", @id = "" })
+                    </div>
+
+                    <div class="input-field col s12" style="margin-bottom:0;">
+                        @Html.EditorFor(model => model.UBICACION, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.LabelFor(model => model.UBICACION, "Equipo", htmlAttributes: new { @class = "control-label col-md-2", @id = "" })
+                    </div>
+
+                    <div class="input-field col s12" style="margin-bottom:0;">
+                        @Html.TextBoxFor(model => model.FECHA, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                        @Html.LabelFor(model => model.FECHA, "Fecha", htmlAttributes: new { @class = "control-label col-md-2", @id = "" })
+                    </div>
+                </div>
+
+                <br />
+                <p>¿Desea finalizar la sesión activa?</p>
+                <br />
+                <div class="row left-align">
+                    <div class="col l12 m12 right">
+                        <a href="@Url.Action("Login", "Account")" class="btn-small">CANCELAR</a>
+                        <input type="submit" value="Continuar" class="btn-small" autofocus/>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="input-field col s12" style="margin-bottom:0;">
+        @Html.EditorFor(model => model.POS, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "display:none;" } })
+        @Html.LabelFor(model => model.POS, htmlAttributes: new { @class = "control-label col-md-2", @id = "", style = "display:none;" })
+    </div>
+
+    <div class="input-field col s12" style="margin-bottom:0;">
+        @Html.EditorFor(model => model.SESION, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "display:none;" } })
+        @Html.LabelFor(model => model.SESION, htmlAttributes: new { @class = "control-label col-md-2", @id = "", style = "display:none;" })
+    </div>
+    <input type="hidden" value="@ViewBag.returnUrl" id="returnUrl" name="returnUrl"/>
+}
+
+
+

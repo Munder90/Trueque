@@ -1,0 +1,57 @@
+﻿@model TAT001.Entities.WARNING
+
+@{
+    //ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 502;
+    ViewBag.carpeta_r = 500;
+}
+
+    <div class="row">
+        <div class="col s12 right-align">
+            <a href="@Url.Action("Edit", "Warnings", new { SPRAS_ID = Model.SPRAS_ID, PAGINA_ID = Model.PAGINA_ID, CAMPO_ID = Model.CAMPO_ID })" id="btnEditar" class="btn btn-default"></a>
+          </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <div class="card-panel" style="height: 250px;">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="input-field col s6">
+                    @Html.EditorFor(model => model.CAMPO_ID, new { htmlAttributes = new { @disabled = "disabled" } })
+                    @Html.LabelFor(model => model.CAMPO_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblCampo" })
+                </div>
+                <div class="input-field col s6">
+                    @Html.EditorFor(model => model.SPRAS_ID, new { htmlAttributes = new { @disabled = "disabled" } })
+                    @Html.LabelFor(model => model.SPRAS_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblIdioma" })
+                </div>
+                <div class="input-field col s6">
+                    @Html.EditorFor(model => model.WARNING1, new { htmlAttributes = new { @disabled = "disabled" } })
+                    @Html.LabelFor(model => model.WARNING1, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblDesc" })
+                    @Html.ValidationMessageFor(model => model.WARNING1, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="input-field col s6 ">
+                    @Html.EditorFor(model => model.POSICION, new { htmlAttributes = new { @disabled = "disabled" } })
+                    @Html.LabelFor(model => model.POSICION, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblPos" })
+                    @Html.ValidationMessageFor(model => model.POSICION, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-field col l1 m10 right" style="margin-bottom:0;">
+                    <label>
+                        @if ((bool)Model.ACTIVO == true)
+                        {
+                            <i class='material-icons green-text'>check</i>}
+                        else
+                        {
+                            <i class='material-icons red-text'>clear</i>}
+                        @Html.LabelFor(model => model.ACTIVO, htmlAttributes: new { @class = "control-label col-md-10", @id = "lblActivo" })
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+     
+
+<div class="col s12">
+    <a id="btnRegresar" href="@Url.Action("Index",new { id=Model.PAGINA_ID })"></a>
+</div>

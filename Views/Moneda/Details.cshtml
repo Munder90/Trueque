@@ -1,0 +1,58 @@
+﻿@model TAT001.Entities.MONEDA
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MONEDA</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ISOCD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ISOCD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ALTWR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ALTWR)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LTEXT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LTEXT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KTEXT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KTEXT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ACTIVO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ACTIVO)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.WAERS }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

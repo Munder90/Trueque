@@ -1,0 +1,171 @@
+﻿@using TAT001.Entities;
+@using PagedList.Mvc
+@model TAT001.Models.MaterialViewModel
+
+
+
+
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<table class="table mdl-data-table striped" id="table" style="width:100%;">
+    <thead>
+        <tr class="header">
+            <th>
+                @Html.ActionLink("MATERIAL_ID", "List", new { colOrden = "MATERIAL_ID", ordenActual = Model.ordenActual, numRegistros = Model.numRegistros, buscar = Model.buscar }, new { id = "lbl_id" })
+            </th>
+            <th>
+                @Html.ActionLink("VKORG", "List", new { colOrden = "VKORG", ordenActual = Model.ordenActual, numRegistros = Model.numRegistros, buscar = Model.buscar }, new { id = "lbl_vkorg" })
+            </th>
+            <th>
+                @Html.ActionLink("VTWEG", "List", new { colOrden = "VTWEG", ordenActual = Model.ordenActual, numRegistros = Model.numRegistros, buscar = Model.buscar }, new { id = "lbl_vtweg" })
+            </th>
+            <th>
+                @Html.ActionLink("MAKTX", "List", new { colOrden = "MAKTX", ordenActual = Model.ordenActual, numRegistros = Model.numRegistros, buscar = Model.buscar }, new { id = "lbl_Dsc" })
+            </th>
+            <th>
+                @Html.ActionLink("MATKL_ID", "List", new { colOrden = "MATKL_ID", ordenActual = Model.ordenActual, numRegistros = Model.numRegistros, buscar = Model.buscar }, new { id = "lbl_matklid" })
+            </th>
+            <th>
+                @Html.ActionLink("MATERIAL_GROUP", "List", new { colOrden = "MATERIAL_GROUP", ordenActual = Model.ordenActual, numRegistros = Model.numRegistros, buscar = Model.buscar }, new { id = "lbl_MatGroup" })
+            </th>
+            @*<th>
+                @Html.ActionLink("ACTIVO", "List", new { colOrden = "ACTIVO", ordenActual = Model.ordenActual, numRegistros = Model.numRegistros, buscar = Model.buscar }, new { id = "lbl_Activo" })
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.materiales)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MATERIAL_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VKORG)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VTWEG)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MAKTX)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MATKL_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MATERIAL_GROUP)
+            </td>
+            @*@if ((bool)item.ACTIVO == true)
+            {
+                <td style="align-items:center"><i class='material-icons green-text'>check</i></td>}
+            else
+            {
+                <td style="align-items:center;"><i class='material-icons red-text'>clear</i></td>}*@
+            <td>
+                <a href="@Url.Action("Edit", "Materiales", new { id = item.MATERIAL_ID, vkorg=item.VKORG, vtweg=item.VTWEG })">
+                <i class='material-icons green-text'>edit</i>
+            </a>&nbsp
+            <a href="@Url.Action("Details", "Materiales", new { id = item.MATERIAL_ID, vkorg=item.VKORG, vtweg=item.VTWEG })">
+                <i class='material-icons blue-text'>search</i>
+            </a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<div id='Paging' style="text-align: center">
+    @(Model.materiales.PageCount < Model.materiales.PageNumber ? 0 : Model.materiales.PageNumber)
+    - @Model.materiales.PageCount
+
+    @Html.PagedListPager(Model.materiales, page => Url.Action("List", new { pagina = page, numRegistros = Model.numRegistros, buscar = Model.buscar, colOrden = Model.ordenActual }))
+</div>
+<div>
+
+    @if (ViewBag.textos != null)
+    {
+        foreach (TEXTO t in ViewBag.textos)
+        {
+            <script>
+                try {
+                    var elem = document.getElementById("@t.CAMPO_ID");
+                    if (elem.nodeName != 'INPUT' & elem.nodeName != 'SELECT' & elem.nodeName != 'TABLE' & elem.nodeName != 'TEXTAREA')
+                    elem.innerHTML = "@t.TEXTOS";
+                } catch (e) {
+                    try {
+                        var divs = document.getElementsByClassName("@t.CAMPO_ID");
+                        [].slice.call(divs).forEach(function (div) {
+                            if (div.nodeName != 'INPUT' & div.nodeName != 'SELECT' & div.nodeName != 'TABLE' & div.nodeName != 'TEXTAREA')
+                            div.innerHTML = "@t.TEXTOS";
+                        });
+                    }
+                    catch (ee) {
+
+                    }
+                 }
+            </script>
+        }
+    }
+</div>
+<script>
+
+
+    //-----Sort
+    function sort() {
+        var sortLink = $('.header>th>a');
+        for (var i = 0; i < sortLink.length; i++) {
+            var url = sortLink.get(i).getAttribute("href");
+            var id = 'link_h' + i;
+            if (url) {
+                sortLink.get(i).setAttribute("id", id);
+                sortLink.get(i).setAttribute("url", url);
+                $('#' + id).click(function (me) {
+                    fnCommon.showProcess(true);
+                    $.ajax({
+                        url: me.target.getAttribute('url'),
+                        success: function (resultView) {
+                        if (resultView.isRedirect) {
+                            window.location = resultView.redirectUrl;
+                        } else {
+                            fnCommon.showProcess(false);
+                            $('#list').html(resultView);
+                            sort();
+                        }
+                        }
+                    });
+                });
+            }
+            sortLink.get(i).removeAttribute("href");
+        }
+    }
+    sort();
+        //-----Pagination
+    function pagination() {
+        var paginationLink = $('.pagination>li>a');
+        for (var i = 0; i < paginationLink.length; i++) {
+            var url = paginationLink.get(i).getAttribute("href");
+            var id = 'link_p' + i;
+            if (url) {
+                paginationLink.get(i).setAttribute("id", id);
+                paginationLink.get(i).setAttribute("url", url);
+                $('#' + id).click(function (me) {
+                    fnCommon.showProcess(true);
+                    $.ajax({
+                        url: me.target.getAttribute('url'),
+                        success: function (resultView) {
+                             if (resultView.isRedirect) {
+                            window.location = resultView.redirectUrl;
+                            } else {
+                            fnCommon.showProcess(false);
+                            $('#list').html(resultView);
+                            pagination();
+                            }
+                        }
+                    });
+                });
+            }
+            paginationLink.get(i).removeAttribute("href");
+        }
+    }
+    pagination();
+</script>

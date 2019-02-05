@@ -1,0 +1,64 @@
+﻿@model TAT001.Entities.DET_APROBH
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 920;
+    ViewBag.carpeta_r = 500;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col s12 l12 right-align">
+        <button type="submit" id="lbl_guardar" class="btn btn-default"></button>
+    </div>
+    <div class="card-panel">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.SOCIEDAD_ID)
+        @Html.HiddenFor(model => model.PUESTOC_ID)
+        @Html.HiddenFor(model => model.VERSION)
+        <div class="row">
+            <div class="col s6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SOCIEDAD_ID, htmlAttributes: new { @class = "control-label col-md-2", id="lbl_coCode" })
+                    <div class="col-md-10">
+                            @Html.EditorFor(model => model.SOCIEDAD_ID, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                            @Html.ValidationMessageFor(model => model.SOCIEDAD_ID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PUESTOC_ID, htmlAttributes: new { @class = "control-label col-md-2", id="lbl_Puesto" })
+                    <div class="col-md-10">
+                            @Html.Editor("PUESTOC", new { htmlAttributes = new { @class = "form-control", disabled = true, @Value = Model.PUESTO.PUESTOTs.Where(t => t.SPRAS_ID == ViewBag.usuario.SPRAS_ID).First().TXT50 } })
+                            @Html.ValidationMessageFor(model => model.PUESTOC_ID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col s6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.VERSION, htmlAttributes: new { @class = "control-label col-md-2", id="lbl_Version" })
+                    <div class="col-md-10">
+                            @Html.EditorFor(model => model.VERSION, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                            @Html.ValidationMessageFor(model => model.VERSION, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                <br />
+                <div class="form-group">
+                    <label>
+                            @Html.EditorFor(model => model.ACTIVO)
+                        <span id="lbl_Activo"></span>
+                        </label>
+                </div>
+            </div>
+            </div>
+        </div>
+            }
+
+            <div>
+                @Html.ActionLink("Back to List", "Flujos", new { id=Model.SOCIEDAD_ID}, new { id="btn_return"})
+            </div>
+<script>
+    $("input[type='hidden']").each(function (index, element) {
+        $(this).appendTo($(element).parent());
+    });
+</script>

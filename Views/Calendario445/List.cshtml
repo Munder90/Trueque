@@ -1,0 +1,190 @@
+﻿@using TAT001.Entities;
+@using PagedList.Mvc
+@model TAT001.Models.Calendario445ViewModel
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<table class="table mdl-data-table striped" id="table" style="width:100%;">
+    <thead>
+        <tr class="text-center">
+            <th colspan="3"> </th>
+            <th colspan="4" class="grey lighten-4 lbl_precierre"></th>
+            <th colspan="4" class="grey lighten-3 lbl_cierre"></th>
+        </tr>
+        <tr class="header">
+            <th>
+                @Html.ActionLink("SOCIEDAD_ID", "List", new { colOrden = "SOCIEDAD_ID", ordenActual = Model.ordenActual, numRegistros = Model.numRegistros, buscar = Model.buscar })
+            </th>
+            <th>
+                @Html.ActionLink("PERIODO", "List", new { colOrden = "PERIODO", ordenActual = Model.ordenActual, numRegistros = Model.numRegistros, buscar = Model.buscar })
+            </th>
+            <th>
+                @Html.ActionLink("TSOL_ID", "List", new { colOrden = "TSOL_ID", ordenActual = Model.ordenActual, numRegistros = Model.numRegistros, buscar = Model.buscar })
+            </th>
+            <th>
+                @Html.ActionLink("PRE_FROMF", "List", new { colOrden = "PRE_FROMF", ordenActual = Model.ordenActual, numRegistros = Model.numRegistros, buscar = Model.buscar })
+            </th>
+            <th>
+                @Html.ActionLink("PRE_FROMH", "List", new { colOrden = "PRE_FROMH", ordenActual = Model.ordenActual, numRegistros = Model.numRegistros, buscar = Model.buscar })
+            </th>
+            <th>
+                @Html.ActionLink("PRE_TOF", "List", new { colOrden = "PRE_TOF", ordenActual = Model.ordenActual, numRegistros = Model.numRegistros, buscar = Model.buscar })
+            </th>
+            <th>
+                @Html.ActionLink("PRE_TOH", "List", new { colOrden = "PRE_TOH", ordenActual = Model.ordenActual, numRegistros = Model.numRegistros, buscar = Model.buscar })
+            </th>
+            <th>
+                @Html.ActionLink("CIE_FROMF", "List", new { colOrden = "CIE_FROMF", ordenActual = Model.ordenActual, numRegistros = Model.numRegistros, buscar = Model.buscar })
+            </th>
+            <th>
+                @Html.ActionLink("CIE_FROMH", "List", new { colOrden = "CIE_FROMH", ordenActual = Model.ordenActual, numRegistros = Model.numRegistros, buscar = Model.buscar })
+            </th>
+            <th>
+                @Html.ActionLink("CIE_TOF", "List", new { colOrden = "CIE_TOF", ordenActual = Model.ordenActual, numRegistros = Model.numRegistros, buscar = Model.buscar })
+            </th>
+            <th>
+                @Html.ActionLink("CIE_TOH", "List", new { colOrden = "CIE_TOH", ordenActual = Model.ordenActual, numRegistros = Model.numRegistros, buscar = Model.buscar })
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.calendarios445)
+        {
+            <tr class="text-left">
+                <td>
+                    @Html.DisplayFor(modelItem => item.SOCIEDAD_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PERIODO)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TSOL_ID)
+                </td>
+                <td>
+                    @Convert.ToDateTime(item.PRE_FROMF).ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PRE_FROMH)
+                </td>
+                <td>
+                    @Convert.ToDateTime(item.PRE_TOF).ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PRE_TOH)
+                </td>
+                <td>
+                    @Convert.ToDateTime(item.CIE_FROMF).ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CIE_FROMH)
+                </td>
+                <td>
+                    @Convert.ToDateTime(item.CIE_TOF).ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CIE_TOH)
+                </td>
+                <td>
+                    @if (DateTime.Now < item.CIE_TOF)
+                    {
+                        <a href="@Url.Action("Edit", "Calendario445", new { ejercicio = item.EJERCICIO, periodo = item.PERIODO, sociedad_id = item.SOCIEDAD_ID, tsol_id = item.TSOL_ID })"><i class='material-icons green-text'>edit</i></a>
+                        <a href="@Url.Action("Index", "CalendarioEx445", new { ejercicio = item.EJERCICIO, periodo = item.PERIODO, sociedad_id = item.SOCIEDAD_ID, tsol_id = item.TSOL_ID })"><i class='material-icons blue-text'>assignment_late</i></a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div id='Paging' style="text-align: center">
+    @(Model.calendarios445.PageCount < Model.calendarios445.PageNumber ? 0 : Model.calendarios445.PageNumber)
+    - @Model.calendarios445.PageCount
+
+    @Html.PagedListPager(Model.calendarios445, page => Url.Action("List", new { pagina = page, numRegistros = Model.numRegistros, buscar = Model.buscar, colOrden = Model.ordenActual }))
+</div>
+<script>
+    //-----Sort
+    function sort() {
+        var sortLink = $('#list').find('.header>th>a');
+        for (var i = 0; i < sortLink.length; i++) {
+            var url = sortLink.get(i).getAttribute("href");
+            var id = 'link_h' + i;
+            if (url) {
+                sortLink.get(i).setAttribute("id", id);
+                sortLink.get(i).setAttribute("url", url);
+                $('#' + id).click(function (me) {
+                    fnCommon.showProcess(true);
+                    $.ajax({
+                        url: me.target.getAttribute('url'),
+                        success: function (resultView) {
+                            if (resultView.isRedirect) {
+                                window.location = resultView.redirectUrl;
+                            } else {
+                            fnCommon.showProcess(false);
+                            $('#list').html(resultView);
+                            sort();
+                            }
+                        }
+                    });
+                });
+            }
+            sortLink.get(i).removeAttribute("href");
+        }
+    }
+    sort();
+        //-----Pagination
+    function pagination() {
+        var paginationLink = $('#list').find('.pagination>li>a');
+        for (var i = 0; i < paginationLink.length; i++) {
+            var url = paginationLink.get(i).getAttribute("href");
+            var id = 'link_p' + i;
+            if (url) {
+                paginationLink.get(i).setAttribute("id", id);
+                paginationLink.get(i).setAttribute("url", url);
+                $('#' + id).click(function (me) {
+                    fnCommon.showProcess(true);
+                    $.ajax({
+                        url: me.target.getAttribute('url'),
+                        success: function (resultView) {
+                            if (resultView.isRedirect) {
+                                window.location = resultView.redirectUrl;
+                            } else {
+                            fnCommon.showProcess(false);
+                            $('#list').html(resultView);
+                            pagination();
+                            }
+                        }
+                    });
+                });
+            }
+            paginationLink.get(i).removeAttribute("href");
+        }
+    }
+    pagination();
+
+</script>
+<div>
+
+    @if (ViewBag.textos != null)
+    {
+        foreach (TEXTO t in ViewBag.textos)
+        {
+            <script>
+                try {
+                    var elem = document.getElementById("@t.CAMPO_ID");
+                    if (elem.nodeName != 'INPUT' & elem.nodeName != 'SELECT' & elem.nodeName != 'TABLE' & elem.nodeName != 'TEXTAREA')
+                    elem.innerHTML = "@t.TEXTOS";
+                } catch (e) {
+                    try {
+                        var divs = document.getElementsByClassName("@t.CAMPO_ID");
+                        [].slice.call(divs).forEach(function (div) {
+                            if (div.nodeName != 'INPUT' & div.nodeName != 'SELECT' & div.nodeName != 'TABLE' & div.nodeName != 'TEXTAREA')
+                            div.innerHTML = "@t.TEXTOS";
+                        });
+                    }
+                    catch (ee) {
+
+                    }
+                 }
+            </script>
+        }
+    }
+</div>

@@ -1,0 +1,66 @@
+﻿@model TAT001.Entities.LEYENDA
+@{
+    //ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 755;
+    ViewBag.carpeta_r = 500;
+    var ed = "";
+    var ob = "";
+    if (ViewBag.ed == true)
+    {
+        ed = "Activo";
+    }
+    else if (ViewBag.ed == false)
+    {
+        ed = "Inactivo";
+    }
+    if (ViewBag.ob == true)
+    {
+        ob = "Activo";
+    }
+    else if (ViewBag.ob == false)
+    {
+        ob = "Inactivo";
+    }
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="form-actions no-color">
+            <button id="btnDl" type="submit" value="Delete" class="btn btn-default" style="float:right;"></button>
+        </div>
+    </div>
+}
+<div>
+    <div class="card-panel">
+        <div class="row">
+            <div class="row">
+                <div class="input-field col l6 m6" style="margin-bottom:0;">
+                    @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblId" })
+                </div>
+                <div class="input-field col l6 m6" style="margin-bottom:0;">
+                    @Html.EditorFor(model => model.PAI.LAND, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.LabelFor(model => model.PAI.LAND, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblPais" })
+                </div>
+                <div class="input-field col l12" style="margin-bottom:0;">
+                    <textarea name="leyenda1" cols="40" rows="8" maxlength="240" class="materialize-textarea" readonly>@(Model.LEYENDA1)</textarea>
+                    @Html.LabelFor(model => model.LEYENDA1, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblLey" })
+                </div>
+                <div class="input-field col l6 m6" style="margin-bottom:0;">
+                    <input value="@ed" type="text" class="control-label col-md-2" disabled="disabled" readonly="readonly" />
+                    @Html.LabelFor(model => model.EDITABLE, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblEditable" })
+                </div>
+                <div class="input-field col l6 m6" style="margin-bottom:0;">
+                    <input value="@ob" type="text" class="control-label col-md-2" disabled="disabled" readonly="readonly" />
+                    @Html.LabelFor(model => model.OBLIGATORIA, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblObligatorio" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index", null, new { id = "lblRegresar" })
+</p>

@@ -1,0 +1,108 @@
+﻿@model TAT001.Entities.CONSOPORTE
+
+@{
+    ViewBag.pagina_r = 843;
+    ViewBag.carpeta_r = 500;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+<link href="~/Content/autocomplete.css" rel="stylesheet" />
+<script src="~/Scripts/autocomplete1.11.4.js"></script>
+@using (Html.BeginForm("Create", "Consoporte", FormMethod.Post, new { @id = "consoporteForm" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="row right">
+            <div class="col l12 m12 right">
+                 <button type="submit"  id="btnGuardar" class="btn btn-default"></button> 
+            </div>
+        </div>
+    </div>
+    <div class="col s12">
+        <div class="card-panel">
+            <div class="row">
+                <div class="col s6">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TSOPORTE_ID, "TSOPORTE_ID", htmlAttributes: new { @class = "control-label col-md-2", @id = "lblTipoSop" })
+                            @Html.EditorFor(model => model.TSOPORTE_ID, new { htmlAttributes = new { @class = "form-control", @required = "", @maxlength = 50 } })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TSOL_ID, "TSOL_ID", htmlAttributes: new { @class = "control-label col-md-2", @id = "lblTipoSol" })
+                            @Html.EditorFor(model => model.TSOL_ID, new { htmlAttributes = new { @class = "form-control", @required = "", @maxlength = 50 } })
+                        </div>
+                        <div class="input-field col l4 m10 right" style="margin-bottom:0;">
+                            <label>
+                                <input type="checkbox" name="ACTIVO" value="true" checked />
+                                <span id="lblActivo"></span>
+                            </label>
+                        </div>
+                        <div class="input-field col l4 m10 right" style="margin-bottom:0;">
+                            <label>
+                                <input type="checkbox" name="OBLIGATORIO" value="true" checked />
+                                <span id="lblObliga"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+        <br />
+        <br />
+<div class="col s12">
+    <a id="btnRegresar" href="@Url.Action("Index")"></a>
+</div>
+<script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+<script>
+    var root = "@Url.Content("~")";
+
+    fnCommon.formValidation('consoporteForm');
+
+    var auto = $.noConflict(true);
+    auto(document).ready(function () {
+        auto("#TSOL_ID").autocomplete({
+            source: function (request, response) {
+                fnCommon.autoAjax(root + "Listas/tiposSolicitud", response, { Prefix: request.term }, function (item) { return { label: item.TXT50, value: item.TSOL_ID }; });
+            },
+            messages: {
+                noResults: '',
+                results: function (resultsCount) { }
+            },
+            select: function (event, ui) {
+                var label = ui.item.label;
+                var value = ui.item.value;
+            },
+            change: function (e, ui) {
+                if (!(ui.item)) {
+                    e.target.value = "";
+                }
+            }
+        });
+    })
+    auto(document).ready(function () {
+        auto("#TSOPORTE_ID").autocomplete(
+            {
+                source: function (request, response) {
+                    fnCommon.autoAjax(root + "Listas/soportes", response, { Prefix: request.term }, function (item) { return { label: item.TXT50, value: item.TSOPORTE_ID }; });
+                },
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) { }
+                },
+                select: function (event, ui) {
+                    var label = ui.item.label;
+                    var value = ui.item.value;
+                },
+                change: function (e, ui) {
+                    if (!(ui.item)) {
+                        e.target.value = "";
+                    }
+                }
+            });
+    })
+</script>
+       

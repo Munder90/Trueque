@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "";
+    ViewBag.pagina_r = 101;
+    ViewBag.carpeta_r = 100;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    TAT001.Models.CartaV v = (TAT001.Models.CartaV)TempData["v"];
+    string monto_enviar = TempData["monto_enviar"] != null ? TempData["monto_enviar"].ToString() : null;
+    string regresar = TempData["return"] != null ? TempData["return"].ToString() : null;
+    bool lista = TempData["lista"] != null && TempData["lista"].ToString()== "LIST"?true:false;
+    if (lista) { TempData["vista"] = "LIST"; }
+    TempData["swf"] = TempData["ESTATUS_WF"];
+    string accion = "Create";
+    string controller = "CartaV";
+    if (regresar == "LIST") {
+        accion = "Lista";
+    } else if (regresar == "SOL") {
+        controller = "Solicitudes";
+        accion = "Details";
+    }
+}
+<div class="row right">
+    @if (accion == "Lista")
+    {
+        <a href="@Url.Action(accion, controller, new { id = @ViewBag.miNum, swf = TempData["ESTATUS_WF"] })" class="col btn btn-small" id="btn_return">Regresar</a>
+    }
+    else if (accion == "Create")
+    {
+        <a href="@Url.Action(accion, controller, new { id = @ViewBag.miNum, Viewlista=lista })" class="col btn btn-small" id="btn_return">Regresar</a>
+    }
+    else
+    {
+        <a href="@Url.Action(accion, controller, new { id = @ViewBag.miNum })" class="col btn btn-small" id="btn_return">Regresar</a>
+    }
+
+    @if (v != null)
+    {
+        TempData["v"] = v;
+        TempData["monto_enviar"] = monto_enviar;
+        using (Html.BeginForm("Create", "CartaV", new { guardar_param = "guardar_desde_visualizar" }, FormMethod.Post, new { @class = "col", @style = "padding-left:4px" }))
+        {
+            <input type="submit" id="btn_submit" value="Guardar" class="col btn btn-small" />
+        }
+    }
+</div>
+<div>
+    <iframe src="@ViewBag.url" width="100%" height="600px"></iframe>
+</div>

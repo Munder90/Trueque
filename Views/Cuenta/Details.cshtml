@@ -1,0 +1,65 @@
+﻿@model TAT001.Entities.CUENTA
+
+@{
+    ViewBag.pagina_r = 693;
+    ViewBag.carpeta_r = 500;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="row right">
+        <div class="col l12 m12 right">
+            <a href="@Url.Action("Edit", "Cuenta", new { soc = Model.SOCIEDAD_ID, pai = Model.PAIS_ID, tal = Model.TALL_ID, eje = Model.EJERCICIO })" id="lblEditar" class="waves-effect waves-light btn">Editar</a>
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="card-panel">
+        <div class="row">
+            <div class="col s6 m6 l6">
+                <div class="col l12 m12 s12">
+                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                        @Html.EditorFor(model => model.SOCIEDAD.BUTXT, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.LabelFor(model => model.SOCIEDAD.BUTXT, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_sociedad" })
+                    </div>
+                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                        @Html.EditorFor(model => model.PAI.LANDX, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.LabelFor(model => model.PAI.SPRAS, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_pais" })
+                    </div>
+                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                        @Html.EditorFor(model => model.TALL.DESCRIPCION, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.LabelFor(model => model.TALL.DESCRIPCION, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_gal" })
+                    </div>
+
+                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                        @Html.Editor("EJERCICIO", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly",@Value=Convert.ToInt16(Model.EJERCICIO) } })
+                        @Html.LabelFor(model => model.EJERCICIO, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_ejercicio" })
+                    </div>
+                </div>
+            </div>
+            <div class="col s6 m6 l6">
+                <div class="col l12 m12 s12">
+                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                        @Html.EditorFor(model => model.CUENTAGL.NOMBRE, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.LabelFor(model => model.ABONO, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_abono" })
+                    </div>
+
+                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                        @Html.EditorFor(model => model.CUENTAGL1.NOMBRE, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.LabelFor(model => model.CARGO, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_cargo" })
+                    </div>
+
+                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                        @Html.EditorFor(model => model.CUENTAGL2.NOMBRE, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.LabelFor(model => model.CLEARING, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_cargofv" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<p>
+    @Html.ActionLink("Regresar", "Index", new { }, new { id = "lblRegresar" })
+</p>
+

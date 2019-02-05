@@ -1,0 +1,316 @@
+﻿@model TAT001.Entities.DOCUMENTO
+<div id="Recurrente_cont" class="row">
+    <div class="col s12 l8 offset-l2">
+        <div class="card horizontal green white-text">
+            <div class="col s12" style="margin-bottom:0;display:none">
+                <p id="p_recurr">
+                    @*B20180801 MGC Textos*@
+                    Esta pestaña se debe llenar solamente si necesitas que tu solicitud se genere automáticamente durante los periodos seleccionados
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col s12">
+        <div class="card-panel">
+            @*<h5>Recurrente</h5>*@
+            <input type="hidden" id="txt_trec" value="@Model.TIPO_RECURRENTE"/>
+            <div class="row">
+                <table class="table_rec display" id="table_rec" cellspacing="0" style="width:100%;display:none;font-size:12px;">
+                    <!--RSG 01.08.2018-->
+                    <thead>
+                        <tr>
+                            <th id="thead_rnumero">NO</th>@*B20180801 MGC Textos*@
+                            <th id="thead_rperiodo">Periodo</th>@*B20180801 MGC Textos*@
+                            <th id="thead_rtiposol">Solicitud</th>@*B20180801 MGC Textos*@
+                            <th id="thead_rnumsol">No. solicitud ICON</th>@*B20180801 MGC Textos*@
+                            <th id="thead_rfecha">FECHA</th>@*B20180801 MGC Textos*@
+                            <th id="thead_rmonto">Monto</th>@*B20180801 MGC Textos*@
+                            <th id="thead_rporc">Porcentaje</th>@*B20180801 MGC Textos*@
+                            <th id="thead_estatus">Estatus</th>@*B20180801 MGC Textos*@
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <table id="table_rech" class="display" cellspacing="0" style="display:none">
+                    <thead>
+                        <tr>
+                            <th>NO</th>
+                            <th>TSOL</th>
+                            <th>FECHA</th>
+                            <th>Monto</th>
+                            <th>Porcentaje</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.DOCUMENTOREC != null)
+                        {
+
+                            for (var i = 0; i < Model.DOCUMENTOREC.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        @Model.DOCUMENTOREC[i].NUM_DOC
+                                    </td>
+                                    <td>
+                                        @Model.DOCUMENTOREC[i].POS
+                                    </td>
+                                    <td>
+                                        @Model.DOCUMENTOREC[i].FECHAF
+                                    </td>
+                                    <td>
+                                        @Model.DOCUMENTOREC[i].MONTO_BASE
+                                    </td>
+                                    <td>
+                                        @Model.DOCUMENTOREC[i].PORC
+                                    </td>
+                                    <td>
+                                        @Model.DOCUMENTOREC[i].DOC_REF
+                                    </td>
+                                    <td>
+                                        @Model.DOCUMENTOREC[i].EJERCICIO
+                                    </td>
+                                    <td>
+                                        @Model.DOCUMENTOREC[i].ESTATUS
+                                    </td>
+                                    <td>
+                                        @Model.DOCUMENTOREC[i].MONTO_FIJO
+                                    </td>
+                                    <td>
+                                        @Model.DOCUMENTOREC[i].MONTO_GRS
+                                    </td>
+                                    <td>
+                                        @Model.DOCUMENTOREC[i].MONTO_NET
+                                    </td>
+                                    <td>
+                                        @Model.DOCUMENTOREC[i].PERIODO
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div>
+
+                <table id="table_ranh" class="display" cellspacing="0" style="display:none">
+                    <thead>
+                        <tr>
+                            <th>NO</th>
+                            <th>POS</th>
+                            <th>LIN</th>
+                            <th>OBJ</th>
+                            <th>PORC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.DOCUMENTORAN != null)
+                        {
+                            for (var i = 0; i < Model.DOCUMENTORAN.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.EditorFor(m => m.DOCUMENTORAN[i].NUM_DOC)
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(m => m.DOCUMENTORAN[i].POS)
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(m => m.DOCUMENTORAN[i].LIN)
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(m => m.DOCUMENTORAN[i].OBJETIVOI)
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(m => m.DOCUMENTORAN[i].PORCENTAJE)
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" style="margin-bottom:0;">
+                <div class="col s12 l6 offset-l6 right-align">
+                    <input type="button" id="btnRango" style="display:none;" class="btn-small" onclick="addRango()" value="Agregar rango" />
+                    <input type="button" id="btnDelRango" style="display:none;" class="btn-small" onclick="delRango()" value="Quitar rangos" />
+                    @*<input type="button" id="dd" style="" class="btn-small" onclick="enviaRan()" value="Enviar" />*@
+                </div>
+                <div class="col s12 l6 offset-l6">
+                    <table class="table_rangos display" id="table_rangos" cellspacing="0" style="width:100%;display:none;font-size:12px;">
+                        <!--RSG 01.08.2018-->
+                        <thead>
+                            <tr>
+                                @*<th></th>*@
+                                <th id="">Documento</th>
+                                <th id="">Rango</th>
+                                <th id="">Objetivo inicio</th>
+                                <th id="">Porcentaje</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col s12">
+        <div id="div_objq" class="card-panel hide">
+            @*<h5>Recurrente</h5>*@
+            @*<input type="hidden" id="txt_trec" />*@
+            <div class="row" style="margin-bottom:0;">
+                <!--RSG 01.08.2018-->
+                <p>
+                    <label>
+                        <input id="check_objetivoq" name="check_objetivoq" type="checkbox" onchange="objetivoQ(this.checked);" />
+                        <span id="span_objq">Objetivo Q</span> @*B20180801 MGC Textos*@
+                    </label>
+                    @if (Model.OBJETIVOQ == true & ViewBag.duplicate == null)
+                    {
+                        <script>
+                            document.getElementById("check_objetivoq").checked = true;
+                        </script>
+                    }
+                    <script>
+                        function objetivoQ(ban) {
+                            $(".objqT").remove();
+                            if (ban) {
+                                var lengthT = $("table#table_rec tbody tr[role='row']").length;
+                                if (lengthT > 0) {
+                                    document.getElementById('table_objQ').classList.remove("hide");
+                                    var total = 0;
+                                    var porc = 0;
+                                    var fecha = "";
+                                    var tsol = "";
+                                    $("#table_rec > tbody  > tr[role='row']").each(function () {
+                                        fecha = ($(this).find("td.FECHA").text());
+                                        tsol = $(this).find("td.TSOL").text();
+
+
+                                        var pos = $(this).find("td.POS").text().split("/")[0];
+                                        if (pos != "1") {
+                                            var tr = "";
+                                            tr += "<tr class='objqT'>"
+                                            tr += "<td>Q " + pos + "</td>"
+                                            tr += "<td>" + tsol + "</td>";
+                                            tr += "<td>" + fecha + "</td>";
+                                            total = 0;
+                                            for (var i = 0; i < listaRangos.length; i++) {
+                                                var poss = listaRangos[i].LIN;
+                                                if (poss == 1 & pos == listaRangos[i].POS)
+                                                    total += parseFloat(toNum(listaRangos[i].OBJ1));
+                                            }
+                                            tr += "<td>" + toShow(total) + "</td>";
+                                            tr += "<td>" + 0 + "</td>";
+                                            tr += "</tr>"
+                                            $("#table_objQ tbody").append(tr);
+                                        } else {
+                                            total = 0;
+                                            for (var i = 0; i < listaRangos.length; i++) {
+                                                var poss = listaRangos[i].LIN;
+                                                if (poss == 1 & pos == listaRangos[i].POS)
+                                                    total += parseFloat(toNum(listaRangos[i].OBJ1));
+                                            }
+                                            document.getElementById("obqTSOL").innerText = tsol;
+                                            document.getElementById("obqFECHA").innerText = fecha;
+                                            document.getElementById("obqMONTO").innerText = toShow(total);
+                                        }
+                                    });
+                                }
+                            }
+                            else {
+                                document.getElementById('table_objQ').classList.add("hide");
+                            }
+                            $("#table_objQ").DataTable();
+                        }
+                        function updateObjQ() {
+                            $(".objqT").remove();
+                            var lengthT = $("table#table_rec tbody tr[role='row']").length;
+                            if (lengthT > 0) {
+                                var total = 0;
+                                var porc = 0;
+                                var fecha = "";
+                                var tsol = "";
+                                $("#table_rec > tbody  > tr[role='row']").each(function () {
+                                    fecha = ($(this).find("td.FECHA").text());
+                                    tsol = $(this).find("td.TSOL").text();
+
+
+                                    var pos = $(this).find("td.POS").text().split("/")[0];
+                                    if (pos != "1") {
+                                        var tr = "";
+                                        tr += "<tr class='objqT'>"
+                                        tr += "<td>Q " + pos + "</td>"
+                                        tr += "<td>" + tsol + "</td>";
+                                        tr += "<td>" + fecha + "</td>";
+                                        total = 0;
+                                        for (var i = 0; i < listaRangos.length; i++) {
+                                            var poss = listaRangos[i].LIN;
+                                            if (poss == 1 & pos == listaRangos[i].POS)
+                                                total += parseFloat(toNum(listaRangos[i].OBJ1));
+                                        }
+                                        tr += "<td>" + toShow(total) + "</td>";
+                                        tr += "<td>" + 0 + "</td>";
+                                        tr += "</tr>"
+                                        $("#table_objQ tbody").append(tr);
+                                    } else {
+                                        total = 0;
+                                        for (var i = 0; i < listaRangos.length; i++) {
+                                            var poss = listaRangos[i].LIN;
+                                            if (poss == 1 & pos == listaRangos[i].POS)
+                                                total += parseFloat(toNum(listaRangos[i].OBJ1));
+                                        }
+                                        document.getElementById("obqTSOL").innerText = tsol;
+                                        document.getElementById("obqFECHA").innerText = fecha;
+                                        document.getElementById("obqMONTO").innerText = toShow(total);
+                                    }
+                                });
+                            }
+                            $("#table_objQ").DataTable();
+                        }
+                    </script>
+                </p>
+                <div style="overflow:auto;">
+                    <table id="table_objQ" class="display hide" cellspacing="0" style="font-size:12px;">
+                        <thead>
+                            <tr>
+                                <th>NO</th>
+                                <th>TSOL</th>
+                                <th>FECHA</th>
+                                <th>Monto</th>
+                                <th>Porcentaje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Q 1</td>
+                                <td id="obqTSOL"></td>
+                                <td id="obqFECHA"></td>
+                                <td id="obqMONTO"></td>
+                                <td>
+                                    @Html.EditorFor(model => model.OBJQ_PORC, new { htmlAttributes = new { @id = "objPORC", @class = "input_dcp ", @style = "width:150px;font-size:12px;height:2rem;", @onchange = "this.value = toShowPorc(this.value);" } })
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    <div class="input-field col l4 m4 s12">
+                        <select id="sel_nn" name="sel_nn">
+                            <option id="opt_mmes" value="1">Mensual</option> @*B20180801 MGC Textos*@
+                            <option id="opt_tmes" value="3">Trimestral</option> @*B20180801 MGC Textos*@
+                            <option id="opt_smes" value="6">Semestral</option> @*B20180801 MGC Textos*@
+                            <option id="opt_ames" value="12">Anual</option> @*B20180801 MGC Textos*@
+                        </select>
+                        <label id="lbl_selnn" for="sel_nn">Frecuencia de liquidación</label> @*B20180801 MGC Textos*@
+                    </div>
+                </p>
+                <p>
+                    <div class="input-field col l4 m4 s12">
+                        @Html.DropDownList("TSOL_LIG", null, "", htmlAttributes: new { @id = "TSOL_LIG", @class = "form-control  " })
+                        <label id="lbl_Mselnn" for="TSOL_LIG">Método de liquidación</label> @*B20180801 MGC Textos*@
+                    </div>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

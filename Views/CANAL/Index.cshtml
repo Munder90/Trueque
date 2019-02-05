@@ -1,0 +1,154 @@
+﻿@model IEnumerable<TAT001.Entities.CANAL>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 940;
+    ViewBag.carpeta_r = 500;
+}
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+<link href="~/Content/dataTable.css" rel="stylesheet" />
+<link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+<style>
+    .dataTables_length {
+        display: none;
+    }
+
+    .dataTables_filter {
+        display: none;
+    }
+
+    .dataTables_scrollHeadInner, .mdl-data-table {
+        width: 100%;
+    }
+</style>
+<div class="row">
+    <div class="row right">
+        <a href="@Url.Action("Create", "Canal")" id="lblAgregar" class="waves-effect waves-light btn">AGREGAR</a>
+    </div>
+</div>
+<div class="row">
+    <div class="card-panel">
+        <div class="row" style="margin-bottom:0;">
+            <div class="input-field col s3 m3 l3">
+                <select id="selecc">
+                    <option value="10" selected>10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                <label id="btn_length"></label>
+            </div>
+            <div class="input-field col s5 m3 l3 offset-l6 offset-m6 offset-s4">
+                <input type="text" class="global_filter" id="global_filter">
+                <label for="global_filter" id="lbl_search"></label>
+            </div>
+        </div>
+        <script>
+            var elem = document.querySelector('select');
+            var options = [];
+            var instance = M.FormSelect.init(elem, options);
+        </script>
+        <table class="table mdl-data-table striped" id="table" style="width:100%;">
+            <thead>
+                <tr>
+                    <th class="lbl_canal">
+                    </th>
+                    <th class="lbl_dsc">
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CANAL1)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CDESCRIPCION)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = item.CANAL1 })">
+                                <i class='material-icons green-text'>edit</i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <script>
+           var root = "@Url.Content("~")",
+        spras_id = "@ViewBag.spras_id",
+        urlLanguage = root + "Scripts/lang/" + spras_id + ".json";
+    $(document).ready(function () {
+        var table = $('#table').DataTable({
+            scrollX: "50vh",
+            scrollY: "50vh",
+            scrollCollapse: true,
+            language: {
+                "url": urlLanguage
+            }, columnDefs: [
+                {
+                    targets: [1],
+                    className: 'mdl-data-table__cell--non-numeric'
+                }
+            ],
+            order: [[0, "asc"]],
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var select = $('<select style="display:initial;" class="browser-default"><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+                    column.cells('', column[0]).render('display').sort().unique().each(function (d, j) {
+                        var val = $('<div/>').html(d).text();
+                        select.append('<option value="' + val + '">' + val + '</option>');
+                    });
+                });
+            }
+        });
+
+        var a = $('#selecc').val();
+        table.page.len(a).draw();
+        $('#selecc').on('change', function () {
+            table.page.len(this.value).draw();
+        });
+
+        $('input.global_filter').on('keyup click', function () {
+            filterGlobal();
+        });
+
+        $('#table tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                var child = format(row.data(), row, tr);
+                if (child != undefined) {
+                }
+            }
+        });
+    });
+    function filterGlobal() {
+        $('#table').DataTable().search(
+            $('#global_filter').val()).draw();
+    }
+    </script>
+</div>

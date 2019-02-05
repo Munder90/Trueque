@@ -1,0 +1,276 @@
+﻿@model TAT001.Models.Calendario445ViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 533;
+    ViewBag.carpeta_r = 500;
+
+}
+<style>
+    .text-center {
+        text-align: center !important;
+    }
+    .text-center th {
+        text-align: center !important;
+    }
+    .text-left th {
+        text-align: left !important;
+    }
+
+    .text-left td {
+        text-align: left !important;
+    }
+
+    #lbl_precierre {
+        font-size: 20px !important;
+        color: #202020;
+    }
+
+    .dataTables_length {
+        display: none;
+    }
+
+    .dataTables_filter {
+        display: none;
+    }
+
+    .dataTables_scrollHeadInner, .mdl-data-table {
+        width: 100%;
+    }
+
+    .select-wrapper input.select-dropdown {
+        z-index: 0 !important;
+    }
+
+    label .invalid {
+        display: none !important;
+    }
+
+</style>
+<link href="~/Content/dataTable.css" rel="stylesheet" />
+<link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+<script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+<ul class="collapsible">
+    <li>
+        <div class="collapsible-header"><i class="material-icons">announcement</i><label id="lbl_agregarExcepcion"></label></div>
+        <div class="collapsible-body">
+            @using (Html.BeginForm("Index", "CalendarioEx445", FormMethod.Post, new { @id = "calendarioEx445Form" }))
+            {
+                @Html.AntiForgeryToken()
+                    <div class="col s12 l12 right-align">
+                        <button type="submit" id="btn_save" class="btn btn-default"></button>
+                    </div>
+                    <div class="card-panel">
+                        @Html.HiddenFor(model => model.calendarioEx445.EJERCICIO)
+                        @Html.HiddenFor(model => model.calendarioEx445.TSOL_ID)
+                        @Html.HiddenFor(model => model.calendarioEx445.SOCIEDAD_ID)
+                        @Html.HiddenFor(model => model.calendarioEx445.PERIODO)
+
+                        <div class="row">
+                            <div class="col s4">
+                                <div class="form-group">
+                                    <label class="lbl_usuario"></label>
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.calendarioEx445.USUARIO_ID, Model.usuarios, "")
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s2">
+                                <div class="form-group">
+                                    <label class="lbl_coCode"></label>
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.calendarioEx445.SOCIEDAD_ID, Model.sociedades, "", new { @disabled = true })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s2">
+                                <div class="form-group">
+                                    <label class="lbl_periodo"></label>
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.calendarioEx445.PERIODO, Model.periodos, "", new { @disabled = true })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s4">
+                                <div class="form-group">
+                                    <label class="lbl_tipoSolicitud"></label>
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.calendarioEx445.TSOL_ID, Model.cmbTiposSolicitud, "", new { @disabled = true })
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <p class="text-center"> <label id="lbl_precierre"></label></p>
+                        <hr>
+                        <div class="row">
+                            <div class="col s3">
+                                <div class="form-group">
+                                    <label class="lbl_desdeDia"></label>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.calendarioEx445.EX_FROMF, new { htmlAttributes = new { @required = "", @class = "datepicker" } })
+                                        <label class="lbl_minFecha"></label>
+                                        @Html.EditorFor(model => model.calendario445.PRE_TOF, new { htmlAttributes = new { @disabled = true, @class = "datepicker",@style= "border-bottom: 0px;" } })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s3">
+                                <div class="form-group">
+                                    <label class="lbl_desdeHora"></label>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.calendarioEx445.EX_FROMH, new { htmlAttributes = new { @required = "", @class = "timepicker" } })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s3">
+                                <div class="form-group">
+                                    <label class="lbl_hastaDia"></label>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.calendarioEx445.EX_TOF, new { htmlAttributes = new { @required = "", @class = "datepicker" } })
+                                        <label class="lbl_maxFecha"></label>
+                                        @Html.EditorFor(model => model.calendario445.CIE_FROMF, new { htmlAttributes = new { @disabled = true, @class = "datepicker", @style = "border-bottom: 0px;" } })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s3">
+                                <div class="form-group">
+                                    <label class="lbl_hastaHora"></label>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.calendarioEx445.EX_TOH, new { htmlAttributes = new { @required = "", @class = "timepicker" } })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+            }
+        </div>
+    </li>
+</ul>
+<div id="exceptions" class="col s12">
+    <div class="card-panel">
+        <div class="row">
+            <div class="row" style="margin-bottom:0;">
+                <div class="input-field col s3 m3 l3">
+                    <select id="cmbPagExceptions">
+                        <option value="10" selected>10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <label id="btn_length"></label>
+                </div>
+                <div class="input-field col s3 m3 l3 offset-l6 offset-m6">
+                    <input type="text" class="global_filter" id="gfilterExceptions">
+                    <label for="global_filter" id="lbl_search"></label>
+                </div>
+            </div>
+            <div style="width:100%;">
+                <table class="table mdl-data-table striped" id="tableExcepciones" style="width:100%;">
+                    <thead>
+                        <tr class="text-center">
+                            <th colspan="4"></th>
+                            <th colspan="4" class="lbl_precierre"></th>
+                        </tr>
+                        <tr  class="text-left">
+                            <th class="lbl_coCode"></th>
+                            <th class="lbl_periodo"></th>
+                            <th class="lbl_tipoSolicitud"></th>
+                            <th class="lbl_usuario" style="min-width: 250px;"></th>
+                            <th class="lbl_desdeDia"></th>
+                            <th class="lbl_desdeHora"></th>
+                            <th class="lbl_hastaDia"></th>
+                            <th class="lbl_hastaHora"></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.calendariosEx445List)
+                        {
+                                <tr  class="text-left">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SOCIEDAD_ID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PERIODO)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TSOL_ID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.USUARIO.ID)
+                                </td>
+                                <td>
+                                    @Convert.ToDateTime(item.EX_FROMF).ToString("dd/MM/yyyy")
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EX_FROMH)
+                                </td>
+                                <td>
+                                    @Convert.ToDateTime(item.EX_TOF).ToString("dd/MM/yyyy")
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EX_TOH)
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Edit", "CalendarioEx445", new { ejercicio=item.EJERCICIO,  periodo= item.PERIODO,  sociedad_id= item.SOCIEDAD_ID,  tsol_id= item.TSOL_ID,usuario_id=item.USUARIO_ID, paginaIndex = "CalendarioEx445" })"><i class='material-icons green-text'>edit</i></a>
+                                </td>
+                            </tr>
+                           }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="col s12">
+    <a id="btn_return" href="@Url.Action("Index", "Calendario445")"></a>
+</div>
+<script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+<script>
+    var spras_id = "@ViewBag.spras_id";
+    //---- Inicializador de componentes Materialize----
+    fnCommon.materializeInit( 'datepicker', spras_id);
+    fnCommon.materializeInit( 'timepicker');
+    fnCommon.materializeInit('select');
+    fnCommon.materializeInit( 'collapsible');
+
+    //----  Remover  Fecha y Hora----
+    var sinFecha = "01/01/0001";
+    document.querySelectorAll('.datepicker').forEach(function (datePicker) {
+        if (datePicker.value.indexOf( sinFecha)>-1) { datePicker.value = ''; }
+        else { datePicker.value = datePicker.value.substring(0, 10); }
+    });
+    var sinHora = "00:00";
+    document.querySelectorAll('.timepicker').forEach(function (timepicker) {
+        if (timepicker.value.indexOf(sinHora)>-1) { timepicker.value = ''; }
+    });
+    //----  Se agrega validaciones al formulario----
+    fnCommon.selectRequired();
+    fnCommon.formValidation('calendarioEx445Form');
+    fnCommon.dateRangeValidation('calendario445_PRE_TOF', 'calendarioEx445_EX_FROMF', 'calendarioEx445_EX_TOF', 'calendario445_CIE_FROMF');
+
+    //----- Configuracion de Tablas-----
+    $(document).ready(function () {
+        var root = "@Url.Content("~")",
+            urlLanguage = root + "/Scripts/lang/" + spras_id + ".json";
+        fnCommon.configurarTable('tableExcepciones', '40vh', '40vh', urlLanguage, 'cmbPagExceptions', 'gfilterExceptions');
+    });
+
+
+    // Valida si ocurrio un error al intentar crear el periodo y otro.
+    var mnjError = '@ViewBag.mnjError';
+    if (mnjError) {
+        M.toast({ html: mnjError });
+    }
+</script>
+
+
+
+
+

@@ -1,0 +1,1438 @@
+﻿@model IEnumerable<TAT001.Entities.DOCUMENTO>
+@using System.Web.Hosting;
+@using System.Globalization;
+@{
+    //ViewBag.Title = "Reporte Provisiones Abiertas TS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 1102;
+    ViewBag.carpeta_r = 1100;
+    string cadena = "";
+    int id = 0;
+    List<Tuple<decimal, decimal>> negAmount = new List<Tuple<decimal, decimal>>();
+}
+
+@if (!ViewBag.Display)
+{
+    <script>
+        $(document).ready(function () {
+            $('select.select_all').siblings('ul').prepend("<li id=sm_select_all><span id='filters_all'>Todas las Opciones</span></li>");
+            $('li#sm_select_all').on('click', function () {
+                var jq_elem = $(this),
+                    jq_elem_span = jq_elem.find('span'),
+                    select_all = jq_elem_span.text() == 'Todas las Opciones',
+                    set_text = select_all ? 'Borrar Selección' : 'Todas las Opciones';
+                jq_elem_span.text(set_text);
+                jq_elem.siblings('li').filter(function () {
+                    return $(this).find('input').prop('checked') != select_all;
+                }).click();
+            });
+        });
+    </script>
+}
+
+@using (Html.BeginForm("ReporteProvisiones", "Reportes", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    System.Globalization.TextInfo myTI = new System.Globalization.CultureInfo("en-US", false).TextInfo;
+    System.Globalization.DateTimeFormatInfo formatoFecha = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat;
+    DateTime newDate = DateTime.Now;
+    int yeard = newDate.Year;
+    int year1 = yeard + 1;
+    int year2 = yeard + 2;
+    int yearback = yeard - 1;
+    int yearback2 = yeard - 2;
+    var baseurl = HttpContext.Current.Request;
+    <div class="row">
+
+        @if (ViewBag.Display)
+        {
+            <div class="col s12 right-align">
+                <button class="btn-small" id="btnConsultar" type="submit" name="action" @*style="display:none"*@>Consultar</button>
+                <input class="btn-small" id="id_excel" type="button" @*onclick="tableToExcel('table', 'Reporte Provisiones Abiertas TS')"*@ value="Generar Excel" name="action" />
+            </div>
+        }
+        else
+        {
+            <div class="col s12 right-align">
+                <button class="btn-small" id="btnConsultar" type="submit" name="action" @*style="display:none"*@>Consultar</button>
+            </div>
+        }
+    </div>
+    <div class="card-panel" id="todo">
+        <div class=" row">
+            <div class="row" style="margin-bottom:0;">
+                <div class="input-field col s3 m3 l3">
+
+                    <select name="filtroCode" multiple class="comcode select_all" id="filtroCode" required="">
+                        @for (int i = 0; i < ViewBag.sociedad.Count; i++)
+                        {
+                            if (cadena == ViewBag.sociedad[i].BUKRS)
+                            {
+                                <option selected="selected" value="@ViewBag.sociedad[i].BUKRS">@ViewBag.sociedad[i].BUKRS</option>
+                            }
+                            else
+                            {
+                                <option value="@ViewBag.sociedad[i].BUKRS">@ViewBag.sociedad[i].BUKRS</option>
+                            }
+                        }
+
+                    </select>
+                    <label id="btn_length1">Co.Code</label>
+                </div>
+                <div class="input-field col s3 m3 l3">
+                    <select name="filtroPeriodo" id="filtroPeriodo">
+                        @try
+                        {
+                            for (int i = 0; i < ViewBag.periodo.Count; i++)
+                            {
+                                string let = "";
+                                let = "P" + ViewBag.periodo[i].ID;
+
+                                if (Int32.Parse(ViewBag.periodo[i].ACTIVO) == 1)
+                                {
+                                    if (id == ViewBag.periodo[i].ID)
+                                    {
+                                        <option value="@ViewBag.periodo[i].ID" selected="selected">@let</option>
+                                    }
+                                    else
+                                    {
+                                        <option value=@ViewBag.periodo[i].ID>@let</option>
+                                    }
+                                }
+                                else
+                                {
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            <option value="" id="no_optper">No hay opciones</option>
+                        }
+                    </select>
+                    <label id="btn_length2">Periódo*</label>
+                </div>
+
+                <div class="input-field col s3 m3 l3">
+                    <select name="selectyear" id="selectyear" class="comcode" required="">
+                        @if (yeard == DateTime.Now.Year)
+                        {
+
+                            <option value="@yeard">@yeard</option>
+                            <option value="@year1">@year1</option>
+                            <option value="@year2">@year2</option>
+                        }
+                        else
+                        {
+                            <option value="@yearback2">@yearback2</option>
+                            <option value="@yearback">@yearback</option>
+                            <option value="@yeard">@yeard</option>
+                        }
+                    </select>
+                    <label id="btn_length3">Año*</label>
+                </div>
+            </div>
+        </div>
+        <script>
+            var elem = document.querySelectorAll('select');
+            var options = [];
+            var instance = M.FormSelect.init(elem, options);
+        </script>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+        <link href="~/Content/dataTable.css" rel="stylesheet" />
+        <link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+        <link href="~/Scripts/subfilters/jquery.tablesorter.pager.css" rel="stylesheet" />
+        <script src="~/Scripts/subfilters/jquery.tablesorter.js"></script>
+        <script src="~/Scripts/subfilters/jquery.tablesorter.pager.js"></script>
+        <script src="~/Scripts/subfilters/widget-filter.js"></script>
+
+        <script>
+            var elem = document.querySelectorAll('select');
+            var options = [];
+            var instance = M.FormSelect.init(elem, options);
+        </script>
+    </div>
+    if (ViewBag.display)
+    {
+        <script>
+
+            $(document).ready(function () {
+                $("#id_excel").click(function () {
+                    $('#table').trigger('destroyPager');
+                    $('#table').trigger('destroy');
+                    var pager = $('#table tfoot').html();
+                    $('#table tfoot').html("");
+                    //tableToExcel('table', 'Provisiones Abiertas TS');
+                    $('#table tfoot').html(pager);
+                    $('#table').tablesorter({
+                        theme: "materialize",
+                        widthFixed: true,
+                        widgets: ["filter", "zebra"],
+                        widgetOptions: {
+                            zebra: ["even", "odd"],
+                            filter_reset: ".reset",
+                            filter_cssFilter: ["", "", "browser-default"]
+                        }
+                    }).tablesorterPager({
+                        container: $(".ts-pager"),
+                        cssGoto: ".pagenum",
+                        removeRows: true,
+                        output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+                    });
+                });
+                $(".grid thead td").click(function () {
+                    showFilterOption(this);
+                });
+           
+
+                $('select.select_all').siblings('ul').prepend('<li id=sm_select_all id="filters_all"><span>Todas Las Opciones</span></li>');
+                $('li#sm_select_all').on('click', function () {
+                    var jq_elem = $(this),
+                        jq_elem_span = jq_elem.find('span'),
+                        select_all = jq_elem_span.text() == 'Todas Las Opciones',
+                        set_text = select_all ? 'Borrar Selección' : 'Todas Las Opciones';
+                    jq_elem_span.text(set_text);
+                    jq_elem.siblings('li').filter(function () {
+                        return $(this).find('input').prop('checked') != select_all;
+                    }).click();
+                });
+                $("#id_excel").click(function () {
+
+                    $('#table').trigger('destroyPager');
+                    $('#table').parent().append('<table id="tableClon" style="display:none;border:2px;"><thead id="headclon"></thead><tbody id="bodyclon"></tbody></table>');
+
+                    $('#table > thead > tr').each(function (index) {
+                        if (index === 0) {
+                            $('#headclon').append('<tr id="headc"></tr>');
+                            $(this).children().each(function (indexch) {
+                                var thead = $(this).text();
+                                $('#headc').append('<th>' + thead + '</th>');
+                            });
+                        }
+                    });
+                    $('#table > tbody > tr').each(function (indexb) {
+                        $('#bodyclon').append('<tr id="b' + indexb + '"></tr>');
+                        $(this).children().each(function (indextd) {
+                            var btext = $(this).text();
+                            if (indextd == 2) {
+                                console.log("num doc: " + $(this).html());
+                                btext = $(this).html();
+                            }
+                            $('#b' + indexb).append('<td style="border: 2px solid black;">' + btext + '</td>');
+                        });
+                    });
+                    var tableid = table;
+                    //getting values of current time for generating the file name
+                    var dt = new Date();
+                    var day = dt.getDate();
+                    var month = dt.getMonth() + 1;
+                    var year = dt.getFullYear();
+                    var hour = dt.getHours();
+                    var mins = dt.getMinutes();
+                    var postfix = day + "" + month + "" + year + "-" + hour + "" + mins;
+                    //creating a temporary HTML link element (they support setting file names)
+                    var a = document.createElement('a');
+                    //getting data from our div that contains the HTML table
+                    var data_type = 'data:application/vnd.ms-excel;charset=UTF-8';
+                    var table_div = document.getElementById('tableClon');
+                    var table_html = table_div.outerHTML.replace(/ /g, '%20');
+                    while (table_html.indexOf('á') != -1) table_html = table_html.replace("á", "&aacute;");
+                    while (table_html.indexOf('é') != -1) table_html = table_html.replace("é", "&eacute;");
+                    while (table_html.indexOf('í') != -1) table_html = table_html.replace("í", "&iacute;");
+                    while (table_html.indexOf('ó') != -1) table_html = table_html.replace("ó", "&oacute;");
+                    while (table_html.indexOf('ú') != -1) table_html = table_html.replace("ú", "&uacute;");
+                    while (table_html.indexOf('ü') != -1) table_html = table_html.replace("ü", "&uuml;");
+                    a.href = data_type + ', ' + table_html.replace("ó", "&oacute;").replace("ú", "&uacute;");
+                    //setting the file name
+                    a.download = 'ProvisionesAbiertasTS' + postfix + '.xls';
+                    //triggering the function
+                    a.click();
+                    //just in case, prevent default behaviour
+                    e.preventDefault();
+
+                    location.refresh();
+                });
+            });
+
+            $(function () {
+
+                $("table").tablesorter({
+                    theme: "materialize",
+
+                    widthFixed: true,
+                    // widget code contained in the jquery.tablesorter.widgets.js file
+                    // use the zebra stripe widget if you plan on hiding any rows (filter widget)
+                    widgets: ["filter", "zebra"],
+
+                    widgetOptions: {
+                        // using the default zebra striping class name, so it actually isn't included in the theme variable above
+                        // this is ONLY needed for materialize theming if you are using the filter widget, because rows are hidden
+                        zebra: ["even", "odd"],
+
+                        // reset filters button
+                        filter_reset: ".reset",
+
+                        // extra css class name (string or array) added to the filter element (input or select)
+                        // select needs a "browser-default" class or it gets hidden
+                        filter_cssFilter: ["", "", "browser-default"]
+                    }
+                })
+                    .tablesorterPager({
+
+                        // target the pager markup - see the HTML block below
+                        container: $(".ts-pager"),
+
+                        // target the pager page select dropdown - choose a page
+                        cssGoto: ".pagenum",
+
+                        // remove rows from the table to speed up the sort of large tables.
+                        // setting this to false, only hides the non-visible rows; needed if you plan to add/remove rows with the pager enabled.
+                        removeRows: true,
+
+                        // output string - default is '{page}/{totalPages}';
+                        // possible variables: {page}, {totalPages}, {filteredPages}, {startRow}, {endRow}, {filteredRows} and {totalRows}
+                        output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+                    });
+            });
+        </script>
+
+        <br />
+        <b id="titulo2" style="color:rgba(0, 0, 0, 0.87); font-family:Tahoma; font-size:12px; margin-left:17px">Al</b>
+
+        foreach (var multi in ViewBag.miConsulSplit)
+        {
+            foreach (var consulta in multi)
+            {
+                <b id="fecha" style="color:rgba(0, 0, 0, 0.87); font-family:Tahoma; font-size:12px; margin-left:8px">
+                    @{
+                        int ejercicio = Int32.Parse(consulta.GetType().GetProperty("EJERCICIO").GetValue(consulta, null));
+                        int periodo = Int32.Parse(consulta.GetType().GetProperty("PERIODO").GetValue(consulta, null).ToString());
+
+                        TAT001.Services.Calendario445 c = new TAT001.Services.Calendario445();
+                        @c.getUltimoDia(ejercicio, periodo).ToString().Substring(0, 10);
+                    }
+                </b>
+                break;
+            }
+        }
+
+        <br />
+        <br />
+        <div style="width:100%;height:50vh;overflow:scroll;">
+            <table class="table mdl-data-table striped grid centered table" id="table" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th id="id_Bu" class="filter-select" data-placeholder="Todas las opciones">BU</th>
+                        <th id="id_Pais" class="filter-select" data-placeholder="Todas las opciones">Pais</th>
+                        <th id="id_Solicitud" class="filter-select" data-placeholder="Todas las opciones">Solicitud </th>
+                        <th id="id_Cliente" class="filter-select" data-placeholder="Todas las opciones">Cliente</th>
+                        <th id="id_NombreC" class="filter-select" data-placeholder="Todas las opciones">Nombre Cliente</th>
+                        <th id="id_Canal" class="filter-select" data-placeholder="Todas las opciones">Canal</th>
+                        <th id="id_Concepto" class="filter-select" data-placeholder="Todas las opciones">Concepto</th>
+                        <th id="id_Periodo" class="filter-select" data-placeholder="Todas las opciones">Periodo de la Solicitud</th>
+                        <th id="id_Registro" class="filter-select" data-placeholder="Todas las opciones">Fecha Registro Contable de la Provision</th>
+                        <th id="id_Cierre" class="filter-select" data-placeholder="Todas las opciones">Fecha Cierre Contable</th>
+                        <th id="id_MontoOriginal" class="filter-select" data-placeholder="Todas las opciones">Monto Original de la Provision</th>
+                        <th id="id_Remanente" class="filter-select" data-placeholder="Todas las opciones">Remanente / (exceso)</th>
+                        <th id="id_PorcentajeR" class="filter-select" data-placeholder="Todas las opciones">Porcentaje del Remanente / (exceso)</th>
+                        <th id="id_Aging" class="filter-select" data-placeholder="Todas las opciones">Aging (dias)</th>
+                        <th id="id_Cuenta" class="filter-select" data-placeholder="Todas las opciones">Cuenta Pasivo</th>
+                        <th id="id_NombreCuenta" class="filter-select" data-placeholder="Todas las opciones">Nombre Cuenta Pasivo</th>
+                        <th id="id_CuentaPL" class="filter-select" data-placeholder="Todas las opciones">Cuenta P&L</th>
+                        <th id="id_NombreCuentaPL" class="filter-select" data-placeholder="Todas las opciones">Nombre Cuenta P&L</th>
+                        <th id="id_NumRegistroC" class="filter-select" data-placeholder="Todas las opciones">Num. Registro contable</th>
+                        <th id="id_Modificado" class="filter-select" data-placeholder="Todas las opciones">Modificado por</th>
+                        <th id="id_Creador" class="filter-select" data-placeholder="Todas las opciones">Usuario creador</th>
+                        <th id="id_Manager" class="filter-select" data-placeholder="Todas las opciones">Manager</th>
+                        <th id="id_Comentarios" class="filter-select" data-placeholder="Todas las opciones">Comentarios del usuario sobre el seguimiento</th>
+                        <th id="id_FCML30" class="filter-select" data-placeholder="Todas las opciones" style="background-color:yellow">A LA FECHA CIERRE $Moneda Local Menor a 30</th>
+                        <th id="id_FCML31" class="filter-select" data-placeholder="Todas las opciones" style="background-color:yellow">A LA FECHA CIERRE $Moneda Local 31-60</th>
+                        <th id="id_FCML61" class="filter-select" data-placeholder="Todas las opciones" style="background-color:yellow">A LA FECHA CIERRE $Moneda Local 61-90</th>
+                        <th id="id_FCML91" class="filter-select" data-placeholder="Todas las opciones" style="background-color:yellow">A LA FECHA CIERRE $Moneda Local 91-120</th>
+                        <th id="id_FCML121" class="filter-select" data-placeholder="Todas las opciones" style="background-color:yellow">A LA FECHA CIERRE $Moneda Local 121-180</th>
+                        <th id="id_FCML181" class="filter-select" data-placeholder="Todas las opciones" style="background-color:yellow">A LA FECHA CIERRE $Moneda Local 181-360</th>
+                        <th id="id_FCML360" class="filter-select" data-placeholder="Todas las opciones" style="background-color:yellow">A LA FECHA CIERRE $Moneda Local Mayor a 360</th>
+                        <th id="id_FAML30" class="filter-select" data-placeholder="Todas las opciones" style="background-color:lightslategray;">A LA FECHA ACTUAL $Moneda Local Menor a 30</th>
+                        <th id="id_FAML31" class="filter-select" data-placeholder="Todas las opciones" style="background-color:lightslategray">A LA FECHA ACTUAL $Moneda Local 31-60</th>
+                        <th id="id_FAML61" class="filter-select" data-placeholder="Todas las opciones" style="background-color:lightslategray">A LA FECHA ACTUAL $Moneda Local 61-90</th>
+                        <th id="id_FAML91" class="filter-select" data-placeholder="Todas las opciones" style="background-color:lightslategray">A LA FECHA ACTUAL $Moneda Local 91-120</th>
+                        <th id="id_FAML121" class="filter-select" data-placeholder="Todas las opciones" style="background-color:lightslategray">A LA FECHA ACTUAL $Moneda Local 121-180</th>
+                        <th id="id_FAML181" class="filter-select" data-placeholder="Todas las opciones" style="background-color:lightslategray">A LA FECHA ACTUAL $Moneda Local 181-360</th>
+                        <th id="id_FAML360" class="filter-select" data-placeholder="Todas las opciones" style="background-color:lightslategray">A LA FECHA ACTUAL $Moneda Local Mayor a 360</th>
+                        <th id="id_FCUSD30" class="filter-select" data-placeholder="Todas las opciones" style="background-color:forestgreen">A LA FECHA DE CIERRE $USD Menor a 30</th>
+                        <th id="id_FCUSD31" class="filter-select" data-placeholder="Todas las opciones" style="background-color:forestgreen">A LA FECHA DE CIERRE $USD 31-60</th>
+                        <th id="id_FCUSD61" class="filter-select" data-placeholder="Todas las opciones" style="background-color:forestgreen">A LA FECHA DE CIERRE $USD 61-90</th>
+                        <th id="id_FCUSD91" class="filter-select" data-placeholder="Todas las opciones" style="background-color:forestgreen">A LA FECHA DE CIERRE $USD 91-120</th>
+                        <th id="id_FCUSD121" class="filter-select" data-placeholder="Todas las opciones" style="background-color:forestgreen">A LA FECHA DE CIERRE $USD 121-180</th>
+                        <th id="id_FCUSD181" class="filter-select" data-placeholder="Todas las opciones" style="background-color:forestgreen">A LA FECHA DE CIERRE $USD 181-360</th>
+                        <th id="id_FCUSD360" class="filter-select" data-placeholder="Todas las opciones" style="background-color:forestgreen">A LA FECHA DE CIERRE $USD Mayor a 360</th>
+                        <th id="id_FAUSD30" class="filter-select" data-placeholder="Todas las opciones" style="background-color:darkseagreen">A LA FECHA ACTUAL $USD Menor a 30</th>
+                        <th id="id_FAUSD31" class="filter-select" data-placeholder="Todas las opciones" style="background-color:darkseagreen">A LA FECHA ACTUAL $USD 31-60</th>
+                        <th id="id_FAUSD61" class="filter-select" data-placeholder="Todas las opciones" style="background-color:darkseagreen">A LA FECHA ACTUAL $USD 61-90</th>
+                        <th id="id_FAUSD91" class="filter-select" data-placeholder="Todas las opciones" style="background-color:darkseagreen">A LA FECHA ACTUAL $USD 91-120</th>
+                        <th id="id_FAUSD121" class="filter-select" data-placeholder="Todas las opciones" style="background-color:darkseagreen">A LA FECHA ACTUAL $USD 121-180</th>
+                        <th id="id_FAUSD181" class="filter-select" data-placeholder="Todas las opciones" style="background-color:darkseagreen">A LA FECHA ACTUAL $USD 181-360</th>
+                        <th id="id_FAUSD360" class="filter-select" data-placeholder="Todas las opciones" style="background-color:darkseagreen">A LA FECHA ACTUAL $USD Mayor a 360</th>
+                    </tr>
+                </thead>
+                <tfoot>                   
+                    <tr class="tablesorter-ignoreRow">
+                        <th colspan="2" class="ts-pager form-horizontal">
+                            <button type="button" class="btn first"><i class="small material-icons">first_page</i></button>
+                            <button type="button" class="btn prev"><i class="small material-icons">navigate_before</i></button>
+                            <span class="pagedisplay"></span>
+                            <!-- this can be any element, including an input -->
+                            <button type="button" class="btn next"><i class="small material-icons">navigate_next</i></button>
+                            <button type="button" class="btn last"><i class="small material-icons">last_page</i></button>
+                            <div style="padding:0 78% 0 0;">
+                                <label class="btn_length" id="por_pag">Ver por página</label>
+                                <select class="pagesize" id="selecc" title="Select page size">
+                                    <option selected="selected" value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="40">40</option>
+                                    <option value="50">50</option>
+                                </select>
+                                <label class="label_pag">Ir a Página</label>
+                                <select class="pagenum browser-default" title="Select page number"></select>
+                            </div>
+                        </th>
+                        <th colspan="50">
+
+
+                        </th>
+                        
+                    </tr>
+                </tfoot>
+
+                <tbody>
+
+                    @foreach (var multi in ViewBag.miConsulSplit)
+                    {
+                        foreach (var consulta in multi)
+                        {
+                            /////////////////////AGING//////////////////////
+                            var registro = consulta.GetType().GetProperty("FECHAC").GetValue(consulta, null);
+
+                            int ejercicio2 = Int32.Parse(consulta.GetType().GetProperty("EJERCICIO").GetValue(consulta, null));
+                            int periodo2 = Int32.Parse(consulta.GetType().GetProperty("PERIODO").GetValue(consulta, null).ToString());
+                            TAT001.Services.Calendario445 c2 = new TAT001.Services.Calendario445();
+                            c2.getUltimoDia(ejercicio2, periodo2);
+
+                            var cierre = c2.getUltimoDia(ejercicio2, periodo2);
+
+                            DateTime diahoy = DateTime.Now;
+                            TimeSpan agingr = diahoy - registro;
+                            int aging = agingr.Days;
+
+                            /////////////////////////////REMANENTE///////////////////////////
+                            var amountParent = consulta.GetType().GetProperty("MONTO_DOC_MD").GetValue(consulta, null);
+
+
+                            /////////////////////////////REMANENTE ACTUAL///////////////////////////
+                            var hoy = DateTime.Now;
+                            var amountParent4 = consulta.GetType().GetProperty("MONTO_DOC_MD").GetValue(consulta, null);
+
+                            /////////////////AGING TABLA //////////////////////////////
+                            var solicitud = consulta.GetType().GetProperty("NUM_DOC").GetValue(consulta, null);
+                            var amountParent2 = consulta.GetType().GetProperty("MONTO_DOC_MD").GetValue(consulta, null);
+
+                            ////COMENTARIOS
+
+                            var comentarios = consulta.GetType().GetProperty("COMENTARIO").GetValue(consulta, null);
+
+                            var numdoc = consulta.GetType().GetProperty("NUM_DOC").GetValue(consulta, null);
+
+
+                            TAT001.Services.FormatosC s = new TAT001.Services.FormatosC();
+
+
+                            /////////////////////////////REMANENTE EN DOLARES///////////////////////////
+                            var amountParent3 = consulta.GetType().GetProperty("MONTO_DOC_ML2").GetValue(consulta, null);
+
+                    <tr>
+                        <td>
+                            @consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null)
+                        </td>
+
+                        <td>
+                            @consulta.GetType().GetProperty("PAIS_ID").GetValue(consulta, null)
+                        </td>
+
+                        <td onclick="document.location='@Url.Action("Details", "Solicitudes", new { id = consulta.GetType().GetProperty("NUM_DOC").GetValue(consulta, null), pais = "" })'" style="cursor:pointer">
+                            <a href="@ViewBag.baseURL/Solicitudes/Details/@consulta.GetType().GetProperty("NUM_DOC").GetValue(consulta, null)">@consulta.GetType().GetProperty("NUM_DOC").GetValue(consulta, null)</a>
+                        </td>
+
+                        <td>
+                            @consulta.GetType().GetProperty("PAYER_ID").GetValue(consulta, null)
+                        </td>
+
+                        <td>
+                            @consulta.GetType().GetProperty("NAME1").GetValue(consulta, null)
+                        </td>
+
+                        <td>
+                            @consulta.GetType().GetProperty("CANAL").GetValue(consulta, null)
+                        </td>
+
+                        <td>
+                            @consulta.GetType().GetProperty("CONCEPTO").GetValue(consulta, null)
+                        </td>
+
+                        <td>
+                            @* PERIODO *@
+                            @{
+                                var per = consulta.GetType().GetProperty("FECHAC").GetValue(consulta, null);
+                                per.ToString("MM / yyyy");
+                            }
+                            @per.ToString("MM / yyyy")
+                        </td>
+
+                        <td>
+                            @* FECHA REGISTRO CONTABLE *@
+                            @consulta.GetType().GetProperty("FECHAC").GetValue(consulta, null)
+                        </td>
+
+                        <td>
+                            @* FECHA CIERRE CONTABLE *@
+                            @{
+                                int ejercicio = Int32.Parse(consulta.GetType().GetProperty("EJERCICIO").GetValue(consulta, null));
+                                int periodo = Int32.Parse(consulta.GetType().GetProperty("PERIODO").GetValue(consulta, null).ToString());
+                                TAT001.Services.Calendario445 c = new TAT001.Services.Calendario445();
+                                c.getUltimoDia(ejercicio, periodo);
+                            }
+                            @c.getUltimoDia(ejercicio, periodo)
+
+                        </td>
+
+                        <td>
+                            @* MONTO ORIGINAL DE LA PROVISION *@
+                            @*$@consulta.GetType().GetProperty("MONTO_DOC_MD").GetValue(consulta, null)
+                                @if (consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null) == "KCMX")
+                                {
+                                    String.Format("{0:C}", "MONTO_DOC_MD");
+                                }*@
+                            @*//FORMATO KCMX//*@
+                            @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KCMX"))) ? String.Format("{0:C}", consulta.GetType().GetProperty("MONTO_DOC_MD").GetValue(consulta, null)) : "")
+                            @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KCAR"))) ? String.Format("{0:C}", consulta.GetType().GetProperty("MONTO_DOC_MD").GetValue(consulta, null)) : "")
+                            @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KLCH"))) ? String.Format("{0:C}", consulta.GetType().GetProperty("MONTO_DOC_MD").GetValue(consulta, null)) : "")
+                            @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KLSV"))) ? String.Format("{0:C}", consulta.GetType().GetProperty("MONTO_DOC_MD").GetValue(consulta, null)) : "")
+                            @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KPRS"))) ? String.Format("{0:C}", consulta.GetType().GetProperty("MONTO_DOC_MD").GetValue(consulta, null)) : "")
+                            @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("LAGA"))) ? String.Format("{0:C}", consulta.GetType().GetProperty("MONTO_DOC_MD").GetValue(consulta, null)) : "")
+                            @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("LCCR"))) ? String.Format("{0:C}", consulta.GetType().GetProperty("MONTO_DOC_MD").GetValue(consulta, null)) : "")
+                            @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("LEKE"))) ? String.Format("{0:C}", consulta.GetType().GetProperty("MONTO_DOC_MD").GetValue(consulta, null)) : "")
+                            @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("LPKP"))) ? String.Format("{0:C}", consulta.GetType().GetProperty("MONTO_DOC_MD").GetValue(consulta, null)) : "")
+                            @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("LPPE"))) ? String.Format("{0:C}", consulta.GetType().GetProperty("MONTO_DOC_MD").GetValue(consulta, null)) : "")
+
+                            @* //FORMATO COLOMBIA, BRASIL Y GUATEMALA *@
+                            @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KLCO"))) ? String.Format("{0:C}", consulta.GetType().GetProperty("MONTO_DOC_MD").GetValue(consulta, null).ToString("c2", CultureInfo.GetCultureInfo("es-CO"))) : "")
+                            @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KLCA"))) ? String.Format("{0:C}", consulta.GetType().GetProperty("MONTO_DOC_MD").GetValue(consulta, null).ToString("c2", CultureInfo.GetCultureInfo("es-CO"))) : "")
+                            @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KLBL"))) ? String.Format("{0:C}", consulta.GetType().GetProperty("MONTO_DOC_MD").GetValue(consulta, null).ToString("c2", CultureInfo.GetCultureInfo("es-CO"))) : "")
+
+                        </td>
+
+                        <td>
+                            @* REMANENTE *@
+
+                            @foreach (var docamnt in ViewBag.remanente)
+                            {
+                                foreach (var amount in docamnt)
+                                {
+
+                                    if (consulta.GetType().GetProperty("NUM_DOC").GetValue(consulta, null) == amount.GetType().GetProperty("DOCUMENTO_REF").GetValue(amount, null))
+                                    {
+                                        amountParent = amountParent - amount.GetType().GetProperty("MONTO_DOC_MD").GetValue(amount, null);
+                                    }
+
+                                }
+                            }
+
+                            @if (amountParent == 0)
+                            {
+                                string showamnt = "-";
+                                @showamnt;
+
+                            }
+                            else if (amountParent < 0)
+                            {
+                                amountParent = amountParent * -1;
+                                //string showamnt = "($" + amountParent + ")";
+
+                                //FORMATO KCMX
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KCMX"))) ? String.Format("({0:C})", amountParent) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KCAR"))) ? String.Format("({0:C})", amountParent) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KLCH"))) ? String.Format("({0:C})", amountParent) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KLSV"))) ? String.Format("({0:C})", amountParent) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KPRS"))) ? String.Format("({0:C})", amountParent) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("LAGA"))) ? String.Format("({0:C})", amountParent) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("LCCR"))) ? String.Format("({0:C})", amountParent) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("LEKE"))) ? String.Format("({0:C})", amountParent) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("LPKP"))) ? String.Format("({0:C})", amountParent) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("LPPE"))) ? String.Format("({0:C})", amountParent) : "")
+
+                                //FORMATO COLOMBIA, BRASIL Y GUATEMALA
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KLCO"))) ? String.Format("({0:C})", amountParent.ToString("c2", CultureInfo.GetCultureInfo("es-CO"))) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KLCA"))) ? String.Format("({0:C})", amountParent.ToString("c2", CultureInfo.GetCultureInfo("es-CO"))) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KLBL"))) ? String.Format("({0:C})", amountParent.ToString("c2", CultureInfo.GetCultureInfo("es-CO"))) : "")
+
+                            }
+                            else
+                            {
+                                //string showamnt = "$" + amountParent;
+
+                                //FORMATO KCMX
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KCMX"))) ? String.Format("{0:C}", amountParent) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KCAR"))) ? String.Format("{0:C}", amountParent) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KLCH"))) ? String.Format("{0:C}", amountParent) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KLSV"))) ? String.Format("{0:C}", amountParent) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KPRS"))) ? String.Format("{0:C}", amountParent) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("LAGA"))) ? String.Format("{0:C}", amountParent) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("LCCR"))) ? String.Format("{0:C}", amountParent) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("LEKE"))) ? String.Format("{0:C}", amountParent) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("LPKP"))) ? String.Format("{0:C}", amountParent) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("LPPE"))) ? String.Format("{0:C}", amountParent) : "")
+
+                                //FORMATO COLOMBIA, BRASIL Y GUATEMALA
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KLCO"))) ? (amountParent.ToString("c2", CultureInfo.GetCultureInfo("es-CO"))) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KLCA"))) ? (amountParent.ToString("c2", CultureInfo.GetCultureInfo("es-CO"))) : "")
+                                @(((consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null).StartsWith("KLBL"))) ? (amountParent.ToString("c2", CultureInfo.GetCultureInfo("es-CO"))) : "")
+                            }
+                        </td>
+
+                        <td>
+                            @* PORCENTAJE DEL REMANENTE *@
+
+                            @{
+                                try
+                                {
+                                    var original = consulta.GetType().GetProperty("MONTO_DOC_MD").GetValue(consulta, null);
+                                    var opRemanente = amountParent * 100 / original;
+                                    string porcentaje = opRemanente + "%";
+
+                                    @porcentaje
+                                }
+                                catch (DivideByZeroException ex)
+                                {
+
+                                }
+                            }
+
+                        </td>
+
+                        <td>
+                            @* Aging *@
+                            @aging
+                        </td>
+
+                        <td>
+                            @* CUENTA PASIVO *@
+                            @consulta.GetType().GetProperty("CUENTAP").GetValue(consulta, null)
+                        </td>
+
+                        <td>
+                            @* NOMBRE CUENTA PASIVO *@
+                            @consulta.GetType().GetProperty("NOMBRE").GetValue(consulta, null)
+                        </td>
+                        <td>
+                            @consulta.GetType().GetProperty("CUENTAPL").GetValue(consulta, null)
+                        </td>
+
+                        <td>
+                            @foreach (var a in ViewBag.cuenta)
+                            {
+                                @* NOMBRE CUENTA PL *@
+                                if (a.GetType().GetProperty("ID").GetValue(a, null) == consulta.GetType().GetProperty("CUENTAPL").GetValue(consulta, null))
+                                {
+                                    @a.GetType().GetProperty("NOMBRE").GetValue(a, null)
+                                }
+                            }
+
+                        </td>
+
+                        <td>
+                            @* NUM REGISTRO CONTABLE *@
+                            @consulta.GetType().GetProperty("DOCUMENTO_SAP").GetValue(consulta, null)
+                        </td>
+
+                        <td>
+                            @* MODIFICADO POR *@
+                            @consulta.GetType().GetProperty("USUARIOC_ID").GetValue(consulta, null)
+                        </td>
+                        <td>
+                            @* USUARIO CREADOR *@
+                            @consulta.GetType().GetProperty("USUARIOD_ID").GetValue(consulta, null)
+                        </td>
+                        <td>
+                            @* MANAGER *@
+                            @consulta.GetType().GetProperty("USUARIOA_ID").GetValue(consulta, null)
+                        </td>
+                        <td>
+                            @*COMENTARIO*@
+
+                            @foreach (var come in ViewBag.ultimo)
+                            {
+                                foreach (TAT001.Models.Comentarios com in come)
+                                {
+                                    if (consulta.GetType().GetProperty("NUM_DOC").GetValue(consulta, null) == com.NUM_DOC)
+                                    {
+                                        @com.COMENTARIOS
+                                    }
+                                }
+                                break;
+                            }
+                        </td>
+                        @* AL CIERRE MONEDA LOCAL *@
+                        @if (aging <= 30)
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent2.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent2)
+
+                                }
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+
+                        }
+                        else if (aging >= 31 && aging <= 60)
+
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent2.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent2)
+
+                                }
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        }
+                        else if (aging >= 61 && aging <= 90)
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent2.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent2)
+
+                                }
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        }
+                        else if (aging >= 91 && aging <= 120)
+
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent2.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent2)
+
+                                }
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        }
+                        else if (aging >= 121 && aging <= 180)
+
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent2.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent2)
+
+                                }
+
+                            </td>
+                            <td></td>
+                            <td></td>
+
+                        }
+                        else if (aging >= 181 && aging <= 360)
+
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent2.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent2)
+
+                                }
+
+                            </td>
+                            <td></td>
+
+                        }
+                        else if (aging > 360)
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent2.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent2)
+
+                                }
+                            </td>
+
+                        }
+
+                        @* FECHA ACTUAL MONEDA LOCAL  *@
+
+                        @if (aging <= 30)
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent)
+
+                                }
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        }
+                        else if (aging >= 31 && aging <= 60)
+
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent)
+
+                                }
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        }
+                        else if (aging >= 61 && aging <= 90)
+
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent)
+
+                                }
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        }
+                        else if (aging >= 91 && aging <= 120)
+
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td></td>
+                            <td> </td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent)
+
+                                }
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        }
+                        else if (aging >= 121 && aging <= 180)
+
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent)
+
+                                }
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                        }
+                        else if (aging >= 181 && aging <= 360)
+
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent)
+
+                                }
+
+                            </td>
+                            <td></td>
+
+                        }
+                        else if (aging > 360)
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent)
+
+                                }
+
+                            </td>
+                        }
+
+                        @* AL CIERRE DOLARES *@
+                        @if (aging <= 30)
+                        {
+                            var compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent3.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent3)
+
+                                }
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        }
+                        else if (aging >= 31 && aging <= 60)
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent3.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent3)
+
+                                }
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        }
+
+                        else if (aging >= 61 && aging <= 90)
+
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td> </td>
+                            <td>
+                                @*@amountParent3*@
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent3.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent3)
+
+                                }
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        }
+                        else if (aging >= 91 && aging <= 120)
+
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent3.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent3)
+
+                                }
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        }
+                        else if (aging >= 121 && aging <= 180)
+
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent3.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent3)
+
+                                }
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                        }
+                        else if (aging >= 181 && aging <= 360)
+
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent3.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent3)
+
+                                }
+
+                            </td>
+                            <td></td>
+                        }
+                        else if (aging > 360)
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent3.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent3)
+
+                                }
+
+                            </td>
+
+                        }
+
+                        @* A LA FECHA ACTUAL DOLARES *@
+
+                        @if (aging <= 30)
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent3.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent3)
+
+                                }
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        }
+                        else if (aging >= 31 && aging <= 60)
+
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent3.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent3)
+
+                                }
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        }
+                        else if (aging >= 61 && aging <= 90)
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td> </td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent3.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent3)
+
+                                }
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        }
+                        else if (aging >= 91 && aging <= 120)
+
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td> </td>
+                            <td> </td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent3.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent3)
+
+                                }
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        }
+                        else if (aging >= 121 && aging <= 180)
+
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent3.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent3)
+
+                                }
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                        }
+                        else if (aging >= 181 && aging <= 360)
+
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent3.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent3)
+
+                                }
+
+                            </td>
+                            <td></td>
+                        }
+                        else if (aging > 360)
+                        {
+                            string compara = consulta.GetType().GetProperty("SOCIEDAD_ID").GetValue(consulta, null);
+                            <td></td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                @if (compara == "KLCO" || compara == "KLCA" || compara == "KLBL")
+                                {
+                                    @String.Format("{0:C}", amountParent3.ToString("c2", CultureInfo.GetCultureInfo("es-CO")))
+
+
+                                }
+                                else
+                                {
+                                    @String.Format("{0:C}", amountParent3)
+
+                                }
+
+
+                            </td>
+                        }
+                    </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <style>
+        .dataTables_length {
+            display: none;
+        }
+
+        .dataTables_filter {
+            display: none;
+        }
+
+        .dataTables_scrollHeadInner, .mdl-data-table {
+            width: 100%;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .btn {
+            font-size: .8em;
+        }
+
+        .material-icons {
+            vertical-align: bottom;
+        }
+
+        select {
+            display: block !important;
+        }
+
+        th {
+            text-align: center !important;
+        }
+    </style>
+}

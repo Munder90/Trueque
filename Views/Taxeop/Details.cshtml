@@ -1,0 +1,90 @@
+﻿@model TAT001.Entities.TAXEOP
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 862;
+    ViewBag.carpeta_r = 500;
+}
+<script src="~/Scripts/ValidarDecimalesTP.js"></script>
+<script src="~/Scripts/jquery.mask.js"></script>
+<style>
+    .pnl-cli {
+        background-color: white;
+        padding: 5px 15px 5px 15px;
+        border-radius: 5px;
+    }
+</style>
+<div>
+    <div class="row">
+        <div class="row left pnl-cli">
+            <h6>@ViewBag.NoCliente - @ViewBag.Cliente</h6>
+        </div>
+        <div class="row right">
+            <a class="btn btn-default right" id="btnEdit" data-form-method="post" href="@Url.Action("Edit", "Taxeop", new { sc = Model.SOCIEDAD_ID, ld = Model.PAIS_ID, kun = Model.KUNNR, vk = Model.VKORG, vtw = Model.VTWEG, sp = Model.SPART, con = Model.CONCEPTO_ID, pos = Model.POS,  rid=Model.RETENCION_ID})">
+            </a>
+        </div>
+    </div>
+        <div class="row">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="col s6 m6 l6">
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.SOCIEDAD_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblSociedadId" })
+                            @Html.EditorFor(model => model.SOCIEDAD_ID, null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.PAIS_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblPaisId" })
+                            @Html.EditorFor(model => model.PAIS_ID, null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.KUNNR, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblKun" })
+                            @Html.EditorFor(model => model.KUNNR, null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.CONCEPTO_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblConId" })
+                            @Html.EditorFor(model => model.CONCEPTO_ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.RETENCION_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblRetId" })
+                            @Html.DropDownList("RETENCION_ID", null, htmlAttributes: new { @class = "form-control clSc", disabled="disabled" })
+                            @Html.ValidationMessageFor(model => model.RETENCION_ID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.PORC, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblPorc" })
+                            @Html.EditorFor(model => model.PORC, new { htmlAttributes = new { @class = "form-control", @id = "txtPorc", @readonly = "readonly" } })
+                        </div>
+                    </div>
+                    <div class="col s6 m6 l6">
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.TRETENCION_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbltRet" })
+                            @Html.DropDownList("TRETENCION_ID", null, htmlAttributes: new { @class = "form-control", disabled="disabled" })
+                            @Html.ValidationMessageFor(model => model.TRETENCION_ID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.VKORG, htmlAttributes: new { @class = "control-label col-md-2", @id = "lvlVk" })
+                            @Html.EditorFor(model => model.VKORG, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.VTWEG, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblVt" })
+                            @Html.EditorFor(model => model.VTWEG, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.POS, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblPos" })
+                            @Html.EditorFor(model => model.POS, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.SPART, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblSp" })
+                            @Html.EditorFor(model => model.SPART, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var elem = document.querySelectorAll('select');
+            var instance = M.FormSelect.init(elem, []);
+        </script>
+        <div class="form-actions no-color">
+            @Html.ActionLink("Back to List", "Index", new { kun = @ViewBag.kun, vk = @ViewBag.vk, vtw = @ViewBag.vtw, sp = @ViewBag.sp, sc = @ViewBag.sc, ld = @ViewBag.ld, con = @ViewBag.con }, new { id = "lblRegresar" })
+        </div>
+</div>

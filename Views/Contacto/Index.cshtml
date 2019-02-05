@@ -1,0 +1,177 @@
+﻿@model TAT001.Models.Contactoc
+@{
+    ViewBag.pagina_r = 641;
+    ViewBag.carpeta_r = 500;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+<link href="~/Content/dataTable.css" rel="stylesheet" />
+<link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+<style>
+    .pnl-cli {
+        background-color: white;
+        padding: 5px 15px 5px 15px;
+        border-radius: 5px;
+    }
+
+    .dataTables_length {
+        display: none;
+    }
+
+    .dataTables_filter {
+        display: none;
+    }
+
+    .dataTables_scrollHeadInner, .mdl-data-table {
+        width: 100%;
+    }
+</style>
+<div class="row">
+    <div class="row left pnl-cli">
+        <h6>@ViewBag.NoCliente - @ViewBag.Cliente</h6>
+    </div>
+    <div class="row right">
+        <a href="@Url.Action("Create", "Contacto", new { vko=Model.vkorg, vtw=Model.vtweg,kun=Model.kunnr,spa=Model.spart})" id="btnCrear" class="btn-small">Crear</a>
+    </div>
+</div>
+<div class="card-panel">
+    <div class="row" style="margin-bottom:0;">
+        <div class="input-field col s3 m3 l3">
+            <select id="selecc">
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <label id="lbl_length">Ver por página</label>
+        </div>
+        <div class="input-field col s5 m3 l3 offset-l6 offset-m6 offset-s4">
+            <input type="text" class="global_filter" id="global_filter">
+            <label for="global_filter" id="lbl_search">Buscar</label>
+        </div>
+    </div>
+    <script>
+        var elem = document.querySelector('select');
+        var options = [];
+        var instance = M.FormSelect.init(elem, options);
+    </script>
+
+
+    <div class="row">
+
+        <div class="row" style="overflow:auto;">
+            <div class="col s12">
+                <table class="table mdl-data-table striped" id="table" style="width:100%;">
+                    <thead>
+                        <tr class="header">
+                            <th id="th_Nombre">NOMBRE</th>
+                            <th id="th_telefono">TELEFONO</th>
+                            <th id="th_mail">E-MAIL</th>
+                            <th id="th_condef">CONTACTO POR DEFECTO</th>
+                            <th id="th_seleccion">SELECCIÓN</th>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.tabContacto)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NOMBRE)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PHONE)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EMAIL)
+                                </td>
+                                @if (item.DEFECTO != null && (bool)item.DEFECTO == true)
+                                {
+                                    <td style="text-align:center;"><i class='material-icons green-text'>check</i></td>
+                                }
+                                else
+                                {
+                                    <td style="text-align:center;"><i class='material-icons red-text'>clear</i></td>
+                                }
+                                <td>
+                                    <a data-form-method="post" href="@Url.Action("Edit", "Contacto", new { vko = item.VKORG, vtw = item.VTWEG, kun = item.KUNNR, spa = item.SPART, id = item.ID })">
+                                        <i class='material-icons green-text'>edit</i>
+                                    </a>
+                                    <a data-form-method="post" href="@Url.Action("Details", "Contacto", new { vko = item.VKORG, vtw = item.VTWEG, kun = item.KUNNR, spa = item.SPART, id = item.ID })">
+                                        <i class='material-icons blue-text'>search</i>
+                                    </a>
+                                    <a class="modal-trigger" href="#modal_@item.ID"><i class='material-icons red-text'>delete</i></a>
+                                    <a id="actionDelete_@item.ID" href="@Url.Action("Delete", "Contacto", new { id = item.ID })"></a>
+                                    <!-- Modal Delete -->
+                                    <div id="modal_@item.ID" class="modal" style=" background-color: #fff; height: 200px; width: 450px;">
+                                        <div class="modal-content">
+                                            <p style="font-size: 16px;text-align: left;" class="lbl_eliminar"></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a class="modal-close waves-effect  btn-flat"><label class="lbl_eliminarNo"></label></a>
+                                            <a onclick="eliminarContacto('actionDelete_@item.ID')" class="modal-close waves-effect  btn-flat"><label class="lbl_eliminarSi"></label></a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<div>
+    <a href="@Url.Action("Index", "Clientes")" id="btn_return"> </a>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.modal');
+       M.Modal.init(elems, options);
+    });
+      var root = "@Url.Content("~")",
+        spras_id = "@ViewBag.spras_id",
+        urlLanguage = root + "Scripts/lang/" + spras_id + ".json";
+    $(document).ready(function () {
+        var table = $('#table').DataTable({
+            scrollX: "50vh",
+            scrollY: "50vh",
+            scrollCollapse: true,
+            language: {
+                "url": urlLanguage
+            }, columnDefs: [
+                {
+                    targets: [0,1,2],
+                    className: 'mdl-data-table__cell--non-numeric'
+                }
+            ],
+            order: [[0, "asc"]]
+        });
+
+        var a = $('#selecc').val();
+        table.page.len(a).draw();
+        $('#selecc').on('change', function () {
+            table.page.len(this.value).draw();
+        });
+
+        $('input.global_filter').on('keyup click', function () {
+            filterGlobal();
+        });
+    });
+
+    function filterGlobal() {
+        $('#table').DataTable().search(
+            $('#global_filter').val()).draw();
+    }
+
+    function eliminarContacto(idLink) {
+        $('#' + idLink).get(0).click().click();
+    }
+
+</script>
+

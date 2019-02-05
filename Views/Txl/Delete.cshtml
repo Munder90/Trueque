@@ -1,0 +1,33 @@
+﻿@model TAT001.Entities.TAX_LAND
+@{
+                /**/
+
+                ViewBag.pagina_r = 813;
+                ViewBag.carpeta_r = 500;
+                //ViewBag.Title = "Delete";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <button id="btnDel" type="submit" value="Delete" class="btn btn-default" style="float:right;"></button>
+        </div>
+        <div class="card-panel">
+            <div class="row">
+                <div class="input-field col l6 m6" style="margin-bottom:0;">
+                    @Html.EditorFor(model => model.SOCIEDAD_ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.LabelFor(model => model.SOCIEDAD_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblSociedadId" })
+                </div>
+                <div class="input-field col l6 m6" style="margin-bottom:0;">
+                    @Html.EditorFor(model => model.PAI.LAND, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.LabelFor(model => model.PAI.LAND, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblPais" })
+                </div>
+            </div>
+        </div>
+        <div class="form-actions no-color">
+            @Html.ActionLink("Back to List", "Index", null, new { id = "lblRegresar" })
+        </div>
+    }
+</div>

@@ -1,0 +1,108 @@
+﻿@model TAT001.Entities.TALL
+
+@{
+    ViewBag.pagina_r = 884;
+    ViewBag.carpeta_r = 500;
+    //ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+<div class="row">
+    @using (Html.BeginForm("Create", "TALLs", FormMethod.Post, new { @id = "tallsForm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="row right">
+                <div class="col l12 m12 right">
+                    <button id="btnGC" type="submit" value="Agregar" class="btn btn-default">Agregar</button>
+                </div>
+            </div>
+        </div>
+        <div class="col s6">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblID" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", maxlength = "10", @required = "" } })
+                                @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DESCRIPCION, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblDes" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.DESCRIPCION, new { htmlAttributes = new { @class = "form-control", maxlength = "62", @required = "" } })
+                                @Html.ValidationMessageFor(model => model.DESCRIPCION, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.GALL_ID, "GALL_ID", htmlAttributes: new { @class = "control-label col-md-2 active", @id = "lblGall" })
+                            @Html.DropDownList("GALL_ID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.GALL_ID, "", new { @class = "text-danger" })
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="form-horizontal">
+            <div class="col s6">
+                <div class="card-panel">
+                    <h5>Traducciones</h5>
+                    <div class="row">
+                        <div class="input-field col l10 m10" style="margin-bottom:0;">
+                            @Html.Editor("EN", new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @required = "" } })
+                            <label id="lblIngles">Ingles</label>
+
+                        </div>
+                        <div class="input-field col l10 m10" style="margin-bottom:0;">
+                            @Html.Editor("ES", new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @required = "" } })
+                            <label id="lblEspa">Español</label>
+
+                        </div>
+                        <div class="input-field col l4 m10 right" style="margin-bottom:0;">
+                            <label>
+                                <input type="checkbox" name="ACTIVO" value="true" id="fac" readonly="readonly" checked />
+                                <span id="lblActivo"></span>
+
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+    @*<script>
+            function check() {
+                if ($("#act").prop('checked'))
+                    $("#idact").prop('checked', true);
+                else
+                    $("#idact").prop('checked', false);
+            }
+        </script>*@
+
+    <script>
+        var elem = document.querySelectorAll('select');
+        var instance = M.FormSelect.init(elem, []);
+    </script>
+    <div>
+        @Html.ActionLink("Regresar", "Index")
+    </div>
+    <script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+    <script>
+        fnCommon.formValidation('tallsForm');
+    </script>
+
+    @*@section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }*@

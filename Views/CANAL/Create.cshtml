@@ -1,0 +1,45 @@
+﻿@model TAT001.Entities.CANAL
+
+@{
+    ViewBag.pagina_r = 941;
+    ViewBag.carpeta_r = 500;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="row right">
+            <div class="col l12 m12 right">
+                <button type="submit" id="lbl_guardar" value="Guardar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="card-panel">
+        <div class="row">
+            <div class="col m6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CANAL1, htmlAttributes: new { @class = "control-label col-md-2", id = "lbl_canal" })
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.CANAL1, new { htmlAttributes = new { @class = "form-control", required = true, @maxlength = "10" } })
+                        @Html.ValidationMessageFor(model => model.CANAL1, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CDESCRIPCION, htmlAttributes: new { @class = "control-label col-md-2", id = "lbl_dsc" })
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.CDESCRIPCION, new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+                        @Html.ValidationMessageFor(model => model.CDESCRIPCION, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { id = "lbl_regresar" })
+</div>

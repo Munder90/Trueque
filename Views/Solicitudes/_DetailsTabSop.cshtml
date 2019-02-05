@@ -1,0 +1,344 @@
+﻿@model TAT001.Models.DocumentoFlujo
+@using TAT001.Entities
+
+<div id="supp" class="col s12">
+    @{
+        List<TAT001.Entities.DOCUMENTOA>
+        archivos = ViewBag.files as List<TAT001.Entities.DOCUMENTOA>;
+        string[] nombrefile;
+        List<TAT001.Entities.CARTAP>
+        lstCarta = ViewBag.cartap as List<TAT001.Entities.CARTAP>;
+        var pos = lstCarta.GroupBy(c => c.POS_ID).Select(g => g.First()).ToList();
+      
+    }
+    <div class="row">
+        <div class="col s12 m12 l6">
+            <div class="card-panel">
+                <div class="row">
+                    <h5 id="head_docssoporter">Soportes</h5>
+                </div>
+                <div class="row">
+                    @using (Html.BeginForm("Descargar", "Solicitudes", FormMethod.Post))
+                    {
+                        try
+                        {
+                            for (int i = 0; i < archivos.Count; i++)
+                            {
+                                nombrefile = archivos[i].PATH.Split('\\');
+
+                                @archivos[i].TSOPORTE.TSOPORTETs.Where(x=>x.SPRAS_ID == Session["spras"].ToString()).FirstOrDefault().TXT50
+                                <div class="file-field input-field">
+                                    <button id="lbl_cargar" name="archivo" class="btn" type="submit" value="@archivos[i].PATH">DESCARGAR</button>
+                                    <div class="file-path-wrapper">
+                                        <input disabled value="@nombrefile[nombrefile.Length - 1]" id="disabled" type="text" class="file-path validate">
+                                    </div>
+                                </div>
+                            }
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        @if (ViewBag.acciones != null && Model.D.ESTATUS_C==null)
+        {
+            if (ViewBag.accion == "S")
+            {
+                <div class="col s12 m12 l6">
+                    <div class="card-panel">
+                        <div class="row">
+                            <h5 id="headCarta">Carta</h5>
+                        </div>
+                        <div class="row">
+                            @using (Html.BeginForm("Details", "Solicitudes", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(model => model.D.NUM_DOC)
+                                <label name="labels_soporte2" id="labels_soporte2">Acuerdo comercial</label><label class"lbl_nec"></label>
+                                            <input type="text" value="Carta" name="labels_soporte" hidden />
+                                            <div class="file-field input-field">
+                                                <div class="btn-small  " style="float:left;">
+                                                    <span>Examinar</span>
+                                                    <input class="file_soporte" name="files_soporte" id="file_carta" type="file">
+                                                </div>
+                                                <div class="file-path-wrapper">
+                                                    <input class="file-path validate" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="col s12 right-align">
+                                                <input id="Enviar" type="button" value="Enviar" class="btn-small btnEnviar" />
+                                                <input style="display:none" id="btn_guardar" type="submit" value="Guardar" class="btn btn-default" />
+                                            </div>
+                                            <input type="hidden" id="pos" name="pos" value="0" />
+                            }
+                        </div>
+                    </div>
+                </div>
+                            <script>
+                                var cartasCount = "@Model.D.CARTAs.Count()";
+
+                                //LEJ 13.07.2018-----------------------------------------------------
+                                $('.btnEnviar').on("click", function (e) {
+                                    e.target.disabled = true;
+                                    document.getElementById("loader").style.display = "flex"; //LEJ 13.07.2018
+                                    var msg = "";
+                                    var ban = 0;
+                                    if (document.getElementById("file_carta").files.length > 0) {
+                                         if (cartasCount == "0") {
+                                            msg = "Favor de Generar la carta.";
+                                            M.toast({
+                                                classes: "validarDis",
+                                                displayLength: 1000000,
+                                                html: '<span style="padding-right:15px;"><i class="material-icons yellow-text">info</i></span> ' + msg
+                                                    + '<button class="btn-small btn-flat toast-action" onclick="dismiss(\'validarDis\')">Aceptar</button>'
+                                             });
+                                             e.target.disabled = false;
+                                            return;
+                                         } else if (ligada()) {
+                                             ban++;
+                                             $('#btn_guardar').click();
+                                         }
+                                        else {
+                                            $(".cpC :input[type=checkbox]").each(function () {
+                                                var _xid = $(this).attr('id');
+                                                var checkedTrue = $('#' + _xid + ':checked').length > 0;
+                                                if (checkedTrue) {
+                                                    ban++;
+                                                    var _pTb = _xid.split('b');
+                                                    var tt = $("#Tt-" + _pTb[1]).text();
+                                                    $("#pos").val(tt[0]);
+                                                    $('#btn_guardar').click();
+                                                }
+                                            });
+                                        }
+                                        if (ban == 0) {
+                                            msg = "Seleccionar una Distribucion";
+                                            M.toast({
+                                                classes: "validarDis",
+                                                displayLength: 1000000,
+                                                html: '<span style="padding-right:15px;"><i class="material-icons yellow-text">info</i></span> ' + msg
+                                                    + '<button class="btn-small btn-flat toast-action" onclick="dismiss(\'validarDis\')">Aceptar</button>'
+                                            });
+                                            document.getElementById("loader").style.display = "none"; //LEJ 13.07.2018
+                                            e.target.disabled = false;
+                                        }
+                                    } else {
+                                        msg = "Favor de subir archivo";
+                                        M.toast({
+                                            classes: "validarDis",
+                                            displayLength: 1000000,
+                                            html: '<span style="padding-right:15px;"><i class="material-icons yellow-text">info</i></span> ' + msg
+                                                + '<button class="btn-small btn-flat toast-action" onclick="dismiss(\'validarDis\')">Aceptar</button>'
+                                        });
+                                        document.getElementById("loader").style.display = "none"; //LEJ 13.07.2018
+                                        e.target.disabled = false;
+                                    }
+                                    
+                                });
+
+                                function dismiss(classe) {
+                                    var toastElement = document.querySelectorAll('.' + classe);
+                                    for (var i = 0; i < toastElement.length; i++) {
+                                        var toastInstance = M.Toast.getInstance(toastElement[i]);
+                                        toastInstance.dismiss();
+                                    }
+                                }
+                            </script>
+                if (ViewBag.cartap.Count != 0)
+                {
+                    //LEJ 10.07.2018
+
+                    <div class="col s12 m12 l12">
+                        <div class="row" style="margin-bottom:0">
+                            <div class="card-panel cpC">
+                                <div class="row">
+                                    <h5 id="head_selectdis">Seleccionar distribución</h5>
+                                    <ul class="collapsible">
+                                        @for (int i = 0; i < pos.Count; i++)
+                                        {
+                                            var lstCF = lstCarta.Where(p => p.POS_ID == pos[i].POS_ID).ToList();
+                                            string idx = "chb" + i;
+                                            <li>
+                                                <div class="collapsible-header">
+                                                    <div><i class="material-icons">arrow_drop_down</i></div>
+                                                    <label for="@idx">
+                                                        <input type="checkbox" id="@idx" />
+                                                        <span id="Tt-@i">@pos[i].POS_ID</span>
+                                                    </label>
+                                                </div>
+                                                <div class="collapsible-body">
+                                                    <table class="table highlight responsive-table" style="font-size: 12px;" id="tableC-@i">
+                                                        <thead>
+                                                            <tr>
+                                                                <th id="lblVigde">Vigencia de</th>
+                                                                <th id="lblVigal">Vigencia al </th>
+                                                                @if (lstCF.First().MATNR!= ""){
+                                                                <th id="lblMater">Material</th>
+                                                                }else {
+                                                                <th id="lblCat">Categoría</th>
+                                                                }
+                                                                <th id="lblPorApoyo">Porc Apoyo</th>
+                                                                <th id="lblMonApoy">Monto Apoyo</th>
+                                                                <th id="lblPreSu">Precio Sugerido</th>
+                                                                @if (Model.D.TSOL.FACTURA)
+                                                                {
+                                                                <th id="lblVolReal">Volumen real</th>
+                                                                <th id="lblApoyReal">Apoyo real</th>
+                                                                }
+                                                                else
+                                                                {
+                                                                <th id="lblVolsEst">Volumen Estimado</th>
+                                                                <th id="lblApoyEst">Apoyo Estimado</th>
+                                                                }
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tb-@i">
+                                                            @for (int y = 0; y < lstCF.Count; y++)
+                                                            {
+                                                            <tr>
+                                                                <td id="_pos-@i-@y" name="_pos-@i" style="display:none;">@lstCF[y].POS_ID</td>
+                                                                <td id="Vigd-@i-@y">@lstCF[y].VIGENCIA_DE.Value.Year/@lstCF[y].VIGENCIA_DE.Value.Month/@lstCF[y].VIGENCIA_DE.Value.Day</td>
+                                                                <td id="Viga-@i-@y-@y">@lstCF[y].VIGENCIA_AL.Value.Year/@lstCF[y].VIGENCIA_AL.Value.Month/@lstCF[y].VIGENCIA_DE.Value.Day</td>
+                                                                @{
+                                                                    using (TAT001.Entities.TruequeEntities db = new TAT001.Entities.TruequeEntities())
+                                                                    {
+                                                                        if (lstCF[y].MATNR != "")
+                                                                        {
+                                                                            var matnr = TAT001.Common.FnCommon.ObtenerMaterial(db, User.Identity.Name, lstCF[y].MATNR);
+                                                                            <td>@matnr.MAKTX</td>
+
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            var matkl = TAT001.Common.FnCommon.ObtenerMaterialGroup(db, lstCF[y].MATKL);
+                                                                            <td>@matkl.DESCRIPCION </td>
+                                                                        }
+
+                                                                    }
+                                                                }
+                                                                @*<td id="cant-@i-@y"> @lstCF[y].CANTIDAD </td>
+                                                                    <td id="pap-@i-@y">@lstCF[y].MONTO </td>*@
+                                                                <td id="papo-@i-@y" class="porcentaje"> @lstCF[y].PORC_APOYO </td>
+                                                                <td id="mnt-@i-@y" class="precio" >@lstCF[y].MONTO_APOYO </td>
+                                                                <td id="psu-@i-@y" class="precio">@lstCF[y].PRECIO_SUG </td>
+                                                                @if (Model.D.TSOL.FACTURA)
+                                                                {
+                                                                    <td class="precio" id="vol-@i-@y"> @lstCF[y].VOLUMEN_REAL </td>
+                                                                    <td class="precio" id="ape-@i-@y"> @lstCF[y].APOYO_REAL </td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td class="precio" id="vol-@i-@y"> @lstCF[y].VOLUMEN_EST </td>
+                                                                    <td class="precio" id="ape-@i-@y"> @lstCF[y].APOYO_EST </td>
+                                                                }
+                                                            </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+        @if (Model.D.DOCUMENTOR != null)
+        {
+            <div class="col s12 m12 l6">
+                <div class="card-panel">
+                    <div class="row">
+                        @if (!Model.D.DOCUMENTORECs.Any())
+    {
+                    <h5 id="head_soprev">Reversa</h5>
+}
+else
+{
+                    <h5 id="head_sopRecCanc">Recurrente cancelada</h5>
+}
+                    </div>
+                    <div class="row">
+                        @*@foreach (var iteem in Model.D.DOCUMENTORs)
+                            {*@
+                        @if (!Model.D.DOCUMENTORECs.Any())
+                        {
+                        <div class="input-field col s12">
+                            <input id="txt_trev" type="text" disabled="disabled" value="@Model.D.DOCUMENTOR.TREVERSA.TREVERSATs.Where(a => a.SPRAS_ID.Equals(ViewBag.spras_id)).FirstOrDefault().TXT100" />
+                            <label for="txt_trev">Tipo de reversa</label>
+                        </div>
+                        }
+                        <div class="input-field col s12">
+                            <textarea id="txt_comm" disabled="disabled" class="materialize-textarea">@Model.D.DOCUMENTOR.COMENTARIO</textarea>
+                            <label for="txt_comm">Comentario</label>
+                        </div>
+                        @*}*@
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script>
+    var _miles = $("#miles").val();
+    var _decimales = $("#dec").val();
+    var _ctlCount = $('#ctlDis tr').length;
+    //LEJ 17.07.2018--------------------------------------
+    //Saco los nodos span para modificarlos
+    var _ctlColsp = $('.collapsible span').length;
+    var t = 0;
+    for (var i = 0; i < _ctlColsp; i++) {
+        //saco los renglones de cada tabla
+        var rowCount = $('#tableC-' + i + ' tbody tr').length;
+        t = 0;
+        for (var y = 0; y < rowCount; y++) {
+            if (_decimales === '.') {
+                var _ape = $("#ape-" + i + '-' + y).text();
+
+                //Convertimos a 2 decimales
+                _ape = parseFloat(_ape).toFixed(2);
+                t = t + parseFloat(_ape);
+            }
+            else if (_decimales === ',') {
+                //Para los valores de la tabla
+                var _ape = $("#ape-" + i + '-' + (y)).text();
+
+                //Convertimos a 2 decimales
+                _ape = parseFloat(_ape).toFixed(2);
+                t = t + parseFloat(_ape);
+            }
+        }
+        //LEJ 17.07.2018----------------------------------------------------------------
+        var _txt = $('#Tt-' + i).text();
+        if (_decimales === '.') {
+            $('#Tt-' + i).text(_txt + '- ' + '$' + t.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        }
+        else if (_decimales === ',') {
+            t = t.toFixed(2).replace('.', ',');
+            $('#Tt-' + i).text(_txt + '- ' + '$' + t.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
+        }
+    }
+    //LEJ 12.07.2018----------------------------------------
+    //Para cuando clicke el checkbox
+    $("input[type=checkbox]").on("click", function (e) {
+        //recupero los datos de lo que clickeo
+        var x = e.target;
+        if (!x.classList.contains("trade"))
+            if (x.checked === true) {
+                revisarChecked(x.id);
+            }
+    });
+
+    function revisarChecked(id) {
+        //deshabilito los checbox, para que solo este 1 checked true
+        $("input[type=checkbox]").each(function () {
+            if ($(this).attr('id') !== id) {
+                $(this).prop('checked', false);
+            }
+        });
+    }
+</script>

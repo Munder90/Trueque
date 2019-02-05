@@ -1,0 +1,1177 @@
+﻿@model TAT001.Entities.DOCUMENTO
+@using TAT001.Entities
+
+@{
+    Layout = null;
+    ViewBag.Title = "Solicitud ";
+}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style>
+        body {
+            font-family: Tahoma;
+            font-size: 12px;
+        }
+
+        .divs {
+            width: 800px;
+            height: 100px;
+            margin-right: 10px;
+            margin-bottom: 30px;
+            float: left;
+        }
+
+        .child_div_1 {
+            float: left;
+            margin-top: 30px;
+            margin-right: 5px;
+            height: 100px;
+        }
+
+        .row {
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 5px;
+        }
+
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+
+            .row .col {
+                float: left;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                padding: 0 0.75rem;
+                min-height: 1px;
+            }
+
+                .row .col[class*="push-"], .row .col[class*="pull-"] {
+                    position: relative;
+                }
+
+                .row .col.s1 {
+                    width: 8.3333333333%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s2 {
+                    width: 16.6666666667%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s3 {
+                    width: 25%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s4 {
+                    width: 33.3333333333%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s5 {
+                    width: 41.6666666667%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s6 {
+                    width: 50%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s7 {
+                    width: 58.3333333333%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s8 {
+                    width: 66.6666666667%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s9 {
+                    width: 75%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s10 {
+                    width: 83.3333333333%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s11 {
+                    width: 91.6666666667%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.s12 {
+                    width: 100%;
+                    margin-left: auto;
+                    left: auto;
+                    right: auto;
+                }
+
+                .row .col.offset-s1 {
+                    margin-left: 8.3333333333%;
+                }
+
+                .row .col.pull-s1 {
+                    right: 8.3333333333%;
+                }
+
+                .row .col.push-s1 {
+                    left: 8.3333333333%;
+                }
+
+                .row .col.offset-s2 {
+                    margin-left: 16.6666666667%;
+                }
+
+                .row .col.pull-s2 {
+                    right: 16.6666666667%;
+                }
+
+                .row .col.push-s2 {
+                    left: 16.6666666667%;
+                }
+
+                .row .col.offset-s3 {
+                    margin-left: 25%;
+                }
+
+                .row .col.pull-s3 {
+                    right: 25%;
+                }
+
+                .row .col.push-s3 {
+                    left: 25%;
+                }
+
+                .row .col.offset-s4 {
+                    margin-left: 33.3333333333%;
+                }
+
+                .row .col.pull-s4 {
+                    right: 33.3333333333%;
+                }
+
+                .row .col.push-s4 {
+                    left: 33.3333333333%;
+                }
+
+                .row .col.offset-s5 {
+                    margin-left: 41.6666666667%;
+                }
+
+                .row .col.pull-s5 {
+                    right: 41.6666666667%;
+                }
+
+                .row .col.push-s5 {
+                    left: 41.6666666667%;
+                }
+
+                .row .col.offset-s6 {
+                    margin-left: 50%;
+                }
+
+                .row .col.pull-s6 {
+                    right: 50%;
+                }
+
+                .row .col.push-s6 {
+                    left: 50%;
+                }
+
+                .row .col.offset-s7 {
+                    margin-left: 58.3333333333%;
+                }
+
+                .row .col.pull-s7 {
+                    right: 58.3333333333%;
+                }
+
+                .row .col.push-s7 {
+                    left: 58.3333333333%;
+                }
+
+                .row .col.offset-s8 {
+                    margin-left: 66.6666666667%;
+                }
+
+                .row .col.pull-s8 {
+                    right: 66.6666666667%;
+                }
+
+                .row .col.push-s8 {
+                    left: 66.6666666667%;
+                }
+
+                .row .col.offset-s9 {
+                    margin-left: 75%;
+                }
+
+                .row .col.pull-s9 {
+                    right: 75%;
+                }
+
+                .row .col.push-s9 {
+                    left: 75%;
+                }
+
+                .row .col.offset-s10 {
+                    margin-left: 83.3333333333%;
+                }
+
+                .row .col.pull-s10 {
+                    right: 83.3333333333%;
+                }
+
+                .row .col.push-s10 {
+                    left: 83.3333333333%;
+                }
+
+                .row .col.offset-s11 {
+                    margin-left: 91.6666666667%;
+                }
+
+                .row .col.pull-s11 {
+                    right: 91.6666666667%;
+                }
+
+                .row .col.push-s11 {
+                    left: 91.6666666667%;
+                }
+
+                .row .col.offset-s12 {
+                    margin-left: 100%;
+                }
+
+                .row .col.pull-s12 {
+                    right: 100%;
+                }
+
+                .row .col.push-s12 {
+                    left: 100%;
+                }
+
+        #container {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            right: 2px;
+        }
+
+        #navi,
+        #infoi {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #infoi {
+            z-index: 10;
+        }
+    </style>
+    <script type="text/javascript">
+        function f1() {
+            document.getElementById("btn_comm").href = "";
+        }
+    </script>
+</head>
+<body>
+    @{
+        string bandera = ViewBag.bandera, textoNotificacionCab = "", textoNotificacionCue = "";
+        bandera = bandera + ".png";
+    }
+    @if (Model.TSOL.REVERSO)
+    {
+        textoNotificacionCab = @ViewBag.cabeceraReverso;
+        textoNotificacionCue = @ViewBag.reverso;
+        textoNotificacionCue = textoNotificacionCue.Replace("a1", ViewBag.nombreUsuario).Replace("b1", ViewBag.idUsuario);
+    }
+    else if (!Model.TSOL.CARTA)
+    {
+        textoNotificacionCab = @ViewBag.cabeceraSoporte;
+        textoNotificacionCue = @ViewBag.soporteExterno;
+        textoNotificacionCue = textoNotificacionCue.Replace("a1", ViewBag.nombreUsuario).Replace("b1", ViewBag.idUsuario);
+    }
+
+
+    @*//B20180803 MGC Correos......................................*@
+    @* ------------------------------------------------------------------------LEJ 09-07-18 *@
+    <input id="miles" name="miles" type="hidden" value="@ViewBag.miles">
+    <input id="dec" name="dec" type="hidden" value="@ViewBag.dec">
+    @* ------------------------------------------------------------------------LEJ 09-07-18 *@
+    @*//B20180803 MGC Correos......................................*@
+
+    @*TABLA CON EL CONTENIDO DE LA BARRA DE CABECERA*@
+    <table class="tg" style="width:100%; height:50px; border-collapse:collapse; background-color:#d11d53;">
+        <tr>
+            <td>
+                <div class="row" style="margin-bottom:0">
+                    <table class="tg" style="width: 100%;border-collapse: collapse;">
+                        <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                            <td>
+                                @{ string mail = ViewBag.mail;}
+                                @if (mail == "X")
+                                {
+                                    <img src="miimg_id" />
+                                }
+                                else
+                                {
+                                    <img src="~/images/logo-kellogg2.png" />
+                                }
+                            </td>
+                            <td style="text-align:center;">
+                                @if (Model.FLUJOes.OrderByDescending(a => a.POS).FirstOrDefault().WORKFP.ACCION.TIPO == "A")
+                                {
+                                    <h1 style="display:inline; text-align:center;color:white;">@ViewBag.tituloCabeceraAprobacion - @Model.TSOL.TSOLTs.Where(x => x.SPRAS_ID.Equals(Model.USUARIO.SPRAS_ID)).FirstOrDefault().TXT020</h1>
+                                }
+                                else
+                                {
+                                    <h1 style="display:inline; text-align:center;color:white;">@ViewBag.tituloCabeceraNotificacion @textoNotificacionCab</h1>
+                                }
+                            </td>
+                            <td>
+                                <img src="miflag_id" style="margin-right:10px;" align="right" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    @*DIV CON EL CONTENIDO DEBAJO DE LA BARRA DE CABECERA*@
+    @if (Model.FLUJOes.OrderByDescending(a => a.POS).FirstOrDefault().WORKFP.ACCION.TIPO == "A")
+    {
+        <table class="tg" style="width:100%; height:50px; border-collapse:collapse;">
+            <tr>
+                <td>
+                    <div class="row" style="margin-bottom:0">
+                        <table class="tg" style="width: 100%;border-collapse: collapse;">
+                            <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                <td>
+                                    <p>
+                                        <h4 style="margin-bottom:0px;">@ViewBag.tituloBajoCabeceraAprobacion</h4>
+                                        @ViewBag.tituloBajoCabeceraAprobacion1<br />
+                                        @ViewBag.tituloBajoCabeceraAprobacion2<br />
+                                        @ViewBag.tituloBajoCabeceraAprobacion3<br />
+                                        @ViewBag.tituloBajoCabeceraAprobacion4<br />
+                                    </p>
+                                </td>
+                                <td class="col s4" style="text-align:right;">
+                                    <a type="button" class="btn-small" id="btn_cancel"
+                                       style="height: 32.4px;line-height: 32.4px;
+                        font-size: 13px;
+                        text-decoration: none;
+                        color: #fff;
+                        background-color: #26a69a;
+                        text-align: center;
+                        letter-spacing: .5px;
+                        -webkit-transition: background-color .2s ease-out;
+                        transition: background-color .2s ease-out;
+                        cursor: pointer;
+                        border: none;
+                        border-radius: 2px;
+                        display: inline-block;
+                        height: 36px;
+                        line-height: 36px;
+                        padding: 0 2rem;
+                        text-transform: uppercase;
+                        vertical-align: middle;
+                        -webkit-tap-highlight-color: transparent;"
+                                       href="mailto:LA_TAT@kellogg.com?Subject=TAT:Approved-@Model.NUM_DOC-@ViewBag.Pos" target="_top">
+                                        @ViewBag.btnAceptar
+                                    </a>
+                                </td>
+                                <td class="col s4">
+                                    <a type="button" class="btn-small" id="btn_cancel"
+                                       style="height: 32.4px;line-height: 32.4px;
+                        font-size: 13px;
+                        text-decoration: none;
+                        color: #fff;
+                        background-color: #f29414;
+                        text-align: center;
+                        letter-spacing: .5px;
+                        -webkit-transition: background-color .2s ease-out;
+                        transition: background-color .2s ease-out;
+                        cursor: pointer;
+                        border: none;
+                        border-radius: 2px;
+                        display: inline-block;
+                        height: 36px;
+                        line-height: 36px;
+                        padding: 0 2rem;
+                        text-transform: uppercase;
+                        vertical-align: middle;
+                        -webkit-tap-highlight-color: transparent;"
+                                       href="mailto:LA_TAT@kellogg.com?Subject=TAT:Rejected-@Model.NUM_DOC-@ViewBag.Pos" onclick="f1();" target="_top">
+                                        @ViewBag.btnCancelar
+                                    </a>
+                                </td>
+                                <td>
+                                    <div>
+                                        @Html.LabelFor(model => model.SOCIEDAD_ID, "BU", new { @style = "color: rgba(0, 0, 0, 1.0);", @id = "lbl_sociedadid" })
+                                    </div>
+                                    <div class="input-field col s12" style="margin-bottom:0;">
+                                        <input type="text" disabled="disabled" style="color: rgba(0, 0, 0, 1.0); background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 30px;width: 120px;margin: 0 0 8px 0;padding: 0;" value="@Model.SOCIEDAD_ID" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    }
+    else
+    {
+        <table class="tg" style="width:100%; height:50px; border-collapse:collapse;">
+            <tr>
+                <td>
+                    <div class="row" style="margin-bottom:0">
+                        <table class="tg" style="width: 100%;border-collapse: collapse;">
+                            <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                <td class="col s4">
+                                    <p>
+                                        <h4 style="margin-bottom:0px;">
+                                            @textoNotificacionCue
+                                        </h4>
+                                    </p>
+                                </td>
+                                <td>
+                                    <div>
+                                        @Html.LabelFor(model => model.SOCIEDAD_ID, "BU", new { @style = "color: rgba(0, 0, 0, 1.0);", @id = "lbl_sociedadid" })
+                                    </div>
+                                    <div class="input-field col s12" style="margin-bottom:0;">
+                                        <input type="text" disabled="disabled" style="color: rgba(0, 0, 0, 1.0); background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 30px;width: 120px;margin: 0 0 8px 0;padding: 0;" value="@Model.SOCIEDAD_ID" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    }
+
+    @*DIV CON EL CONTENIDO DEL CUERPO DEL CORREO*@
+
+    @if (Model.TSOL.REVERSO)
+    {
+        <table class="tg" style="width: 100%; border-collapse: collapse;">
+            <tr style="border-bottom: 1px solid #e0e0e0;">
+                <td>
+                    <h4 style="font-family: -apple-system, BlinkMacSystemFont,Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif; font-size:25px;">
+                        @ViewBag.Title @Model.NUM_DOC
+                    </h4>
+                </td>
+            </tr>
+
+            <tr style="border-bottom: 1px solid #e0e0e0;">
+                <td>
+                    <div class="card-panel" style="transition: box-shadow .25s, -webkit-box-shadow .25s;
+                                padding: 24px;margin: 0 0 1rem 0;border-radius: 2px;
+                                background-color:#fff;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);">
+
+                        <div class="row" style="margin-bottom:0">
+                            <table class="tg" style="width: 100%;border-collapse: collapse;">
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.usuario</label>
+                                        @Html.EditorFor(model => model.USUARIOC_ID, new { htmlAttributes = new { @disabled = "disabled", @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 30px;width: 100%;margin: 0 0 8px 0;padding: 0; " } })
+                                    </td>
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.usuarioNombre</label>
+                                        @*@Html.LabelFor(model => model.USUARIO.NOMBRE, ViewBag.usuarioNombre, new { @style = "color: rgba(0, 0, 0, 1.0);", @id = "lbl_manager" })*@
+                                        @Html.EditorFor(model => model.USUARIO.NOMBRE, new { htmlAttributes = new { @disabled = "disabled", @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 30px;width: 100%;margin: 0 0 8px 0;padding: 0; ", @Value = Model.USUARIO.NOMBRE, Model.USUARIO.APELLIDO_P, Model.USUARIO.APELLIDO_M } })
+                                    </td>
+                                </tr>
+
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.relPeriodo</label>
+                                        @Html.EditorFor(model => model.PERIODO, new { htmlAttributes = new { @disabled = "disabled", @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 30px;width: 100%;margin: 0 0 8px 0;padding: 0;" } })
+                                    </td>
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.relEjercicio</label>
+                                        @Html.EditorFor(model => model.EJERCICIO, new { htmlAttributes = new { @disabled = "disabled", @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 30px;width: 100%;margin: 0 0 8px 0;padding: 0;" } })
+                                    </td>
+                                </tr>
+
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.tipoSolicitud</label>
+                                        @*@Html.LabelFor(model => model.TSOL_ID, ViewBag.tipoSolicitud, new { @style = "color: rgba(0, 0, 0, 1.0);", @id = "lbl_userid" })*@
+                                        @Html.EditorFor(model => model.TSOL.TSOLTs.Where(a => a.SPRAS_ID.Equals(model.USUARIO.SPRAS_ID)).FirstOrDefault().TXT020, new { htmlAttributes = new { @disabled = "disabled", @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 30px;width: 100%;margin: 0 0 8px 0;padding: 0; " } })
+                                    </td>
+
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.concepto</label>
+                                        @*@Html.LabelFor(model => model.CONCEPTO, @ViewBag.concepto, new { @style = "color: rgba(0, 0, 0, 1.0);", @id = "lbl_userid" })*@
+                                        @Html.EditorFor(model => model.CONCEPTO, new { htmlAttributes = new { @disabled = "disabled", @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 30px;width: 100%;margin: 0 0 8px 0;padding: 0; " } })
+                                    </td>
+                                </tr>
+
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.clasificacion</label>
+                                        @*@Html.LabelFor(model => model.TALL_ID, ViewBag.clasificacion, new { @style = "    color: rgba(0, 0, 0, 1.0);", @id = "lbl_userid" })*@
+                                        @Html.EditorFor(model => model.TALL.TALLTs.Where(a => a.SPRAS_ID.Equals(model.USUARIO.SPRAS_ID)).FirstOrDefault().TXT50, new { htmlAttributes = new { @disabled = "disabled", @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 30px;width: 100%;margin: 0 0 8px 0;padding: 0; " } })
+                                    </td>
+
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.montoDoc</label>
+                                        @*@Html.LabelFor(model => model.MONTO_DOC_MD, @ViewBag.montoDoc, new { @style = "    color: rgba(0, 0, 0, 1.0);", @id = "lbl_userid" })*@
+                                        <input type="text" disabled="disabled" style="color:rgba(0, 0, 0, 1.0); background-color:transparent; border:none; border-bottom:1px dotted rgba(0, 0, 0, 1.0); border-radius:0; outline:none; height:30px; width:100%; margin:0 0 8px 0; padding:0; font-weight:bold;" value="@ViewBag.monto" />
+                                    </td>
+                                </tr>
+
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.cliente</label>
+                                        @*@Html.LabelFor(model => model.PAYER_ID, ViewBag.cliente, new { @style = "    color: rgba(0, 0, 0, 1.0);", @id = "lbl_userid" })*@
+                                        @Html.EditorFor(model => model.PAYER_ID, new { htmlAttributes = new { @disabled = "disabled", @style = "color:rgba(0, 0, 0, 1.0); background-color:transparent; border:none; border-bottom:1px dotted rgba(0, 0, 0, 1.0); border-radius:0; outline:none; height:30px; width:100%; margin:0 0 8px 0; padding:0; font-weight:bold;" } })
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.clienteNombre</label>
+                                        @*@Html.LabelFor(model => model.PAYER_NOMBRE, ViewBag.clienteNombre, new { @style = "    color: rgba(0, 0, 0, 1.0);", @id = "lbl_userid" })*@
+                                        @Html.EditorFor(model => model.CLIENTE.NAME1, new { htmlAttributes = new { @disabled = "disabled", @style = "color:rgba(0, 0, 0, 1.0); background-color:transparent; border:none; border-bottom:1px dotted rgba(0, 0, 0, 1.0); border-radius:0; outline:none; height:30px; width:100%; margin:0 0 8px 0; padding:0; font-weight:bold;" } })
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    
+                @if (Model.DOCUMENTOR != null)
+                {
+                    <div class="card-panel" style="transition: box-shadow .25s, -webkit-box-shadow .25s;
+                                padding: 24px;margin: 0.5rem 0 1rem 0;border-radius: 2px;
+                                background-color:#fff;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);">
+
+                        @*<h5 style="font-size:20px;margin:5px;">@ViewBag.headReverso</h5>*@
+
+                        <div class="row" style="margin-bottom:0">
+                            <table class="tg" style="width: 100%;border-collapse: collapse;">
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                        <td>
+                                            <span>@ViewBag.razonReverso</span>
+                                        </td>
+                                        <td style="text-align:right">
+                                            <label id="p_vtweg" style="font-weight:bold;">@Model.DOCUMENTOR.COMENTARIO</label>
+                                        </td>
+                                    </tr>
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td class="tg-yw4l">
+                                        <span>@ViewBag.tipoReverso</span>
+                                    </td>
+                                    <td class="tg-yw4l" style="text-align:right">
+                                        <label id="p_kunnr" style="color: #9e9e9e;">@Model.DOCUMENTOR.TREVERSA.DESCRIPCION</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                }
+
+
+                    <div class="card-panel" style="transition: box-shadow .25s, -webkit-box-shadow .25s;
+                                padding: 24px;margin: 0.5rem 0 1rem 0;border-radius: 2px;
+                                background-color:#fff;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);">
+                        <h5 style="font-size:20px;margin:5px;">@ViewBag.analisisSolicitud</h5>
+
+                        <div class="row" style="margin-bottom:0">
+                            <table class="tg" style="width: 100%;border-collapse: collapse;">
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td class="tg-yw4l">
+                                        <span>@ViewBag.lblMontoSolicitud</span>
+                                    </td>
+                                    <td class="tg-yw4l" style="text-align:right">
+                                        <h5 id="p_vtweg">@ViewBag.montoSol</h5>
+                                        @*<label id="p_vtweg" style="font-weight:bold;">@ViewBag.montoSol</label>*@
+                                    </td>
+                                </tr>
+
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td class="tg-yw4l">
+                                        <span>@ViewBag.lblImpuesto</span>
+                                    </td>
+                                    <td style="text-align:right;">
+                                        <label id="p_imp" style="color: #9e9e9e;">@ViewBag.impuesto</label>
+                                    </td>
+                                </tr>
+
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td class="tg-yw4l">
+                                        <span>@ViewBag.lblMontoTotal</span>
+                                    </td>
+                                    <td style="text-align:right">
+                                        <label id="p_kunnr" style="color: #9e9e9e;">@ViewBag.montoTotal</label>
+                                    </td>
+                                </tr>
+
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td class="tg-yw4l">
+                                        <span>@ViewBag.lblMontoProvision</span>
+                                    </td>
+                                    <td class="tg-yw4l" style="text-align:right">
+                                        <label id="p_kunnr" style="color: #9e9e9e;">@ViewBag.montoProv</label>
+                                    </td>
+                                </tr>
+
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td class="tg-yw4l">
+                                        <span>@ViewBag.lblMontoAplicado</span>
+                                    </td>
+                                    <td class="tg-yw4l" style="text-align:right">
+                                        <label id="p_kunnr" style="color: #9e9e9e;">@ViewBag.montoApli</label>
+                                    </td>
+                                </tr>
+
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td class="tg-yw4l">
+                                        <span>@ViewBag.lblRemanente</span>
+                                    </td>
+                                    <td style="background-color:@ViewBag.rema_color;text-align:right;">
+                                        <h5 id="p_kunnr">@ViewBag.remanente</h5>
+                                        @*<label id="p_kunnr" style="font-weight:bold;">@ViewBag.remanente</label>*@
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <input type="text" style="outline:none; height:30px; width:100%; display:none;" value="@ViewBag.monto" />
+                </td>
+
+                <td>
+                    <div class="card-panel" style="transition: box-shadow .25s, -webkit-box-shadow .25s;
+                                padding: 24px;margin: 0.5rem 0 1rem 0;border-radius: 2px;
+                                background-color:#fff;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);">
+                        <h5 style="font-size:20px;margin:5px;">@ViewBag.analisisPresupuesto</h5>
+                        <p style="font-weight:bold;">@ViewBag.fechaCarga @ViewBag.ultMod</p>
+
+                        <div class="row" style="margin-bottom:0">
+                            <table class="tg" style="width: 100%;border-collapse: collapse;">
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td class="tg-yw4l">
+                                        <label>@ViewBag.presupuestoCanal</label>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        @*<label id="p_vtweg" style="font-weight:bold;">@ViewBag.vtweg</label>*@
+                                        <h5 id="p_vtweg">@ViewBag.vtweg</h5>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        @*<label id="p_canal" style="font-weight:bold;">@ViewBag.pcan</label>*@
+                                        <h5 id="p_canal">@ViewBag.pcan</h5>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td class="tg-yw4l">
+                                        <label>@ViewBag.preCliBaAgrupador</label>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        @*<label id="p_kunnr" style="font-weight:bold;">@ViewBag.kunnr</label>*@
+                                        <h5 id="p_kunnr">@ViewBag.kunnr</h5>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        @*<label id="p_banner" style="font-weight:bold;">@ViewBag.pban</label>*@
+                                        <h5 id="p_banner">@ViewBag.pban</h5>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="card-panel" style="transition: box-shadow .25s, -webkit-box-shadow .25s;
+                                padding: 24px;margin: 0.5rem 0 1rem 0;border-radius: 2px;
+                                background-color:#fff;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);">
+
+                            <div class="row" style="margin-bottom:0">
+                                <table class="tg" style="width: 100%; border-collapse: collapse;">
+                                    <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                        <td class="tg-yw4l" colspan="2">
+                                            <label>@ViewBag.registroSap</label>
+                                        </td>
+                                        <td class="tg-yw4l">
+                                            <label id="pc_c" style="color: #9e9e9e;">@ViewBag.pcc</label>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #e0e0e0; height:35px;">
+                                        <td class="tg-yw4l" colspan="2">
+                                            <label>Por registrar en SAP</label>
+                                        </td>
+                                        <td class="tg-yw4l">
+                                            <label id="pc_a" style="color: #9e9e9e;">@ViewBag.pca</label>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                        <td class="tg-yw4l" colspan="2">
+                                            <label>@ViewBag.procesoIcon</label>
+                                        </td>
+                                        <td class="tg-yw4l">
+                                            <label id="pc_p" style="color: #9e9e9e; text-decoration:underline">@ViewBag.pcp</label>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                        <td class="tg-yw4l" colspan="2">
+                                            <label>@ViewBag.consumido</label>
+                                        </td>
+                                        <td></td>
+                                        <td class="tg-yw4l">
+                                            @*<label id="pc_t" style="font-weight:bold;">@ViewBag.pct</label>*@
+                                            <h5 id="pc_t">@ViewBag.pct</h5>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                        <td class="tg-yw4l" colspan="2">
+                                            <label>@ViewBag.excedido</label>
+                                        </td>
+                                        <td></td>
+                                        <td class="tg-yw4l">
+                                            @*<label id="consu" style="font-weight:bold;">@ViewBag.consu</label>*@
+                                            <h5 id="consu">@ViewBag.consu</h5>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        @using (TruequeEntities db = new TruequeEntities())
+                        {
+                            List
+                            <DOCUMENTO> inf = new List<DOCUMENTO>();
+                            inf = db.DOCUMENTOes.Where(x => x.DOCUMENTO_REF == Model.NUM_DOC).ToList();
+                            if (Model.DOCUMENTO_REF != null)
+                            {
+                                <div class="card-panel" style="transition: box-shadow .25s, -webkit-box-shadow .25s;
+                                padding: 24px;margin: 0.5rem 0 1rem 0;border-radius: 2px;
+                                background-color:#fff;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);">
+                                    <h5 style="font-size:20px;margin:5px;">@ViewBag.relacionados</h5>
+
+                                    <div class="row" style="margin-bottom:0">
+                                        <table class="table striped" id="table" style="width:100%;">
+                                            <thead>
+                                                <tr class="header">
+                                                    <th>
+                                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.relTipo</label>
+                                                        @*@Html.LabelFor(model => model.TSOL_ID, ViewBag.relTipo)*@
+                                                    </th>
+                                                    <th>
+                                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.relDocumento</label>
+                                                        @*@Html.LabelFor(model => model.NUM_DOC, ViewBag.relDocumento)*@
+                                                    </th>
+                                                    <th>
+                                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.relSap</label>
+                                                        @*@Html.LabelFor(model => model.DOCUMENTO_SAP, @ViewBag.relSap)*@
+                                                    </th>
+                                                    <th>
+                                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.relSociedad</label>
+                                                        @*@Html.LabelFor(model => model.SOCIEDAD_ID, @ViewBag.relSociedad)*@
+                                                    </th>
+                                                    <th>
+                                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.relPeriodo</label>
+                                                        @*@Html.LabelFor(model => model.PERIODO, @ViewBag.relPeriodo)*@
+                                                    </th>
+                                                    <th>
+                                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.relEjercicio</label>
+                                                        @*@Html.LabelFor(model => model.EJERCICIO, ViewBag.relEjercicio)*@
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody style="text-align:center;">
+                                                <tr rowspan=2>
+                                                    <td>
+                                                        @Model.TSOL.TSOLTs.Where(x => x.SPRAS_ID == "ES").FirstOrDefault().TXT010
+                                                    </td>
+                                                    <td>
+                                                        @Model.NUM_DOC
+                                                    </td>
+                                                    <td>
+                                                        @Model.DOCUMENTO_SAP
+                                                    </td>
+                                                    <td>
+                                                        @Model.SOCIEDAD_ID
+                                                    </td>
+                                                    <td>
+                                                        @Model.PERIODO
+                                                    </td>
+                                                    <td>
+                                                        @Model.EJERCICIO
+                                                    </td>
+                                                </tr>
+                                                @if (inf.Count() > 0)
+                                                {
+                                                    foreach (var miCi in inf)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @miCi.TSOL.TSOLTs.Where(x => x.SPRAS_ID == ViewBag.spras_id).FirstOrDefault().TXT010
+                                                            </td>
+                                                            <td>
+                                                                <a href="@Url.Action("Details", new { id = miCi.NUM_DOC })">@miCi.NUM_DOC</a>
+                                                            </td>
+                                                            <td>
+                                                                @miCi.DOCUMENTO_SAP
+                                                            </td>
+                                                            <td>
+                                                                @miCi.SOCIEDAD_ID
+                                                            </td>
+                                                            <td>
+                                                                @miCi.PERIODO
+                                                            </td>
+                                                            <td>
+                                                                @miCi.EJERCICIO
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span style="font-weight:bold;">@ViewBag.pieSoporte</span>
+                    <a href="@ViewBag.url@Url.Action("Details","Solicitudes", new { id=Model.NUM_DOC })">
+                        Link.
+                    </a>
+                </td>
+            </tr>
+        </table>
+    }
+    else
+    {
+        <table class="tg" style="width: 100%; border-collapse: collapse;">
+            <tr style="border-bottom: 1px solid #e0e0e0;">
+                <td>
+                    <h4 style="font-family: -apple-system, BlinkMacSystemFont,Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif; font-size:25px;">
+                        @ViewBag.Title @Model.NUM_DOC
+                        @if (Model.TIPO_RECURRENTE != null)
+                        {
+                            <span style="font-weight: normal;">Documento recurrente</span>
+                        }
+                    </h4>
+                </td>
+            </tr>
+
+            <tr style="border-bottom: 1px solid #e0e0e0;">
+                <td>
+                    <div class="card-panel" style="transition: box-shadow .25s, -webkit-box-shadow .25s;
+                                padding: 24px;margin: 0 0 1rem 0;border-radius: 2px;
+                                background-color:#fff;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);">
+
+                        <div class="row" style="margin-bottom:0">
+                            <table class="tg" style="width: 100%;border-collapse: collapse;">
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.usuario</label>
+                                        @Html.EditorFor(model => model.USUARIOC_ID, new { htmlAttributes = new { @disabled = "disabled", @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 30px;width: 100%;margin: 0 0 8px 0;padding: 0; " } })
+                                    </td>
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.usuarioNombre</label>
+                                        @*@Html.LabelFor(model => model.USUARIO.NOMBRE, ViewBag.usuarioNombre, new { @style = "color: rgba(0, 0, 0, 1.0);", @id = "lbl_manager" })*@
+                                        @Html.EditorFor(model => model.USUARIO.NOMBRE, new { htmlAttributes = new { @disabled = "disabled", @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 30px;width: 100%;margin: 0 0 8px 0;padding: 0; ", @Value = Model.USUARIO.NOMBRE, Model.USUARIO.APELLIDO_P, Model.USUARIO.APELLIDO_M } })
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.tipoSolicitud</label>
+                                        @*@Html.LabelFor(model => model.TSOL_ID, ViewBag.tipoSolicitud, new { @style = "color: rgba(0, 0, 0, 1.0);", @id = "lbl_userid" })*@
+                                        @Html.EditorFor(model => model.TSOL.TSOLTs.Where(a => a.SPRAS_ID.Equals(model.USUARIO.SPRAS_ID)).FirstOrDefault().TXT020, new { htmlAttributes = new { @disabled = "disabled", @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 30px;width: 100%;margin: 0 0 8px 0;padding: 0; " } })
+                                    </td>
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.clasificacion</label>
+                                        @*@Html.LabelFor(model => model.TALL_ID, ViewBag.clasificacion, new { @style = "    color: rgba(0, 0, 0, 1.0);", @id = "lbl_userid" })*@
+                                        @Html.EditorFor(model => model.TALL.TALLTs.Where(a => a.SPRAS_ID.Equals(model.USUARIO.SPRAS_ID)).FirstOrDefault().TXT50, new { htmlAttributes = new { @disabled = "disabled", @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 30px;width: 100%;margin: 0 0 8px 0;padding: 0; " } })
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.cliente</label>
+                                        @*@Html.LabelFor(model => model.PAYER_ID, ViewBag.cliente, new { @style = "    color: rgba(0, 0, 0, 1.0);", @id = "lbl_userid" })*@
+                                        @Html.EditorFor(model => model.PAYER_ID, new { htmlAttributes = new { @disabled = "disabled", @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 30px;width: 100%;margin: 0 0 8px 0;padding: 0;" } })
+                                    </td>
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.clienteNombre</label>
+                                        @*@Html.LabelFor(model => model.PAYER_NOMBRE, ViewBag.clienteNombre, new { @style = "    color: rgba(0, 0, 0, 1.0);", @id = "lbl_userid" })*@
+                                        @Html.EditorFor(model => model.CLIENTE.NAME1, new { htmlAttributes = new { @disabled = "disabled", @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 30px;width: 100%;margin: 0 0 8px 0;padding: 0;" } })
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="card-panel" style="transition: box-shadow .25s, -webkit-box-shadow .25s;
+                                padding: 24px;margin: 0.5rem 0 1rem 0;border-radius: 2px;
+                                background-color:#fff;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);">
+                        <h5 style="font-size:20px;margin:5px;">@ViewBag.analisisSolicitud</h5>
+
+                        <div class="row" style="margin-bottom:0">
+                            <table class="tg" style="width: 100%;border-collapse: collapse;">
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td class="tg-yw4l">
+                                        <span>@ViewBag.lblMontoSolicitud</span>
+                                    </td>
+                                    <td class="tg-yw4l" style="text-align:right">
+                                        <h5 id="p_vtweg">@ViewBag.montoSol</h5>
+                                        @*<label id="p_vtweg" style="font-weight:bold;">@ViewBag.montoSol</label>*@
+                                    </td>
+                                </tr>
+
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td class="tg-yw4l">
+                                        <span>@ViewBag.lblImpuesto</span>
+                                    </td>
+                                    <td style="text-align:right;">
+                                        <label id="p_imp" style="color: #9e9e9e;">@ViewBag.impuesto</label>
+                                    </td>
+                                </tr>
+
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td class="tg-yw4l">
+                                        <span>@ViewBag.lblMontoTotal</span>
+                                    </td>
+                                    <td style="text-align:right">
+                                        <label id="p_kunnr" style="color: #9e9e9e;">@ViewBag.montoTotal</label>
+                                    </td>
+                                </tr>
+
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td class="tg-yw4l">
+                                        <span>@ViewBag.lblMontoProvision</span>
+                                    </td>
+                                    <td class="tg-yw4l" style="text-align:right">
+                                        <label id="p_kunnr" style="color: #9e9e9e;">@ViewBag.montoProv</label>
+                                    </td>
+                                </tr>
+
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td class="tg-yw4l">
+                                        <span>@ViewBag.lblMontoAplicado</span>
+                                    </td>
+                                    <td class="tg-yw4l" style="text-align:right">
+                                        <label id="p_kunnr" style="color: #9e9e9e;">@ViewBag.montoApli</label>
+                                    </td>
+                                </tr>
+
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td class="tg-yw4l">
+                                        <span>@ViewBag.lblRemanente</span>
+                                    </td>
+                                    <td style="background-color:@ViewBag.rema_color;text-align:right;">
+                                        <h5 id="p_kunnr">@ViewBag.remanente</h5>
+                                        @*<label id="p_kunnr" style="font-weight:bold;">@ViewBag.remanente</label>*@
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="card-panel" style="transition: box-shadow .25s, -webkit-box-shadow .25s;
+                                padding:24px; border-radius:2px;
+                                margin-top: 0px;
+                                background-color:#fff;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);">
+
+                        <h5 style="font-size:20px;">Vigencia</h5>
+
+                        <div class="row" style="margin-bottom:0">
+                            <table class="tg" style="width: 100%;border-collapse: collapse;">
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.vigenciaDe</label>
+                                        @*@Html.LabelFor(model => model.FECHAI_VIG, @ViewBag.vigenciaDe, new { @style = "color: rgba(0, 0, 0, 1.0);", @id = "lbl_userid" })*@
+                                        <input type="text" disabled="disabled" style="color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 30px;width: 100%;margin: 0 0 8px 0;padding: 0; " value="@Model.FECHAI_VIG.Value.ToShortDateString()" />
+                                    </td>
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.vigenciaA</label>
+                                        @*@Html.LabelFor(model => model.FECHAF_VIG, @ViewBag.vigenciaA, new { @style = "    color: rgba(0, 0, 0, 1.0);", @id = "lbl_userid" })*@
+                                        <input type="text" disabled="disabled" style="color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 30px;width: 100%;margin: 0 0 8px 0;padding: 0; " value="@Model.FECHAF_VIG.Value.ToShortDateString()" />
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td>
+                                        <label style="color: rgba(0, 0, 0, 1.0);">@ViewBag.concepto</label>
+                                        @*@Html.LabelFor(model => model.CONCEPTO, @ViewBag.concepto, new { @style = "color: rgba(0, 0, 0, 1.0);", @id = "lbl_userid" })*@
+                                        @Html.EditorFor(model => model.CONCEPTO, new { htmlAttributes = new { @disabled = "disabled", @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 30px;width: 100%;margin: 0 0 8px 0;padding: 0; " } })
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="card-panel" style="transition: box-shadow .25s, -webkit-box-shadow .25s;
+                                padding: 24px;margin: 0.5rem 0 1rem 0;border-radius: 2px;
+                                background-color:#fff;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);">
+                        <h5 style="font-size:20px;margin:5px;">@ViewBag.analisisPresupuesto</h5>
+                        <p style="font-weight:bold;">@ViewBag.fechaCarga @ViewBag.ultMod</p>
+
+                        <div class="row" style="margin-bottom:0">
+                            <table class="tg" style="width: 100%;border-collapse: collapse;">
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td class="tg-yw4l">
+                                        <label>@ViewBag.presupuestoCanal</label>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        @*<label id="p_vtweg" style="font-weight:bold;">@ViewBag.vtweg</label>*@
+                                        <h5 id="p_vtweg">@ViewBag.vtweg</h5>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        @*<label id="p_canal" style="font-weight:bold;">@ViewBag.pcan</label>*@
+                                        <h5 id="p_canal">@ViewBag.pcan</h5>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                    <td class="tg-yw4l">
+                                        <label>@ViewBag.preCliBaAgrupador</label>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        @*<label id="p_kunnr" style="font-weight:bold;">@ViewBag.kunnr</label>*@
+                                        <h5 id="p_kunnr">@ViewBag.kunnr</h5>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        @*<label id="p_banner" style="font-weight:bold;">@ViewBag.pban</label>*@
+                                        <h5 id="p_banner">@ViewBag.pban</h5>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="card-panel" style="transition: box-shadow .25s, -webkit-box-shadow .25s;
+                                padding: 24px;margin: 0.5rem 0 1rem 0;border-radius: 2px;
+                                background-color:#fff;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);">
+
+                            <div class="row" style="margin-bottom:0">
+                                <table class="tg" style="width: 100%; border-collapse: collapse;">
+                                    <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                        <td class="tg-yw4l" colspan="2">
+                                            <label>@ViewBag.registroSap</label>
+                                        </td>
+                                        <td class="tg-yw4l">
+                                            <label id="pc_c" style="color: #9e9e9e;">@ViewBag.pcc</label>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                        <td class="tg-yw4l" colspan="2">
+                                            <label>Por registrar en SAP</label>
+                                        </td>
+                                        <td class="tg-yw4l">
+                                            <label id="pc_a" style="color: #9e9e9e;">@ViewBag.pca</label>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                        <td class="tg-yw4l" colspan="2">
+                                            <label>@ViewBag.procesoIcon</label>
+                                        </td>
+                                        <td class="tg-yw4l">
+                                            <label id="pc_p" style="color: #9e9e9e; text-decoration:underline">@ViewBag.pcp</label>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                        <td class="tg-yw4l" colspan="2">
+                                            <label>@ViewBag.consumido</label>
+                                        </td>
+                                        <td></td>
+                                        <td class="tg-yw4l">
+                                            @*<label id="pc_t" style="font-weight:bold;">@ViewBag.pct</label>*@
+                                            <h5 id="pc_t">@ViewBag.pct</h5>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;">
+                                        <td class="tg-yw4l" colspan="2">
+                                            <label>@ViewBag.excedido</label>
+                                        </td>
+                                        <td></td>
+                                        <td class="tg-yw4l">
+                                            @*<label id="consu" style="font-weight:bold;">@ViewBag.consu</label>*@
+                                            <h5 id="consu">@ViewBag.consu</h5>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @if (Model.FLUJOes.OrderByDescending(a => a.POS).FirstOrDefault().WORKFP.ACCION.TIPO == "A")
+                    {
+                        <span style="font-weight:bold;">@ViewBag.pieAprobacion</span>
+                        <a href="@ViewBag.url@Url.Action("Details","Solicitudes", new { id=Model.NUM_DOC })">
+                            Link.
+                        </a>
+                    }
+                    else
+                    {
+                        <span style="font-weight:bold;">@ViewBag.pieSoporte</span>
+                        <a href="@ViewBag.url@Url.Action("Details","Solicitudes", new { id=Model.NUM_DOC })">
+                            Link.
+                        </a>
+                    }
+                </td>
+            </tr>
+        </table>
+    }
+</body>
+</html>

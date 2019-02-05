@@ -1,0 +1,197 @@
+﻿@model IEnumerable<TAT001.Entities.SOCIEDAD>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 920;
+    ViewBag.carpeta_r = 500;
+}
+<div class="row">
+    <div class="card-panel">
+        <div class="row" style="margin-bottom:0;">
+            <div class="input-field col s3 m3 l3">
+                <select id="selecc">
+                    <option value="10" selected>10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                <label id="btn_length"></label>
+            </div>
+            <div class="input-field col s5 m3 l3 offset-l6 offset-m6 offset-s4">
+                <input type="text" class="global_filter" id="global_filter">
+                <label for="global_filter" id="lbl_search"></label>
+            </div>
+        </div>
+        <script>
+            var elem = document.querySelector('select');
+            var options = [];
+            var instance = M.FormSelect.init(elem, options);
+        </script>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+        <link href="~/Content/dataTable.css" rel="stylesheet" />
+        <link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+        <table class="table mdl-data-table striped" id="table" style="width:100%;">
+            <thead>
+                <tr>
+                    <th class="lbl_coCode">
+                    </th>
+                    <th class="lbl_Compania">
+                    </th>
+                    <th class="lbl_Estado">
+                    </th>
+                    <th class="lbl_Pais">
+                    </th>
+                    <th class="lbl_subRegion">
+                    </th>
+                    <th class="lbl_Moneda">
+                    </th>
+                    @*<th class="lbl_Idioma">
+                    </th>*@
+                    <th class="lbl_Activo">
+                    </th>
+                    <th class="lbl_Region">
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BUKRS)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BUTXT)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ORT01)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LAND)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SUBREGIO)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WAERS)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.SPRAS)
+                    </td>*@
+                    @if ((bool)item.ACTIVO == true)
+                    {
+                        <td style="align-items:center"><i class='material-icons green-text'>check</i></td>}
+                    else
+                    {
+                        <td style="align-items:center;"><i class='material-icons red-text'>clear</i></td>}
+                    <td>
+                        @Html.DisplayFor(modelItem => item.REGION)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = item.BUKRS })">
+                            <i class='material-icons green-text'>edit</i>
+                        </a>&nbsp
+                        <a href="@Url.Action("Details", new { id = item.BUKRS })">
+                            <i class='material-icons blue-text'>search</i>
+                        </a>
+                        @if (item.ACTIVO) { 
+                        <span>&nbsp</span>
+                        <a href="@Url.Action("Flujos", new { id = item.BUKRS })">
+                            <i class='material-icons black-text'>assignment_turned_in</i>
+                        </a>
+                        <span>&nbsp</span>
+                        <a href="@Url.Action("Details","ccat", new { id = item.BUKRS })">
+                            <i class='material-icons black-text'>settings</i>
+                        </a>
+                                }
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <script>
+    $(document).ready(function () {
+        var table = $('#table').DataTable({
+            scrollX: "50vh",
+            scrollY: "50vh",
+            scrollCollapse: true,
+            language: {
+                "url": "../Scripts/lang/@ViewBag.usuario.SPRAS_ID"+".json"
+            }, columnDefs: [
+                {
+                    targets: [0,1,2,3,4,5,6,7,8],
+                    className: 'mdl-data-table__cell--non-numeric'
+                }
+            ],
+            order: [[0, "asc"]],
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var select = $('<select style="display:initial;" class="browser-default"><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+                    column.cells('', column[0]).render('display').sort().unique().each(function (d, j) {
+                        var val = $('<div/>').html(d).text();
+                        select.append('<option value="' + val + '">' + val + '</option>');
+                    });
+                });
+            }
+        });
+
+        var a = $('#selecc').val();
+        table.page.len(a).draw();
+        $('#selecc').on('change', function () {
+            table.page.len(this.value).draw();
+        });
+
+        $('input.global_filter').on('keyup click', function () {
+            filterGlobal();
+        });
+
+        $('#table tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                var child = format(row.data(), row, tr);
+                if (child != undefined) {
+                }
+            }
+        });
+    });
+    function filterGlobal() {
+        $('#table').DataTable().search(
+            $('#global_filter').val()).draw();
+    }
+    </script>
+</div>
+<style>
+    .dataTables_length {
+        display: none;
+    }
+
+    .dataTables_filter {
+        display: none;
+    }
+
+    .dataTables_scrollHeadInner, .mdl-data-table {
+        width: 100%;
+    }
+</style>

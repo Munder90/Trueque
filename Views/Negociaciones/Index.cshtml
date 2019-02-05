@@ -1,0 +1,275 @@
+@model IEnumerable<TAT001.Entities.DOCUMENTO>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <style>
+
+
+        .texto {
+            text-align: left;
+        }
+
+        .th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            color: black;
+        }
+
+        .table {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .borde {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #table1 tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #table1 tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <table class="tg" style="width:100%; border-collapse:collapse;">
+        <tr style="background-color:#d11d53; height:50px;">
+            <td>
+                <div class="row" style="margin-bottom:0">
+                    <table class="tg" style="width: 100%;border-collapse: collapse;">
+                        <tr style="border-bottom: 1px solid #e0e0e0;height: 35px;"></tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    @*DIV CON EL CONTENIDO DEL CUERPO DEL CORREO*@
+    <table class="tg" style="width: 100%; border-collapse:collapse;">
+        <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="text-align:right;">
+                <p>@ViewBag.cd, @ViewBag.edo, @ViewBag.FechaH</p>
+                <br />
+            </td>
+        </tr>
+
+        <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td>
+                <table class="tg" style="width: 100%; border-collapse:collapse;">
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td>
+                            <p>@ViewBag.clName</p>
+                        </td>
+                        <td style="text-align:right;">
+                            <p><strong>@ViewBag.lbl_control</strong></p>
+                        </td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td>
+                            <p>@ViewBag.clDir</p>
+                        </td>
+                        <td style="text-align:right;">
+                            <p><strong>@ViewBag.clPayId</strong></p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td>
+                <table class="tg" style="width: 100%; border-collapse:collapse;">
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td>
+                            <p align="justify">
+                                <br /><br />
+                                <span id="lbl_dear">@ViewBag.lbl_dear </span> @ViewBag.clCon,<br /><br />
+                                <span id="lbl_next">@ViewBag.lbl_next</span>@ViewBag.ff.<br />
+                                <br /><br />
+                                <span id="lbl_pres">@ViewBag.lbl_pres.</span>
+                                <br /><br /><br /><br />
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td>
+                <table style="width:100%;" id="table1" class="table borde">
+                    <thead>
+                        <tr>
+                            <th class="texto th borde">
+                                <span id="lbl_numsol">@ViewBag.lbl_numsol</span>
+                            </th>
+                            <th class="texto th borde">
+                                <span id="lbl_vigencia">@ViewBag.lbl_vigencia</span>
+                            </th>
+                            <th class="texto th borde">
+                                <span id="lbl_desc">@ViewBag.lbl_desc</span>
+                            </th>
+                            <th class="texto th borde">
+                                <span id="lbl_soporte">@ViewBag.lbl_soporte</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="borde">
+                                    @item.NUM_DOC
+                                </td>
+                                <td class="borde">
+                                    @item.FECHAI_VIG.Value.Day/@item.FECHAI_VIG.Value.Month/@item.FECHAI_VIG.Value.Year - @item.FECHAF_VIG.Value.Day/@item.FECHAF_VIG.Value.Month/@item.FECHAF_VIG.Value.Year
+                                </td>
+                                <td class="borde">
+                                    @Html.DisplayFor(modelItem => item.CONCEPTO)
+                                </td>
+                                <td class="borde">
+                                    @{
+                                        int cont = 1;
+                                        int cont2 = item.DOCUMENTOAs.Where(x => x.ACTIVO).Count();
+                                        foreach (TAT001.Entities.DOCUMENTOA a in item.DOCUMENTOAs.Where(x => x.ACTIVO))
+                                        {
+                                            string spras = ViewBag.spras;
+                                            var t = a.TSOPORTE.TSOPORTETs.Where(x => x.SPRAS_ID == spras).FirstOrDefault();
+                                            if (t != null)
+                                            {
+                                                if (cont == cont2)
+                                                {
+                                                    <span>@t.TXT50</span>
+                                                }
+                                                else if (cont2 > 1)
+                                                {
+                                                    <span>@t.TXT50, </span>
+                                                }
+                                            }
+                                            cont++;
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td>
+                <table class="tg" style="width: 100%; border-collapse:collapse;">
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td>
+                            <br /><br />
+                            <hr style="width:400px" />
+                            <p style="text-align:center;">
+                                @ViewBag.clFunci<br /><br />
+                                @ViewBag.clPos <br /><br />
+                                @ViewBag.KellCom
+                            </p>
+                            <br />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td>
+                <table class="tg" style="width: 100%; border-collapse:collapse;">
+                    <tr style="border-bottom: 1px solid #e0e0e0;">
+                        <td style="text-align:left;">
+                            <a type="button" class="btn-small" id="btn_Ok"
+                               style="height: 32.4px;line-height: 32.4px;
+                        font-size: 13px;
+                        text-decoration: none;
+                        color: #fff;
+                        background-color: #26a69a;
+                        text-align: center;
+                        letter-spacing: .5px;
+                        -webkit-transition: background-color .2s ease-out;
+                        transition: background-color .2s ease-out;
+                        cursor: pointer;
+                        border: none;
+                        border-radius: 2px;
+                        display: inline-block;
+                        height: 36px;
+                        line-height: 36px;
+                        padding: 0 2rem;
+                        text-transform: uppercase;
+                        vertical-align: middle;
+                        margin-right:5px;
+                        -webkit-tap-highlight-color: transparent;"
+                               href="mailto:LA_TAT@kellogg.com?Subject=De%20Acuerdo-@ViewBag.clPayId.@ViewBag.idf.@ViewBag.vk.@ViewBag.vtw.@ViewBag.clCorreo2" target="_top">
+                                De Acuerdo
+                            </a>
+                        </td>
+                        <td style="text-align:left;">
+                            <a type="button" class="btn-small" id="btn_Ok"
+                               style="height: 32.4px;line-height: 32.4px;
+                        font-size: 13px;
+                        text-decoration: none;
+                        color: #fff;
+                        background-color: #f89406;
+                        text-align: center;
+                        letter-spacing: .5px;
+                        -webkit-transition: background-color .2s ease-out;
+                        transition: background-color .2s ease-out;
+                        cursor: pointer;
+                        border: none;
+                        border-radius: 2px;
+                        display: inline-block;
+                        height: 36px;
+                        line-height: 36px;
+                        padding: 0 2rem;
+                        text-transform: uppercase;
+                        vertical-align: middle;
+                        margin-right:5px;
+                        -webkit-tap-highlight-color: transparent;"
+                               href="mailto:LA_TAT@kellogg.com?Subject=Tengo%20Observaciones-@ViewBag.clPayId.@ViewBag.idf.@ViewBag.vk.@ViewBag.vtw.@ViewBag.clCorreo2" target="_top">
+                                Tengo Observaciones
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    @if (ViewBag.textos != null)
+    {
+        foreach (TAT001.Entities.TEXTO t in ViewBag.textos)
+        {
+            <script>
+                try {
+                    var elem = document.getElementById("@t.CAMPO_ID");
+                    if (elem.nodeName != 'INPUT' & elem.nodeName != 'SELECT' & elem.nodeName != 'TABLE' & elem.nodeName != 'TEXTAREA')
+                    elem.innerHTML = "@t.TEXTOS";
+                } catch (e) {
+                    try {
+                        var divs = document.getElementsByClassName("@t.CAMPO_ID");
+                        [].slice.call(divs).forEach(function (div) {
+                            if (div.nodeName != 'INPUT' & div.nodeName != 'SELECT' & div.nodeName != 'TABLE' & div.nodeName != 'TEXTAREA')
+                            div.innerHTML = "@t.TEXTOS";
+                        });
+                    }
+                    catch (ee) {
+
+                    }
+                 }
+            </script>
+        }
+    }
+</body>
+</html>

@@ -1,0 +1,129 @@
+﻿@model IEnumerable<TAT001.Models.Clientes>
+
+    @{ 
+        int i = 0;
+        foreach (var item in Model)
+        {
+
+            string css_coc = item.BUKRS.Contains("?") ? "red" : "";
+            item.BUKRS = item.BUKRS.TrimEnd('?');
+            string css_pai = item.LAND.Contains("?") ? "red" : "";
+            item.LAND = item.LAND.TrimEnd('?');
+            string css_cli = item.KUNNR.Contains("?") ? "red" : "";
+            item.KUNNR = item.KUNNR.TrimEnd('?').TrimStart('0'); ;
+            string css_noc = item.CLIENTE_N.Contains("?") ? "red" : "";
+            item.CLIENTE_N = item.CLIENTE_N.TrimEnd('?');
+            string css_ni0 = item.ID_US0.Contains("?") ? "red" : "";
+            item.ID_US0 = item.ID_US0.TrimEnd('?');
+            string css_ni1 = item.ID_US1.Contains("?") ? "red" : "";
+            item.ID_US1 = item.ID_US1.TrimEnd('?');
+            string css_ni2 = item.ID_US2.Contains("?") ? "red" : "";
+            item.ID_US2 = item.ID_US2.TrimEnd('?');
+            string css_ni3 = item.ID_US3.Contains("?") ? "red" : "";
+            item.ID_US3 = item.ID_US3.TrimEnd('?');
+            string css_ni4 = item.ID_US4.Contains("?") ? "red" : "";
+            item.ID_US4 = item.ID_US4.TrimEnd('?');
+            string css_ni5 = item.ID_US5.Contains("?") ? "red" : "";
+            item.ID_US5 = item.ID_US5.TrimEnd('?');
+            string css_ni6 = item.ID_US6.Contains("?") ? "red" : "";
+            item.ID_US6 = item.ID_US6.TrimEnd('?');
+            string css_ni7 = item.ID_US7.Contains("?") ? "red" : "";
+            item.ID_US7 = item.ID_US7.TrimEnd('?');
+            string css_ven = item.ID_PROVEEDOR.Contains("?") ? "red" : "";
+            item.ID_PROVEEDOR = item.ID_PROVEEDOR.TrimEnd('?').TrimStart('0');
+            item.BANNER = item.BANNER.TrimStart('0');
+            item.BANNERG = item.BANNERG.TrimStart('0');
+
+            string css_can = item.CANAL.Contains("?") ? "red" : "";
+            item.CANAL = item.CANAL.TrimEnd('?');
+
+            string css_eco = item.CONTACTOE.Contains("?") ? "red" : "";
+            item.CONTACTOE = item.CONTACTOE.TrimEnd('?');
+      <tr>
+          <td><label><input class="input_bor" type="checkbox" id="" name="bor" onclick="checkoff();" value="@i"><span></span></label></td>
+          <td>
+              <input class="input_coc @css_coc" style="font-size:12px;" type="text" id="" name="coc" value="@item.BUKRS" onchange="Comprobar(this)">
+              <span style="display: none;">@item.BUKRS</span>
+          </td>
+          <td>
+              <input class="input_pai @css_pai" style="font-size:12px;" type="text" id="" name="pai" value="@item.LAND" onchange="Comprobar(this)">
+              <span style="display: none;">@item.LAND</span>
+          </td>
+          <td>
+              <input class="input_cli @css_cli" disabled="disabled" style="font-size:12px;min-width:50px;" type="text" id="" name="cli" value="@item.KUNNR" onchange="Comprobar(this)">
+              <span style="display: none;">@item.KUNNR</span>
+          </td>
+          <td>
+              <input class="input_noc @css_noc" style="font-size:12px; min-width:250px;" type="text" id="" name="noc" value="@item.CLIENTE_N" onchange="Comprobar(this)">
+              <span style="display: none;">@item.CLIENTE_N</span>
+          </td>
+          <td>
+              <input class="input_ni0 @css_ni0" style="font-size:12px;min-width:50px;" type="text" id="" name="ni0" value="@item.ID_US0" onchange="Comprobar(this)">
+              <span style="display: none;">@item.ID_US0</span>
+          </td>
+          <td>
+              <input class="input_ni1 @css_ni1" style="font-size:12px;min-width:50px;" type="text" id="" name="ni1" value="@item.ID_US1" onchange="Comprobar(this)">
+              <span style="display: none;">@item.ID_US1</span>
+          </td>
+          <td>
+              <input class="input_ni2 @css_ni2" style="font-size:12px;min-width:50px;" type="text" id="" name="ni2" value="@item.ID_US2" onchange="Comprobar(this)">
+              <span style="display: none;">@item.ID_US2</span>
+          </td>
+          <td>
+              <input class="input_ni3 @css_ni3" style="font-size:12px;min-width:50px;" type="text" id="" name="ni3" value="@item.ID_US3" onchange="Comprobar(this)">
+              <span style="display: none;">@item.ID_US3</span>
+          </td>
+          <td>
+              <input class="input_ni4 @css_ni4" style="font-size:12px;min-width:50px;" type="text" id="" name="ni4" value="@item.ID_US4" onchange="Comprobar(this)">
+              <span style="display: none;">@item.ID_US4</span>
+          </td>
+          <td>
+              <input class="input_ni5 @css_ni5" style="font-size:12px;min-width:50px;" type="text" id="" name="ni5" value="@item.ID_US5" onchange="Comprobar(this)">
+              <span style="display: none;">@item.ID_US5</span>
+          </td>
+          <td>
+              <input class="input_ni6 @css_ni6" style="font-size:12px;min-width:50px;" type="text" id="" name="ni6" value="@item.ID_US6" onchange="Comprobar(this)">
+              <span style="display: none;">@item.ID_US6</span>
+          </td>
+          <td>
+              <input class="input_ni7 @css_ni7" style="font-size:12px;min-width:50px;" type="text" id="" name="ni7" value="@item.ID_US7" onchange="Comprobar(this)">
+              <span style="display: none;">@item.ID_US7</span>
+          </td>
+          <td>
+              <input class="input_ven @css_ven" style="font-size:12px;" type="text" id="" name="ven" value="@item.ID_PROVEEDOR" onchange="Comprobar(this)">
+              <span style="display: none;">@item.ID_PROVEEDOR</span>
+          </td>
+          <td>
+              <input class="input_ban" disabled="disabled" style="font-size:12px;" type="text" id="" name="ban" value="@item.BANNER" onchange="Comprobar(this)">
+              <span style="display: none;">@item.BANNER</span>
+          </td>
+          <td>
+              <input class="input_baa" style="font-size:12px;" type="text" id="" name="baa" value="@item.BANNERG" onchange="Comprobar(this)">
+              <span style="display: none;">@item.BANNERG</span>
+          </td>
+          <td>
+              <input class="input_can @css_can" style="font-size:12px;" type="text" id="" name="can" value="@item.CANAL" onchange="Comprobar(this)">
+              <span style="display: none;">@item.CANAL</span>
+          </td>
+          <td>
+              <input class="input_exp" style="font-size:12px;" type="text" id="" name="exp" value="@item.EXPORTACION" onchange="Comprobar(this)">
+              <span style="display: none;">@item.EXPORTACION</span>
+          </td>
+          <td>
+              <input class="input_con" style="font-size:12px; min-width:250px;" type="text" id="" name="con" value="@item.CONTACTO" onchange="Comprobar(this)">
+              <span style="display: none;">@item.CONTACTO</span>
+          </td>
+          <td>
+              <input class="input_eco @css_eco" type="email" style="font-size:12px; min-width:250px;" id="" name="eco" value="@item.CONTACTOE" onchange="Comprobar(this)">
+              <span style="display: none;">@item.CONTACTOE</span>
+          </td>
+          <td>
+              <input class="input_mes" type="hidden" name="mes" value="@item.MESS">
+              <span class="input_mes" style="font-size:12px;">@Html.Raw(item.MESS)</span>
+          </td>
+
+      </tr>
+                i++;
+            }
+
+        }

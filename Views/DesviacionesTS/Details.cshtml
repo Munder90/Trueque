@@ -1,0 +1,67 @@
+﻿@model TAT001.Entities.TS_CAMPO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 1311;
+    ViewBag.carpeta_r = 500;
+}
+<div class="row">
+    <div class="col s12 right-align">
+        <a href="@Url.Action("Edit", "DesviacionesTS", new { id = Model.ID })" id="lblEditar" class="btn btn-default">Editar</a>
+    </div>
+</div>
+
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        <div class="col s6 ">
+            <div class="card-panel">
+                <div class="row">
+                    @foreach (var item in Model.TS_FORM)
+                    {
+                        <div class="input-field col l10 m10" style="margin-bottom:0;">
+                            @Html.LabelFor(model => item.BUKRS_ID, "BUKRS_ID", htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_sociedad" })
+                            @Html.EditorFor(model => item.SOCIEDAD.BUKRS, new { htmlAttributes = new { @class = "form-control", @required = "", @maxlength = 50, @readonly = "readonly" } })
+                        </div>
+                    }
+                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                        <h5>Traducciones</h5>
+                    </div>
+                    @{
+                        string txtEn = Model.TS_FORMT.First(x => x.SPRAS_ID == "EN").TXT100;
+                        string txtEs = Model.TS_FORMT.First(x => x.SPRAS_ID == "ES").TXT100;
+
+                        <div class="input-field col l12 m12" style="margin-bottom:0;">
+                            @Html.Editor("EN", new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @required = "", @Value = txtEn , @readonly = "readonly" } })
+                            <label id="lblIngles">EN</label>
+                        </div>
+                        <div class="input-field col l12 m12" style="margin-bottom:0;">
+                            @Html.Editor("ES", new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @required = "", @Value = txtEs, @readonly = "readonly" } })
+                            <label id="lblEspa">ES</label>
+                        </div>
+                    }
+
+                </div>
+                <div>
+
+                    @if (Model.ACTIVO)
+                    {
+                        <i class='material-icons green-text'>check</i>}
+                    else
+                    {
+                        <i class='material-icons red-text'>clear</i>}
+                    @Html.LabelFor(model => model.ACTIVO, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblObliga" })
+
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+<p>
+    @Html.ActionLink("Regresar", "Index", null, new { id = "lblRegresar" })
+</p>
+

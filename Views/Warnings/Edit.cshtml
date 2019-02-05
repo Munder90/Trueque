@@ -1,0 +1,69 @@
+﻿@model TAT001.Entities.WARNING
+
+@{
+    //ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 502;
+    ViewBag.carpeta_r = 500;
+}
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col s12 right-align">
+                <button type="submit" id="btnGuardar" class="btn btn-default"></button>
+            </div>
+        </div>
+        <div class="col s12">
+
+            <div class="card-panel">
+                <div class="row">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.PAGINA_ID)
+
+                    @Html.HiddenFor(model => model.CAMPO_ID)
+
+                    @Html.HiddenFor(model => model.SPRAS_ID)
+
+                    <div class="input-field col s6">
+                        @Html.EditorFor(model => model.CAMPO_ID, new { htmlAttributes = new { @disabled = "" } })
+                        @Html.LabelFor(model => model.CAMPO_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblCampo" })
+                    </div>
+                    <div class="input-field col s6">
+                        @Html.EditorFor(model => model.SPRAS_ID, new { htmlAttributes = new { @disabled = "disabled" } })
+                        @Html.LabelFor(model => model.SPRAS_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblIdioma" })
+                    </div>
+                    <div class="input-field col s6">
+                        @Html.TextAreaFor(model => model.WARNING1, new { @class = "materialize-textarea", @required = "required" })
+                        @Html.LabelFor(model => model.WARNING1, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblDesc" })
+                        @Html.ValidationMessageFor(model => model.WARNING1, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="input-field col s6 ">
+                        @Html.DropDownListFor(model => model.POSICION, null, htmlAttributes: new { @id = "sel-posi" })
+                        @Html.LabelFor(model => model.POSICION, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblPos" })
+                        @Html.ValidationMessageFor(model => model.POSICION, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="input-field col l1 m10 right" style="margin-bottom:0;">
+                        <label>
+                            <input type="checkbox" name="ACTIVO" value="true" @Html.Raw((Model.ACTIVO!=null && Model.ACTIVO.Value) ? "checked=\"checked\"" : "") />
+                            <span id="lblActivo"></span>
+
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+        </div>
+    <div class="col s12">
+        <a id="btnRegresar" href="@Url.Action("Index",new { id=Model.PAGINA_ID })"></a>
+    </div>
+
+    <script>
+        var elem = document.getElementById('sel-posi');
+        var options = [];
+        var instance = M.FormSelect.init(elem, options);
+    </script>
+

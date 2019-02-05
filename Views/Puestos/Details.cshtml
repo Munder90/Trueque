@@ -1,0 +1,63 @@
+﻿@model TAT001.Entities.PUESTO
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 621;
+    ViewBag.carpeta_r = 500;
+}
+<div class="row">
+    <div class="col s12 right-align">
+        <a href="@Url.Action("Index", "Ppag" , new { id=Model.ID })" id="lblPermisos" class="btn-small"> Permisos</a>
+        <a href="@Url.Action("Edit", "Puestos", new { id = Model.ID })" id="lblEditar" class="btn-small"> Editar</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col s6">
+        <div class="card-panel">
+            <div class="row">
+                <div class=" input-field col s12">
+                    @Html.EditorFor(model => model.PUESTOTs.Where(a => a.SPRAS_ID.Equals(Session["spras"].ToString())).FirstOrDefault().TXT50, new { htmlAttributes = new { @disabled = "disabled" } })
+                    @Html.LabelFor(model => model.PUESTOTs.FirstOrDefault().TXT50, new {id="lblDescripcion" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col s6 right">
+        <div class="card-panel">
+            <h5 class="lblTraducciones"></h5>
+            <div class="row">
+                @foreach (var item in Model.PUESTOTs)
+                {
+                    <div class=" input-field col s12">
+                        @Html.EditorFor(modelItem => item.TXT50, new { htmlAttributes = new { @disabled = "disabled" } })
+                        <label for="TXT50">@item.SPRA.DESCRIPCION</label>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col s6">
+        <div class="card-panel">
+            <h5 id="lblUsuarios"></h5>
+            <div class="row">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="lblId"></th>
+                            <th class="lblNombre"></th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model.USUARIOs)
+                    {
+                        <tr>
+                            <td> @Html.DisplayFor(modelItem => item.ID)</td>
+                            <td> @Html.DisplayFor(modelItem => item.NOMBRE) @Html.DisplayFor(modelItem => item.APELLIDO_P) @Html.DisplayFor(modelItem => item.APELLIDO_M)</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+        <a href="@Url.Action("Index", "Puestos")" id="lblRegresar"> Lista</a>
+</div>

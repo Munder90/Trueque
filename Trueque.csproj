@@ -1,0 +1,2425 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2FCFAF26-C385-4841-9BC2-126F98EB28DA}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TAT001</RootNamespace>
+    <AssemblyName>TAT001</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.92.1.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.92.1\lib\net40\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.2\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetZip, Version=1.12.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetZip.1.12.0\lib\net20\DotNetZip.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.BulkInsert, Version=6.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.BulkInsert-ef6-ext.6.0.3.1\lib\net45\EntityFramework.BulkInsert.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.MappingAPI, Version=6.1.0.9, Culture=neutral, PublicKeyToken=7ee2e825d201459e, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.MappingAPI.6.1.0.9\lib\net45\EntityFramework.MappingAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader, Version=3.4.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.3.4.0\lib\net45\ExcelDataReader.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader.DataSet, Version=3.4.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.DataSet.3.4.0\lib\net45\ExcelDataReader.DataSet.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelNumberFormat, Version=1.0.3.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelNumberFormat.1.0.3\lib\net20\ExcelNumberFormat.dll</HintPath>
+    </Reference>
+    <Reference Include="FastMember.Signed, Version=1.3.0.0, Culture=neutral, PublicKeyToken=9e8f22703bef9a29, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastMember.Signed.1.3.0\lib\net45\FastMember.Signed.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleImpersonation, Version=2.0.1.27158, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleImpersonation.2.0.1\lib\net40-Client\SimpleImpersonation.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Common\FnCommon.cs" />
+    <Compile Include="Common\FnCommonCarta.cs" />
+    <Compile Include="Common\Log.cs" />
+    <Compile Include="Common\TATConstantes.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AyudaController.cs" />
+    <Compile Include="Controllers\CartaDController.cs" />
+    <Compile Include="Controllers\CartaVController.cs" />
+    <Compile Include="Controllers\Catalogos\AlertasController.cs" />
+    <Compile Include="Controllers\Catalogos\Calendario445Controller.cs" />
+    <Compile Include="Controllers\Catalogos\CalendarioEx445Controller.cs" />
+    <Compile Include="Controllers\Catalogos\CANALController.cs" />
+    <Compile Include="Controllers\Catalogos\ConsoporteController.cs" />
+    <Compile Include="Controllers\Catalogos\CuentaController.cs" />
+    <Compile Include="Controllers\Catalogos\DesviacionesTSController.cs" />
+    <Compile Include="Controllers\Catalogos\DocRelacionController.cs" />
+    <Compile Include="Controllers\Catalogos\GALLController.cs" />
+    <Compile Include="Controllers\Catalogos\IimpuestoController.cs" />
+    <Compile Include="Controllers\Catalogos\ImpuestosController.cs" />
+    <Compile Include="Controllers\Catalogos\MonedaController.cs" />
+    <Compile Include="Controllers\Catalogos\RegionController.cs" />
+    <Compile Include="Controllers\Catalogos\SociedadesController.cs" />
+    <Compile Include="Controllers\Catalogos\SoporteController.cs" />
+    <Compile Include="Controllers\Catalogos\TALLsController.cs" />
+    <Compile Include="Controllers\Catalogos\TextocvController.cs" />
+    <Compile Include="Controllers\Configuracion\ccatController.cs" />
+    <Compile Include="Controllers\Catalogos\ClientesController.cs" />
+    <Compile Include="Controllers\Catalogos\ContactoController.cs" />
+    <Compile Include="Controllers\Catalogos\LeyendaController.cs" />
+    <Compile Include="Controllers\Catalogos\ProveedorController.cs" />
+    <Compile Include="Controllers\Catalogos\trvController.cs" />
+    <Compile Include="Controllers\Catalogos\TSOLController.cs" />
+    <Compile Include="Controllers\Catalogos\TxcController.cs" />
+    <Compile Include="Controllers\Catalogos\TxlController.cs" />
+    <Compile Include="Controllers\Catalogos\TxnController.cs" />
+    <Compile Include="Controllers\Configuracion\NOTICIAsController.cs" />
+    <Compile Include="Controllers\Configuracion\PpagController.cs" />
+    <Compile Include="Controllers\Configuracion\TaxeohController.cs" />
+    <Compile Include="Controllers\Configuracion\TaxeopController.cs" />
+    <Compile Include="Controllers\CorreosController.cs" />
+    <Compile Include="Controllers\Det_AprobsController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\ExcelController.cs" />
+    <Compile Include="Controllers\FlujosController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Catalogos\ImpuestoController.cs" />
+    <Compile Include="Controllers\LAContabilizacionController.cs" />
+    <Compile Include="Controllers\LayoutCargaMasivaController.cs" />
+    <Compile Include="Controllers\ListasController.cs" />
+    <Compile Include="Controllers\MailsController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\Catalogos\MaterialesController.cs" />
+    <Compile Include="Controllers\Catalogos\PaginasController.cs" />
+    <Compile Include="Controllers\Catalogos\PaisController.cs" />
+    <Compile Include="Controllers\MasivaController.cs" />
+    <Compile Include="Controllers\ModificacionesGlobalesController.cs" />
+    <Compile Include="Controllers\NegociacionesController.cs" />
+    <Compile Include="Controllers\Configuracion\NegsController.cs" />
+    <Compile Include="Controllers\PresupuestoController.cs" />
+    <Compile Include="Controllers\ProvisionController.cs" />
+    <Compile Include="Controllers\Catalogos\PuestosController.cs" />
+    <Compile Include="Controllers\Catalogos\RolesController.cs" />
+    <Compile Include="Controllers\RecurrenciasController.cs" />
+    <Compile Include="Controllers\Reportes\ReportesController.cs" />
+    <Compile Include="Controllers\SolicitudesController.cs" />
+    <Compile Include="Controllers\Catalogos\TCambioController.cs" />
+    <Compile Include="Controllers\Catalogos\TextosController.cs" />
+    <Compile Include="Controllers\Catalogos\UsuariosController.cs" />
+    <Compile Include="Controllers\Catalogos\WarningsController.cs" />
+    <Compile Include="Entities\ACCION.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ACCIONT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\APPSETTING.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CALENDARIO_AC.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CALENDARIO_EX.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CAMPOS.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CAMPOZKE24.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CAMPOZKE24T.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CANAL.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CARPETA.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CARPETAT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CARPETAV.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CARTA.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CARTAP.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CATEGORIA.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CATEGORIAT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CITy.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CLIENTE.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CLIENTEF.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CLIENTEI.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CONDICION.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CONDICIONT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CONFDIST_CAT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CONMAIL.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CONPOSAPH.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CONPOSAPP.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CONSOPORTE.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CONTACTOC.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\COUNTRy.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CPS_LISTA_CITIES_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CPS_LISTA_CLIENTES_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CPS_LISTA_CLI_PRO_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CPS_LISTA_CONTACTOS_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CPS_LISTA_DOCUMENTOP_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CPS_LISTA_MATERIALES_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CPS_LISTA_SOCIEDADES_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CPS_LISTA_SOLICITUDES_POR_APROBAR_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CPS_LISTA_SOLICITUDES_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CPS_LISTA_SPRAS_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CPS_LISTA_STATES_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CPS_LISTA_USUARIOS_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CREADOR.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CREADOR2.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CSP_BANNERSINCANAL_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CSP_CAMBIO_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CSP_CARPETA_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CSP_CONSULTARPRESUPUESTO_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CSP_DOCUMENTOSRECCXSOL_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CSP_DOCUMENTOSRELXSOL_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CSP_DOCUMENTOSXCOCODE_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CSP_DOCUMENTOSXUSER2_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CSP_DOCUMENTOSXUSER_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CSP_DOCUMENTOSXUSER_test_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CSP_LISTA_TALL_CUENTA_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CSP_PERMISO_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CSP_PRESUPUESTO_ADDP_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CSP_PROVISIONES_ABIERTAS_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CSP_USUARIO_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CUENTA.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CUENTAA.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CUENTAGL.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DELEGAR.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DET_AGENTE.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DET_AGENTEC.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DET_AGENTEH.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DET_AGENTEP.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DET_APROB.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DET_APROBH.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DET_APROBP.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DET_APROBV.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DET_TAX.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DET_TAXEO.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DET_TAXEOC.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCTOAYUDA.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCTOCLASIF.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCTOCLASIFT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTBORR.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTO.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTOA.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTOBORRF.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTOBORRM.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTOBORRN.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTOBORRP.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTOBORRREC.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTOF.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTOL.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTOM.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTON.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTOP.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTOR.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTORAN.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTOREC.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTOSAP.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTOT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DOCUMENTOV.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ESTATU.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ESTATUSR.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ESTATUST.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\FACTURASCONF.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\FLUJNEGO.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\FLUJO.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\GALL.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\GALLT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\GAUTORIZACION.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Grupo.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\GrupoCat.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\IIMPUESTO.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\IMPUESTO.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\LAYOUT_CARGA.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\LEYENDA.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MATERIAL.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MATERIALGP.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MATERIALGPT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MATERIALT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MATERIALVKE.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MENSAJE.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MIEMBRO.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MONEDA.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\NEGOCIACION.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\NEGOCIACION2.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\NOTICIA.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PAGINA.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PAGINAT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PAGINAV.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PAI.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PERIODO.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PERIODO445.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PERIODOT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PERMISO_PAGINA.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\POSICION.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PRESUPSAPH.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PRESUPSAPP.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PRESUPUESTOH.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PRESUPUESTOP.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PROVEEDOR.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PUESTO.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PUESTOT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\RANGO.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\REGION.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\RETENCION.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\RETENCIONT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ROL.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ROLT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SOCIEDAD.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\split_Result.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SPRA.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\STATE.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TAB.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TAB_CAMPO.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TALL.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TALLT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TAXEOH.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TAXEOP.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TAX_LAND.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TCAMBIO.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TCLIENTE.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TCLIENTET.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TEXTO.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TEXTOCV.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TRETENCION.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TRETENCIONT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TREVERSA.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TREVERSAT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Trueque.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Trueque.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Trueque.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Trueque.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Trueque.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TSOL.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TSOLT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TSOL_GROUP.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TSOL_GROUPT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TSOL_TREE.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TSOL_XG.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TSOPORTE.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TSOPORTET.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TS_CAMPO.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TS_FORM.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TS_FORMT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TX_CONCEPTO.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TX_CONCEPTOT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TX_NOTAT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TX_TNOTA.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\UMEDIDA.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\UMEDIDAT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\USUARIO.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\USUARIOF.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\USUARIOLOG.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\USUARIOSAP.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WARNING.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WARNINGP.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WARNINGPT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WARNINGV.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WARNING_COND.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WORKFH.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WORKFP.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WORKFT.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WORKFV.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ZBRAND.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ZCTGR.cs">
+      <DependentUpon>Trueque.tt</DependentUpon>
+    </Compile>
+    <!--<<<<<<< HEAD
+    <Compile Include="Entities\NEGOCIACION2.cs" />
+=======-->
+    <Compile Include="Filters\LoginActiveFilter.cs" />
+    <Compile Include="Models\AlertaViewModel.cs" />
+    <Compile Include="Models\ArchivoC.cs" />
+    <Compile Include="Models\Calendario445ViewModel.cs" />
+    <Compile Include="Models\CargaMasivaModels.cs" />
+    <Compile Include="Models\CartaD.cs" />
+    <Compile Include="Models\CartaDEsqueleto.cs" />
+    <Compile Include="Models\CategoriaMaterial.cs" />
+    <Compile Include="Models\ClienteViewModel.cs" />
+    <Compile Include="Models\Comentarios.cs" />
+    <Compile Include="Models\Dao\CamposDao.cs" />
+    <Compile Include="Models\Dao\CitiesDao.cs" />
+    <Compile Include="Models\Dao\ClientesDao.cs" />
+    <Compile Include="Models\Dao\ContactosDao.cs" />
+    <Compile Include="Models\Dao\MaterialesgptDao.cs" />
+    <Compile Include="Models\Dao\PeriodosDao.cs" />
+    <Compile Include="Models\Dao\SolicitudesDao.cs" />
+    <Compile Include="Models\Dao\SprasDao.cs" />
+    <Compile Include="Models\Dao\TabsDao.cs" />
+    <Compile Include="Models\Dao\TallsDao.cs" />
+    <Compile Include="Models\Dao\TiposSolicitudesDao.cs" />
+    <Compile Include="Models\Dao\UsuariosDao.cs" />
+    <Compile Include="Models\dby.cs" />
+    <Compile Include="Models\DesviacionesTS.cs" />
+    <Compile Include="Models\Documento.cs" />
+    <Compile Include="Models\DOCUMENTOM_MOD.cs" />
+    <Compile Include="Models\Delegados.cs" />
+    <Compile Include="Models\DOCUMENTOP_CAT.cs" />
+    <Compile Include="Models\DOCUMENTOP_SP.cs" />
+    <Compile Include="Models\DOCUMENTO_MOD.cs" />
+    <Compile Include="Models\HeaderFooterD.cs" />
+    <Compile Include="Models\LayoutCargaMasivaViewModels.cs" />
+    <Compile Include="Models\listacuerpoc.cs" />
+    <Compile Include="Models\Masiva\Distribucion.cs" />
+    <Compile Include="Models\Masiva\Encabezado.cs" />
+    <Compile Include="Models\Masiva\Multiple.cs" />
+    <Compile Include="Models\Masiva\Relacionada.cs" />
+    <Compile Include="Models\Dao\MaterialesDao.cs" />
+    <Compile Include="Models\MaterialViewModel.cs" />
+    <Compile Include="Models\ModificacionesGlobalesViewModel.cs" />
+    <Compile Include="Models\ProveedorViewModel.cs" />
+    <Compile Include="Models\ReportesModel.cs" />
+    <Compile Include="Models\SelectTreeItem.cs" />
+    <Compile Include="Models\Dao\SociedadesDao.cs" />
+    <Compile Include="Models\SOLICITUD_MOD.cs" />
+    <Compile Include="Models\Flujos.cs" />
+    <Compile Include="Models\SolxContabilizar.cs" />
+    <Compile Include="Models\TALLT_MOD.cs" />
+    <Compile Include="Models\Soporte.cs" />
+    <Compile Include="Models\TSOLT_MODBD.cs" />
+    <Compile Include="Controllers\WorkflowsController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CargarModel.cs" />
+    <Compile Include="Models\CartaV.cs" />
+    <Compile Include="Models\CartaVEsqueleto.cs" />
+    <Compile Include="Models\Cliente.cs" />
+    <Compile Include="Models\CLIENTE_MOD.cs" />
+    <Compile Include="Models\Contactoc.cs" />
+    <Compile Include="Models\Cryptography.cs" />
+    <Compile Include="Models\Det_Aprob.cs" />
+    <Compile Include="Models\DocumentoComparer.cs" />
+    <Compile Include="Models\DOCUMENTOF_MOD.cs" />
+    <Compile Include="Models\DOCUMENTOP_MOD.cs" />
+    <Compile Include="Models\FACTURASCONF_MOD.cs" />
+    <Compile Include="Models\GALL_MOD.cs" />
+    <Compile Include="Models\Impuesto.cs" />
+    <Compile Include="Models\MaterialVal.cs" />
+    <Compile Include="Models\PRESUPUESTO_MOD.cs" />
+    <Compile Include="Models\ArchivoContable.cs" />
+    <Compile Include="Models\ProveedorVal.cs" />
+    <Compile Include="Models\TSOLT_MOD.cs" />
+    <Compile Include="Models\ClienteF.cs" />
+    <Compile Include="Models\UsuarioF.cs" />
+    <Compile Include="Models\Clientes.cs" />
+    <Compile Include="Models\Usuarios.cs" />
+    <Compile Include="Models\UsuariosNuevo.cs" />
+    <Compile Include="Models\DocumentoFlujo.cs" />
+    <Compile Include="Models\EncabezadoMateriales.cs" />
+    <Compile Include="Models\HeaderFooter.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Pass.cs" />
+    <Compile Include="Models\PresupuestoModels.cs" />
+    <Compile Include="Models\Usuario.cs" />
+    <Compile Include="MoreLinq\MoreEnumerable.DistinctBy.cs" />
+    <!--<Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />-->
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Cancelar.cs" />
+    <Compile Include="Services\Duplicado.cs" />
+    <Compile Include="Services\ExcelExport.cs" />
+    <Compile Include="Services\PorEnviar.cs" />
+    <Compile Include="Services\UsuarioLogin.cs" />
+    <Compile Include="Services\Warning.cs" />
+    <Compile Include="Services\Presupuesto.cs" />
+    <Compile Include="Services\Estatus.cs" />
+    <Compile Include="Services\Cadena.cs" />
+    <Compile Include="Services\Calendario445.cs" />
+    <Compile Include="Services\Email.cs" />
+    <Compile Include="Services\Files.cs" />
+    <Compile Include="Services\FormatosC.cs" />
+    <Compile Include="Services\ProcesaFlujo.cs" />
+    <Compile Include="Services\Rangos.cs" />
+    <Compile Include="Services\Reversa.cs" />
+    <Compile Include="Services\Recurrente.cs" />
+    <Compile Include="Services\TCambio.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <!--<Content Include="bin\Antlr3.Runtime.dll" />
+    <Content Include="bin\Antlr3.Runtime.pdb" />
+    <Content Include="bin\ClosedXML.dll" />
+    <Content Include="bin\ClosedXML.pdb" />
+    <Content Include="bin\DocumentFormat.OpenXml.dll" />
+    <Content Include="bin\EntityFramework.BulkInsert.dll" />
+    <Content Include="bin\EntityFramework.dll" />
+    <Content Include="bin\EntityFramework.MappingAPI.dll" />
+    <Content Include="bin\EntityFramework.MappingAPI.pdb" />
+    <Content Include="bin\EntityFramework.SqlServer.dll" />
+    <Content Include="bin\es\EntityFramework.resources.dll" />
+    <Content Include="bin\es\EntityFramework.SqlServer.resources.dll" />
+    <Content Include="bin\es\Microsoft.AspNet.Identity.Core.resources.dll" />
+    <Content Include="bin\es\Microsoft.AspNet.Identity.EntityFramework.resources.dll" />
+    <Content Include="bin\es\Microsoft.AspNet.Identity.Owin.resources.dll" />
+    <Content Include="bin\es\Microsoft.Owin.Host.SystemWeb.resources.dll" />
+    <Content Include="bin\es\Microsoft.Owin.resources.dll" />
+    <Content Include="bin\es\Microsoft.Owin.Security.Facebook.resources.dll" />
+    <Content Include="bin\es\Microsoft.Owin.Security.Google.resources.dll" />
+    <Content Include="bin\es\Microsoft.Owin.Security.MicrosoftAccount.resources.dll" />
+    <Content Include="bin\es\Microsoft.Owin.Security.resources.dll" />
+    <Content Include="bin\es\Microsoft.Owin.Security.Twitter.resources.dll" />
+    <Content Include="bin\es\System.Web.Helpers.resources.dll" />
+    <Content Include="bin\es\System.Web.Mvc.resources.dll" />
+    <Content Include="bin\es\System.Web.Optimization.resources.dll" />
+    <Content Include="bin\es\System.Web.Razor.resources.dll" />
+    <Content Include="bin\es\System.Web.WebPages.Deployment.resources.dll" />
+    <Content Include="bin\es\System.Web.WebPages.Razor.resources.dll" />
+    <Content Include="bin\es\System.Web.WebPages.resources.dll" />
+    <Content Include="bin\ExcelDataReader.DataSet.dll" />
+    <Content Include="bin\ExcelDataReader.dll" />
+    <Content Include="bin\ExcelNumberFormat.dll" />
+    <Content Include="bin\FastMember.Signed.dll" />
+    <Content Include="bin\itextsharp.dll" />
+    <Content Include="bin\Microsoft.AspNet.Identity.Core.dll" />
+    <Content Include="bin\Microsoft.AspNet.Identity.EntityFramework.dll" />
+    <Content Include="bin\Microsoft.AspNet.Identity.Owin.dll" />
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
+    <Content Include="bin\Microsoft.Owin.dll" />
+    <Content Include="bin\Microsoft.Owin.Host.SystemWeb.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.Cookies.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.Facebook.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.Google.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.MicrosoftAccount.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.OAuth.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.Twitter.dll" />
+    <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="bin\Owin.dll" />
+    <Content Include="bin\roslyn\csc.exe" />
+    <Content Include="bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll" />
+    <Content Include="bin\roslyn\System.Collections.Immutable.dll" />
+    <Content Include="bin\roslyn\System.Reflection.Metadata.dll" />
+    <Content Include="bin\roslyn\vbc.exe" />
+    <Content Include="bin\roslyn\VBCSCompiler.exe" />
+    <Content Include="bin\SimpleImpersonation.dll" />
+    <Content Include="bin\System.Web.Helpers.dll" />
+    <Content Include="bin\System.Web.Mvc.dll" />
+    <Content Include="bin\System.Web.Optimization.dll" />
+    <Content Include="bin\System.Web.Razor.dll" />
+    <Content Include="bin\System.Web.WebPages.Deployment.dll" />
+    <Content Include="bin\System.Web.WebPages.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.dll" />
+    <Content Include="bin\TAT001.dll" />-->
+    <!--<Content Include="bin\TAT001.pdb" />-->
+    <!--<Content Include="bin\WebGrease.dll" />-->
+    <Content Include="Archivos\DoctosAyuda\readme.txt" />
+    <Content Include="Archivos\LayoutCargaMasiva\readme.txt" />
+    <Content Include="Content\autocomplete.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\dataTable.css" />
+    <Content Include="Content\dataTables1.material.min.css" />
+    <Content Include="Content\dataTables.material.min.css" />
+    <Content Include="Content\dropdowntree.css" />
+    <Content Include="Content\formatos.css" />
+    <Content Include="Content\g-materialize.css" />
+    <Content Include="Content\material.min.css" />
+    <Content Include="Content\materialize.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\sideMenu.css" />
+    <Content Include="Content\subfilters\jquery.tablesorter.pager.css" />
+    <Content Include="Archivos\readme.txt" />
+    <Content Include="Entities\Trueque.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Trueque.edmx</DependentUpon>
+      <LastGenOutput>Trueque.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entities\Trueque.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Trueque.edmx</DependentUpon>
+      <LastGenOutput>Trueque.cs</LastGenOutput>
+    </Content>
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="fonts\roboto\Roboto-Bold.woff" />
+    <Content Include="fonts\roboto\Roboto-Bold.woff2" />
+    <Content Include="fonts\roboto\Roboto-Light.woff" />
+    <Content Include="fonts\roboto\Roboto-Light.woff2" />
+    <Content Include="fonts\roboto\Roboto-Medium.woff" />
+    <Content Include="fonts\roboto\Roboto-Medium.woff2" />
+    <Content Include="fonts\roboto\Roboto-Regular.woff" />
+    <Content Include="fonts\roboto\Roboto-Regular.woff2" />
+    <Content Include="fonts\roboto\Roboto-Thin.woff" />
+    <Content Include="fonts\roboto\Roboto-Thin.woff2" />
+    <Content Include="images\6792532.jpg" />
+    <Content Include="images\auto_loading.gif" />
+    <Content Include="images\expandl.png" />
+    <Content Include="images\expandm.png" />
+    <Content Include="images\flags\1x1\ad.png" />
+    <Content Include="images\flags\1x1\ar.png" />
+    <Content Include="images\flags\1x1\as.png" />
+    <Content Include="images\flags\1x1\as.svg" />
+    <Content Include="images\flags\1x1\at.png" />
+    <Content Include="images\flags\1x1\be.png" />
+    <Content Include="images\flags\1x1\bo.png" />
+    <Content Include="images\flags\1x1\br.png" />
+    <Content Include="images\flags\1x1\bs.png" />
+    <Content Include="images\flags\1x1\bz.png" />
+    <Content Include="images\flags\1x1\cl.png" />
+    <Content Include="images\flags\1x1\co.png" />
+    <Content Include="images\flags\1x1\cr.png" />
+    <Content Include="images\flags\1x1\ec.png" />
+    <Content Include="images\flags\1x1\ec.svg" />
+    <Content Include="images\flags\1x1\gt.png" />
+    <Content Include="images\flags\1x1\hn.png" />
+    <Content Include="images\flags\1x1\jm.png" />
+    <Content Include="images\flags\1x1\mx.png" />
+    <Content Include="images\flags\1x1\ni.png" />
+    <Content Include="images\flags\1x1\pa.png" />
+    <Content Include="images\flags\1x1\pa.svg" />
+    <Content Include="images\flags\1x1\pe.png" />
+    <Content Include="images\flags\1x1\pr.png" />
+    <Content Include="images\flags\1x1\py.png" />
+    <Content Include="images\flags\1x1\sg.png" />
+    <Content Include="images\flags\1x1\sg.svg" />
+    <Content Include="images\flags\1x1\sv.png" />
+    <Content Include="images\flags\1x1\ve.png" />
+    <Content Include="images\flags\1x1\ve.svg" />
+    <Content Include="images\flags\4x3\ar.png" />
+    <Content Include="images\flags\4x3\as.png" />
+    <Content Include="images\flags\4x3\as.svg" />
+    <Content Include="images\flags\4x3\at.png" />
+    <Content Include="images\flags\4x3\be.png" />
+    <Content Include="images\flags\4x3\bo.png" />
+    <Content Include="images\flags\4x3\br.png" />
+    <Content Include="images\flags\4x3\bs.png" />
+    <Content Include="images\flags\4x3\bz.png" />
+    <Content Include="images\flags\4x3\cl.png" />
+    <Content Include="images\flags\4x3\co.png" />
+    <Content Include="images\flags\4x3\cr.png" />
+    <Content Include="images\flags\4x3\ec.png" />
+    <Content Include="images\flags\4x3\ec.svg" />
+    <Content Include="images\flags\4x3\gt.png" />
+    <Content Include="images\flags\4x3\hn.png" />
+    <Content Include="images\flags\4x3\jm.png" />
+    <Content Include="images\flags\4x3\mx.png" />
+    <Content Include="images\flags\4x3\ni.png" />
+    <Content Include="images\flags\4x3\pa.png" />
+    <Content Include="images\flags\4x3\pa.svg" />
+    <Content Include="images\flags\4x3\pe.png" />
+    <Content Include="images\flags\4x3\pr.png" />
+    <Content Include="images\flags\4x3\py.png" />
+    <Content Include="images\flags\4x3\sg.png" />
+    <Content Include="images\flags\4x3\sg.svg" />
+    <Content Include="images\flags\4x3\sv.png" />
+    <Content Include="images\flags\4x3\ve.png" />
+    <Content Include="images\flags\4x3\ve.svg" />
+    <Content Include="images\flags\mini\ar.png" />
+    <Content Include="images\flags\mini\as.png" />
+    <Content Include="images\flags\mini\at.png" />
+    <Content Include="images\flags\mini\be.png" />
+    <Content Include="images\flags\mini\bo.png" />
+    <Content Include="images\flags\mini\br.png" />
+    <Content Include="images\flags\mini\bs.png" />
+    <Content Include="images\flags\mini\bz.png" />
+    <Content Include="images\flags\mini\cl.png" />
+    <Content Include="images\flags\mini\co.png" />
+    <Content Include="images\flags\mini\cr.png" />
+    <Content Include="images\flags\mini\do.png" />
+    <Content Include="images\flags\mini\ec.png" />
+    <Content Include="images\flags\mini\gt.png" />
+    <Content Include="images\flags\mini\hn.png" />
+    <Content Include="images\flags\mini\jm.png" />
+    <Content Include="images\flags\mini\mx.png" />
+    <Content Include="images\flags\mini\ni.png" />
+    <Content Include="images\flags\mini\pa.png" />
+    <Content Include="images\flags\mini\pe.png" />
+    <Content Include="images\flags\mini\pr.png" />
+    <Content Include="images\flags\mini\py.png" />
+    <Content Include="images\flags\mini\sg.png" />
+    <Content Include="images\flags\mini\sv.png" />
+    <Content Include="images\parallax.jpg" />
+    <Content Include="images\play.png" />
+    <Content Include="images\playb.png" />
+    <Content Include="images\playb.svg" />
+    <Content Include="images\play.svg" />
+    <Content Include="images\expandm.svg" />
+    <Content Include="images\expandl.svg" />
+    <Content Include="images\flags\1x1\ar.svg" />
+    <Content Include="images\flags\1x1\br.svg" />
+    <Content Include="images\flags\1x1\gt.svg" />
+    <Content Include="images\flags\1x1\mx.svg" />
+    <Content Include="images\flags\1x1\pr.svg" />
+    <Content Include="images\flags\4x3\ar.svg" />
+    <Content Include="images\flags\4x3\br.svg" />
+    <Content Include="images\flags\4x3\gt.svg" />
+    <Content Include="images\flags\4x3\mx.svg" />
+    <Content Include="images\flags\4x3\pr.svg" />
+    <Content Include="images\header-transient.png" />
+    <Content Include="images\logo-kellogg2.png" />
+    <Content Include="images\logo_kellogg.png" />
+    <Content Include="images\sf-logo.jpg" />
+    <!--<Content Include="obj\Debug\TAT001.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\TAT001.dll" />
+    <Content Include="obj\Debug\TAT001.pdb" />-->
+    <!--<Content Include="obj\Debug\TAT001.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\TempPE\Entities.Model1.Context.cs.dll" />
+    <Content Include="obj\Debug\TempPE\Entities.Model1.cs.dll" />
+    <Content Include="obj\Debug\TempPE\Entities.Model1.Designer.cs.dll" />
+    <Content Include="obj\Debug\TempPE\Entities.TAT001.Context.cs.dll" />
+    <Content Include="obj\Debug\TempPE\Entities.TAT001.cs.dll" />
+    <Content Include="obj\Debug\TempPE\Entities.TAT001.Designer.cs.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\Antlr3.Runtime.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\Antlr3.Runtime.pdb" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\ClosedXML.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\ClosedXML.pdb" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\DocumentFormat.OpenXml.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\EntityFramework.BulkInsert.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\EntityFramework.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\EntityFramework.MappingAPI.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\EntityFramework.MappingAPI.pdb" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\EntityFramework.SqlServer.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\EntityFramework.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\EntityFramework.SqlServer.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\Microsoft.AspNet.Identity.Core.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\Microsoft.AspNet.Identity.EntityFramework.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\Microsoft.AspNet.Identity.Owin.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\Microsoft.Owin.Host.SystemWeb.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\Microsoft.Owin.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\Microsoft.Owin.Security.Facebook.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\Microsoft.Owin.Security.Google.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\Microsoft.Owin.Security.MicrosoftAccount.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\Microsoft.Owin.Security.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\Microsoft.Owin.Security.Twitter.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\System.Web.Helpers.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\System.Web.Mvc.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\System.Web.Optimization.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\System.Web.Razor.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\System.Web.WebPages.Deployment.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\System.Web.WebPages.Razor.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\es\System.Web.WebPages.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\ExcelDataReader.DataSet.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\ExcelDataReader.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\ExcelNumberFormat.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\FastMember.Signed.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\itextsharp.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\Microsoft.AspNet.Identity.Core.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\Microsoft.AspNet.Identity.EntityFramework.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\Microsoft.AspNet.Identity.Owin.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\Microsoft.Owin.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\Microsoft.Owin.Host.SystemWeb.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\Microsoft.Owin.Security.Cookies.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\Microsoft.Owin.Security.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\Microsoft.Owin.Security.Facebook.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\Microsoft.Owin.Security.Google.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\Microsoft.Owin.Security.MicrosoftAccount.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\Microsoft.Owin.Security.OAuth.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\Microsoft.Owin.Security.Twitter.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\Newtonsoft.Json.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\Owin.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\roslyn\csc.exe" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\roslyn\Microsoft.CodeAnalysis.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\roslyn\System.Collections.Immutable.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\roslyn\System.Reflection.Metadata.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\roslyn\vbc.exe" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\roslyn\VBCSCompiler.exe" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\SimpleImpersonation.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\System.Web.Helpers.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\System.Web.Mvc.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\System.Web.Optimization.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\System.Web.Razor.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\System.Web.WebPages.Deployment.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\System.Web.WebPages.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\System.Web.WebPages.Razor.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\TAT001.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\TAT001.pdb" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\WebGrease.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Content\autocomplete.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Content\bootstrap.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Content\bootstrap.min.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Content\dataTable.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Content\dataTables.material.min.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Content\g-materialize.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Content\material.min.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Content\materialize.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Content\sideMenu.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Content\Site.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\favicon.ico" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Global.asax" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\images\expandl.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\images\expandm.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\images\flags\1x1\ar.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\images\flags\1x1\br.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\images\flags\1x1\gt.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\images\flags\1x1\mx.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\images\flags\1x1\pr.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\images\flags\4x3\ar.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\images\flags\4x3\br.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\images\flags\4x3\gt.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\images\flags\4x3\mx.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\images\flags\4x3\pr.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\images\header-transient.png" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\images\logo-kellogg2.png" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\images\logo_kellogg.png" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\images\play.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\images\playb.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\images\sf-logo.jpg" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\autocomplete1.10.2.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\autocomplete1.11.4.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\CargaPresupuesto.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\ConsultarPresupuesto.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\create.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\createa.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\dataTables.fixedColumns.min.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\dataTables.material.min.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\jquery-3.0.0.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\jquery-3.0.0.min.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\jquery-3.0.0.slim.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\jquery-3.0.0.slim.min.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\jquery.dataTables.min.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\layout.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\materialize.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\materialize.min.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\menu.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\sideMenu.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\tableHeadFixer.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Mails\logo_kellogg.png" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\Antlr3.Runtime.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\Antlr3.Runtime.pdb" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\App_global.asax.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\ClosedXML.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\ClosedXML.pdb" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\DocumentFormat.OpenXml.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\EntityFramework.BulkInsert.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\EntityFramework.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\EntityFramework.MappingAPI.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\EntityFramework.MappingAPI.pdb" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\EntityFramework.SqlServer.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\EntityFramework.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\EntityFramework.SqlServer.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\Microsoft.AspNet.Identity.Core.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\Microsoft.AspNet.Identity.EntityFramework.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\Microsoft.AspNet.Identity.Owin.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\Microsoft.Owin.Host.SystemWeb.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\Microsoft.Owin.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\Microsoft.Owin.Security.Facebook.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\Microsoft.Owin.Security.Google.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\Microsoft.Owin.Security.MicrosoftAccount.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\Microsoft.Owin.Security.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\Microsoft.Owin.Security.Twitter.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\System.Web.Helpers.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\System.Web.Mvc.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\System.Web.Optimization.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\System.Web.Razor.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\System.Web.WebPages.Deployment.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\System.Web.WebPages.Razor.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\es\System.Web.WebPages.resources.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\ExcelDataReader.DataSet.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\ExcelDataReader.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\ExcelNumberFormat.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\FastMember.Signed.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\itextsharp.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\Microsoft.AspNet.Identity.Core.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\Microsoft.AspNet.Identity.EntityFramework.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\Microsoft.AspNet.Identity.Owin.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\Microsoft.Owin.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\Microsoft.Owin.Host.SystemWeb.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\Microsoft.Owin.Security.Cookies.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\Microsoft.Owin.Security.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\Microsoft.Owin.Security.Facebook.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\Microsoft.Owin.Security.Google.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\Microsoft.Owin.Security.MicrosoftAccount.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\Microsoft.Owin.Security.OAuth.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\Microsoft.Owin.Security.Twitter.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\Newtonsoft.Json.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\Owin.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\roslyn\csc.exe" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\roslyn\Microsoft.CodeAnalysis.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\roslyn\System.Collections.Immutable.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\roslyn\System.Reflection.Metadata.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\roslyn\vbc.exe" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\roslyn\VBCSCompiler.exe" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\SimpleImpersonation.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\System.Web.Helpers.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\System.Web.Mvc.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\System.Web.Optimization.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\System.Web.Razor.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\System.Web.WebPages.Deployment.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\System.Web.WebPages.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\System.Web.WebPages.Razor.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\TAT001.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\TAT001.pdb" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\WebGrease.dll" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Content\autocomplete.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Content\bootstrap.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Content\bootstrap.min.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Content\dataTable.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Content\dataTables.material.min.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Content\g-materialize.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Content\material.min.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Content\materialize.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Content\sideMenu.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Content\Site.css" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\favicon.ico" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\images\expandl.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\images\expandm.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\images\flags\1x1\ar.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\images\flags\1x1\br.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\images\flags\1x1\gt.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\images\flags\1x1\mx.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\images\flags\1x1\pr.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\images\flags\4x3\ar.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\images\flags\4x3\br.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\images\flags\4x3\gt.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\images\flags\4x3\mx.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\images\flags\4x3\pr.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\images\header-transient.png" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\images\logo-kellogg2.png" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\images\logo_kellogg.png" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\images\play.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\images\playb.svg" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\images\sf-logo.jpg" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\autocomplete1.10.2.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\autocomplete1.11.4.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\CargaPresupuesto.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\ConsultarPresupuesto.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\create.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\createa.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\dataTables.fixedColumns.min.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\dataTables.material.min.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\jquery-3.0.0.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\jquery-3.0.0.min.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\jquery-3.0.0.slim.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\jquery-3.0.0.slim.min.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\jquery.dataTables.min.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\layout.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\materialize.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\materialize.min.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\menu.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\sideMenu.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\tableHeadFixer.js" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Mails\logo_kellogg.png" />
+    <Content Include="obj\Release\TAT001.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Release\TempPE\Entities.TAT001.Context.cs.dll" />
+    <Content Include="obj\Release\TempPE\Entities.TAT001.cs.dll" />
+    <Content Include="obj\Release\TempPE\Entities.TAT001.Designer.cs.dll" />-->
+    <Content Include="images\Simple-wallpapers-HD-for-desktop.png" />
+    <!--<Content Include="PdfTemp\readme.txt" />-->
+    <!--<Content Include="Properties\PublishProfiles\FolderProfile.pubxml.user" />-->
+    <Content Include="Scripts\CargaUsuarios.js" />
+    <Content Include="Scripts\CargaClientes.js" />
+    <!--<Content Include="obj\Debug\TAT001.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\TAT001.dll" />
+    <Content Include="obj\Debug\TAT001.pdb" />-->
+    <Content Include="PdfTemp\Solicitudes_Consulta\Solicitudes_Consulta09\11\2018.xlsx" />
+    <Content Include="PdfTemp\Solicitudes_Consulta\Solicitudes_Consulta\09\11\2018.xlsx" />
+    <Content Include="PdfTemp\Solicitudes_Consulta\09\11\2018.xlsx" />
+    <Compile Include="Models\Dao\StatesDao.cs" />
+    <EntityDeploy Include="Entities\Trueque.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Trueque.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Entities\Trueque.edmx.diagram">
+      <DependentUpon>Trueque.edmx</DependentUpon>
+    </Content>
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\borrador.js" />
+    <Content Include="Content\Datatables\datatables.min.css" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\css\autoFill.bootstrap.css" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\css\autoFill.bootstrap.min.css" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\css\autoFill.bootstrap4.css" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\css\autoFill.bootstrap4.min.css" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\css\autoFill.dataTables.css" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\css\autoFill.dataTables.min.css" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\css\autoFill.foundation.css" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\css\autoFill.foundation.min.css" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\css\autoFill.jqueryui.css" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\css\autoFill.jqueryui.min.css" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\css\autoFill.semanticui.css" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\css\autoFill.semanticui.min.css" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\js\autoFill.bootstrap.js" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\js\autoFill.bootstrap.min.js" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\js\autoFill.bootstrap4.js" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\js\autoFill.bootstrap4.min.js" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\js\autoFill.foundation.js" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\js\autoFill.foundation.min.js" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\js\autoFill.jqueryui.js" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\js\autoFill.jqueryui.min.js" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\js\autoFill.semanticui.js" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\js\autoFill.semanticui.min.js" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\js\dataTables.autoFill.js" />
+    <Content Include="Scripts\DataTables\AutoFill-2.3.2\js\dataTables.autoFill.min.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.bootstrap.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.bootstrap.min.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.bootstrap4.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.bootstrap4.min.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.foundation.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.foundation.min.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.jqueryui.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.jqueryui.min.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.semanticui.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.semanticui.min.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\css\jquery.dataTables.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\css\jquery.dataTables.min.css" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\images\sort_asc.png" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\images\sort_asc_disabled.png" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\images\sort_both.png" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\images\sort_desc.png" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\images\sort_desc_disabled.png" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\js\dataTables.bootstrap.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\js\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\js\dataTables.bootstrap4.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\js\dataTables.bootstrap4.min.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\js\dataTables.foundation.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\js\dataTables.foundation.min.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\js\dataTables.jqueryui.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\js\dataTables.jqueryui.min.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\js\dataTables.semanticui.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\js\dataTables.semanticui.min.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\js\jquery.dataTables.js" />
+    <Content Include="Scripts\DataTables\DataTables-1.10.18\js\jquery.dataTables.min.js" />
+    <Content Include="Scripts\DataTables\datatables.css" />
+    <Content Include="Scripts\DataTables\datatables.js" />
+    <Content Include="Scripts\DataTables\datatables.min.css" />
+    <Content Include="Scripts\DataTables\datatables.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.rowGroup.min.js" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\css\editor.bootstrap.css" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\css\editor.bootstrap.min.css" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\css\editor.bootstrap4.css" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\css\editor.bootstrap4.min.css" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\css\editor.dataTables.css" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\css\editor.dataTables.min.css" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\css\editor.foundation.css" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\css\editor.foundation.min.css" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\css\editor.jqueryui.css" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\css\editor.jqueryui.min.css" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\css\editor.semanticui.css" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\css\editor.semanticui.min.css" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\js\dataTables.editor.js" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\js\dataTables.editor.min.js" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\js\editor.bootstrap.js" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\js\editor.bootstrap.min.js" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\js\editor.bootstrap4.js" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\js\editor.bootstrap4.min.js" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\js\editor.foundation.js" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\js\editor.foundation.min.js" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\js\editor.jqueryui.js" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\js\editor.jqueryui.min.js" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\js\editor.semanticui.js" />
+    <Content Include="Scripts\DataTables\Editor-2019-01-02-1.8.1\js\editor.semanticui.min.js" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\css\fixedColumns.bootstrap.css" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\css\fixedColumns.bootstrap.min.css" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\css\fixedColumns.bootstrap4.css" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\css\fixedColumns.bootstrap4.min.css" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\css\fixedColumns.dataTables.css" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\css\fixedColumns.dataTables.min.css" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\css\fixedColumns.foundation.css" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\css\fixedColumns.foundation.min.css" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\css\fixedColumns.jqueryui.css" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\css\fixedColumns.jqueryui.min.css" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\css\fixedColumns.semanticui.css" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\css\fixedColumns.semanticui.min.css" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\js\dataTables.fixedColumns.js" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\js\dataTables.fixedColumns.min.js" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\js\fixedColumns.bootstrap.js" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\js\fixedColumns.bootstrap.min.js" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\js\fixedColumns.bootstrap4.js" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\js\fixedColumns.bootstrap4.min.js" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\js\fixedColumns.dataTables.js" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\js\fixedColumns.foundation.js" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\js\fixedColumns.foundation.min.js" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\js\fixedColumns.jqueryui.js" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\js\fixedColumns.jqueryui.min.js" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\js\fixedColumns.semanicui.js" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\js\fixedColumns.semanticui.js" />
+    <Content Include="Scripts\DataTables\FixedColumns-3.2.5\js\fixedColumns.semanticui.min.js" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\css\fixedHeader.bootstrap.css" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\css\fixedHeader.bootstrap.min.css" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\css\fixedHeader.bootstrap4.css" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\css\fixedHeader.bootstrap4.min.css" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\css\fixedHeader.dataTables.css" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\css\fixedHeader.dataTables.min.css" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\css\fixedHeader.foundation.css" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\css\fixedHeader.foundation.min.css" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\css\fixedHeader.jqueryui.css" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\css\fixedHeader.jqueryui.min.css" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\css\fixedHeader.semanticui.css" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\css\fixedHeader.semanticui.min.css" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\js\dataTables.fixedHeader.js" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\js\dataTables.fixedHeader.min.js" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\js\fixedHeader.bootstrap.js" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\js\fixedHeader.bootstrap.min.js" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\js\fixedHeader.bootstrap4.js" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\js\fixedHeader.bootstrap4.min.js" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\js\fixedHeader.dataTables.js" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\js\fixedHeader.foundation.js" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\js\fixedHeader.foundation.min.js" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\js\fixedHeader.jqueryui.js" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\js\fixedHeader.jqueryui.min.js" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\js\fixedHeader.semanicui.js" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\js\fixedHeader.semanticui.js" />
+    <Content Include="Scripts\DataTables\FixedHeader-3.1.4\js\fixedHeader.semanticui.min.js" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\css\select.bootstrap.css" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\css\select.bootstrap.min.css" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\css\select.bootstrap4.css" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\css\select.bootstrap4.min.css" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\css\select.dataTables.css" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\css\select.dataTables.min.css" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\css\select.foundation.css" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\css\select.foundation.min.css" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\css\select.jqueryui.css" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\css\select.jqueryui.min.css" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\css\select.semanticui.css" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\css\select.semanticui.min.css" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\js\dataTables.select.js" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\js\dataTables.select.min.js" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\js\select.bootstrap.js" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\js\select.bootstrap.min.js" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\js\select.bootstrap4.js" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\js\select.bootstrap4.min.js" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\js\select.dataTables.js" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\js\select.foundation.js" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\js\select.foundation.min.js" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\js\select.jqueryui.js" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\js\select.jqueryui.min.js" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\js\select.semanticui.js" />
+    <Content Include="Scripts\DataTables\Select-1.2.6\js\select.semanticui.min.js" />
+    <Content Include="Scripts\dropdowntree.js" />
+    <Content Include="Scripts\fnCommon.js" />
+    <Content Include="Scripts\jquery.mask.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\listas.js" />
+    <Content Include="Scripts\Masiva\create.js" />
+    <Content Include="Scripts\Masiva\formatosMasiva.js" />
+    <Content Include="Scripts\Masiva\validaTabs.js" />
+    <Content Include="Scripts\Masiva\warningm.js" />
+    <Content Include="Scripts\messagesCat.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\rangos.js" />
+    <Content Include="Scripts\Solicitudes\comun.js" />
+    <Content Include="Scripts\subfilters\jquery.tablesorter.js" />
+    <Content Include="Scripts\subfilters\jquery.tablesorter.pager.js" />
+    <Content Include="Scripts\subfilters\script.js" />
+    <Content Include="Scripts\subfilters\widget-filter.js" />
+    <Content Include="Scripts\tablesort\tableToExcel.js" />
+    <Content Include="Scripts\warning.js" />
+    <Content Include="Scripts\autocomplete1.11.4.js" />
+    <Content Include="Scripts\CargaPresupuesto.js" />
+    <Content Include="Scripts\ConsultarPresupuesto.js" />
+    <Content Include="Scripts\cartaV.js" />
+    <Content Include="Scripts\create.js" />
+    <Content Include="Scripts\edit.js" />
+    <Content Include="Scripts\createa.js" />
+    <Content Include="Scripts\dataTables.fixedColumns.min.js" />
+    <Content Include="Scripts\dataTables.material.min.js" />
+    <Content Include="files\masiva.xlsx" />
+    <!--<Content Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
+    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\Entities\TAT001.csdl" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\Entities\TAT001.msl" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\Entities\TAT001.ssdl" />
+    <Content Include="obj\Debug\TAT001.csproj.CopyComplete" />
+    <Content Include="obj\Debug\TAT001.csproj.CoreCompileInputs.cache" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\roslyn\Microsoft.CSharp.Core.targets" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\roslyn\Microsoft.VisualBasic.Core.targets" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\bin\roslyn\VBCSCompiler.exe.config" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Entities\TAT001.edmx.diagram" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\fonts\roboto\Roboto-Bold.woff" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\fonts\roboto\Roboto-Bold.woff2" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\fonts\roboto\Roboto-Light.woff" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\fonts\roboto\Roboto-Light.woff2" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\fonts\roboto\Roboto-Medium.woff" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\fonts\roboto\Roboto-Medium.woff2" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\fonts\roboto\Roboto-Regular.woff" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\fonts\roboto\Roboto-Regular.woff2" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\fonts\roboto\Roboto-Thin.woff" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\fonts\roboto\Roboto-Thin.woff2" />-->
+    <!--<Content Include="bin\roslyn\Microsoft.CSharp.Core.targets" />
+    <Content Include="bin\roslyn\Microsoft.VisualBasic.Core.targets" />
+    <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <Content Include="bin\TAT001.dll.config" />-->
+    <!--<Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\Entities\TAT001.csdl" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\Entities\TAT001.msl" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\Entities\TAT001.ssdl" />
+    <Content Include="obj\Debug\TAT001.csproj.CopyComplete" />
+    <Content Include="obj\Debug\TAT001.csproj.CoreCompileInputs.cache" />
+    <Content Include="obj\Debug\TAT001.csprojAssemblyReference.cache" />-->
+    <!--<Content Include="PdfTemp\Doc06\06\2018.xlsx" />
+    <Content Include="PdfTemp\Doc29\05\2018.xlsx" />
+    <Content Include="PdfTemp\DocPr04\06\2018.xlsx" />
+    <Content Include="PdfTemp\20180913_200852.pdf" />-->
+    <!--<Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\jquery-3.0.0.min.map" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Scripts\jquery-3.0.0.slim.min.map" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Account\ForgotPassword.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Account\Login.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Account\Register.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Account\ResetPassword.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Account\SendCode.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Account\VerifyCode.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\CartaV\Create.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\CartaV\Details.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\CartaV\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Flujos\Create.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Flujos\Delete.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Flujos\Details.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Flujos\Edit.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Flujos\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Flujos\Procesa.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Home\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Home\Pais.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Listas\Ciudades.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Listas\Clientes.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Listas\Det_Aprob.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Listas\Estados.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Listas\Grupos.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Listas\UsuariosPuesto.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Mails\Enviar.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Mails\Solicitud.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Mails\Solicitudes.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Manage\ChangePassword.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Manage\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Manage\ManageLogins.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Manage\SetPassword.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Paginas\Create.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Paginas\Delete.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Paginas\Details.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Paginas\Edit.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Paginas\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Presupuesto\Carga.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Presupuesto\Descargar.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Presupuesto\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Provision\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Puestos\Create.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Puestos\Delete.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Puestos\Details.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Puestos\Edit.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Puestos\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Shared\Error.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Shared\Lockout.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Shared\_Layout.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Shared\_LayoutMail.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Solicitudes\Create.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Solicitudes\CreateNew.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Solicitudes\Delete.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Solicitudes\Details.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Solicitudes\DetailsF.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Solicitudes\Edit.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Solicitudes\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Textos\Create.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Textos\Delete.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Textos\Details.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Textos\Edit.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Textos\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Usuarios\AgregarRol.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Usuarios\Create.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Usuarios\Delete.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Usuarios\Details.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Usuarios\Edit.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Usuarios\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Usuarios\Pass.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Warnings\Create.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Warnings\Delete.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Warnings\Details.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Warnings\Edit.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Warnings\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Web.config" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Workflows\Create.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Workflows\Delete.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Workflows\Details.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Workflows\Edit.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\Workflows\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Views\_ViewStart.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\Source\Web.config" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\App_global.asax.compiled" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\roslyn\Microsoft.CSharp.Core.targets" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\roslyn\Microsoft.VisualBasic.Core.targets" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\bin\roslyn\VBCSCompiler.exe.config" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Entities\TAT001.edmx.diagram" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\fonts\roboto\Roboto-Bold.woff" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\fonts\roboto\Roboto-Bold.woff2" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\fonts\roboto\Roboto-Light.woff" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\fonts\roboto\Roboto-Light.woff2" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\fonts\roboto\Roboto-Medium.woff" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\fonts\roboto\Roboto-Medium.woff2" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\fonts\roboto\Roboto-Regular.woff" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\fonts\roboto\Roboto-Regular.woff2" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\fonts\roboto\Roboto-Thin.woff" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\fonts\roboto\Roboto-Thin.woff2" />
+    <None Include="obj\Release\AspnetCompileMerge\TempBuildDir\packages.config" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\PrecompiledApp.config" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\jquery-3.0.0.min.map" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Scripts\jquery-3.0.0.slim.min.map" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Account\ForgotPassword.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Account\Login.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Account\Register.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Account\ResetPassword.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Account\SendCode.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Account\VerifyCode.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\CartaV\Create.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\CartaV\Details.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\CartaV\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Flujos\Create.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Flujos\Delete.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Flujos\Details.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Flujos\Edit.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Flujos\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Flujos\Procesa.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Home\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Home\Pais.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Listas\Ciudades.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Listas\Clientes.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Listas\Det_Aprob.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Listas\Estados.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Listas\Grupos.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Listas\UsuariosPuesto.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Mails\Enviar.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Mails\Solicitud.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Mails\Solicitudes.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Manage\ChangePassword.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Manage\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Manage\ManageLogins.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Manage\SetPassword.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Paginas\Create.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Paginas\Delete.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Paginas\Details.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Paginas\Edit.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Paginas\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Presupuesto\Carga.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Presupuesto\Descargar.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Presupuesto\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Provision\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Puestos\Create.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Puestos\Delete.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Puestos\Details.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Puestos\Edit.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Puestos\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Shared\Error.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Shared\Lockout.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Shared\_Layout.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Shared\_LayoutMail.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Solicitudes\Create.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Solicitudes\CreateNew.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Solicitudes\Delete.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Solicitudes\Details.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Solicitudes\DetailsF.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Solicitudes\Edit.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Solicitudes\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Textos\Create.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Textos\Delete.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Textos\Details.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Textos\Edit.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Textos\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Usuarios\AgregarRol.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Usuarios\Create.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Usuarios\Delete.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Usuarios\Details.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Usuarios\Edit.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Usuarios\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Usuarios\Pass.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Warnings\Create.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Warnings\Delete.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Warnings\Details.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Warnings\Edit.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Warnings\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Web.config" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Workflows\Create.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Workflows\Delete.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Workflows\Details.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Workflows\Edit.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\Workflows\Index.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Views\_ViewStart.cshtml" />
+    <Content Include="obj\Release\AspnetCompileMerge\TempBuildDir\Web.config" />
+    <Content Include="obj\Release\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Release\edmxResourcesToEmbed\Entities\TAT001.csdl" />
+    <Content Include="obj\Release\edmxResourcesToEmbed\Entities\TAT001.msl" />
+    <Content Include="obj\Release\edmxResourcesToEmbed\Entities\TAT001.ssdl" />
+    <Content Include="obj\Release\TAT001.csproj.CopyComplete" />
+    <Content Include="obj\Release\TAT001.csproj.CoreCompileInputs.cache" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\Entities\TAT001.csdl" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\Entities\TAT001.msl" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\Entities\TAT001.ssdl" />
+    <Content Include="obj\Debug\TAT001.csproj.CoreCompileInputs.cache" />
+    <Content Include="obj\Debug\TAT001.csprojAssemblyReference.cache" />-->
+    <Content Include="Content\LAYOUT CARGA MASIVA.xlsx" />
+    <!--<Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Debug\TAT001.csproj.CopyComplete" />-->
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
+    <None Include="Properties\PublishProfiles\SERVER.pubxml" />
+    <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
+    <Content Include="Scripts\descargar.js" />
+    <Content Include="Scripts\jquery-3.0.0.js" />
+    <Content Include="Scripts\jquery-3.0.0.min.js" />
+    <Content Include="Scripts\jquery-3.0.0.slim.js" />
+    <Content Include="Scripts\jquery-3.0.0.slim.min.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
+    <Content Include="Scripts\layout.js" />
+    <Content Include="Scripts\materialize.js" />
+    <Content Include="Scripts\materialize.min2.js" />
+    <Content Include="Scripts\materialize2.js" />
+    <Content Include="Scripts\menu.js" />
+    <Content Include="Scripts\formatos.js" />
+    <Content Include="Scripts\recurrente.js" />
+    <Content Include="Scripts\sideMenu.js" />
+    <Content Include="Scripts\soporte.js" />
+    <Content Include="Scripts\subirNoticias.js" />
+    <Content Include="Scripts\tableHeadFixer.js" />
+    <Content Include="Scripts\ValidarDecimalesTP.js" />
+    <Content Include="Scripts\ValidarEdC.js" />
+    <Content Include="Scripts\ValidarFormatoDecimalesC.js" />
+    <Content Include="Scripts\ValidarFormatosDec.js" />
+    <Content Include="Scripts\ValidarImpuestos.js" />
+    <Content Include="Scripts\ValidarLeyenda.js" />
+    <Content Include="Scripts\ValidarNumero.js" />
+    <Content Include="Scripts\ValidarProv.js" />
+    <Content Include="Scripts\ValidarTCambio.js" />
+    <Content Include="Views\Mails\logo_kellogg.png" />
+    <Content Include="Views\LayoutCargaMasiva\Details.cshtml" />
+    <Content Include="Views\LayoutCargaMasiva\Edit.cshtml" />
+    <Content Include="Views\ModificacionesGlobales\ListModSolicitudes.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Mails\Solicitudes.cshtml" />
+    <Content Include="Views\Listas\Estados.cshtml" />
+    <Content Include="Views\Listas\Ciudades.cshtml" />
+    <Content Include="Views\CartaV\Details.cshtml" />
+    <Content Include="Views\CartaV\Index.cshtml" />
+    <Content Include="Views\Solicitudes\DetailsF.cshtml" />
+    <Content Include="Views\Puestos\Create.cshtml" />
+    <Content Include="Views\Puestos\Delete.cshtml" />
+    <Content Include="Views\Puestos\Details.cshtml" />
+    <Content Include="Views\Puestos\Edit.cshtml" />
+    <Content Include="Views\Puestos\Index.cshtml" />
+    <Content Include="Views\Presupuesto\Descargar.cshtml" />
+    <Content Include="Views\Listas\Det_Aprob.cshtml" />
+    <Content Include="Views\Listas\UsuariosPuesto.cshtml" />
+    <Content Include="Views\Listas\Grupos.cshtml" />
+    <Content Include="Views\Contacto\Create.cshtml" />
+    <Content Include="Views\Contacto\Details.cshtml" />
+    <Content Include="Views\Contacto\Edit.cshtml" />
+    <Content Include="Views\Contacto\Index.cshtml" />
+    <Content Include="Views\Impuestos\Create.cshtml" />
+    <Content Include="Views\Impuestos\Index.cshtml" />
+    <Content Include="Views\Pais\Create.cshtml" />
+    <Content Include="Views\Pais\Delete.cshtml" />
+    <Content Include="Views\Pais\Details.cshtml" />
+    <Content Include="Views\Pais\Edit.cshtml" />
+    <Content Include="Views\Pais\Index.cshtml" />
+    <Content Include="Scripts\lang\ES.json" />
+    <Content Include="Scripts\lang\EN.json" />
+    <Content Include="Scripts\lang\PO.json" />
+    <Content Include="Views\Listas\Relacionados.cshtml" />
+    <Content Include="Views\Solicitudes\_PartialDisTr.cshtml" />
+    <Content Include="Views\TCambio\Index.cshtml" />
+    <Content Include="Views\TCambio\Create.cshtml" />
+    <Content Include="Views\TCambio\Delete.cshtml" />
+    <Content Include="Views\TCambio\Details.cshtml" />
+    <Content Include="Views\TCambio\Edit.cshtml" />
+    <Content Include="Views\Det_Aprobs\Create.cshtml" />
+    <Content Include="Views\Det_Aprobs\Delete.cshtml" />
+    <Content Include="Views\Det_Aprobs\Details.cshtml" />
+    <Content Include="Views\Det_Aprobs\Edit.cshtml" />
+    <Content Include="Views\Det_Aprobs\Index.cshtml" />
+    <Content Include="Views\Clientes\Details.cshtml" />
+    <Content Include="Views\Clientes\Edit.cshtml" />
+    <Content Include="Views\Clientes\Index.cshtml" />
+    <Content Include="Views\Materiales\Details.cshtml" />
+    <Content Include="Views\Materiales\Edit.cshtml" />
+    <Content Include="Views\Materiales\Index.cshtml" />
+    <Content Include="Views\Listas\Paises.cshtml" />
+    <Content Include="Views\Listas\selectTaxeo.cshtml" />
+    <Content Include="Views\Solicitudes\_PartialSopTr.cshtml" />
+    <Content Include="Views\Solicitudes\Reversa.cshtml" />
+    <Content Include="Views\Txn\Index.cshtml" />
+    <Content Include="Views\Txn\Create.cshtml" />
+    <Content Include="Views\Txn\Delete.cshtml" />
+    <Content Include="Views\Txn\Details.cshtml" />
+    <Content Include="Views\Txn\Edit.cshtml" />
+    <Content Include="Views\Txc\Index.cshtml" />
+    <Content Include="Views\Txc\Create.cshtml" />
+    <Content Include="Views\Txc\Delete.cshtml" />
+    <Content Include="Views\Txc\Details.cshtml" />
+    <Content Include="Views\Txc\Edit.cshtml" />
+    <Content Include="Views\trv\Index.cshtml" />
+    <Content Include="Views\trv\Create.cshtml" />
+    <Content Include="Views\trv\Delete.cshtml" />
+    <Content Include="Views\trv\Details.cshtml" />
+    <Content Include="Views\trv\Edit.cshtml" />
+    <Content Include="Views\Txl\Index.cshtml" />
+    <Content Include="Views\Txl\Create.cshtml" />
+    <Content Include="Views\Txl\Delete.cshtml" />
+    <Content Include="Views\Leyenda\Index.cshtml" />
+    <Content Include="Views\Leyenda\Create.cshtml" />
+    <Content Include="Views\Leyenda\Delete.cshtml" />
+    <Content Include="Views\Leyenda\Details.cshtml" />
+    <Content Include="Views\Leyenda\Edit.cshtml" />
+    <Content Include="Views\Proveedor\Index.cshtml" />
+    <Content Include="Views\Proveedor\Details.cshtml" />
+    <Content Include="Views\Proveedor\Edit.cshtml" />
+    <Content Include="Views\TSOL\Details.cshtml" />
+    <Content Include="Views\TSOL\Edit.cshtml" />
+    <Content Include="Views\TSOL\Index.cshtml" />
+    <Content Include="Views\Solicitudes\_PartialRecTr.cshtml" />
+    <Content Include="Views\Recurrencias\Create.cshtml" />
+    <Content Include="Views\Recurrencias\Enviar.cshtml" />
+    <Content Include="Views\Presupuesto\Carga.cshtml" />
+    <Content Include="Views\Negociaciones\Index.cshtml" />
+    <Content Include="Views\Negociaciones\Create.cshtml" />
+    <Content Include="Views\Negociaciones\Delete.cshtml" />
+    <Content Include="Views\Negociaciones\Details.cshtml" />
+    <Content Include="Views\Negociaciones\Edit.cshtml" />
+    <Content Include="Views\Recurrencias\Create2.cshtml" />
+    <Content Include="Views\Excel\Details.cshtml" />
+    <Content Include="Views\Excel\Index.cshtml" />
+    <Content Include="Views\ccat\Index.cshtml" />
+    <Content Include="Views\ccat\Create.cshtml" />
+    <Content Include="Views\ccat\Delete.cshtml" />
+    <Content Include="Views\ccat\Details.cshtml" />
+    <Content Include="Views\ccat\Edit.cshtml" />
+    <Content Include="Views\CartaV\Create.cshtml" />
+    <Content Include="Views\Listas\getPeriodo.cshtml" />
+    <Content Include="Views\Correos\Index.cshtml" />
+    <Content Include="Views\Correos\Details.cshtml" />
+    <Content Include="Views\GALL\Index.cshtml" />
+    <Content Include="Views\GALL\Details.cshtml" />
+    <Content Include="Views\GALL\Edit.cshtml" />
+    <Content Include="Views\Iimpuesto\Index.cshtml" />
+    <Content Include="Views\Iimpuesto\Create.cshtml" />
+    <Content Include="Views\Iimpuesto\Delete.cshtml" />
+    <Content Include="Views\Iimpuesto\Details.cshtml" />
+    <Content Include="Views\Iimpuesto\Edit.cshtml" />
+    <Content Include="Views\Impuestos\Delete.cshtml" />
+    <Content Include="Views\Impuestos\Details.cshtml" />
+    <Content Include="Views\Impuestos\Edit.cshtml" />
+    <Content Include="Views\Ppag\Index.cshtml" />
+    <Content Include="Views\Ppag\Create.cshtml" />
+    <Content Include="Views\Ppag\Delete.cshtml" />
+    <Content Include="Views\Ppag\Details.cshtml" />
+    <Content Include="Views\Ppag\Edit.cshtml" />
+    <Content Include="Views\Taxeoh\Index.cshtml" />
+    <Content Include="Views\Taxeoh\Create.cshtml" />
+    <Content Include="Views\Taxeoh\Delete.cshtml" />
+    <Content Include="Views\Taxeoh\Details.cshtml" />
+    <Content Include="Views\Taxeoh\Edit.cshtml" />
+    <Content Include="Views\Taxeop\Index.cshtml" />
+    <Content Include="Views\Taxeop\Create.cshtml" />
+    <Content Include="Views\Taxeop\Delete.cshtml" />
+    <Content Include="Views\Taxeop\Details.cshtml" />
+    <Content Include="Views\Taxeop\Edit.cshtml" />
+    <Content Include="Views\Negs\Index.cshtml" />
+    <Content Include="Views\Negs\Create.cshtml" />
+    <Content Include="Views\Negs\Delete.cshtml" />
+    <Content Include="Views\Negs\Details.cshtml" />
+    <Content Include="Views\Negs\Edit.cshtml" />
+    <Content Include="Views\Flujos\Carga.cshtml" />
+    <Content Include="Views\CartaD\Create.cshtml" />
+    <Content Include="Views\CartaD\Details.cshtml" />
+    <Content Include="Views\CartaD\Index.cshtml" />
+    <Content Include="Views\CartaV\_PartialMatTr.cshtml" />
+    <Content Include="Views\Correos\Recurrente.cshtml" />
+    <Content Include="Views\CartaV\DetailsPos.cshtml" />
+    <Content Include="Views\CartaV\Lista.cshtml" />
+    <Content Include="Views\Correos\Backorder.cshtml" />
+    <Content Include="Views\Recurrencias\Backorder.cshtml" />
+    <Content Include="Views\NOTICIAs\Index.cshtml" />
+    <Content Include="Views\NOTICIAs\Create.cshtml" />
+    <Content Include="Views\NOTICIAs\Delete.cshtml" />
+    <Content Include="Views\NOTICIAs\Details.cshtml" />
+    <Content Include="Views\NOTICIAs\Edit.cshtml" />
+    <Content Include="Views\Recurrencias\Cancelar.cshtml" />
+    <Content Include="Views\Solicitudes\Create.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Masiva\Index.cshtml" />
+    <Content Include="Views\Masiva\_Hoja1.cshtml" />
+    <Content Include="Views\Masiva\_Hoja2.cshtml" />
+    <Content Include="Views\Usuarios\Carga.cshtml" />
+    <Content Include="Views\Reportes\Index.cshtml" />
+    <Content Include="Views\Reportes\ReporteIntegracionTs.cshtml" />
+    <Content Include="Views\Reportes\ReporteProvisiones.cshtml" />
+    <Content Include="Views\Solicitudes\_PartialRanTr.cshtml" />
+    <Content Include="Views\Clientes\Carga.cshtml" />
+    <Content Include="Views\Calendario445\Create.cshtml" />
+    <Content Include="Views\Calendario445\Edit.cshtml" />
+    <Content Include="Views\Calendario445\Index.cshtml" />
+    <Content Include="Views\CalendarioEx445\Edit.cshtml" />
+    <Content Include="Views\CalendarioEx445\Index.cshtml" />
+    <Content Include="Views\Alertas\Index.cshtml" />
+    <Content Include="Views\Alertas\Create.cshtml" />
+    <Content Include="Views\Reportes\ReporteTrackingTS.cshtml" />
+    <Content Include="Views\Alertas\Edit.cshtml" />
+    <Content Include="Views\Sociedades\Details.cshtml" />
+    <Content Include="Views\Sociedades\Edit.cshtml" />
+    <Content Include="Views\Sociedades\Index.cshtml" />
+    <Content Include="Views\Consoporte\Create.cshtml" />
+    <Content Include="Views\Consoporte\Details.cshtml" />
+    <Content Include="Views\Consoporte\Edit.cshtml" />
+    <Content Include="Views\Consoporte\Index.cshtml" />
+    <Content Include="Views\Cuenta\Create.cshtml" />
+    <Content Include="Views\Cuenta\Delete.cshtml" />
+    <Content Include="Views\Cuenta\Details.cshtml" />
+    <Content Include="Views\Cuenta\Edit.cshtml" />
+    <Content Include="Views\Cuenta\Index.cshtml" />
+    <Content Include="Views\Error\Error.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Reportes\ReporteConcentrado.cshtml" />
+    <Content Include="Views\Reportes\ReporteMRLTS.cshtml" />
+    <Content Include="Views\Recurrencias\Ejecutar.cshtml" />
+    <Content Include="Views\TALLs\Index.cshtml" />
+    <Content Include="Views\TALLs\Create.cshtml" />
+    <Content Include="Views\TALLs\Delete.cshtml" />
+    <Content Include="Views\TALLs\Details.cshtml" />
+    <Content Include="Views\TALLs\Edit.cshtml" />
+    <Content Include="Views\Reportes\ReporteAllowancesB.cshtml" />
+    <Content Include="Views\Reportes\ReporteAllowancesPL.cshtml" />
+    <Content Include="Views\Clientes\List.cshtml" />
+    <Content Include="Views\DesviacionesTS\Create.cshtml" />
+    <Content Include="Views\DesviacionesTS\Details.cshtml" />
+    <Content Include="Views\DesviacionesTS\Edit.cshtml" />
+    <Content Include="Views\DesviacionesTS\Index.cshtml" />
+    <Content Include="Views\DocRelacion\Create.cshtml" />
+    <Content Include="Views\DocRelacion\Details.cshtml" />
+    <Content Include="Views\DocRelacion\Edit.cshtml" />
+    <Content Include="Views\DocRelacion\Index.cshtml" />
+    <Content Include="Views\Soporte\Create.cshtml" />
+    <Content Include="Views\Soporte\Details.cshtml" />
+    <Content Include="Views\Soporte\Edit.cshtml" />
+    <Content Include="Views\Soporte\Index.cshtml" />
+    <Content Include="Views\Usuarios\AddBackup.cshtml" />
+    <Content Include="Views\Usuarios\EditBackup.cshtml" />
+    <Content Include="Views\Materiales\List.cshtml" />
+    <Content Include="Views\TSOL\Create.cshtml" />
+    <Content Include="Views\Moneda\Create.cshtml" />
+    <Content Include="Views\Moneda\Delete.cshtml" />
+    <Content Include="Views\Moneda\Details.cshtml" />
+    <Content Include="Views\Moneda\Edit.cshtml" />
+    <Content Include="Views\Moneda\Index.cshtml" />
+    <Content Include="Views\Proveedor\List.cshtml" />
+    <Content Include="Views\Clientes\CargaList.cshtml" />
+    <Content Include="Views\Textocv\Create.cshtml" />
+    <Content Include="Views\Textocv\Delete.cshtml" />
+    <Content Include="Views\Textocv\Details.cshtml" />
+    <Content Include="Views\Textocv\Edit.cshtml" />
+    <Content Include="Views\Textocv\Index.cshtml" />
+    <Content Include="Views\Txc\CreateA.cshtml" />
+    <Content Include="Views\Txn\CreateA.cshtml" />
+    <Content Include="Views\CANAL\Create.cshtml" />
+    <Content Include="Views\CANAL\Delete.cshtml" />
+    <Content Include="Views\CANAL\Details.cshtml" />
+    <Content Include="Views\CANAL\Edit.cshtml" />
+    <Content Include="Views\CANAL\Index.cshtml" />
+    <Content Include="Views\Solicitudes\_CreateTabInfo.cshtml" />
+    <Content Include="Views\Solicitudes\_CreateTabSop.cshtml" />
+    <Content Include="Views\Solicitudes\_CreateTabDis.cshtml" />
+    <Content Include="Views\Solicitudes\_CreateTabRec.cshtml" />
+    <Content Include="Views\Solicitudes\_CreateTabFin.cshtml" />
+    <Content Include="Views\Solicitudes\_DetailsTabInfo.cshtml" />
+    <Content Include="Views\Solicitudes\_DetailsTabDis.cshtml" />
+    <Content Include="Views\Solicitudes\_DetailsTabRec.cshtml" />
+    <Content Include="Views\Solicitudes\_DetailsTabFin.cshtml" />
+    <Content Include="Views\Solicitudes\_DetailsTabSop.cshtml" />
+    <Content Include="Views\Clientes\VerFlujo.cshtml" />
+    <Content Include="Views\Account\ValidateLoginView.cshtml" />
+    <Content Include="Views\Ayuda\Create.cshtml" />
+    <Content Include="Views\Ayuda\Delete.cshtml" />
+    <Content Include="Views\Ayuda\Details.cshtml" />
+    <Content Include="Views\Ayuda\Edit.cshtml" />
+    <Content Include="Views\Ayuda\Index.cshtml" />
+    <Content Include="Views\Ayuda\Consulta.cshtml" />
+    <Content Include="Views\LayoutCargaMasiva\Create.cshtml" />
+    <Content Include="Views\LayoutCargaMasiva\Index.cshtml" />
+    <Content Include="Views\Calendario445\List.cshtml" />
+    <Content Include="Views\Calendario445\ListEx.cshtml" />
+    <Content Include="Views\Region\Create.cshtml" />
+    <Content Include="Views\Region\Delete.cshtml" />
+    <Content Include="Views\Region\Details.cshtml" />
+    <Content Include="Views\Region\Edit.cshtml" />
+    <Content Include="Views\Region\Index.cshtml" />
+    <Content Include="Views\ModificacionesGlobales\Index.cshtml" />
+    <Content Include="Views\ModificacionesGlobales\ListModAutorizador.cshtml" />
+    <Content Include="Views\Solicitudes\_EditTabDis.cshtml" />
+    <Content Include="Views\Solicitudes\_EditTabFin.cshtml" />
+    <Content Include="Views\Solicitudes\_EditTabInfo.cshtml" />
+    <Content Include="Views\Solicitudes\_EditTabRec.cshtml" />
+    <Content Include="Views\Solicitudes\_EditTabSop.cshtml" />
+    <Content Include="Views\Sociedades\Flujos.cshtml" />
+    <Content Include="Views\Sociedades\MAFlujos.cshtml" />
+    <Content Include="Views\Sociedades\EditF.cshtml" />
+    <Content Include="Views\Sociedades\CreateF.cshtml" />
+    <Content Include="Views\Sociedades\CreateFA.cshtml" />
+    <Content Include="Views\LAContabilizacion\Index.cshtml" />
+    <Content Include="Views\Correos\Cancelacion.cshtml" />
+    <Content Include="Views\Correos\Taxeo.cshtml" />
+    <Content Include="Views\Correos\Backup.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <!--<Folder Include="obj\Debug\TempPE\" />-->
+    <Folder Include="App_Data\" />
+    <Folder Include="files\Ayuda\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Project_Readme.html" />
+    <Content Include="Scripts\materialize.min.js" />
+    <Content Include="Views\Home\Pais.cshtml" />
+    <Content Include="Views\Presupuesto\Index.cshtml" />
+    <Content Include="Views\Presupuesto\Carga1.cshtml" />
+    <Content Include="Views\Provision\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Views\Warnings\Create.cshtml" />
+    <Content Include="Views\Warnings\Details.cshtml" />
+    <Content Include="Views\Warnings\Edit.cshtml" />
+    <Content Include="Views\Warnings\Index.cshtml" />
+    <Content Include="Views\Paginas\Create.cshtml" />
+    <Content Include="Views\Paginas\Delete.cshtml" />
+    <Content Include="Views\Paginas\Details.cshtml" />
+    <Content Include="Views\Paginas\Edit.cshtml" />
+    <Content Include="Views\Paginas\Index.cshtml" />
+    <Content Include="Views\Textos\Create.cshtml" />
+    <Content Include="Views\Textos\Delete.cshtml" />
+    <Content Include="Views\Textos\Details.cshtml" />
+    <Content Include="Views\Textos\Edit.cshtml" />
+    <Content Include="Views\Textos\Index.cshtml" />
+    <Content Include="Views\Listas\Clientes.cshtml" />
+    <Content Include="Scripts\autocomplete1.10.2.js" />
+    <Content Include="Views\Solicitudes\Delete.cshtml" />
+    <Content Include="Views\Solicitudes\Details.cshtml" />
+    <Content Include="Views\Solicitudes\Edit.cshtml" />
+    <Content Include="Views\Solicitudes\Index.cshtml" />
+    <Content Include="Views\Workflows\Create.cshtml" />
+    <Content Include="Views\Workflows\Delete.cshtml" />
+    <Content Include="Views\Workflows\Details.cshtml" />
+    <Content Include="Views\Workflows\Edit.cshtml" />
+    <Content Include="Views\Workflows\Index.cshtml" />
+    <Content Include="Views\Flujos\Create.cshtml" />
+    <Content Include="Views\Flujos\Delete.cshtml" />
+    <Content Include="Views\Flujos\Details.cshtml" />
+    <Content Include="Views\Flujos\Edit.cshtml" />
+    <Content Include="Views\Flujos\Index.cshtml" />
+    <Content Include="Views\Flujos\Procesa.cshtml" />
+    <Content Include="Views\Usuarios\Create.cshtml" />
+    <Content Include="Views\Usuarios\Details.cshtml" />
+    <Content Include="Views\Usuarios\Edit.cshtml" />
+    <Content Include="Views\Usuarios\Index.cshtml" />
+    <Content Include="Views\Usuarios\Pass.cshtml" />
+    <Content Include="Views\Mails\Solicitud.cshtml" />
+    <Content Include="Views\Shared\_LayoutMail.cshtml" />
+    <Content Include="Views\Mails\Enviar.cshtml" />
+    <Content Include="Scripts\jquery-3.0.0.min.map" />
+    <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>9</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>64497</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:64497/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

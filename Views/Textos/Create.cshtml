@@ -1,0 +1,74 @@
+﻿@model TAT001.Entities.TEXTO
+
+@{
+    //ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 502;
+    ViewBag.carpeta_r = 500;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col s12 right-align">
+            <button type="submit" class="btn-small" id="btn_create">Crear</button>
+        </div>
+    </div>
+
+    <div class="card-panel">
+        <div class="row">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @*<div class="form-group">
+                @Html.LabelFor(model => model.PAGINA_ID, "PAGINA_ID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">*@
+            @Html.HiddenFor(model => model.PAGINA_ID, new { htmlAttributes = new { @class = "form-control" } })
+            @*@Html.DropDownList("PAGINA_ID", null, htmlAttributes: new { @class = "form-control" })*@
+            @*@Html.ValidationMessageFor(model => model.PAGINA_ID, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            <div class="input-field col s6">
+                @Html.DropDownList("CAMPO_ID", null, htmlAttributes: new { @id = "sel-campo" })
+                @Html.LabelFor(model => model.CAMPO_ID, null, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_campo" })
+                @Html.ValidationMessageFor(model => model.CAMPO_ID, "", new { @class = "text-danger" })
+            </div>
+            <script>
+                var elem = document.getElementById('sel-campo');
+                var options = [];
+                var instance = M.FormSelect.init(elem, options);
+            </script>
+
+            @*<div class="input-field col s6">
+                    @Html.DropDownList("SPRAS_ID", null, htmlAttributes: new { @id = "sel-spras" })
+                    @Html.LabelFor(model => model.SPRAS_ID, "SPRAS_ID", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.ValidationMessageFor(model => model.SPRAS_ID, "", new { @class = "text-danger" })
+                </div>
+                <script>
+                    var elem = document.getElementById('sel-spras');
+                    var options = [];
+                    var instance = M.FormSelect.init(elem, options);
+                </script>*@
+
+            <div class="input-field col s6">
+                @Html.EditorFor(model => model.TEXTOS, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.LabelFor(model => model.TEXTOS, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_texto" })
+                @Html.ValidationMessageFor(model => model.TEXTOS, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    if (ViewBag.Error != null)
+    {
+        @*<div class="row red-text">
+                @ViewBag.Error
+            </div>*@
+
+        <script>
+            M.toast({ html: '@ViewBag.Error', classes: 'red' });
+        </script>
+    }
+}
+
+
+@Html.ActionLink("Cancelar", "Index", new { id = Model.PAGINA_ID }, new { @class = "", @id = "btn_return" })

@@ -1,0 +1,323 @@
+﻿@model TAT001.Entities.DET_APROBH
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 920;
+    ViewBag.carpeta_r = 500;
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col s12 l12 right-align">
+        <button type="submit" id="lbl_guardar" class="btn btn-default"></button>
+    </div>
+    <div class="card-panel">
+        @Html.ValidationSummary(true, "", new { @class = "red-text" })
+        @Html.HiddenFor(model => model.SOCIEDAD_ID)
+        @Html.HiddenFor(model => model.VERSION)
+        @Html.HiddenFor(model => model.ACTIVO)
+        @Html.HiddenFor(model => model.PUESTOC_ID)
+        <div class="row">
+            <div class="col s4">
+                @Html.LabelFor(model => model.SOCIEDAD_ID, "SOCIEDAD_ID", htmlAttributes: new { @class = "control-label col-md-2", id = "lbl_coCode" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.SOCIEDAD_ID, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                    @Html.ValidationMessageFor(model => model.SOCIEDAD_ID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col s4">
+                @Html.LabelFor(model => model.PUESTOC_ID, "PUESTOC_ID", htmlAttributes: new { @class = "control-label col-md-2", id = "lbl_Puesto" })
+                <div class="col-md-4">
+                    @Html.DropDownList("PUESTOC_ID", null, htmlAttributes: new { @class = "form-control", disabled = true })
+                    @Html.ValidationMessageFor(model => model.PUESTOC_ID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col s2">
+                @Html.LabelFor(model => model.VERSION, htmlAttributes: new { @class = "control-label col-md-2", id = "lbl_Version" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.VERSION, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                    @Html.ValidationMessageFor(model => model.VERSION, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col s2">
+                <br />
+                <label>
+                    @Html.CheckBoxFor(model => model.ACTIVO, new { @disabled = true })
+                    <span class="lbl_Activo"></span>
+                </label>
+
+            </div>
+        </div>
+        <div class="row">
+            <div id="table" class="table-editable">
+                <a class="table-add btn-floating btn-medium green right"><i class="material-icons">add_circle</i></a>
+                <table class="table mdl-data-table striped centered" id="tablama" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="lbl_Posicion">Pos</th>
+                            <th class="lbl_NAprobador">Nivel Aprobador</th>
+                            <th class="lbl_Presupuesto">Presupuesto</th>
+                            <th class="lbl_NPresupuesto">Nivel</th>
+                            <th class="lbl_Monto">Monto</th>
+                            <th class="lbl_AprobadorDos">Nivel</th>
+                            @*<th class="lbl_Activo">Activo</th>*@
+                            @*<th></th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hide">
+                            @{
+                                var listA1 = (ViewBag.NivelesA as SelectList).ToList();
+                                var listP1 = (ViewBag.NivelesP as SelectList).ToList();
+                                var listM1 = (ViewBag.NivelesM as SelectList).ToList();
+
+                            }
+                            <td><input type="text" readonly class="posicion" name="posicion" value="0"></td>
+                            <td>@Html.DropDownList("NivelesAP", listA1, "", htmlAttributes: new { @class = "nivelapro browser-default form-control" })</td>
+                            <td>
+                                <label><input class="input_presu" type="checkbox" name="p_0" /><span></span></label>
+                            </td>
+                            <td>@Html.DropDownList("NivelesPR", listP1, "", htmlAttributes: new { @class = "browser-default form-control NivelesPR", disabled = true })</td>
+                            <td><input type="text" class="monto" name="monto" maxlength="17" /></td>
+                            <td>@Html.DropDownList("NivelesMO", listM1, "", htmlAttributes: new { @class = "browser-default form-control NivelesMO", disabled = true })</td>
+                            @*<td><label><input class='input_activo' type='checkbox' id='input_activo' name='activof' checked /><span></span></label></td>*@
+                            @*<td>
+                                    <span class="table-remove material-icons red-text">delete</span>
+                                </td>*@
+                        </tr>
+                        @foreach (var item in ViewBag.FlujosActuales)
+                        {
+                            var listA = (ViewBag.NivelesA as SelectList).ToList();
+                            listA.First(i => i.Value == item.PUESTOA_ID.ToString()).Selected = true;
+
+                            var listP = (ViewBag.NivelesP as SelectList).ToList();
+                            if (item.N_PRESUP != null)
+                            {
+                                listP.First(i => i.Value == item.N_PRESUP.ToString()).Selected = true;
+                            }
+                            var listM = (ViewBag.NivelesM as SelectList).ToList();
+                            if (item.N_MONTO != null)
+                            {
+                                listM.First(i => i.Value == item.N_MONTO.ToString()).Selected = true;
+                            }
+                            <tr>
+                                <td><input type="text" readonly class="posicion" name="posicion" value="@item.POS"></td>
+                                <td>@Html.DropDownList("NivelesAP", listA, "", htmlAttributes: new { @class = "nivelapro browser-default form-control", required = true })</td>
+                                <td>
+                                    @{
+                                        var checado = item.PRESUPUESTO != null ? item.PRESUPUESTO : false;
+                                        if (checado)
+                                        {
+                                            <label><input class="input_presu" type="checkbox" checked name="p_@item.POS" /><span></span></label>
+                                        }
+                                        else
+                                        {
+                                            <label><input class="input_presu" type="checkbox" name="p_@item.POS" /><span></span></label>
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    @{
+                                        var presu = item.PRESUPUESTO != null ? item.PRESUPUESTO : false;
+                                        if (presu)
+                                        {
+                                            @Html.DropDownList("NivelesPR", listP, "", htmlAttributes: new { @class = "browser-default form-control NivelesPR", required = true })
+                                        }
+                                        else
+                                        {
+                                            @Html.DropDownList("NivelesPR", listP, "", htmlAttributes: new { @class = "browser-default form-control NivelesPR", disabled = true })
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <input type="text" class="monto" name="monto" maxlength="17" value="@item.MONTO" />
+                                </td>
+                                <td>
+                                    @if (item.MONTO != 0 && item.MONTO != null)
+                                    {
+                                        @Html.DropDownList("NivelesMO", listM, "", htmlAttributes: new { @class = "browser-default form-control NivelesMO", required = true })
+                                    }
+                                    else
+                                    {
+                                        @Html.DropDownList("NivelesMO", listM, "", htmlAttributes: new { @class = "browser-default form-control NivelesMO", disabled = true })
+                                    }
+                                </td>
+                                @*<td>
+                                        <span class="table-remove material-icons red-text">delete</span>
+                                    </td>*@
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+                <a class="table-remove btn-floating btn-medium red right"><i class="material-icons">delete</i></a>
+            </div>
+            <p id="export"></p>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "MAFlujos", new { id = Model.SOCIEDAD_ID, pid = Model.PUESTOC_ID, v = Model.VERSION - 1 }, new { id = "btn_return" })
+</div>
+<script src="~/Scripts/jquery.mask.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+<link href="~/Content/dataTable.css" rel="stylesheet" />
+<link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+<script src="~/Scripts/messagesCat.js"></script>
+<script>
+            var lista = @Html.Raw(ViewBag.mensajes);
+</script>
+<script>
+    jQuery(function ($) {
+        $('form').bind('submit', function (e) {
+            var rows = $('#tablama>tbody>tr:not(:hidden)').length;
+            var continuar = true;
+            var valoress = [];
+            $(".nivelapro").each(function () {
+                if ($(this).val() != "") {
+                    var existe = valoress.indexOf($(this).val());
+                    if (existe == -1) {
+                        valoress.push($(this).val());
+                    }
+                    else {
+                        toast("tcambio", 100000, "priority_high", lista[2].DESCRIPCION, "red", lista[0].DESCRIPCION);
+                        continuar = false;
+                        e.preventDefault();
+                    }
+                }
+            });
+            if (continuar) {
+                if (rows > 1) {
+                    $(this).find(':input').prop('disabled', false);
+                    return;
+                }
+                else {
+                    toast("tcambio", 100000, "priority_high", lista[1].DESCRIPCION, "red", lista[0].DESCRIPCION);
+                    e.preventDefault();
+                }
+            }
+        });
+    });
+    $("input[type='hidden']").each(function (index, element) {
+        $(this).appendTo($(element).parent());
+                });
+                document.addEventListener('DOMContentLoaded', function () {
+                    var elems = document.querySelectorAll('select');
+                    var instances = M.FormSelect.init(elems, options);
+    });
+    $("#tablama").DataTable({
+        "paging": false,
+        "ordering": false,
+        "info": false,
+        "searching":false
+    });
+            $('.monto').mask('#' + '@ViewBag.Miles' + '##0' + '@ViewBag.PD' + '00', { reverse: true });
+
+                var $TABLE = $('#table');
+
+    $($TABLE).on('click', '.table-add', function () {
+        var pos = $TABLE.find('tr:last>td:eq(0)>input').val();
+        if (pos < 5) {
+            var $clone = $TABLE.find('tr.hide').clone().removeClass('hide table-line');
+            var posn = parseInt(pos) + 1;
+            //if ($(".nivelapro").length > 1) {
+            //    $(".nivelapro").each(function () {
+            //        $clone.find("td:eq(1)>select option:eq(" + $(this).val() + ")").prop("disabled", true);
+            //});
+            //}
+            $clone.find('td:eq(1)>select').prop("required",true);
+            $clone.find('td:eq(0)>input').val(posn);
+            $clone.find('td:eq(2)').find(":checkbox").prop("name", "p_" + posn);
+            $clone.find('td:eq(4)>input').mask('#' + '@ViewBag.Miles' + '##0' + '@ViewBag.PD' + '00', { reverse: true });
+            if (posn == 5) {
+                $clone.find('td:eq(2)').find(":checkbox").prop("disabled", true);
+                $clone.find('td:eq(4)>input').prop("disabled", true);
+            }
+            $TABLE.find('table').append($clone);
+        }
+        else {
+            toast("tcambio", 100000, "priority_high", lista[3].DESCRIPCION, "red", lista[0].DESCRIPCION);
+        }
+                });
+
+    $('.table-remove').click(function () {
+        var pos = $TABLE.find('tr:last>td:eq(0)>input').val();
+        if (pos != 0) {
+            $TABLE.find('tr:last').detach();
+        }
+    });
+    $(document).on('change', '.input_presu', function () {
+        var pos = $(this).closest("tr").find('td:eq(0)>input').val();
+        if ($(this).is(':checked')) {
+            $(this).closest("tr").find("td:eq(3)>select").prop("required", true);
+            $(this).closest("tr").find("td:eq(3)>select").prop("disabled", false);
+            for (var i = 1; i <= pos; i++) {
+                $(this).closest("tr").find("td:eq(3)>select option[value='" + i + "']").prop("disabled", true);
+            }
+            //$(this).closest("tr").find("td:eq(4)>input").prop("disabled", false);
+        }
+        else {
+            $(this).closest("tr").find("td:eq(3)>select").prop("required", false);
+            $(this).closest("tr").find("td:eq(3)>select").prop("disabled", true);
+            //$(this).closest("tr").find("td:eq(4)>input").prop("disabled", true);
+        }
+    });
+    $('.NivelesPR').click(function () {
+        var pos = $(this).closest("tr").find('td:eq(0)>input').val();
+            for (var i = 1; i <= pos; i++) {
+                $(this).closest("tr").find("td:eq(3)>select option[value='" + i + "']").prop("disabled", true);
+            }
+    });
+    $('.NivelesMO').click(function () {
+        var pos = $(this).closest("tr").find('td:eq(0)>input').val();
+        for (var i = 1; i <= pos; i++) {
+            $(this).closest("tr").find("td:eq(5)>select option[value='" + i + "']").prop("disabled", true);
+        }
+    });
+
+    $(document).on('change', '.monto', function () {
+        var pos = $(this).closest("tr").find('td:eq(0)>input').val();
+        if ($(this).val() != "") {
+            $(this).closest("tr").find("td:eq(5)>select").prop("required", true);
+            $(this).closest("tr").find("td:eq(5)>select").prop("disabled", false);
+            for (var i = 1; i <= pos; i++) {
+                $(this).closest("tr").find("td:eq(5)>select option[value='" + i + "']").prop("disabled", true);
+            }
+        }
+        else {
+            $(this).closest("tr").find("td:eq(5)>select").prop("required", false);
+            $(this).closest("tr").find("td:eq(5)>select").prop("disabled", true);
+        }
+    });
+
+    //$(document).on('click', '.nivelapro', function () {
+    //    if ($(".nivelapro").length > 1) {
+    //        $(".nivelapro").each(function () {
+    //            $(this).closest("tr").find("td:eq(1)>select option:eq(" + $(this).val() + ")").prop("disabled", true);
+    //        });
+    //    }
+    //});
+
+</script>
+<style>
+    .table-editable {
+        position: relative;
+    }
+
+        .table-editable .glyphicon {
+            font-size: 20px;
+        }
+
+    .table-remove {
+        color: #700;
+        cursor: pointer;
+    }
+
+        .table-remove:hover {
+            color: #f00;
+        }
+</style>
+
+

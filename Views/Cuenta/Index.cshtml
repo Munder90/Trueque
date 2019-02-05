@@ -1,0 +1,202 @@
+﻿@model IEnumerable<TAT001.Entities.CUENTA>
+@{
+    ViewBag.pagina_r = 691;
+    ViewBag.carpeta_r = 500;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+<link href="~/Content/dataTable.css" rel="stylesheet" />
+<link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+
+<style>
+    .dataTables_length {
+        display: none;
+    }
+
+    .dataTables_filter {
+        display: none;
+    }
+
+    .dataTables_scrollHeadInner, .mdl-data-table {
+        width: 100%;
+    }
+</style>
+<div class="row">
+    <div class="row right">
+        <a href="@Url.Action("Create", "Cuenta")" id="lblAgregar" class="waves-effect waves-light btn">AGREGAR</a>
+    </div>
+</div>
+<div class="card-panel">
+    <div class="row" style="margin-bottom:0;">
+        <div class="input-field col s3 m3 l3">
+            <select id="selecc">
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <label id="lbl_length">Ver por página</label>
+        </div>
+        <div class="input-field col s5 m3 l3 offset-l6 offset-m6 offset-s4">
+            <input type="text" class="global_filter" id="global_filter">
+            <label for="global_filter" id="lbl_search">Buscar</label>
+        </div>
+    </div>
+    <script>
+        var elem = document.querySelector('select');
+        var options = [];
+        var instance = M.FormSelect.init(elem, options);
+    </script>
+    <table class="table mdl-data-table striped" id="table" style="width:100%;">
+        <thead>
+            <tr>
+                <th class="lblCoCode">
+                    @Html.DisplayNameFor(model => model.SOCIEDAD.BUTXT)
+                </th>
+                <th class="lblPais">
+                    @Html.DisplayNameFor(model => model.PAI.LANDX)
+                </th>
+                <th class="lbltall">
+                    @Html.DisplayNameFor(model => model.TALL.DESCRIPCION)
+                </th>
+                <th class="lblejercicio">
+                    @Html.DisplayNameFor(model => model.EJERCICIO)
+                </th>
+                <th class="lblabono">
+                    @Html.DisplayNameFor(model => model.ABONO)
+                </th>
+                <th class="lblcargo">
+                    @Html.DisplayNameFor(model => model.CARGO)
+                </th>
+                <th class="lblclearing">
+                    @Html.DisplayNameFor(model => model.CLEARING)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                TAT001.Entities.TruequeEntities db = new TAT001.Entities.TruequeEntities();
+                string abono = "";
+                if (item.CUENTAGL==null)
+                {
+                    abono = "red";
+                }
+                string cargo = "";
+                if (item.CUENTAGL1 == null)
+                {
+                    cargo = "red";
+                }
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SOCIEDAD_ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PAI.LANDX)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TALL.DESCRIPCION)
+                    </td>
+                    <td>
+                        @item.EJERCICIO.ToString()
+                    </td>
+                    <td class="@abono">
+                        @item.ABONO.ToString()
+                    </td>
+                    <td class="@cargo">
+                        @item.CARGO.ToString()
+                    </td>
+                    <td>
+                        @item.CLEARING.ToString()
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Cuenta", new { soc = item.SOCIEDAD_ID, pai = item.PAIS_ID, tal = item.TALL_ID, eje = item.EJERCICIO })">
+                            <i class='material-icons green-text'>edit</i>
+                        </a>&nbsp
+                        <a href="@Url.Action("Details", "Cuenta", new { soc = item.SOCIEDAD_ID, pai = item.PAIS_ID, tal = item.TALL_ID, eje = item.EJERCICIO })">
+                            <i class='material-icons blue-text'>search</i>
+                        </a>&nbsp
+                        @*<a data-form-method="post" href="@Url.Action("Delete", "Cuenta", new { soc = item.SOCIEDAD_ID, pai = item.PAIS_ID, tal = item.TALL_ID, eje = item.EJERCICIO })">
+                                <i class='material-icons red-text'>delete</i>
+                            </a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+     var root = "@Url.Content("~")",
+        spras_id = "@ViewBag.spras_id",
+        urlLanguage = root + "Scripts/lang/" + spras_id + ".json";
+    $(document).ready(function () {
+        var table = $('#table').DataTable({
+            scrollX: "50vh",
+            scrollY: "50vh",
+            scrollCollapse: true,
+            language: {
+                "url": urlLanguage
+            },
+            order: [[2, "asc"]],
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var select = $('<select style="display:initial;" class="browser-default"><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+                    column.cells('', column[0]).render('display').sort().unique().each(function (d, j) {
+                        var val = $('<div/>').html(d).text();
+                        select.append('<option value="' + val + '">' + val + '</option>');
+                    });
+                });
+            }
+        });
+
+        var a = $('#selecc').val();
+        table.page.len(a).draw();
+        $('#selecc').on('change', function () {
+            table.page.len(this.value).draw();
+        });
+
+        $('input.global_filter').on('keyup click', function () {
+            filterGlobal();
+        });
+
+        $('#table tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                var child = format(row.data(), row, tr);
+                if (child != undefined) {
+                }
+            }
+        });
+    });
+    function filterGlobal() {
+        $('#table').DataTable().search(
+            $('#global_filter').val()).draw();
+    }
+
+</script>
+

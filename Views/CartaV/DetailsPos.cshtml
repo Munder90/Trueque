@@ -1,0 +1,632 @@
+﻿@model TAT001.Models.CartaV
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 232;
+    ViewBag.carpeta_r = 200;
+    TempData["swf"] = TempData["ESTATUS_WF"];
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="row">
+            <div class="col l12 m12 right-align">
+                @* -----DRS 14.10.2018---- *@
+                <a href="@Url.Action("Lista", "CartaV" , new { id = Model.num_doc, swf = TempData["ESTATUS_WF"]})" class="btn btn-small">Regresar</a>
+                <button class="btn btn-small" type="submit" name="action" id="lbl_print" >
+                    Imprimir
+                    @*<i class="material-icons right">print</i>*@
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="card-panel">
+            <div class="row">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.num_doc)
+                @Html.HiddenFor(model => model.num_doc)
+                <div class="row">
+                    <div class="col l3 m3 s6 offset-l9">
+                        <div class="col l2 s2">
+                            <label>
+                                <input type="checkbox" disabled="disabled" name="company_x" value="true" id="company_x" @Html.Raw((Model.company_x) ? "checked=\"checked\"" : "") />
+                                <span style="height:0"></span>
+                            </label>
+                        </div>
+                        <div class="input-field col l10 m10" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.company, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;", @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.company, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_company" })
+                        </div>
+                    </div>
+                    <div class="col l3 m3 s6 offset-l9">
+                        <div class="col l2 s2">
+                            <label>
+                                <input type="checkbox" disabled="disabled" name="taxid_x" value="true" id="taxid_x" @Html.Raw((Model.taxid_x) ? "checked=\"checked\"" : "") />
+                                <span style="height:0"></span>
+                            </label>
+                        </div>
+                        <div class="input-field col l10 m10" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.taxid, new { htmlAttributes = new { @class = "form-control", @style = "height:auto; ", @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.taxid, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_tax" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="height:10px;width:100%;">
+                    <div class="col l7 pink darken-1" style="height:10px;padding:0;"></div>
+                    <div class="col l3 pink darken-4" style="height:10px;padding:0;">
+                        <div class="col l3 pink darken-4" style="height:10px;padding:0;"></div>
+                        <div class="col l8 orange" style="height:10px;padding:0;"></div>
+                        <div class="col l1 red" style="height:10px;padding:0;"></div>
+                    </div>
+                    <div class="col l2 yellow" style="height:10px;padding:0;"></div>
+                </div>
+                <div class="row">
+                    <div class="col s6 m6 l6">
+                        <div class="row">
+                            <div class="col l12 m12 s12">
+                                <div class="col l2 s2">
+                                    <label>
+                                        <input type="checkbox" disabled="disabled" name="concepto_x" value="true" id="concepto_x" @Html.Raw((Model.concepto_x) ? "checked=\"checked\"" : "") />
+                                        <span style="height:0"></span>
+                                    </label>
+                                </div>
+                                <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                    @Html.EditorFor(model => model.concepto, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;", @disabled = "disabled" } })
+                                    @Html.LabelFor(model => model.concepto, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_concepto" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col l8 m8 s12">
+                                <div class="col l2 s2">
+                                    <label>
+                                        <input type="checkbox" disabled="disabled" name="payerNom_x" value="true" id="payerNom_x" @Html.Raw((Model.payerNom_x) ? "checked=\"checked\"" : "") />
+                                        <span style="height:0"></span>
+                                    </label>
+                                </div>
+                                <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                    @Html.EditorFor(model => model.payerNom, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;", @disabled = "disabled" } })
+                                    @Html.LabelFor(model => model.payerNom, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_payN" })
+                                </div>
+                                <div class="col l2 s2">
+                                    <label>
+                                        <input type="checkbox" disabled="disabled" name="cliente_x" value="true" id="cliente_x" @Html.Raw((Model.cliente_x) ? "checked=\"checked\"" : "") />
+                                        <span style="height:0"></span>
+                                    </label>
+                                </div>
+                                <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                    @Html.EditorFor(model => model.cliente, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;", @disabled = "disabled" } })
+                                    @Html.LabelFor(model => model.cliente, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_cliente" })
+                                </div>
+                                <div class="col l2 s2">
+                                    <label>
+                                        <input type="checkbox" disabled="disabled" name="puesto_x" value="true" id="puesto_x" @Html.Raw((Model.puesto_x) ? "checked=\"checked\"" : "") />
+                                        <span style="height:0"></span>
+                                    </label>
+                                </div>
+                                <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                    @Html.EditorFor(model => model.puesto, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;", @disabled = "disabled" } })
+                                    @Html.LabelFor(model => model.puesto, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_puesto" })
+                                </div>
+                                <div class="col l2 s2">
+                                    <label>
+                                        <input type="checkbox" disabled="disabled" name="direccion_x" value="true" id="direccion_x" @Html.Raw((Model.direccion_x) ? "checked=\"checked\"" : "") />
+                                        <span style="height:0"></span>
+                                    </label>
+                                </div>
+                                <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                    @Html.EditorFor(model => model.direccion, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;", @disabled = "disabled" } })
+                                    @Html.LabelFor(model => model.direccion, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_direccion" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s6 m6 l6">
+                        <div class="col l8 m8 s8 offset-l4">
+                            <div class="col l2 s2 offset-l2">
+                                <label>
+                                    <input type="checkbox" disabled="disabled" name="folio_x" value="true" id="folio_x" @Html.Raw((Model.folio_x) ? "checked=\"checked\"" : "") />
+                                    <span style="height:0"></span>
+                                </label>
+                            </div>
+                            <div class="input-field col l8 m8" style="margin-bottom:0;">
+                                @Html.EditorFor(model => model.folio, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;", @disabled = "disabled" } })
+                                @Html.LabelFor(model => model.folio, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_folio" })
+                            </div>
+                            <div class="col l2 s2">
+                                <label>
+                                    <input type="checkbox" disabled="disabled" name="lugarFech_x" value="true" id="lugarFech_x" @Html.Raw((Model.lugarFech_x) ? "checked=\"checked\"" : "") />
+                                    <span style="height:0"></span>
+                                </label>
+                            </div>
+                            <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                @Html.EditorFor(model => model.lugarFech, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;", @readonly = "readonly", @disabled = "disabled" } })
+                                @Html.LabelFor(model => model.lugarFech, "Fecha", htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_fecha" })
+                            </div>
+                            <div class="col l2 s2">
+                                <label>
+                                    <input type="checkbox" disabled="disabled" name="lugar_x" value="true" id="lugar_x" @Html.Raw((Model.lugar_x) ? "checked=\"checked\"" : "") />
+                                    <span style="height:0"></span>
+                                </label>
+                            </div>
+                            <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                @Html.EditorFor(model => model.lugar, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;", @disabled = "disabled" } })
+                                @Html.LabelFor(model => model.lugar, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_lugar" })
+                            </div>
+                            <div class="col l2 s2">
+                                <label>
+                                    <input type="checkbox" disabled="disabled" name="payerId_x" value="true" id="payerId_x" @Html.Raw((Model.payerId_x) ? "checked=\"checked\"" : "") />
+                                    <span style="height:0"></span>
+                                </label>
+                            </div>
+                            <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                @Html.EditorFor(model => model.payerId, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;", @disabled = "disabled" } })
+                                @Html.LabelFor(model => model.payerId, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_payerId" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l6 m6 s6">
+                        <div class="col l1 s2">
+                            <label>
+                                <input type="checkbox" disabled="disabled" name="estimado_x" value="true" id="estimado_x" @Html.Raw((Model.estimado_x) ? "checked=\"checked\"" : "") />
+                                <span style="height:0"></span>
+                            </label>
+                        </div>
+                        <div class="input-field col l10 m10" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.estimado, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;", @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.estimado, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_estimado" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l12 m12 s12">
+                        <div class="col l1 s2">
+                            <label>
+                                <input type="checkbox" disabled="disabled" name="mecanica_x" value="true" id="mecanica_x" @Html.Raw((Model.mecanica_x) ? "checked=\"checked\"" : "") />
+                                <span style="height:0"></span>
+                            </label>
+                        </div>
+                        <div class="input-field col l10 m10" style="margin-bottom:0;">
+                            @Html.TextAreaFor(model => model.mecanica, new { @class = "materialize-textarea", @disabled = "disabled" })
+                            @*@Html.EditorFor(model => model.mecanica, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;" } })*@
+                            @Html.LabelFor(model => model.mecanica, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_mecanica" })
+                        </div>
+                    </div>
+                </div>
+                @*AQUI VA LA TABLA*@
+                @{ int tablas = Model.listaFechas.Count; }@*SE RECIBE LA N CANTIDAD DE TABLAS A GENERAR*@
+                @{ int cols = Model.numColEncabezado.Count(); } @*SE RECIBE LA CANTIDAD DE COLUMNAS A CONTENER LA TABLA*@
+                @{ int tamaño = 600 / cols; }
+                @{int pos = 0; }
+
+                @for (int a = 0; a < tablas; a++)
+                {
+                    <div class="row">
+                        <div class="col s12">
+                            @{var tabname = "table_mat" + a;} @*B20180710 MGC 2018.07.10 Modificaciones para editar los campos de distribución*@
+                            @{var dename = "dedate_table_mat" + a;} @*B20180710 MGC 2018.07.10 Modificaciones para editar los campos de distribución*@
+                            @{var alname = "aldate_table_mat" + a;} @*B20180710 MGC 2018.07.10 Modificaciones para editar los campos de distribución*@
+                            <input type="hidden" value="@Model.listaFechas[a].Remove(10)" id="@dename" /> @*B20180710 MGC 2018.07.10 Modificaciones para editar los campos de distribución*@
+                            <input type="hidden" value="@Model.listaFechas[a].Remove(0, Model.listaFechas[a].Length / 2).Remove(10)" id="@alname" /> @*B20180710 MGC 2018.07.10 Modificaciones para editar los campos de distribución*@
+                            <table id="@tabname" class="table table_mat" style="font-size: 12px;">
+                                @*B20180710 MGC 2018.07.10 Modificaciones para editar los campos de distribución*@
+                                <thead>
+                                    <tr>
+                                        @{ string cabecera = @ViewBag.de + " " + Model.listaFechas[a].Remove(10) + " " + @ViewBag.al + " " + (Model.listaFechas[a].Remove(0, Model.listaFechas[a].Length / 2)).Remove(10); }
+                                        <b style="font-size:x-large">@cabecera</b>
+                                    </tr>
+                                </thead>
+                                @if (a == 0)
+                                {
+                                    <tr style="background-color:#CCCCCC">
+                                        <th style="text-align:center"><br />
+                                            <b>@Model.numColEncabezado[0]</b><br/>
+                                            <label>
+                                                <input type="checkbox" disabled="disabled" name="material_x" value="true" id="material_x" @Html.Raw((Model.material_x) ? "checked=\"checked\"" : "") />
+                                                <span style="height:10px"></span>
+                                            </label>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[1]</b>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[2]</b>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[3]</b><br />
+                                            <label>
+                                                <input type="checkbox" disabled="disabled" name="costoun_x" value="true" id="costoun_x" @Html.Raw((Model.costoun_x) ? "checked=\"checked\"" : "") />
+                                                <span style="height:10px"></span>
+                                            </label>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[4]</b><br />
+                                            <label>
+                                                <input type="checkbox" disabled="disabled" name="apoyo_x" value="true" id="apoyo_x" @Html.Raw((Model.apoyo_x) ? "checked=\"checked\"" : "") />
+                                                <span style="height:10px"></span>
+                                            </label>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[5]</b><br />
+                                            <label>
+                                                <input type="checkbox" disabled="disabled" name="apoyop_x" value="true" id="apoyop_x" @Html.Raw((Model.apoyop_x) ? "checked=\"checked\"" : "") />
+                                                <span style="height:10px"></span>
+                                            </label>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[6]</b><br />
+                                            <label>
+                                                <input type="checkbox" disabled="disabled" name="costoap_x" value="true" id="costoap_x" @Html.Raw((Model.costoap_x) ? "checked=\"checked\"" : "") />
+                                                <span style="height:10px"></span>
+                                            </label>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[7]</b><br />
+                                            <label>
+                                                <input type="checkbox" disabled="disabled" name="precio_x" value="true" id="precio_x" @Html.Raw((Model.precio_x) ? "checked=\"checked\"" : "") />
+                                                <span style="height:10px"></span>
+                                            </label>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[8]</b><br />
+                                            <label>
+                                                <input type="checkbox" disabled="disabled" name="volumen_x" value="true" id="apoyoEst_x" @Html.Raw((Model.volumen_x) ? "checked=\"checked\"" : "") />@*B20180730 MGC 2018.07.30 Formatos*@
+                                                <span style="height:10px"></span>
+                                            </label>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[9]</b><br />
+                                            <label>
+                                                <input type="checkbox" disabled="disabled" name="apoyototal_x" value="true" id="apoyoRea_x" @Html.Raw((Model.apoyototal_x) ? "checked=\"checked\"" : "") />@*B20180730 MGC 2018.07.30 Formatos*@
+                                                <span style="height:10px"></span>
+                                            </label>
+                                        </th>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr style="background-color:#CCCCCC">
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[0]</b>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[1]</b>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[2]</b>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[3]</b>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[4]</b>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[5]</b>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[6]</b>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[7]</b>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[8]</b>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado[9]</b>
+                                        </th>
+                                    </tr>
+                                }
+
+                                @{int columnas = 0; }
+                                @{int filas = 0; }
+                                @{columnas = Model.numColEncabezado.Count(); }
+                                @{filas = Model.numfilasTabla[a]; }
+                                @*B20180710 MGC 2018.07.10 Modificaciones para editar los campos de distribución*@
+                                @for (int i = 0; i < filas; i++)
+                                {
+                                    <tr class="@ViewBag.trclass" role="row">
+                                        @for (int j = 0; j < columnas; j++)
+                                        {
+                                            if (@Model.listaCuerpom[pos].clase.Contains("ni"))
+                                            {
+                                                <td class="ni">@Model.listaCuerpom[pos].val</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="text-align:center">@Html.EditorFor(m => m.listaCuerpom[pos].val, new { htmlAttributes = new { @class = @Model.listaCuerpom[pos].clase } })</td>
+                                            }
+                                            pos++;
+                                        }
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col l8 m8 s12">
+                        <div class="col l1 s1">
+                            <label>
+                                <input type="checkbox" disabled="disabled" name="monto_x" value="true" id="monto_x" @Html.Raw((Model.monto_x) ? "checked=\"checked\"" : "") />
+                                <span style="height:0"></span>
+                            </label>
+                        </div>
+                        <div class="input-field col l10 m10" style="margin-bottom:0;">
+                            @Html.HiddenFor(model => model.monto)
+                            @Html.HiddenFor(model => model.moneda)
+                            @{ string monto = @ViewBag.mon; }
+
+                            @Html.LabelFor(model => model.monto, monto + " " + Model.monto + " " + Model.moneda, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_monto", @disabled = "disabled" })
+
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <br />
+
+                @if (Model.numfilasTabla2 > 0)
+                {
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="col l1 s1">
+                                <label>
+                                    <input type="checkbox" disabled="disabled" name="secondTab_x" value="true" id="secondTab_x" @Html.Raw((Model.secondTab_x) ? "checked=\"checked\"" : "") />
+                                    <span style="height:0"></span>
+                                </label>
+                            </div>
+                            <div class="input-field col l11 m11" style="margin-bottom:0;">
+                                <table class="table" style="font-size: 12px;">
+                                    <thead>
+                                        <tr><b style="font-size:x-large" id="lbl_Titulo"></b></tr>
+                                    </thead>
+                                    <tr style="background-color:#CCCCCC;">
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado2[0]</b>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado2[1]</b>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado2[2]</b>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado2[3]</b>
+                                        </th>
+                                        <th style="text-align:center">
+                                            <b>@Model.numColEncabezado2[4]</b>
+                                        </th>
+                                    </tr>
+                                    @{int cols2 = Model.numColEncabezado2.Count(); }
+                                    @{int pos2 = 0; }
+                                    @for (int i = 0; i < Model.numfilasTabla2; i++)
+                                    {
+                                        <tr>
+                                            @for (int j = 0; j < cols2; j++)
+                                            {
+                                                <td style='text-align:center;'>@Model.listaCuerpoRec[pos2]</td>
+                                                pos2++;
+                                            }
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <br />
+                <div class="row">
+                    <div class="col l6 m6">
+                        <div class="row">
+                            <div class="col l8 m8 offset-l2">
+                                <div class="col l12 m12 s12">
+                                    <div class="col l1 s2">
+                                        <label>
+                                            <input type="checkbox" disabled="disabled" name="nombreE_x" value="true" id="nombreE_x" @Html.Raw((Model.nombreE_x) ? "checked=\"checked\"" : "") />
+                                            <span style="height:0"></span>
+                                        </label>
+                                    </div>
+                                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                        @Html.EditorFor(model => model.nombreE, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;", @disabled = "disabled" } })
+                                        @Html.LabelFor(model => model.nombreE, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_nombreE" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col l8 m8 offset-l2">
+                                <div class="col l12 m12 s12">
+                                    <div class="col l1 s2">
+                                        <label>
+                                            <input type="checkbox" disabled="disabled" name="puestoE_x" value="true" id="puestoE_x" @Html.Raw((Model.puestoE_x) ? "checked=\"checked\"" : "") />
+                                            <span style="height:0"></span>
+                                        </label>
+                                    </div>
+                                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                        @Html.EditorFor(model => model.puestoE, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;", @disabled = "disabled" } })
+                                        @Html.LabelFor(model => model.puestoE, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_puestoE" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col l8 m8 offset-l2">
+                                <div class="col l12 m12 s12">
+                                    <div class="col l1 s2">
+                                        <label>
+                                            <input type="checkbox" disabled="disabled" name="companyC_x" value="true" id="companyC_x" @Html.Raw((Model.companyC_x) ? "checked=\"checked\"" : "") />
+                                            <span style="height:0"></span>
+                                        </label>
+                                    </div>
+                                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                        @Html.EditorFor(model => model.companyC, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;", @disabled = "disabled" } })
+                                        @Html.LabelFor(model => model.companyC, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_companyC" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l6 m6">
+                        <div class="row">
+                            <div class="col l8 m8 offset-l2">
+                                <div class="col l12 m12 s12">
+                                    <div class="col l1 s2">
+                                        <label>
+                                            <input type="checkbox" disabled="disabled" name="nombreC_x" value="true" id="nombreC_x" @Html.Raw((Model.nombreC_x) ? "checked=\"checked\"" : "") />
+                                            <span style="height:0"></span>
+                                        </label>
+                                    </div>
+                                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                        @Html.EditorFor(model => model.nombreC, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;", @disabled = "disabled" } })
+                                        @Html.LabelFor(model => model.nombreC, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_nombreC" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col l8 m8 offset-l2">
+                                <div class="col l12 m12 s12">
+                                    <div class="col l1 s2">
+                                        <label>
+                                            <input type="checkbox" disabled="disabled" name="puestoC_x" value="true" id="puestoC_x" @Html.Raw((Model.puestoC_x) ? "checked=\"checked\"" : "") />
+                                            <span style="height:0"></span>
+                                        </label>
+                                    </div>
+                                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                        @Html.EditorFor(model => model.puestoC, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;", @disabled = "disabled" } })
+                                        @Html.LabelFor(model => model.puestoC, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_puestoC" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col l8 m8 offset-l2">
+                                <div class="col l12 m12 s12">
+                                    <div class="col l1 s2">
+                                        <label>
+                                            <input type="checkbox" disabled="disabled" name="companyCC_x" value="true" id="companyCC_x" @Html.Raw((Model.companyCC_x) ? "checked=\"checked\"" : "") />
+                                            <span style="height:0"></span>
+                                        </label>
+                                    </div>
+                                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                        @Html.EditorFor(model => model.companyCC, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;", @disabled = "disabled" } })
+                                        @Html.LabelFor(model => model.companyCC, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_companyCC" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                @*OCG 16-10-18 Se edita el campo comentario como parrafo y se quitan los campos compromiso k y compromiso c*@
+                @*<div class="row">
+                    <div class="col l12 m6">
+                        <div class="row">
+                            <div class="col l6 m8 sl2">
+                                <div class="col l12 m12 s12">
+                                    <div class="col l1 s2">
+                                        <label>
+                                            <input type="checkbox" disabled="disabled" name="comentarios_x" value="true" id="comentarios_x" @Html.Raw((Model.comentarios_x) ? "checked=\"checked\"" : "") />
+                                            <span style="height:0"></span>
+                                        </label>
+                                    </div>
+                                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                        @Html.TextAreaFor(model => model.comentarios, new { @class = "materialize-textarea", @disabled = "disabled" })
+                                        @Html.LabelFor(model => model.comentarios, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_comen" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col l6 m8 sl2">
+                                <div class="col l12 m12 s12">
+                                    <div class="col l1 s2">
+                                        <label>
+                                            <input type="checkbox" disabled="disabled" name="compromisok_x" value="true" id="compromisok_x" @Html.Raw((Model.compromisoK_x) ? "checked=\"checked\"" : "") />
+                                            <span style="height:0"></span>
+                                        </label>
+                                    </div>
+                                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                        @Html.TextAreaFor(model => model.compromisoK, new { @class = "materialize-textarea", @disabled = "disabled" })
+                                        @Html.LabelFor(model => model.compromisoK, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_comproK" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l12 m6">
+                        <div class="row">
+                            <div class="col l6 m8 sl2">
+                                <div class="col l12 m12 s12">
+                                    <div class="col l1 s2">
+                                        <label>
+                                            <input type="checkbox" disabled="disabled" name="compromisoC_x" value="true" id="compromisoC_x" @Html.Raw((Model.compromisoC_x) ? "checked=\"checked\"" : "") />
+                                            <span style="height:0"></span>
+                                        </label>
+                                    </div>
+                                    <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                        @Html.TextAreaFor(model => model.compromisoC, new { @class = "materialize-textarea", @disabled = "disabled" })
+                                        @Html.LabelFor(model => model.compromisoC, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_comproC" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+
+                <div class="row">
+                    <div class="col l12 m12 s12">
+                        <div class="col l1 s2">
+                            <label>
+                                <input type="checkbox" disabled="disabled" name="comentarios_x" value="true" id="comentarios_x" @Html.Raw((Model.comentarios_x) ? "checked=\"checked\"" : "") />
+                                <span style="height:0"></span>
+                            </label>
+                        </div>
+                        <div class="input-field col l10 m10" style="margin-bottom:0;">
+                            @Html.TextAreaFor(model => model.comentarios, new { @class = "materialize-textarea", @disabled = "disabled" })
+                            @Html.LabelFor(model => model.comentarios, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_comen" })
+                        </div>
+                    </div>
+                </div>
+                @*OCG 16-10-18*@
+
+                <div class="row">
+                    <div class="col l12 m12 s12">
+                        <div class="col l1 s2">
+                            <label>
+                                <input type="checkbox" disabled="disabled" name="legal_x" value="true" id="legal_x" @Html.Raw((Model.legal_x) ? "checked=\"checked\"" : "") />
+                                <span style="height:0"></span>
+                            </label>
+                        </div>
+                        <div class="input-field col l10 m10" style="margin-bottom:0;">
+                            @Html.TextAreaFor(model => model.legal, new { @class = "materialize-textarea", @style = "height:auto;", @disabled = "disabled" })
+                            @Html.LabelFor(model => model.legal, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_legal" })
+                        </div>
+                    </div>
+                    <div class="col l12 m12 s12">
+                        <div class="col l1 s2">
+                            <label>
+                                <input type="checkbox" disabled="disabled" name="mail_x" value="true" id="mail_x" @Html.Raw((Model.mail_x) ? "checked=\"checked\"" : "") />
+                                <span style="height:0"></span>
+                            </label>
+                        </div>
+                        <div class="input-field col l10 m10" style="margin-bottom:0;">
+                            @Html.EditorFor(model => model.mail, new { htmlAttributes = new { @class = "form-control", @style = "height:auto;", @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.mail, htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_email" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="height:10px;width:100%;">
+                <div class="col l7 pink darken-1" style="height:10px;padding:0;"></div>
+                <div class="col l3 pink darken-4" style="height:10px;padding:0;">
+                    <div class="col l3 pink darken-4" style="height:10px;padding:0;"></div>
+                    <div class="col l8 orange" style="height:10px;padding:0;"></div>
+                    <div class="col l1 red" style="height:10px;padding:0;"></div>
+                </div>
+                <div class="col l2 yellow" style="height:10px;padding:0;"></div>
+            </div>
+        </div>
+
+    </div>
+
+}

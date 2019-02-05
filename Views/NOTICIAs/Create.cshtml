@@ -1,0 +1,124 @@
+﻿@model TAT001.Entities.NOTICIA
+@using System.Web.Hosting;
+@{
+    ViewBag.pagina_r = 911;
+    ViewBag.carpeta_r = 900;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/subirNoticias.js"></script>
+@if (ViewBag.error != "")
+{
+    <script>
+        $(document).ready(function () {
+            function errorMessage(msg) {
+            M.toast({ html: msg });
+        }
+            var message = '@ViewBag.error';
+            if (message != "") {
+                errorMessage(message);
+            }
+        });
+    </script>
+}
+@if (ViewBag.imgnoticia != null)
+{
+    if (String.IsNullOrEmpty(ViewBag.imgnoticia) == false)
+    {
+        <div class="parallax-container" style="height:250px;">
+            <div class="@*parallax*@">
+                @if (Request.Url.PathAndQuery != "/")
+                {
+                    <img src="@Request.Url.OriginalString.Replace(Request.Url.PathAndQuery, "")@HostingEnvironment.ApplicationVirtualPath/@ViewBag.imgnoticia" style="height: 200px; position:absolute; width:100%;" />
+                }
+                else
+                {
+                    <img src="@Request.Url.OriginalString@HostingEnvironment.ApplicationVirtualPath/@ViewBag.imgnoticia" style="height: 200px; position:absolute; width:100%;" />
+                }
+            </div>
+        </div>
+    }
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="PATH" id="PATH" value="" />
+    <div class="row">
+        <div class="col s12 l8 offset-l2">
+            <div class="card horizontal green white-text">
+                <div class="col s12" style="margin-bottom:0;">
+                    <p class="lblMensajeRecomendacion">
+                       
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <div id="file_Imagen" class="file-field input-field">
+            <div class="btn">
+                <span class="lblFile"></span>
+                <input type="file" class="fileImg" id="fileImg" accept="image/*" />
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate fileImg" id="lblImgText" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="parallax-container" style="height:250px;">
+        <div class="@*parallax*@">
+            <h5 id="lblPrevia" class="lblVistaPrevia" style="display:none;"></h5>
+            <img id="previa" src="" style="height: 200px; position:absolute; width:100%; display:none;" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="card-panel oc" style="display:none;">
+            <div class="row">
+                <div class="col s6">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix oc" style="display:none;">date_range</i>
+                        @*@Html.HiddenFor(model => model.FECHAI, new { htmlAttributes = new { @class = "form-control datepicker" } })*@
+                        <input id="FECHAI" required name="FECHAI" type="text" class="validate oc datepicker" style="display:none;" />
+                        <label for="FECHAI" class="oc" style="display:none;">Fecha Inicio</label>
+                    </div>
+                </div>
+                <div class="col s6 ">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix oc" style="display:none;">date_range</i>
+                        @*@Html.HiddenFor(model => model.FECHAF, new { htmlAttributes = new { @class = "form-control datepicker" } })*@
+                        <input id="FECHAF" name="FECHAF" required type="text" class="validate oc datepicker" style="display:none;" />
+                        <label for="FECHAF" class="oc" style="display:none;">Fecha Termino</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group right-align right" style=" display: inline-block;">
+            <input id="btnCancelar" type="button" value="Cancelar" class="btn-small red" style="display:none;" />
+            @*<input id="btnAp" type="button" value="Guardar" class="btn-small" style="display:none;" />*@
+            <button id="btnCrear" type="submit" value="Guardar" class="btn-small" style="display:none;">Guardar</button>
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index",null,new { @class="lblRegresar"})
+</div>
+<script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+<script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+<script>
+    jQuery(function ($) {
+        $('form').bind('submit', function (e) {
+                //Realizar guardado
+                var res = loadImage();
+                if (res != "0") {
+                    //POST
+                    return;
+            }
+            e.preventDefault();
+        });
+    });
+    fnCommon.materializeInit('datepicker', '@ViewBag.lan');
+    fnCommon.setDateRange('FECHAI', 'FECHAF', null);  
+    fnCommon.setDateRange('FECHAF',null,'FECHAI');
+
+</script>

@@ -1,0 +1,161 @@
+﻿@model IEnumerable<TAT001.Entities.DET_APROB>
+
+@{
+    //ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 103;
+    ViewBag.carpeta_r = 100;
+}
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+@*<link href="//cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css" rel="stylesheet" />*@
+<link href="~/Content/dataTable.css" rel="stylesheet" />
+<link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+
+<table class="table mdl-data-table striped" id="table" style="width:100%;">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BUKRS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PUESTO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.POS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PUESTO1.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MONTO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PRESUPUESTO)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BUKRS)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PUESTO.PUESTOTs.Where(a => a.SPRAS_ID.Equals(Session["spras"].ToString())).FirstOrDefault().TXT50)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.POS)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PUESTO1.PUESTOTs.Where(a => a.SPRAS_ID.Equals(Session["spras"].ToString())).FirstOrDefault().TXT50)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MONTO)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PRESUPUESTO)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#table').DataTable({
+            paging: false,
+            //searching: false
+            //stateSave: true,
+            scrollX: "50vh",
+            scrollY: "50vh",
+            scrollCollapse: true,
+            //language: {
+            //    lengthMenu: "Display _MENU_ records per page",
+            //    zeroRecords: "No se encontraron datos",
+            //    info: "Página _PAGE_ de _PAGES_",
+            //    infoEmpty: "No hay datos",
+            //    infoFiltered: "(Filtrado de _MAX_ líneas totales)",
+            //    search: "Buscar"
+            //},
+            //order: [[4, "desc"], [1, "desc"]],
+            language: {
+                "url": "../Scripts/lang/@Session["spras"].ToString()"+".json"
+            },
+            columnDefs: [
+                {
+                    targets: [1, 2, 3],
+                    className: 'mdl-data-table__cell--non-numeric'
+                }
+            ],
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    //var div = $('<div class="inputa-field col s12">').appendTo($(column.footer()).empty());
+                    var select = $('<select style="display:initial;" class="browser-default"><option value=""></option></select>')
+                        //var select = $('<select ><option value=""></option></select>')
+                        //.appendTo($(div))
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            )
+                                ;
+
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+
+                    //column.data().unique().sort().each(function (d, j) {
+                    column.cells('', column[0]).render('display').sort().unique().each(function (d, j) {
+                        //select.append('<option value="' + d + '">' + d + '</option>')
+                        var val = $('<div/>').html(d).text();
+                        select.append('<option value="' + val + '">' + val + '</option>');
+                    });
+                    //var scr = div.append('<script>var elem = document.querySelectorAll("select");var instance = M.FormSelect.init(elem, []);');
+                });
+            }
+        });
+
+        var a = $('#selecc').val();
+        table.page.len(a).draw();
+        $('#selecc').on('change', function () {
+            table.page.len(this.value).draw();
+        });
+
+        $('input.global_filter').on('keyup click', function () {
+            filterGlobal();
+        });
+    });
+
+    function filterGlobal() {
+        $('#table').DataTable().search(
+            $('#global_filter').val()).draw();
+    }
+    function link(num) {
+        document.location = "../Det_Aprobs/Details/" + num;
+    }
+</script>
+<style>
+
+    .dataTables_length {
+        display: none;
+    }
+
+    .dataTables_filter {
+        display: none;
+    }
+
+    .dataTables_scrollHeadInner, .mdl-data-table {
+        width: 100%;
+    }
+</style>

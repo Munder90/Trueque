@@ -1,0 +1,17 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 560;
+    ViewBag.carpeta_r = 900;
+}
+<div class="card-panel">
+    <div class="row">
+        <div class="col s8 left">
+            @using (Html.BeginForm("Descargar", "LAContabilizacion", FormMethod.Post, new { @style = "display:inline;" }))
+            {
+                <button id="btnExport" name="excel" class="btn-small" type="submit" value="Excel"></button>
+            }
+        </div>
+    </div>
+</div>
+

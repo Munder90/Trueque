@@ -1,0 +1,793 @@
+﻿@model IEnumerable<TAT001.Entities.DOCUMENTO>
+@*@model TAT001.Entities.DOCUMENTO*@
+
+
+@{
+    //ViewBag.Title = "Páginas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 1100;
+    ViewBag.carpeta_r = 1104;
+    List<Tuple<decimal, decimal>> negAmount = new List<Tuple<decimal, decimal>>();
+}
+@if (!ViewBag.Display)
+{
+    <script>
+
+        $(document).ready(function () {
+
+
+
+            $('select.select_all').siblings('ul').prepend("<li id=sm_select_all><span id='filters_all'>Todas las Opciones</span></li>");
+            $('li#sm_select_all').on('click', function () {
+                var jq_elem = $(this),
+                    jq_elem_span = jq_elem.find('span'),
+                    select_all = jq_elem_span.text() == 'Todas las Opciones',
+                    set_text = select_all ? 'Borrar Selección' : 'Todas las Opciones';
+                jq_elem_span.text(set_text);
+                jq_elem.siblings('li').filter(function () {
+                    return $(this).find('input').prop('checked') != select_all;
+                }).click();
+            });
+            //$(document).ready(function () {
+            //    $("#sendbtn").click(function () {
+            //        $("#excelBtn").prop("disabled", "false");
+            //    });
+            //});
+        });
+    </script>
+}
+
+@using (Html.BeginForm("ExportReporteAllowancesPL", "Reportes", FormMethod.Post, new { id = "exportForm", @style = "display:inline;" }))
+{
+    if (ViewBag.Display)
+    {
+        <div class="" style="float: right;margin-left: 10px;">
+            <div class="col s12 right-align">
+                <input type="hidden" name="selectedcocode" value="@((ViewBag.selectedcocode == null)?String.Empty:ViewBag.selectedcocode)" />
+                <input type="hidden" name="selectedq" value="@((ViewBag.selectedq == null)?String.Empty:ViewBag.selectedq)" />
+                <input type="hidden" name="selectedperiod" value="@((ViewBag.selectedperiod == null)?String.Empty:ViewBag.selectedperiod)" />
+                <input type="hidden" name="selectedpayer" value="@((ViewBag.selectedpayer == null)?String.Empty:ViewBag.selectedpayer)" />
+                <input type="hidden" name="selectedcategory" value="@((ViewBag.selectedcategory == null)?String.Empty:ViewBag.selectedcategory)" />
+                <input type="hidden" name="selectedyear" value="@((ViewBag.selectedyear == null)?String.Empty:ViewBag.selectedyear)" />
+                <input type="hidden" name="selectedcanal" value="@((ViewBag.selectedcanal == null)?String.Empty:ViewBag.selectedcanal)" />
+                <input type="hidden" id="selectedsubfilters" name="selectedsubfilters" value="" />
+                <button id="btnExport" name="excel" class="btn-small" type="button">Exportar</button>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $(document).on('click', '#btnExport', function () {
+                    $("#selectedsubfilters").val("");
+                    $("select.tablesorter-filter").each(function (index, element) {
+                        if ($("option:selected", this).attr('parsed') != undefined)
+                            $("#selectedsubfilters").val($("#selectedsubfilters").val() + $(this).attr('data-column') + "|ST|" + $("option:selected", this).val() + "|T,T|");
+                        else
+                            $("#selectedsubfilters").val($("#selectedsubfilters").val() + $(this).attr('data-column') + "|ST||T,T|");
+                    });
+                    $('#exportForm').submit();
+                });
+            });
+        </script>
+    }
+}
+
+@using (Html.BeginForm("ReporteAllowancesPL", "Reportes", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    System.Globalization.TextInfo myTI = new System.Globalization.CultureInfo("en-US", false).TextInfo;
+    System.Globalization.DateTimeFormatInfo formatoFecha = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat;
+    DateTime newDate = DateTime.Now;
+    int yeard = newDate.Year;
+    int year1 = yeard + 1;
+    int year2 = yeard + 2;
+    int yearback = yeard - 1;
+    int yearback2 = yeard - 2;
+    <div class="">
+        <div class="col s12 right-align">
+            <button class="btn-small" id="sendbtn" type="submit" name="action">Consultar</button>
+            @*<input class="btn-small" id="id_excel" type="button" value="Generar Excel" name="action" />*@
+        </div>
+    </div>
+    <div class="card-panel">
+        <div class="row">
+            <div class="row" style="margin-bottom:0;">
+                <div class="input-field col s2 m2 l2">
+                    <select multiple name="selectq" id="selectq" class="comcode select_all">
+                        <option value="1">Q1</option>
+                        <option value="2">Q2</option>
+                        <option value="3">Q3</option>
+                        <option value="4">Q4</option>
+                    </select>
+                    <label id="lbl_quarter">Quarter</label>
+                </div>
+                <div class="input-field col s2 m2 l2">
+                    <select multiple name="selectperiod" id="selectperiod" class="comcode select_all" required="">
+                        @try
+                        {
+                            foreach (var periodo in ViewBag.periodo)
+                            {
+                                var concat = "P";
+                                if (Int32.Parse(periodo.ACTIVO) == 1)
+                                {
+                                    Console.Write(periodo.ACTIVO);
+                                    <option value="@periodo.ID">@(concat + periodo.ID)</option>
+
+                                }
+                                else { }
+                            }
+
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    </select>
+                    <label id="lbl_periodo">Periodo *</label>
+                </div>
+                <div class="input-field col s2 m2 l2">
+                    <select name="selectyear" id="selectyear" required="">
+                        @if (yeard == DateTime.Now.Year)
+                        {
+
+                            <option value="@yeard">@yeard</option>
+                            <option value="@year1">@year1</option>
+                            <option value="@year2">@year2</option>
+                        }
+                        else
+                        {
+                            <option value="@yearback2">@yearback2</option>
+                            <option value="@yearback">@yearback</option>
+                            <option value="@yeard">@yeard</option>
+                        }
+                    </select>
+                    <label id="lbl_anio">Año *</label>
+                </div>
+                <div class="input-field col s2 m2 l2">
+                    <select multiple name="selectcocode" id="selectcocode" class="comcode select_all" required="">
+                        @try
+                        {
+                            foreach (var item in ViewBag.sociedad)
+                            {
+                                <option value="@item.BUKRS">@item.BUKRS</option>
+                            }
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    </select>
+                    <label id="lbl_cocode">Co. Code *</label>
+                    <script>
+                        //$(document).on('change', '#selectcocode', function () {
+                        //    var vcocode = $("#selectcocode").val();
+                        //    if (vcocode != null) {
+                        //        vcocode = vcocode.join(',');
+                        //    }
+                        //    $.ajax({
+                        //        url: "../Listas/ReportesFiltroPayer",
+                        //        type: "GET",
+                        //        dataType: "json",
+                        //        data: { cocodes: vcocode },//cocode: $(this).val() },
+                        //        success: function (data) {
+                        //            $('#selectpayer').find('option').remove();
+                        //            var opciones = 0;
+                        //            for (var i in data) {
+                        //                $('#selectpayer').append($('<option>', { value: data[i].KUNNR }).text(data[i].KUNNR)); // + " - " + data[i].NAME1
+                        //                var elem = document.querySelector('#selectpayer');
+                        //                var options = [];
+                        //                var instance = M.FormSelect.init(elem, options);
+                        //            }
+                        //        },
+                        //        //error: function (data) {
+                        //        //}
+                        //    })
+                        //});
+                    </script>
+                </div>
+                <div class="input-field col s2 m2 l2">
+                    <select name="selectcanal" id="selectcanal" multiple class="comcode select_all">
+                        @try
+                        {
+                            foreach (var canal in ViewBag.canales)
+                            {
+                                <option value="@canal.CANAL1">@canal.CDESCRIPCION</option>
+                            }
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    </select>
+                    <label id="lbl_canal">Canal</label>
+                </div>
+                <div class="input-field col s2 m2 l2">
+                    @*<select multiple name="selectpayer" id="selectpayer" required="" class="comcode select_all">
+                            @try
+                            {
+                                foreach (var item in ViewBag.payers)
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                <option value="" id="no_opt">No hay opciones</option>
+                            }
+                        </select>*@
+                    <input class="form-control  text-box single-line ui-autocomplete-input" id="selectpayer" name="selectpayer" type="text" value="" autocomplete="off" style="">
+                    <label id="lbl_payer">Payer</label>
+                    <link href="~/Content/autocomplete.css" rel="stylesheet" />
+                    <script src="~/Scripts/autocomplete1.10.2.js"></script>
+                    <script src="~/Scripts/autocomplete1.11.4.js"></script>
+                    <script>
+                        var auto = $.noConflict(true);
+                        auto(document).ready(function () {
+                            auto("#selectpayer").autocomplete({
+                                source: function (request, response) {
+                                    var vcocode = $("#selectcocode").val();
+                                    if (vcocode != null) {
+                                        vcocode = vcocode.join(',');
+                                    }
+                                    auto.ajax({
+                                        url: "../Listas/ReportesFiltroPayer",
+                                        type: "GET",
+                                        dataType: "json",
+                                        data: { Prefix: request.term, cocodes: vcocode },
+                                        success: function (data) {
+                                            response(auto.map(data, function (item) {
+                                                return { label: item.KUNNR + " - " + item.NAME1, value: item.KUNNR };
+                                            }))
+                                        },
+                                    })
+                                },
+                                messages: {
+                                    noResults: '',
+                                    results: function (resultsCount) { }
+                                },
+                                change: function (e, ui) {
+                                    if (!(ui.item)) {
+                                        e.target.value = "";
+                                    }
+                                },
+                                select: function (event, ui) {
+                                    var label = ui.item.label;
+                                    var value = ui.item.value;
+                                    //selectCliente(value);
+                                }
+                            });
+                        });
+                    </script>
+
+                </div>
+                <div class="input-field col s2 m2 l2">
+                    <select multiple name="selectcategory" id="selectcategory" class="comcode select_all">
+                        @try
+                        {
+                            foreach (var category in ViewBag.categories)
+                            {
+
+                                <option value="@category">@category</option>
+                            }
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    </select>
+                    <label id="lbl_categoria">Categoria</label>
+                </div>
+            </div>
+        </div>
+        <script>
+            var elem = document.querySelectorAll('select');
+            var options = [];
+            var instance = M.FormSelect.init(elem, options);
+        </script>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+        <link href="~/Content/dataTable.css" rel="stylesheet" />
+        @*<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>*@
+        <script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+        @*<link href="~/Content/dataTable.css" rel="stylesheet" />
+            <link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />*@
+        <script src="~/Scripts/subfilters/jquery.tablesorter.js"></script>
+        <link href="~/Scripts/subfilters/jquery.tablesorter.pager.css" rel="stylesheet" />
+        <script src="~/Scripts/subfilters/jquery.tablesorter.pager.js"></script>
+        <script src="~/Scripts/subfilters/widget-filter.js"></script>
+        <script src="~/Scripts/tablesort/tableToExcel.js"></script>
+        @*<script>
+                var elem = document.querySelector('select');
+                var options = [];
+                var instance = M.FormSelect.init(elem, options);
+            </script>*@
+    </div>
+    if (ViewBag.display)
+    {
+        <script>
+            $(document).ready(function () {
+                $(".grid thead td").click(function () {
+                    showFilterOption(this);
+                });
+                //$("#excelBtn").click(function () {
+                //    $("#table").tableExport();
+                //});
+                $('select.select_all').siblings('ul').prepend('<li id=sm_select_all id="filters_all"><span>Todas Las Opciones</span></li>');
+                $('li#sm_select_all').on('click', function () {
+                    var jq_elem = $(this),
+                        jq_elem_span = jq_elem.find('span'),
+                        select_all = jq_elem_span.text() == 'Todas Las Opciones',
+                        set_text = select_all ? 'Borrar Selección' : 'Todas Las Opciones';
+                    jq_elem_span.text(set_text);
+                    jq_elem.siblings('li').filter(function () {
+                        return $(this).find('input').prop('checked') != select_all;
+                    }).click();
+                });
+
+                $("#id_excel").click(function () {
+                    $("#table").trigger("filterReset");
+                    $('#table').trigger('destroyPager');
+                    $('#table').trigger('destroy');
+                    var pager = $('#table tfoot').html();
+                    $('#table tfoot').html("");
+                    tableToExcel('table', 'Reporte Allowances PL');
+                    $('#table tfoot').html(pager);
+                    $('#table').tablesorter({
+                        theme: "materialize",
+                        widthFixed: true,
+                        widgets: ["filter", "zebra"],
+                        widgetOptions: {
+                            zebra: ["even", "odd"],
+                            filter_reset: ".reset",
+                            filter_cssFilter: ["", "", "browser-default"]
+                        }
+                    }).tablesorterPager({
+                        container: $(".ts-pager"),
+                        cssGoto: ".pagenum",
+                        removeRows: true,
+                        output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+                    });
+                });
+            });
+            $(function () {
+                $("#table").tablesorter({
+                    theme: "materialize",
+                    widthFixed: true,
+                    // widget code contained in the jquery.tablesorter.widgets.js file
+                    // use the zebra stripe widget if you plan on hiding any rows (filter widget)
+                    widgets: ["filter", "zebra"],
+                    widgetOptions: {
+                        // using the default zebra striping class name, so it actually isn't included in the theme variable above
+                        // this is ONLY needed for materialize theming if you are using the filter widget, because rows are hidden
+                        zebra: ["even", "odd"],
+                        // reset filters button
+                        filter_reset: ".reset",
+                        // extra css class name (string or array) added to the filter element (input or select)
+                        // select needs a "browser-default" class or it gets hidden
+                        filter_cssFilter: ["", "", "browser-default"]
+                    }
+                })
+                    .tablesorterPager({
+                        // target the pager markup - see the HTML block below
+                        container: $(".ts-pager"),
+                        // target the pager page select dropdown - choose a page
+                        cssGoto: ".pagenum",
+                        // remove rows from the table to speed up the sort of large tables.
+                        // setting this to false, only hides the non-visible rows; needed if you plan to add/remove rows with the pager enabled.
+                        removeRows: true,
+                        // output string - default is '{page}/{totalPages}';
+                        // possible variables: {page}, {totalPages}, {filteredPages}, {startRow}, {endRow}, {filteredRows} and {totalRows}
+                        output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+                    });
+            });
+            var tableToExcel = (function () {
+                var uri = 'data:application/vnd.ms-excel;base64,'
+                    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+                    , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+                    , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+                return function (table, name) {
+                    if (!table.nodeType) table = document.getElementById(table)
+                    var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+                    window.location.href = uri + base64(format(template, ctx))
+                }
+            })()
+        </script>
+        <div style="width:100%;height:50vh;overflow:scroll;">
+            <table class="table mdl-data-table striped grid centered table" id="table" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_Periodo">Periodo</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_anio">Año</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_BU">BU</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_Payer">Payer</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_Cliente">Cliente</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_Canal">Canal</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_categoria">Categoría Producto</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_CD_EN_PROCESO">Cash Discount En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_CD_ALLOWANCE_TAT">Cash Discount Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_CD_ALLOWANCE_FACT">Cash Discount Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_CD_AJUSTES">Cash Discount Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_CD_TOTALES">Cash Discount Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_C_EN_PROCESO">Clearance En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_C_ALLOWANCE_TAT">Clearance Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_C_ALLOWANCE_FACT">Clearance Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_C_AJUSTES">Clearance Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_C_TOTALES">Clearance Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_COD_EN_PROCESO">Consumer Data En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_COD_ALLOWANCE_TAT">Consumer Data Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_COD_ALLOWANCE_FACT">Consumer Data Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_COD_AJUSTES">Consumer Data Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_COD_TOTALES">Consumer Data Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_DPS_EN_PROCESO">Direct Plant Ship & Customer Pickup Allowance En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_DPS_ALLOWANCE_TAT">Direct Plant Ship & Customer Pickup Allowance Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_DPS_ALLOWANCE_FACT">Direct Plant Ship & Customer Pickup Allowance Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_DPS_AJUSTES">Direct Plant Ship & Customer Pickup Allowance Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_DPS_TOTALES">Direct Plant Ship & Customer Pickup Allowance Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_DC_EN_PROCESO">Distribution Comission En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_DC_ALLOWANCE_TAT">Distribution Comission Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_DC_ALLOWANCE_FACT">Distribution Comission Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_DC_AJUSTES">Distribution Comission Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_DC_TOTALES">Distribution Comission Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_ELP_EN_PROCESO">Everyday Low Price En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_ELP_ALLOWANCE_TAT">Everyday Low Price Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_ELP_ALLOWANCE_FACT">Everyday Low Price Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_ELP_AJUSTES">Everyday Low Price Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_ELP_TOTALES">Everyday Low Price Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_FG_EN_PROCESO">Free Goods En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_FG_ALLOWANCE_TAT">Free Goods Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_FG_ALLOWANCE_FACT">Free Goods Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_FG_AJUSTES">Free Goods Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_FG_TOTALES">Free Goods Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_GD_EN_PROCESO">Government Discounts En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_GD_ALLOWANCE_TAT">Government Discounts Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_GD_ALLOWANCE_FACT">Government Discounts Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_GD_AJUSTES">Government Discounts Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_GD_TOTALES">Government Discounts Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_GP_EN_PROCESO">Growth Program En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_GP_ALLOWANCE_TAT">Growth Program Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_GP_ALLOWANCE_FACT">Growth Program Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_GP_AJUSTES">Growth Program Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_GP_TOTALES">Growth Program Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_LD_EN_PROCESO">Logistic Discount En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_LD_ALLOWANCE_TAT">Logistic Discount Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_LD_ALLOWANCE_FACT">Logistic Discount Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_LD_AJUSTES">Logistic Discount Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_LD_TOTALES">Logistic Discount Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_MS_EN_PROCESO">Margin Support En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_MS_ALLOWANCE_TAT">Margin Support Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_MS_ALLOWANCE_FACT">Margin Support Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_MS_AJUSTES">Margin Support Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_MS_TOTALES">Margin Support Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_R_EN_PROCESO">Rollbacks En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_R_ALLOWANCE_TAT">Rollbacks Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_R_ALLOWANCE_FACT">Rollbacks Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_R_AJUSTES">Rollbacks Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_R_TOTALES">Rollbacks Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_TP_EN_PROCESO">Trade Promotion – Non-Kellogg Coupons En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_TP_ALLOWANCE_TAT">Trade Promotion – Non-Kellogg Coupons Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_TP_ALLOWANCE_FACT">Trade Promotion – Non-Kellogg Coupons Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_TP_AJUSTES">Trade Promotion – Non-Kellogg Coupons Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_TP_TOTALES">Trade Promotion – Non-Kellogg Coupons Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_SIS_EN_PROCESO">Sponsorship / In-Store adv (before: Booklets) En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_SIS_ALLOWANCE_TAT">Sponsorship / In-Store adv (before: Booklets) Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_SIS_ALLOWANCE_FACT">Sponsorship / In-Store adv (before: Booklets) Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_SIS_AJUSTES">Sponsorship / In-Store adv (before: Booklets) Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_SIS_TOTALES">Sponsorship / In-Store adv (before: Booklets) Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_SO_EN_PROCESO">Store Openings En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_SO_ALLOWANCE_TAT">Store Openings Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_SO_ALLOWANCE_FACT">Store Openings Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_SO_AJUSTES">Store Openings Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_SO_TOTALES">Store Openings Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPIS_EN_PROCESO">Trade Promotion – In-Store sampling Demostration cost En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPIS_ALLOWANCE_TAT">Trade Promotion – In-Store sampling Demostration cost Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPIS_ALLOWANCE_FACT">Trade Promotion – In-Store sampling Demostration cost Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPIS_AJUSTES">Trade Promotion – In-Store sampling Demostration cost Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPIS_TOTALES">Trade Promotion – In-Store sampling Demostration cost Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPO_EN_PROCESO">Trade Promotion - Other En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPO_ALLOWANCE_TAT">Trade Promotion - Other Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPO_ALLOWANCE_FACT">Trade Promotion - Other Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPO_AJUSTES">Trade Promotion - Other Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPO_TOTALES">Trade Promotion - Other Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_U_EN_PROCESO">Unsaleables En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_U_ALLOWANCE_TAT">Unsaleables Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_U_ALLOWANCE_FACT">Unsaleables Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_U_AJUSTES">Unsaleables Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_U_TOTALES">Unsaleables Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_WA_EN_PROCESO">Warehouse Allowances (“DxD”) En Proceso TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_WA_ALLOWANCE_TAT">Warehouse Allowances (“DxD”) Allowance TAT</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_WA_ALLOWANCE_FACT">Warehouse Allowances (“DxD”) Allowance Facturados</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_WA_AJUSTES">Warehouse Allowances (“DxD”) Ajustes y reclasificaciones manuales</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_WA_TOTALES">Warehouse Allowances (“DxD”) Allowance Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_PROCESO_TAT_TOTAL">En Proceso TAT Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_ALLOWANCE_TAT_TOTAL">Allowance TAT Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_ALLOWANCE_FACT_TOTAL">Allowance facturados Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_AJUSTES">Ajustes y reclasificaciones manuales Total</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_ALLOWANCE_TOTALES">Allowances Total</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    @*<tr>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_Periodo">Periodo</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_anio">Año</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_BU">BU</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_Payer">Payer</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_Cliente">Cliente</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_Canal">Canal</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_categoria">Categoría Producto</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_CD_EN_PROCESO">Cash Discount En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_CD_ALLOWANCE_TAT">Cash Discount Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_CD_ALLOWANCE_FACT">Cash Discount Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_CD_AJUSTES">Cash Discount Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_CD_TOTALES">Cash Discount Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_C_EN_PROCESO">Clearance En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_C_ALLOWANCE_TAT">Clearance Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_C_ALLOWANCE_FACT">Clearance Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_C_AJUSTES">Clearance Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_C_TOTALES">Clearance Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_COD_EN_PROCESO">Consumer Data En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_COD_ALLOWANCE_TAT">Consumer Data Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_COD_ALLOWANCE_FACT">Consumer Data Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_COD_AJUSTES">Consumer Data Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_COD_TOTALES">Consumer Data Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_DPS_EN_PROCESO">Direct Plant Ship & Customer Pickup Allowance En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_DPS_ALLOWANCE_TAT">Direct Plant Ship & Customer Pickup Allowance Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_DPS_ALLOWANCE_FACT">Direct Plant Ship & Customer Pickup Allowance Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_DPS_AJUSTES">Direct Plant Ship & Customer Pickup Allowance Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_DPS_TOTALES">Direct Plant Ship & Customer Pickup Allowance Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_DC_EN_PROCESO">Distribution Comission En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_DC_ALLOWANCE_TAT">Distribution Comission Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_DC_ALLOWANCE_FACT">Distribution Comission Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_DC_AJUSTES">Distribution Comission Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_DC_TOTALES">Distribution Comission Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_ELP_EN_PROCESO">Everyday Low Price En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_ELP_ALLOWANCE_TAT">Everyday Low Price Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_ELP_ALLOWANCE_FACT">Everyday Low Price Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_ELP_AJUSTES">Everyday Low Price Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_ELP_TOTALES">Everyday Low Price Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_FG_EN_PROCESO">Free Goods En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_FG_ALLOWANCE_TAT">Free Goods Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_FG_ALLOWANCE_FACT">Free Goods Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_FG_AJUSTES">Free Goods Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_FG_TOTALES">Free Goods Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_GD_EN_PROCESO">Government Discounts En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_GD_ALLOWANCE_TAT">Government Discounts Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_GD_ALLOWANCE_FACT">Government Discounts Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_GD_AJUSTES">Government Discounts Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_GD_TOTALES">Government Discounts Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_GP_EN_PROCESO">Growth Program En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_GP_ALLOWANCE_TAT">Growth Program Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_GP_ALLOWANCE_FACT">Growth Program Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_GP_AJUSTES">Growth Program Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_GP_TOTALES">Growth Program Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_LD_EN_PROCESO">Logistic Discount En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_LD_ALLOWANCE_TAT">Logistic Discount Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_LD_ALLOWANCE_FACT">Logistic Discount Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_LD_AJUSTES">Logistic Discount Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_LD_TOTALES">Logistic Discount Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_MS_EN_PROCESO">Margin Support En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_MS_ALLOWANCE_TAT">Margin Support Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_MS_ALLOWANCE_FACT">Margin Support Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_MS_AJUSTES">Margin Support Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_MS_TOTALES">Margin Support Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_R_EN_PROCESO">Rollbacks En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_R_ALLOWANCE_TAT">Rollbacks Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_R_ALLOWANCE_FACT">Rollbacks Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_R_AJUSTES">Rollbacks Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_R_TOTALES">Rollbacks Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_TP_EN_PROCESO">Trade Promotion – Non-Kellogg Coupons En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_TP_ALLOWANCE_TAT">Trade Promotion – Non-Kellogg Coupons Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_TP_ALLOWANCE_FACT">Trade Promotion – Non-Kellogg Coupons Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_TP_AJUSTES">Trade Promotion – Non-Kellogg Coupons Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_TP_TOTALES">Trade Promotion – Non-Kellogg Coupons Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_SIS_EN_PROCESO">Sponsorship / In-Store adv (before: Booklets) En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_SIS_ALLOWANCE_TAT">Sponsorship / In-Store adv (before: Booklets) Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_SIS_ALLOWANCE_FACT">Sponsorship / In-Store adv (before: Booklets) Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_SIS_AJUSTES">Sponsorship / In-Store adv (before: Booklets) Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_SIS_TOTALES">Sponsorship / In-Store adv (before: Booklets) Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_SO_EN_PROCESO">Store Openings En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_SO_ALLOWANCE_TAT">Store Openings Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_SO_ALLOWANCE_FACT">Store Openings Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_SO_AJUSTES">Store Openings Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_SO_TOTALES">Store Openings Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPIS_EN_PROCESO">Trade Promotion – In-Store sampling Demostration cost En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPIS_ALLOWANCE_TAT">Trade Promotion – In-Store sampling Demostration cost Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPIS_ALLOWANCE_FACT">Trade Promotion – In-Store sampling Demostration cost Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPIS_AJUSTES">Trade Promotion – In-Store sampling Demostration cost Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPIS_TOTALES">Trade Promotion – In-Store sampling Demostration cost Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPO_EN_PROCESO">Trade Promotion - Other En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPO_ALLOWANCE_TAT">Trade Promotion - Other Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPO_ALLOWANCE_FACT">Trade Promotion - Other Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPO_AJUSTES">Trade Promotion - Other Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_TPO_TOTALES">Trade Promotion - Other Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_U_EN_PROCESO">Unsaleables En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_U_ALLOWANCE_TAT">Unsaleables Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_U_ALLOWANCE_FACT">Unsaleables Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_U_AJUSTES">Unsaleables Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_U_TOTALES">Unsaleables Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_WA_EN_PROCESO">Warehouse Allowances (“DxD”) En Proceso TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_WA_ALLOWANCE_TAT">Warehouse Allowances (“DxD”) Allowance TAT</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_WA_ALLOWANCE_FACT">Warehouse Allowances (“DxD”) Allowance Facturados</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_WA_AJUSTES">Warehouse Allowances (“DxD”) Ajustes y reclasificaciones manuales</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_WA_TOTALES">Warehouse Allowances (“DxD”) Allowance Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_PROCESO_TAT_TOTAL">En Proceso TAT Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_ALLOWANCE_TAT_TOTAL">Allowance TAT Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_ALLOWANCE_FACT_TOTAL">Allowance facturados Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_AJUSTES">Ajustes y reclasificaciones manuales Total</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_ALLOWANCE_TOTALES">Allowances Total</th>
+                        </tr>*@
+                    <!-- include "tablesorter-ignoreRow" class for pager rows in thead -->
+                    <tr class="tablesorter-ignoreRow">
+                        <th colspan="2" class="ts-pager form-horizontal">
+                            <button type="button" class="btn first"><i class="small material-icons">first_page</i></button>
+                            <button type="button" class="btn prev"><i class="small material-icons">navigate_before</i></button>
+                            <span class="pagedisplay"></span>
+                            <!-- this can be any element, including an input -->
+                            <button type="button" class="btn next"><i class="small material-icons">navigate_next</i></button>
+                            <button type="button" class="btn last"><i class="small material-icons">last_page</i></button>
+                            <div style="padding:0 78% 0 0;">
+                                <label class="btn_length" id="por_pag">Ver por página</label>
+                                <select class="pagesize" id="selecc" title="Select page size">
+                                    <option selected="selected" value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="40">40</option>
+                                    <option value="50">50</option>
+                                </select>
+                                <label class="label_pag">Ir a Página</label>
+                                <select class="pagenum browser-default" title="Select page number"></select>
+                            </div>
+                        </th>
+                        <th colspan="105">
+
+
+                        </th>
+
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (TAT001.Models.ReportesModel.AllowancesPL item in ViewBag.reporte)
+                    {
+                        <tr>
+                            <td>@item.PERIODO </td>
+                            <td>@item.YEAR </td>
+                            <td>@item.BU </td>
+                            <td>@item.PAYER </td>
+                            <td>@item.CLIENTE </td>
+                            <td>@item.CANAL </td>
+                            <td>@item.CATEGORIA </td>
+                            <td>@item.CD_EN_PROCESO_STRING </td>
+                            <td>@item.CD_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.CD_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.CD_AJUSTES_STRING </td>
+                            <td>@item.CD_TOTALES_STRING </td>
+                            <td>@item.C_EN_PROCESO_STRING </td>
+                            <td>@item.C_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.C_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.C_AJUSTES_STRING </td>
+                            <td>@item.C_TOTALES_STRING </td>
+                            <td>@item.COD_EN_PROCESO_STRING </td>
+                            <td>@item.COD_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.COD_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.COD_AJUSTES_STRING </td>
+                            <td>@item.COD_TOTALES_STRING </td>
+                            <td>@item.DPS_EN_PROCESO_STRING </td>
+                            <td>@item.DPS_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.DPS_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.DPS_AJUSTES_STRING </td>
+                            <td>@item.DPS_TOTALES_STRING </td>
+                            <td>@item.DC_EN_PROCESO_STRING </td>
+                            <td>@item.DC_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.DC_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.DC_AJUSTES_STRING </td>
+                            <td>@item.DC_TOTALES_STRING </td>
+                            <td>@item.ELP_EN_PROCESO_STRING </td>
+                            <td>@item.ELP_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.ELP_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.ELP_AJUSTES_STRING </td>
+                            <td>@item.ELP_TOTALES_STRING </td>
+                            <td>@item.FG_EN_PROCESO_STRING </td>
+                            <td>@item.FG_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.FG_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.FG_AJUSTES_STRING </td>
+                            <td>@item.FG_TOTALES_STRING </td>
+                            <td>@item.GD_EN_PROCESO_STRING </td>
+                            <td>@item.GD_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.GD_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.GD_AJUSTES_STRING </td>
+                            <td>@item.GD_TOTALES_STRING </td>
+                            <td>@item.GP_EN_PROCESO_STRING </td>
+                            <td>@item.GP_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.GP_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.GP_AJUSTES_STRING </td>
+                            <td>@item.GP_TOTALES_STRING </td>
+                            <td>@item.LD_EN_PROCESO_STRING </td>
+                            <td>@item.LD_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.LD_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.LD_AJUSTES_STRING </td>
+                            <td>@item.LD_TOTALES_STRING </td>
+                            <td>@item.MS_EN_PROCESO_STRING </td>
+                            <td>@item.MS_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.MS_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.MS_AJUSTES_STRING </td>
+                            <td>@item.MS_TOTALES_STRING </td>
+                            <td>@item.R_EN_PROCESO_STRING </td>
+                            <td>@item.R_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.R_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.R_AJUSTES_STRING </td>
+                            <td>@item.R_TOTALES_STRING </td>
+                            <td>@item.TP_EN_PROCESO_STRING </td>
+                            <td>@item.TP_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.TP_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.TP_AJUSTES_STRING </td>
+                            <td>@item.TP_TOTALES_STRING </td>
+                            <td>@item.SIS_EN_PROCESO_STRING </td>
+                            <td>@item.SIS_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.SIS_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.SIS_AJUSTES_STRING </td>
+                            <td>@item.SIS_TOTALES_STRING </td>
+                            <td>@item.SO_EN_PROCESO_STRING </td>
+                            <td>@item.SO_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.SO_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.SO_AJUSTES_STRING </td>
+                            <td>@item.SO_TOTALES_STRING </td>
+                            <td>@item.TPIS_EN_PROCESO_STRING </td>
+                            <td>@item.TPIS_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.TPIS_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.TPIS_AJUSTES_STRING </td>
+                            <td>@item.TPIS_TOTALES_STRING </td>
+                            <td>@item.TPO_EN_PROCESO_STRING </td>
+                            <td>@item.TPO_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.TPO_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.TPO_AJUSTES_STRING </td>
+                            <td>@item.TPO_TOTALES_STRING </td>
+                            <td>@item.U_EN_PROCESO_STRING </td>
+                            <td>@item.U_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.U_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.U_AJUSTES_STRING </td>
+                            <td>@item.U_TOTALES_STRING </td>
+                            <td>@item.WA_EN_PROCESO_STRING </td>
+                            <td>@item.WA_ALLOWANCE_TAT_STRING </td>
+                            <td>@item.WA_ALLOWANCE_FACT_STRING </td>
+                            <td>@item.WA_AJUSTES_STRING </td>
+                            <td>@item.WA_TOTALES_STRING </td>
+                            <td>@item.PROCESO_TAT_TOTAL_STRING </td>
+                            <td>@item.ALLOWANCE_TAT_TOTAL_STRING </td>
+                            <td>@item.ALLOWANCE_FACT_TOTAL_STRING </td>
+                            <td>@item.AJUSTES_STRING </td>
+                            <td>@item.ALLOWANCE_TOTALES_STRING </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else { }
+    <style>
+        .dataTables_length {
+            display: none;
+        }
+
+        .dataTables_filter {
+            display: none;
+        }
+
+        .dataTables_scrollHeadInner, .mdl-data-table {
+            width: 100%;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .btn {
+            font-size: .8em;
+        }
+        /* not sure why this is needed... */
+        .material-icons {
+            vertical-align: bottom;
+        }
+
+        select {
+            display: block !important;
+        }
+
+        th {
+            text-align: center !important;
+        }
+    </style>
+}

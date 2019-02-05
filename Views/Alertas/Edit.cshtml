@@ -1,0 +1,285 @@
+﻿@model TAT001.Models.AlertaViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 542;
+    ViewBag.carpeta_r = 500;
+}
+<style>
+    .text-center {
+        text-align: center !important;
+    }
+
+    .select-wrapper input.select-dropdown {
+        z-index: 0 !important;
+    }
+
+    label .invalid {
+        display: none !important;
+    }
+   
+</style>
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+@using (Html.BeginForm("Edit", "Alertas", FormMethod.Post, new { @id = "alertaForm" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="col s12 l12 right-align">
+        <button type="submit" id="btn_save" class="btn btn-default"></button>
+    </div>
+    <div class="card-panel">
+        @Html.HiddenFor(model => model.alerta.ID)
+        @Html.HiddenFor(model => model.alerta.SOCIEDAD_ID)
+        @Html.HiddenFor(model => model.alerta.TSOL_ID)
+        @Html.HiddenFor(model => model.alerta.TAB_ID)
+        @Html.HiddenFor(model => model.alerta.CAMPO_ID)
+
+        @Html.HiddenFor(model => model.alerta.PAGINA_ID)
+        @Html.HiddenFor(model => model.alerta.ACCION)
+        @Html.HiddenFor(model => model.alerta.CAMPOVAL_ID)
+        <div class="row">
+            <div class="col s2">
+                <div class="form-group">
+                    <label id="lbl_alerta"></label>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.alerta.ID, new { @disabled = true })
+                    </div>
+                </div>
+            </div>
+            <div class="col s5">
+                <div class="form-group">
+                    <label id="lbl_descAlerta"></label>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.alerta.DESCR, new { @required = true, @maxlength = 50 })
+                    </div>
+                </div>
+            </div>
+            <div class="col s2">
+                <div class="form-group">
+                    <label id="lbl_alerta_error"></label>
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.alerta.TIPO, Model.tipos, "")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @if (Model.alerta.SOCIEDAD_ID != null && Model.alerta.TSOL_ID != null)
+            {
+                <div class="col s2">
+                    <div class="form-group">
+                        <label id="lbl_bu"></label>
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.alerta.SOCIEDAD_ID, Model.sociedades, "", new { @disabled = true })
+                        </div>
+                    </div>
+                </div>
+                <div class="col s5">
+                    <div class="form-group">
+                        <label id="lbl_tipo"></label>
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.alerta.TSOL_ID, Model.cmbTiposSolicitud, "", new { @disabled = true })
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="col s2">
+                <div class="form-group">
+                    <label id="lbl_tab"></label>
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.alerta.TAB_ID, Model.tabs, "", new { @disabled = true })
+                    </div>
+                </div>
+            </div>
+            <div class="col s3">
+                <div class="form-group">
+                    <label id="lbl_campo"></label>
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.alerta.CAMPO_ID, Model.campos, "", new { @disabled = true })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="text-center"><label id="lbl_condicion_regla"></label></p>
+        <hr>
+        @if (Model.alerta.SOCIEDAD_ID != null && Model.alerta.TSOL_ID != null && Model.alerta.ID!="concepto1")
+        {
+
+            <div class="row">
+                <div class="col s1">
+                    <div class="form-group">
+                        <label>
+                            @Html.RadioButtonFor(model => model.alertaCondiciones[1].ANDOR, "", new { @onchange = "actualizarCondiciones(this.value)" })
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            @Html.HiddenFor(model => model.alertaCondiciones[0].POS)
+                            @Html.HiddenFor(model => model.alertaCondiciones[0].ANDOR)
+                            @Html.HiddenFor(model => model.alertaCondiciones[0].TAB_ID)
+                            @Html.HiddenFor(model => model.alertaCondiciones[0].WARNING_ID)
+                            @Html.HiddenFor(model => model.alertaCondiciones[0].ACTIVO)
+                            @Html.DropDownListFor(model => model.alertaCondiciones[0].CONDICION_ID, Model.condCampos, "")
+                        </div>
+                    </div>
+                </div>
+                <div class="col s2">
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.alertaCondiciones[0].VALOR_COMP, Model.condValores, "")
+                        </div>
+                    </div>
+                </div>
+                <div class="col s1">
+                    <div class="form-group">
+                        <label>
+                            @Html.RadioButtonFor(model => model.alertaCondiciones[1].ANDOR, "&", new { @onchange = "actualizarCondiciones(this.value)" })
+                            <span id="lbl_and"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col s1">
+                    <div class="form-group">
+                        <label>
+                            @Html.RadioButtonFor(model => model.alertaCondiciones[1].ANDOR, "|", new { @onchange = "actualizarCondiciones(this.value)" })
+                            <span id="lbl_or"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col s2">
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.alertaCondiciones[1].CONDICION_ID, Model.condCampos1, "", new { @disabled = true })
+                        </div>
+                    </div>
+                </div>
+                <div class="col s2">
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.alertaCondiciones[1].VALOR_COMP, Model.condValores1, "", new { @disabled = true })
+                            @Html.HiddenFor(model => model.alertaCondiciones[1].ORAND)
+                            @Html.HiddenFor(model => model.alertaCondiciones[1].POS)
+                            @Html.HiddenFor(model => model.alertaCondiciones[1].TAB_ID)
+                            @Html.HiddenFor(model => model.alertaCondiciones[1].ACTIVO)
+                            @Html.HiddenFor(model => model.alertaCondiciones[1].WARNING_ID)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            string spras_id = ViewBag.spras_id;
+            string condicion = "";
+            Model.alertaCondiciones.ForEach(x =>
+            {
+                string condTexto = x.CONDICION.DESCR;
+                if (x.CONDICION.CONDICIONTs.Any(y => y.SPRAS_ID == spras_id))
+                {
+                    condTexto = x.CONDICION.CONDICIONTs.Where(y => y.SPRAS_ID == spras_id).First().TXT050;
+                }
+                string valComp = x.VALOR_COMP == "" ? "v" : x.VALOR_COMP;
+                string condValorTexto = x.VALOR_COMP;
+                if (Model.condValores.Any(y => y.Value == valComp))
+                {
+                    condValorTexto = Model.condValores.Where(y => y.Value == valComp).First().Text;
+                }
+                condicion = condicion + x.ANDOR + " " + condTexto + " " + condValorTexto + " " + x.ORAND + " ";
+            });
+            <div class="row">
+                <div class="col s12 text-center">
+                    @condicion
+                </div>
+            </div>
+        }
+                    <p class="text-center"><label id="lbl_mensajes"></label></p>
+                    <hr>
+                    <div class="row">
+                        <div class="col s6">
+                            <div class="form-group">
+                                <label>ES</label>
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.alertaMensajes[0].TXT100, new { @required = "", @maxlength = 100 })
+                                    @Html.HiddenFor(model => model.alertaMensajes[0].SPRAS_ID)
+                                    @Html.HiddenFor(model => model.alertaMensajes[0].TAB_ID)
+                                    @Html.HiddenFor(model => model.alertaMensajes[0].WARNING_ID)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col s6">
+                            <div class="form-group">
+                                <label>EN</label>
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.alertaMensajes[1].TXT100, new { @required = "", @maxlength = 100 })
+                                    @Html.HiddenFor(model => model.alertaMensajes[1].SPRAS_ID)
+                                    @Html.HiddenFor(model => model.alertaMensajes[1].TAB_ID)
+                                    @Html.HiddenFor(model => model.alertaMensajes[1].WARNING_ID)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+}
+    <div class="col s12">
+        <a id="btn_return" href="@Url.Action("Index")"></a>
+    </div>
+    <script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+   @if (Model.alerta.SOCIEDAD_ID != null && Model.alerta.TSOL_ID != null && Model.alerta.ID!= "concepto1")
+   {
+    <script>
+             // Asignar valor a combos de list
+            var idAndOr = "@Model.alertaCondiciones[1].ANDOR";
+            if (idAndOr == "&amp;") { idAndOr = "&";}
+            $('#alertaCondiciones_0__CONDICION_ID').val('@Model.alertaCondiciones[0].CONDICION_ID');
+            $('#alertaCondiciones_0__VALOR_COMP').val('@Model.alertaCondiciones[0].VALOR_COMP');
+            $('#alertaCondiciones_1__ANDOR[value="' + idAndOr + '"]').prop("checked", true);
+            if (idAndOr != '') {
+            $('#alertaCondiciones_1__CONDICION_ID').val('@Model.alertaCondiciones[1].CONDICION_ID');
+            $('#alertaCondiciones_1__VALOR_COMP').val('@Model.alertaCondiciones[1].VALOR_COMP');
+            $('#alertaCondiciones_0__ANDOR').val('(');
+            $('#alertaCondiciones_1__CONDICION_ID').prop('disabled', false);
+            $('#alertaCondiciones_1__VALOR_COMP').prop('disabled', false);
+            }
+
+            //----  Se agrega carga de Select Campos----
+        var root = "@Url.Content("~")";
+        fnCommon.fillOptionsInSelect('alertaCondiciones_0__CONDICION_ID', root + 'Alertas/ObtenerCondValores', 'alertaCondiciones_0__VALOR_COMP');
+        fnCommon.fillOptionsInSelect('alertaCondiciones_1__CONDICION_ID', root + 'Alertas/ObtenerCondValores', 'alertaCondiciones_1__VALOR_COMP');
+        </script>
+   }
+        <script>
+         //---- Inicializador de componentes Materialize----
+         fnCommon.materializeInit( 'select');
+
+         //----  Se agrega validaciones al formulario----
+         fnCommon.selectRequired();
+         fnCommon.formValidation('alertaForm');
+
+
+         function actualizarCondiciones(andor) {
+             if (andor === "&" || andor === "|") {
+            $('#alertaCondiciones_1__CONDICION_ID').prop('disabled', false);
+            $('#alertaCondiciones_1__VALOR_COMP').prop('disabled', false);
+            $('#alertaCondiciones_0__ANDOR').val('(');
+             } else {
+            $('#alertaCondiciones_1__CONDICION_ID').prop('disabled', true);
+            $('#alertaCondiciones_1__CONDICION_ID').val(null);
+            $('#alertaCondiciones_1__VALOR_COMP').prop('disabled', true);
+            $('#alertaCondiciones_1__VALOR_COMP').val(null);
+            $('#alertaCondiciones_0__ANDOR').val(null);
+             }
+             fnCommon.materializeInit( 'select');
+             fnCommon.selectRequired();
+
+         }
+
+         // Valida si ocurrio un error al intentar crear el periodo y otro.
+         var mnjError = '@ViewBag.mnjError';
+            if (mnjError) {
+                M.toast({ html: mnjError });
+            }
+      </script>
+

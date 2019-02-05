@@ -1,0 +1,230 @@
+﻿@model TAT001.Models.Usuario
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 602;
+    ViewBag.carpeta_r = 500;
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col s12 left-align">
+            @if (@TempData["MensajeUsuario"] != null)
+            {
+            <label>@TempData["MensajeUsuario"]</label>
+            }
+        </div>
+        <div class="col s12 right-align">
+            <button type="submit" id="btn_guardar" class="btn btn-default" />
+        </div>
+    </div>
+    <div class="row right">
+        <div class="col l6 s12">
+            <div class="card-panel">
+                <div class="row">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @aria_required = "true", @required = "required" } })
+                        @Html.LabelFor(model => model.ID, htmlAttributes: new { @id = "lbl_id" })
+                        <span class="helper-text" id="hlp_id" data-error="Id repetido" data-success="Correcto"></span>
+                    </div>
+
+                    <div class="input-field col s12">
+                        @Html.PasswordFor(model => model.PASS, new { @class = "form-control", @id = "txt_pass", required = true, @maxlength = 16, @minlength = 5 })
+                        @Html.LabelFor(model => model.PASS, htmlAttributes: new { @id = "lbl_pass" })
+                        @Html.ValidationMessageFor(model => model.PASS, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="input-field col s12">
+                        @Html.PasswordFor(model => model.MANAGER, new { @id = "txt_pass2", required = true, @maxlength = 16, @minlength = 5 })
+                        @Html.LabelFor(model => model.MANAGER, "Confirmar contraseña", htmlAttributes: new { @id = "lbl_conf" })
+                        </div>
+                    <div class="row">
+                        <div class="col s12 left-align">
+                            @if (@TempData["MensajePass"] != null)
+                            {
+                                <label class="alert-dismissable" id="lbl_confirpass"></label>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    function valorID(campo) {
+                        if (campo.value == "") {
+                            document.getElementById("hlp_id").setAttribute("data-error", "Campo requerido");
+                            document.getElementById(campo.id).className = "validate invalid";
+                        } else {
+                            var regex = new RegExp(/^[a-z0-9]+$/i);
+                            var ban = regex.test(campo.value);
+                            if (ban) {
+                                document.getElementById("hlp_id").setAttribute("data-error", "Id repetido");
+                                document.getElementById(campo.id).className = "validate valid";
+                            } else {
+                                document.getElementById("hlp_id").setAttribute("data-error", "Solo letras y números");
+                                document.getElementById(campo.id).className = "validate invalid";
+                            }
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+        <div class="col l6 s12 right">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.NOMBRE, new { htmlAttributes = new { @class = "form-control", required = true } })
+                        @Html.LabelFor(model => model.NOMBRE, htmlAttributes: new { @id = "lbl_nombre" })
+                        @Html.ValidationMessageFor(model => model.NOMBRE, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.APELLIDO_P, new { htmlAttributes = new { @class = "form-control", required = true } })
+                        @Html.LabelFor(model => model.APELLIDO_P, htmlAttributes: new { @id = "lbl_appPat" })
+                        @Html.ValidationMessageFor(model => model.APELLIDO_P, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.APELLIDO_M, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.LabelFor(model => model.APELLIDO_M, htmlAttributes: new { @id = "lbl_appMat" })
+                        @Html.ValidationMessageFor(model => model.APELLIDO_M, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.EMAIL, new { htmlAttributes = new { @type = "email", required = true } })
+                        @Html.LabelFor(model => model.EMAIL, htmlAttributes: new { @id = "lbl_email" })
+                        @Html.ValidationMessageFor(model => model.EMAIL, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="input-field col s12">
+                        @Html.DropDownListFor(model => model.SPRAS_ID, (List<SelectListItem>)ViewBag.SPRAS, "")
+                        @Html.LabelFor(model => model.SPRAS_ID, htmlAttributes: new { @id = "lbl_spras" })
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col l6 s12">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.PUESTO_ID, new { htmlAttributes = new { @class = "text", @id = "input_puesto", required = true } })
+                        @Html.LabelFor(model => model.PUESTO_ID, htmlAttributes: new { @id = "lbl_puesto" })
+                        @Html.ValidationMessageFor(model => model.PUESTO_ID, "", new { @class = "text-danger" })
+                    </div>
+                    @if(ViewBag.sociedad!=null){
+                        @Html.Hidden("SELECT_SOCIEDADES1", (string)ViewBag.sociedad)
+                     }
+                    <div id="cocodemul">
+                        <div class="input-field col s12">
+                            <select multiple name="selectcocode" id="selectcocode" class="comcode select_all" required>
+                                @try
+                                {
+                                    foreach (var item in ViewBag.SOCIEDADES)
+                                    {
+                                        <option id="@item.BUKRS" value="@item.BUKRS">@item.BUKRS</option>
+                                    }
+                                }
+                                catch (Exception)
+                                {
+                                    <option value="" id="no_opt">No hay opciones</option>
+                                }
+                            </select>
+                            <label id="label_cocode">Co. Code</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    //OCG 11/10/18 Validacion de email
+
+    <script src="~/Scripts/autocomplete1.10.2.js"></script>
+    <script src="~/Scripts/autocomplete1.11.4.js"></script>
+    <link href="~/Content/autocomplete.css" rel="stylesheet" />
+    <script>
+         var root = "@Url.Content("~")";
+
+        //--Asignar Sociedades
+       var sociedad = $("#SELECT_SOCIEDADES1").val();
+        if (sociedad != null) {
+            var jsval = $.parseJSON(sociedad);
+            for (var i = 0; i < jsval.length; i++) {
+                var ids = "#selectcocode #" + jsval[i] + "";
+                $(ids).prop('selected', true);
+            }
+        }
+
+        //--Inicializar combos
+        var elem = document.querySelectorAll('select');
+        var options = [];
+        var instance = M.FormSelect.init(elem, options);
+
+
+      
+        $("#input_puesto").attr("type", "text");
+
+        $('#EMAIL').on("focusout", function () {
+            var email = $('#EMAIL').val();
+            $('#EMAIL').removeClass("valid");
+            $('#EMAIL').removeClass("invalid");
+            if (validateEmail(email) == true) {
+                $('#EMAIL').addClass("valid");
+            }
+            else {
+                $('#EMAIL').addClass("invalid");
+            }
+        });
+
+        function validateEmail(email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+        var auto = $.noConflict();
+        $('body').on('keydown.autocomplete', '#input_puesto', function () {
+
+            auto(this).autocomplete({
+                source: function (request, response) {
+                    auto.ajax({
+                        type: "POST",
+                        url: root +'Usuarios/Nivel',
+                        dataType: "json",
+                        data: { "Prefix": request.term },
+                        success: function (data) {
+                            response(auto.map(data, function (item) {
+                                return { label: item.ID + " | " + item.TEXTO, value: item.ID };
+                            }))
+                        }
+                    })
+                },
+
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) { }
+                },
+
+                change: function (e, ui) {
+                    if (!(ui.item)) {
+                        e.target.value = "";
+                    }
+                },
+
+                select: function (event, ui) {
+                }
+            });
+        });
+
+
+    </script>
+}
+<div>
+    @Html.ActionLink("Regresar", "Index", null, new { id = "lbl_regresar" })
+</div>
+@if (ViewBag.Error != null)
+{
+    <script>
+            M.toast({ html: '@ViewBag.Error', classes: 'red' });
+    </script>
+}

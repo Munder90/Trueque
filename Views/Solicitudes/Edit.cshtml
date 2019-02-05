@@ -1,0 +1,374 @@
+﻿@model TAT001.Entities.DOCUMENTO
+@using TAT001.Entities
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 202;
+    ViewBag.carpeta_r = 200;
+    TAT001.Models.DocumentoFlujo _df = ViewBag.df as TAT001.Models.DocumentoFlujo;
+}
+<script>
+    var root = "@Url.Content("~")";
+</script>
+@*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>*@
+<link rel="stylesheet" type="text/css" href="~/Scripts/DataTables/datatables.min.css" />
+<script type="text/javascript" src="~/Scripts/DataTables/datatables.min.js"></script>
+<script src="~/Scripts/edit.js"></script>
+<script src="~/Scripts/Solicitudes/comun.js"></script>
+<script src="~/Scripts/formatos.js"></script>
+<script src="~/Scripts/soporte.js"></script><!--RSG 23.05.2018-->
+<script src="~/Scripts/recurrente.js"></script><!--RSG 27.05.2018-->
+<script src="~/Scripts/descargar.js"></script><!--RSG 22.06.2018-->
+<script src="~/Scripts/rangos.js"></script>
+<script src="~/Scripts/borrador.js"></script><!--RSG 30.10.2018-->
+<script src="~/Scripts/ValidarNumero.js"></script>
+<script src="~/Scripts/listas.js"></script>
+<script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+@if (ViewBag.error != "")
+{
+    <script>
+    $(document).ready(function () {
+        function errorMessage(msg) {
+            M.toast({ html: msg });
+        }
+
+        /**/
+        var message = '@ViewBag.error';
+    /**/
+
+    if (message != "") {
+        // do drop down loic
+        errorMessage(message);
+    }
+});
+    </script>
+}
+@* ------------------------------------------------------------------------LEJ 09-07-18 *@
+<input id="miles" name="miles" type="hidden" value="@ViewBag.miles">
+<input id="dec" name="dec" type="hidden" value="@ViewBag.dec">
+<input id="mult" name="mult" type="hidden" value="@_df.D.DOCUMENTOF.Count">@*LEJ 03-08-18*@
+<input id="horaServer" type="hidden" value="@ViewBag.horaServer">
+<span class="span_fileload" style="display:none;"></span>
+<span class="lbl_cabono" style="display:none;"></span>
+<span class="lbl_ccargo" style="display:none;"></span>
+<span class="lbl_cclear" style="display:none;"></span>
+<span class="lbl_cpayer" style="display:none;">Payer</span>
+@* ------------------------------------------------------------------------LEJ 09-07-18 *@
+                <input type="hidden" id="txt_backorder" name="txt_backorder" value="@ViewBag.backorder" />
+<div class="row" style="margin-bottom:0">
+    @{TAT001.Entities.USUARIO us = ViewBag.usuario;
+
+        <div class="col s12 m7">
+            <div class="row" style="margin-bottom:0">
+                <div class="input-field col s4 m2">
+                    @Html.EditorFor(model => model.USUARIOC_ID, "Usuario", new { htmlAttributes = new { @disabled = "disabled", @Value = us.ID } })
+                    @Html.LabelFor(model => model.USUARIOC_ID, "Usuario", new { @id = "lbl_userid" })
+                </div>
+                <div class="input-field col s4 m2">
+                    @{ string manager = "";
+                        try
+                        {
+                            DET_APROBH dah = Model.USUARIO.PUESTO.DET_APROBH.Where(a => a.SOCIEDAD_ID == Model.SOCIEDAD_ID && a.ACTIVO)
+                                                .OrderByDescending(a => a.VERSION).FirstOrDefault();
+                            if (dah != null)
+                            {
+                                CLIENTEF cf = Model.CLIENTE.CLIENTEFs.Where(a => a.ACTIVO).OrderByDescending(a => a.VERSION).FirstOrDefault();
+                                TAT001.Services.ProcesaFlujo pf = new TAT001.Services.ProcesaFlujo();
+                                manager = pf.determinaAgenteI(cf, dah).USUARIOA_ID;
+                            }
+                        }
+                        catch { }
+                        //string manager = Model.D.CLIENTE.CLIENTEFs.Any(x => x.ACTIVO) ? Model.D.CLIENTE.CLIENTEFs.First(x => x.ACTIVO).USUARIO1_ID : "";
+                        @Html.EditorFor(model => model.USUARIO.MANAGER, new { htmlAttributes = new { @disabled = "disabled", @Value = manager } })
+                        @Html.LabelFor(model => model.USUARIO.MANAGER, "Manager", new { @id = "lbl_manager" })
+                    }
+                </div>
+                <div class="input-field col s4 m2">
+                    @Html.EditorFor(model => model.USUARIO.BACKUP_ID, new { htmlAttributes = new { @disabled = "disabled", @Value = ViewBag.USUARIO_BACKUPID } })
+                    @Html.LabelFor(model => model.USUARIO.BACKUP_ID, "Backup", new { @id = "lbl_backup" })
+                </div>
+            @*</div>
+
+            <div class="col s12 m6 l4">*@
+                <div class="input-field col s4 m2">
+                    @Html.EditorFor(model => model.USUARIO.BUNIT, "BU", new { htmlAttributes = new { @disabled = "disabled", @Value = Model.SOCIEDAD_ID } })
+                    @Html.LabelFor(model => model.USUARIO.BUNIT, "BU", new { @id = "lbl_bu" })
+                </div>
+                @*<div class="input-field col s3">
+                        <input type="text" id="txt_status" value="Nuevo" disabled="disabled" />
+                        <label for="txt_status" id="lbl_status">Estatus</label>
+                    </div>*@
+                <div class="input-field col s8 m4">
+                    @if (Model.ESTATUS == "N" | Model.ESTATUS != "N")
+                    {
+                        TAT001.Services.Estatus es = new TAT001.Services.Estatus();//ADD RSG 25.10.2018
+                        string status = es.getText(Model.NUM_DOC, Session["spras"].ToString());//ADD RSG 25.10.2018
+                        <input type="text" id="txt_status" value="@status" disabled="disabled" />@*//ADD RSG 25.10.2018*@
+                        <label for="txt_status" id="lbl_status">Estatus</label>
+                    }
+                </div>
+                @if (ViewBag.relacionadan != "" & Model.DOCUMENTO_REF != null)
+                {
+                    <div class="input-field col s4">
+                        <input type="text" id="txt_rel" name="txt_rel" value="@Model.DOCUMENTO_REF" disabled="disabled" />
+                        @*<input type="text" id="txt_rel" name="txt_rel" value="@ViewBag.relacionadan" disabled="disabled" />*@
+                        <label for="txt_rel" id="lbl_rel">Relacionada</label>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    @*<style>
+
+            .div_left {
+                float: left;
+            }
+
+            .div_right {
+                float: right;
+            }
+
+            .div_bottom {
+                clear: both;
+            }
+
+            .hr_bw {
+                height: 4px;
+                border: 0;
+                margin-bottom: 0px;
+                padding: 0;
+                background-color: #ccc;
+            }
+
+            .hr_color {
+                height: 6px;
+                border: 0;
+                margin: 0 0;
+                padding: 0;
+                background-color: #B90C46;
+            }
+
+            .hidden {
+                display: none;
+            }
+
+            .tabs_menu {
+                width: auto;
+            }
+
+            td.select_row {
+                background: url('../images/playb.png') no-repeat center center;
+                cursor: pointer;
+            }
+
+            tr.selected td.select_row {
+                background: url('../images/play.png') no-repeat center center;
+            }
+
+            td.detail_row {
+                background: url('../images/expandm.png') no-repeat center center;
+                cursor: pointer;
+            }
+
+            tr.details td.detail_row {
+                background: url('../images/expandl.png') no-repeat center center;
+            }
+
+            .errorMaterial {
+                background-color: red;
+            }
+
+            .errorProveedor {
+                background-color: red;
+            }
+        </style>*@
+        <div class="col s12 m5">
+            <div class="row right">
+                <a href="@Url.Action("Index", "Home" )" class="btn btn-small">Cancelar</a>
+                @if (Model.TSOL.REVERSO)
+                {
+                    ViewBag.reversan = "X";
+                }
+                else
+                {
+                    ViewBag.reversan = "";
+                }
+                @if (ViewBag.reversan != "X" | ViewBag.reversan == "X")
+                {
+                    <a id="btn_guardarBorr" class="btn btn-small">Guardar</a><!--ADD RSG 30.10.2018-->
+                    <a id="btn_guardarh" class="btn btn-small disabled">Enviar</a>
+                }
+            </div>
+        </div>
+        @*<div class="div_bottom">
+                <hr class="hr_bw" />
+                <hr class="hr_color .pink.darken-1" />
+            </div>*@
+    </div>
+    <div class="">
+        <div class="row" style="background-color:#f4f4f4;">
+            <div class="col s12">
+                <ul class="tabs" id="tabs">
+                    <li class="tab col s2 tabs_menu"><a id="tab_info" href="#Informacion_cont" class="active">Información</a></li>
+                    <li class="tab col s2 tabs_menu"><a id="tab_soporte" href="#Soporte_cont" disables>Soporte</a></li>
+                    <li class="tab col s3 tabs_menu"><a id="tab_dis" href="#Distribucion_cont">Distribución</a></li>
+                    <li id="tabs_rec" class="tab col s3 tabs_menu disabled"><a id="tab_rec" href="#Recurrente_cont">Recurrencia</a></li><!--RSG 09.07.2018-->
+                    <li class="tab col s2 tabs_menu"><a id="tab_fin" href="#Financiera_cont"><!--RSG 23.05.2018-->Financiera</a></li>
+                </ul>
+            </div>
+        </div>
+        @using (Html.BeginForm("Edit", "Solicitudes", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" id="txt_flujo" name="txt_flujo" value="P" /><!--ADD RSG 30.10.2018-->
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @*Información*@
+                @Html.Partial("_EditTabInfo", Model)
+                @*Recurrencia*@
+                @Html.Partial("_EditTabRec", Model)
+                @*Soporte*@
+                @Html.Partial("_EditTabSop", Model)
+                @*Distribución*@
+                @Html.Partial("_EditTabDis", Model)
+                @*Financiera*@
+                @Html.Partial("_EditTabFin", Model)
+                @* SCRIPT ------------------------------------------------------------------------------------------ LEJ 09.07.18*@
+                <script src="~/Scripts/ValidarFormatoDecimalesC.js"></script>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input style="display:none" id="btn_guardar" type="submit" value="Guardar" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+    @if (ViewBag.workflow.Count != 0)
+    {
+        <div class="row" style="font-size:12px;">
+            <div class="col s12">
+                <div class="row" style="margin-bottom:0">
+                    <div class="card-panel">
+                        <h5>Workflow</h5>
+                        <table class="table highlight responsive-table" id="table">
+                            <thead>
+                                <tr>
+                                    <th width="">
+                                        Usuario
+                                    </th>
+                                    <th width="">
+                                        Evento
+                                    </th>
+                                    <th width=""> Fecha inicio</th>
+                                    <th width=""> Hora inicio</th>
+                                    <th width=""> Fecha término</th>
+                                    <th width=""> Hora término</th>
+                                    <th width="" id="lbl_ew">
+                                        Estatus WF
+                                    </th>
+                                    <th width="" id="lbl_es">
+                                        Estatus
+                                    </th>
+                                    <th width="30%" id="lbl_co">
+                                        Comentario
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (TAT001.Entities.FLUJO f in ViewBag.workflow)
+                                {
+                                    <tr>
+                                        <td width=""> @Html.DisplayFor(modelItem => f.USUARIOA_ID) - @Html.DisplayFor(modelItem => f.USUARIO.NOMBRE) @Html.DisplayFor(modelItem => f.USUARIO.APELLIDO_P) @Html.DisplayFor(modelItem => f.USUARIO.APELLIDO_M) </td>
+                                        <td width=""> @Html.DisplayFor(modelItem => f.WORKFP.ACCION.ACCIONTs.Where(a => a.SPRAS_ID == Session["spras"].ToString()).FirstOrDefault().TXT050) </td>
+                                        <td width=""> @f.FECHAC.Value.ToShortDateString() </td>
+                                        <td width=""> @f.FECHAC.Value.TimeOfDay.ToString().Split('.')[0] </td>
+                                        <td width=""> @f.FECHAM.Value.ToShortDateString() </td>
+                                        <td width=""> @f.FECHAM.Value.TimeOfDay.ToString().Split('.')[0] </td>
+                                        <td width=""> @Html.DisplayFor(modelItem => f.ESTATUS) </td>
+                                        @* ------DRS 24.09.18------ *@
+                                        <td width="">
+                                            @{
+                                                string spras = ViewBag.spras_id;
+                                                string est = (Html.DisplayFor(modelItem => f.STATUS)).ToString();
+                                                TAT001.Services.Estatus c = new TAT001.Services.Estatus();
+                                                c.getText(est, Model.NUM_DOC, spras);
+                                            }
+                                            @c.getText(est, Model.NUM_DOC, spras)
+
+                                        </td>
+                                        <td width="30%"> @Html.Raw(f.COMENTARIO) </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @{
+        List<TAT001.Entities.DOCUMENTOA> archivos = ViewBag.files as List<TAT001.Entities.DOCUMENTOA>;
+        if (ViewBag.relacionadan != "" && archivos.Count > 0)
+        {
+            string[] nombrefile;
+            <div class="card-panel" style="display:none">
+                <h5>Documentos de Soporte @ViewBag.relacionadan</h5>
+                <div class="row" style="margin-bottom:0">
+                    @using (Html.BeginForm("Descargar", "Solicitudes", FormMethod.Post))
+                    {
+                        try
+                        {
+                            for (int i = 0; i < archivos.Count; i++)
+                            {
+
+                                nombrefile = archivos[i].PATH.Split('\\');
+                                <div class="col s11">
+                                    <div class="file-field input-field">
+                                        <input type="hidden" id="desc-@i" value="@archivos[i].PATH" />
+                                        <button id="lbl_cargar-@i" name="archivo" class="btn-small" style="float:left;" type="submit" value="@archivos[i].PATH">DESCARGAR</button>
+                                        <div class="file-path-wrapper">
+                                            <input disabled value="@nombrefile[nombrefile.Length - 1]" id="disabled" type="text" class="file-path ">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col s1" style="padding-top:19px;">
+                                    <a href="#" class="red-text">
+                                        <i class="material-icons prefix">clear</i>
+                                    </a>
+                                </div>
+                            }
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    }
+                </div>
+            </div>
+        }
+    }
+
+
+    <div id="validaciones">
+        <script>
+            var lista1 = [];
+            var lista = @Html.Raw(ViewBag.listaValid);
+        </script>
+        <script src="~/Scripts/warning.js"></script>
+    </div>
+    @Html.EditorFor(model => model.PAYER_ID, new { htmlAttributes = new { @id = "payer_id", @disabled = "disabled ", @onchange = @"selectCliente(this.value)", @style = "visibility:hidden" } }) @*OCG 15-10-18 Se inserta aqui para no afectar la vista*@
+
+    @*@if (ViewBag.duplicado != null)
+        {*@
+    <script>
+        var dd = false;
+        $('#tab_dis').on("click", function (e) {
+            if (!dd & isRecurrente()) {
+                $("#tabs_rec").removeClass("disabled");
+                dd = true;
+            }
+        });
+    </script>
+    @*}*@

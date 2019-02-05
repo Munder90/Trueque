@@ -1,0 +1,71 @@
+﻿@model TAT001.Entities.TSOPORTE
+
+@{
+    ViewBag.pagina_r = 1316;
+    ViewBag.carpeta_r = 500;
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+<div class="row">
+  @using (Html.BeginForm("Create", "Soporte", FormMethod.Post, new { @id = "soporteForm" }))
+  {
+        @Html.AntiForgeryToken()
+        <div class="row" style="margin-bottom:0%;">
+            <div class="row right">
+                <div class="col l12 m12">
+                    <button type="submit" id="btnGuardar" class="btn btn-default"></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s6">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="input-field col s12">
+                        @Html.LabelFor(model => model.ID, "ID", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", @required = "", @maxlength = "3" } })
+                    </div>
+                    <div class=" input-field col s12">
+                        @Html.LabelFor(model => model.DESCRIPCION, "DESCRIPCION", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.DESCRIPCION, new { htmlAttributes = new { @class = "form-control", @required = "", @maxlength = "50" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="form-horizontal">
+                    <div class="col s6">
+                        <div class="card-panel">
+                            <h5>Traducciones</h5>
+                            <div class="row">
+                                <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                    @Html.Editor("EN", new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @required = "" } })
+                                    <label id="lblIngles">Ingles</label>
+
+                                </div>
+                                <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                    @Html.Editor("ES", new { htmlAttributes = new { @class = "form-control", @maxlength = "50" , @required = "" } })
+                                    <label id="lblEspa">Español</label>
+
+                                </div>
+                                <div class="input-field col l4 m10 right" style="margin-bottom:0;">
+                                    <label>
+                                        <input type="checkbox" name="ACTIVO" value="true" id="fac" readonly="readonly" checked />
+                                        <span  id="lblActivo"></span>
+
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>   
+    }
+    </div>
+    <div class="col s12">
+        <a id="btnRegresar" href="@Url.Action("Index")"></a>
+    </div>
+<script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+<script>
+    fnCommon.formValidation('soporteForm');
+</script>

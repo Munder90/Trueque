@@ -1,0 +1,101 @@
+﻿@model IEnumerable<TAT001.Entities.CARTA>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 201;
+    ViewBag.carpeta_r = 200;
+
+    TempData["swf"] = TempData["ESTATUS_WF"];
+}
+<div class="row">
+    <div class="row right">
+        <div class="col l12 m12 right">
+            <a href="@Url.Action("Details", "Solicitudes", new { id = TempData["id"].ToString()})" class="btn btn-small" id="btn_return">Regresar</a>
+            @{ string swf = TempData["ESTATUS_WF"].ToString();}
+            @if (swf.Equals("S") && (Model.Count()>0 && Model.First().DOCUMENTO.USUARIOD_ID == User.Identity.Name))
+            {
+                <a href="@Url.Action("Create", "CartaV", new { id = TempData["id"].ToString(), Viewlista=true})" class="btn btn-small" id="btn_generarC">Generar Carta</a>
+            }
+            else if(Model.Count() > 0 && Model.First().DOCUMENTO.USUARIOD_ID == User.Identity.Name)
+            {
+                <a href="@Url.Action("Create", "CartaD", new { id = TempData["id"].ToString(), Viewlista=true})" class="btn btn-small" id="btn_generarC">Generar Carta</a>
+            }
+        </div>
+    </div>
+</div>
+<div class="card-panel">
+    <table class="table">
+        <tr>
+            <td></td>
+            <th id="lbl_Fecha"></th>
+            <th id="lbl_Tipo"> </th>
+            <th id="lbl_Sociedad"> </th>
+            <th id="lbl_Tax"> </th>
+            <th id="lbl_Concepto"></th>
+            <th id="lbl_Cliente"></th>
+            <th id="lbl_Puesto"></th>
+            <th id="lbl_Direccion"></th>
+            <th id="lbl_Folio"></th>
+            <th id="lbl_Lugar"></th>
+            <th id="lbl_PayerId"> </th>
+            <th id="lbl_Estimado"> </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            ////////DRS 14.10.2018//////
+        <tr onclick="document.location = '@Url.Action("DetailsPos", new { id = item.NUM_DOC, pos = item.POS, swf=TempData["ESTATUS_WF"] })'" style="cursor:pointer">
+            @if (item.DOCUMENTO.LIGADA==null || item.DOCUMENTO.LIGADA==false)
+            {
+             if (item.STATUS != null && (bool)item.STATUS == true)
+             {
+                <td style="align-items:center"><i class='material-icons green-text'>check_box</i></td>
+             }
+             else
+             {
+                <td style="align-items:center;"><i class='material-icons black-text'>check_box_outline_blank</i></td>
+                }
+            }
+            else {
+                <td></td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.FECHAC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TIPO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.COMPANY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TAXID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CONCEPTO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CLIENTE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PUESTO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DIRECCION)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FOLIO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LUGAR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PAYER)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ESTIMADO)
+            </td>
+        </tr>
+        }
+
+    </table>
+    </div>

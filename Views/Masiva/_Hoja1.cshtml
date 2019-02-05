@@ -1,0 +1,108 @@
+﻿@model IEnumerable<TAT001.Entities.DOCUMENTO>
+
+
+<thead class="header">
+    <tr>
+        <th>
+            ESTATUS
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NUM_DOC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TSOL.ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TALL.DESCRIPCION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SOCIEDAD.BUKRS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PAI.LANDX)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ESTADO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CIUDAD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CONCEPTO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NOTAS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PAYER_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PAYER_NOMBRE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PAYER_EMAIL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FECHAI_VIG)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FECHAF_VIG)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MONEDA_ID)
+        </th>
+    </tr>
+</thead>
+<tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>X</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NUM_DOC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TSOL_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TALL.DESCRIPCION)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SOCIEDAD.BUKRS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PAI.LANDX)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ESTADO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CIUDAD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CONCEPTO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NOTAS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PAYER_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PAYER_NOMBRE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PAYER_EMAIL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FECHAI_VIG)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FECHAF_VIG)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MONEDA_ID)
+            </td>
+        </tr>
+    }
+</tbody>

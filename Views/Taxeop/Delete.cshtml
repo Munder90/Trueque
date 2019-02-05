@@ -1,0 +1,68 @@
+﻿@model TAT001.Entities.TAXEOP
+
+@{
+    //ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 864;
+    ViewBag.carpeta_r = 500;
+}
+<div>
+    @using (Html.BeginForm("Delete", "Taxeop", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col l12 m12 s12">
+                <button id="btnBorrar" type="submit" value="Delete" class="btn btn-default" style="float:right;">X</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="col s6 m6 l6">
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.SOCIEDAD_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblSociedadId" })
+                            @Html.EditorFor(model => model.SOCIEDAD_ID, null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.PAIS_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblPaisId" })
+                            @Html.EditorFor(model => model.PAIS_ID, null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.KUNNR, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblKun" })
+                            @Html.EditorFor(model => model.KUNNR, null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.CONCEPTO_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblConId" })
+                            @Html.EditorFor(model => model.CONCEPTO_ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.RETENCION_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblRetId" })
+                            @Html.EditorFor(model => model.RETENCION_ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                    </div>
+                    <div class="col s6 m6 l6">
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.VKORG, htmlAttributes: new { @class = "control-label col-md-2", @id = "lvlVk" })
+                            @Html.EditorFor(model => model.VKORG, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.VTWEG, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblVt" })
+                            @Html.EditorFor(model => model.VTWEG, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.POS, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblPos" })
+                            @Html.EditorFor(model => model.POS, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.SPART, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblSp" })
+                            @Html.EditorFor(model => model.SPART, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions no-color">
+            @Html.ActionLink("Back to List", "Index", new { kun = @ViewBag.kun, vk = @ViewBag.vk, vtw = @ViewBag.vtw, sp = @ViewBag.sp, sc = @ViewBag.sc, ld = @ViewBag.ld, con = @ViewBag.con }, new { id = "lblRegresar" })
+        </div>
+    }
+</div>

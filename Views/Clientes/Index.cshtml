@@ -1,0 +1,123 @@
+﻿@model TAT001.Models.ClienteViewModel
+@{
+    ViewBag.pagina_r = 631;
+    ViewBag.carpeta_r = 500;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #list {
+        overflow-x: auto;
+    }
+</style>
+<div class="row">
+    <div class="col s12 right-align">
+        <a class="btn-small" href="@Url.Action("Carga")">Cargar Clientes</a>
+        @using (Html.BeginForm("Descargar", "Clientes", FormMethod.Post, new { @style = "display:inline;" }))
+        {
+            <button id="btnExport" name="excel" class="btn-small" type="submit" value="Excel"></button>
+        }
+    </div>
+</div>
+<div class="card-panel">
+    <div class="row" style="margin-bottom:0;">
+        <div class="input-field col s3 m3 l3">
+            @Html.DropDownListFor(model => model.numRegistros, Model.pageSizes, "")
+            <label id="btn_length"></label>
+        </div>
+        <div class="input-field col s5 m3 l3 offset-l6 offset-m6 offset-s4">
+            @Html.TextBoxFor(model => model.buscar, new { @class = "global_filter", @id = "global_filter", @maxlength = 50 })
+            <label for="global_filter" id="lbl_search">Buscar</label>
+        </div>
+    </div>
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+    <link href="~/Content/dataTable.css" rel="stylesheet" />
+    <link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+    <iframe id="txtArea1" style="display:none"></iframe>
+    <div id="list">
+       @Html.Partial("List", Model)
+    </div>
+</div>
+
+<script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+<script>
+    var root = '@Url.Content("~")';
+    //---- Inicializador de componentes Materialize----
+    fnCommon.materializeInit('select');
+
+    //------Actualizar numero de registros en paginación
+    $('#numRegistros').change(function () {
+        fnCommon.showProcess(true);
+        $.ajax({
+            url: root + 'Clientes/List?numRegistros=' + $('#numRegistros').val() + '&&buscar=' + $('input.global_filter').val(),
+            success: function (resultView) {
+                if (resultView.isRedirect) {
+                    window.location = resultView.redirectUrl;
+                } else {
+                    fnCommon.showProcess(false);
+                    $('#list').html(resultView);
+                  
+                }
+            }
+        });
+    });
+
+    //------Actualizar registros por busqueda
+    $('input.global_filter').keyup(function () {
+         $.ajax({
+             url: root+'Clientes/List?numRegistros=' + $('#numRegistros').val() + '&&buscar=' + $('input.global_filter').val(),
+             success: function (resultView) {
+                 if (resultView.isRedirect) {
+                     window.location = resultView.redirectUrl;
+                 } else {
+                     fnCommon.showProcess(false);
+                     $('#list').html(resultView);
+                    
+                 } 
+            }
+        });
+    });
+
+    //////-------Cargar List
+    ////$('#numRegistros').trigger("change");
+
+    $("#excelBtn").click(function () {
+        $('#table').trigger('destroyPager');
+        var tableid = table;
+        fnExcelReport();
+        M.toast({ html: 'Se ha generado el excel con los registros mostrados en pantalla' });
+        location.reload();
+    });
+    function fnExcelReport() {
+        var tab_text = "<table border='2px'><tr bgcolor='#87AFC6'>";
+        var textRange; var j = 0;
+        tab = document.getElementById('table'); // id of table
+
+        for (j = 0; j < tab.rows.length; j++) {
+            tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
+            //tab_text=tab_text+"</tr>";
+        }
+
+        tab_text = tab_text + "</table>";
+        tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+        tab_text = tab_text.replace(/<img[^>]*>/gi, ""); // remove if u want images in your table
+        tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("MSIE ");
+
+        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+        {
+            txtArea1.document.open("txt/html", "replace");
+            txtArea1.document.write(tab_text);
+            txtArea1.document.close();
+            txtArea1.focus();
+            sa = txtArea1.document.execCommand("SaveAs", true, "Say Thanks to Sumit.xls");
+        }
+        else                 //other browser not tested on IE 11
+            sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+
+        return (sa);
+    }
+</script>

@@ -1,0 +1,43 @@
+﻿@model TAT001.Entities.NEGOCIACION
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>NEGOCIACION</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FECHAI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FECHAI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FECHAF)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FECHAF)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FECHAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FECHAN)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

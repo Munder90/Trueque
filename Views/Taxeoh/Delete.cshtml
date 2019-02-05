@@ -1,0 +1,56 @@
+﻿@model TAT001.Entities.TAXEOH
+
+@{
+    //ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 855;
+    ViewBag.carpeta_r = 500;
+}
+
+<div>
+
+    @using (Html.BeginForm("Delete", "Taxeoh", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <button id="btnGE" type="submit" value="Submit" class="btn-small" style="float:right;">Submit</button>
+        </div>
+        <div class="row">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="col s6 m6 l6">
+                        <div class="col l12 m12 s12">
+                            <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                @Html.EditorFor(model => model.KUNNR, null, "kunnr", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                @Html.LabelFor(model => model.KUNNR, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblKun" })
+                            </div>
+                        </div>
+                        <div class="col l12 m12 s12">
+                            <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                @Html.EditorFor(model => model.CONCEPTO_ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                @Html.LabelFor(model => model.CONCEPTO_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblConId" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s6 m6 l6">
+                        <div class="col l12 m12 s12">
+                            <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                @Html.EditorFor(model => model.VKORG, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                @Html.LabelFor(model => model.VKORG, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblVorkg" })
+                            </div>
+                        </div>
+                        <div class="col l12 m12 s12">
+                            <div class="input-field col l10 m10" style="margin-bottom:0;">
+                                @Html.EditorFor(model => model.VTWEG, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                @Html.LabelFor(model => model.VTWEG, htmlAttributes: new { @class = "control-label col-md-2", @id = "lvlVtweg" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions no-color">
+            @Html.ActionLink("Back to List", "Index", new { vko = Model.VKORG, vtw = Model.VTWEG, kun = Model.KUNNR, spa = Model.SPART }, new { id = "lblRegresar" })
+        </div>
+    }
+</div>

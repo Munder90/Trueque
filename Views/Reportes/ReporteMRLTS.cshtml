@@ -1,0 +1,446 @@
+﻿@model IEnumerable<TAT001.Entities.DOCUMENTO>
+
+@{
+    /**/
+
+    //ViewBag.Title = "Páginas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 1100;
+    ViewBag.carpeta_r = 1106;
+    List<Tuple<decimal, decimal>> negAmount = new List<Tuple<decimal, decimal>>();
+}
+@if (!ViewBag.Display)
+{
+    <script>
+        $(document).ready(function () {
+            $('select.select_all').siblings('ul').prepend("<li id=sm_select_all><span id='filters_all'>Todas las Opciones</span></li>");
+            $('li#sm_select_all').on('click', function () {
+                var jq_elem = $(this),
+                    jq_elem_span = jq_elem.find('span'),
+                    select_all = jq_elem_span.text() == 'Todas las Opciones',
+                    set_text = select_all ? 'Borrar Selección' : 'Todas las Opciones';
+                jq_elem_span.text(set_text);
+                jq_elem.siblings('li').filter(function () {
+                    return $(this).find('input').prop('checked') != select_all;
+                }).click();
+            });
+            //$(document).ready(function () {
+            //    $("#sendbtn").click(function () {
+            //        $("#excelBtn").prop("disabled", "false");
+            //    });
+            //});
+        });
+    </script>
+}
+
+@using (Html.BeginForm("ExportReporteMRLTS", "Reportes", FormMethod.Post, new { id = "exportForm", @style = "display:inline;" }))
+{
+    if (ViewBag.Display)
+    {
+        <div class="" style="float: right;margin-left: 10px;">
+            <div class="col s12 right-align">
+                <input type="hidden" name="selectedcocode" value="@((ViewBag.selectedcocode == null)?String.Empty:ViewBag.selectedcocode)" />
+                <input type="hidden" name="selecteddperiod" value="@((ViewBag.selecteddperiod == null)?String.Empty:ViewBag.selecteddperiod)" />
+                <input type="hidden" name="selectedaperiod" value="@((ViewBag.selectedaperiod == null)?String.Empty:ViewBag.selectedaperiod)" />
+                <input type="hidden" name="selectedyear" value="@((ViewBag.selectedyear == null)?String.Empty:ViewBag.selectedyear)" />
+                <input type="hidden" id="selectedsubfilters" name="selectedsubfilters" value="" />
+                <button id="btnExport" name="excel" class="btn-small" type="button">Exportar</button>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $(document).on('click', '#btnExport', function () {
+                    $("#selectedsubfilters").val("");
+                    $("select.tablesorter-filter").each(function (index, element) {
+                        if ($("option:selected", this).attr('parsed') != undefined)
+                            $("#selectedsubfilters").val($("#selectedsubfilters").val() + $(this).attr('data-column') + "|ST|" + $("option:selected", this).val() + "|T,T|");
+                        else
+                            $("#selectedsubfilters").val($("#selectedsubfilters").val() + $(this).attr('data-column') + "|ST||T,T|");
+                    });
+                    $('#exportForm').submit();
+                });
+            });
+        </script>
+    }
+}
+
+
+@using (Html.BeginForm("ReporteMRLTS", "Reportes", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    System.Globalization.TextInfo myTI = new System.Globalization.CultureInfo("en-US", false).TextInfo;
+    System.Globalization.DateTimeFormatInfo formatoFecha = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat;
+    DateTime newDate = DateTime.Now;
+    int yeard = newDate.Year;
+    int year1 = yeard + 1;
+    int year2 = yeard + 2;
+    int yearback = yeard - 1;
+    int yearback2 = yeard - 2;
+    <div class="">
+        <div class="col s12 right-align">
+            <button class="btn-small" id="sendbtn" type="submit" name="action">Consultar</button>
+            @*<input class="btn-small" id="id_excel" type="button" value="Generar Excel" name="action" />*@
+        </div>
+    </div>
+    <div class="card-panel">
+        <div class="row">
+            <div class="row" style="margin-bottom:0;">
+                <div class="input-field col s3 m3 l3">
+                    <select name="selectdperiod" id="selectdperiod" required="">
+                        @try
+                        {
+                            foreach (var periodo in ViewBag.dperiodo)
+                            {
+                                var concat = "P";
+                                if (Int32.Parse(periodo.ACTIVO) == 1)
+                                {
+                                    <option value="@periodo.ID">@(concat + periodo.ID)</option>
+
+                                }
+                                else { }
+                            }
+
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    </select>
+                    <label id="lbl_de_periodo">De Periodo *</label>
+                </div>
+                <div class="input-field col s3 m3 l3">
+                    <select name="selectaperiod" id="selectdaperiod" required="">
+
+                        @try
+                        {
+                            foreach (var periodo in ViewBag.aperiodo)
+                            {
+                                var concat = "P";
+                                if (Int32.Parse(periodo.ACTIVO) == 1)
+                                {
+                                    <option value="@periodo.ID">@(concat + periodo.ID)</option>
+
+                                }
+                                else { }
+                            }
+
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    </select>
+                    <label id="lbl_a_periodo">A Periodo *</label>
+                </div>
+                <div class="input-field col s2 m2 l2">
+                    <select name="selectyear" id="selectyear" required="">
+                        @if (yeard == DateTime.Now.Year)
+                        {
+
+                            <option value="@yeard">@yeard</option>
+                            <option value="@year1">@year1</option>
+                            <option value="@year2">@year2</option>
+                        }
+                        else
+                        {
+                            <option value="@yearback2">@yearback2</option>
+                            <option value="@yearback">@yearback</option>
+                            <option value="@yeard">@yeard</option>
+                        }
+                    </select>
+                    <label id="lbl_anio">Año *</label>
+                </div>
+                <div class="input-field col s3 m3 l3">
+                    <select multiple name="selectcocode" id="selectcocode" class="comcode select_all" required="">
+                        @try
+                        {
+                            foreach (var item in ViewBag.sociedad)
+                            {
+                                <option value="@item.BUKRS">@item.BUKRS</option>
+                            }
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    </select>
+                    <label id="lbl_cocode">Co. Code *</label>
+                </div>
+            </div>
+        </div>
+        <script>
+            var elem = document.querySelectorAll('select');
+            var options = [];
+            var instance = M.FormSelect.init(elem, options);
+        </script>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+        <link href="~/Content/dataTable.css" rel="stylesheet" />
+        @*<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>*@
+        <script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+        @*<link href="~/Content/dataTable.css" rel="stylesheet" />
+            <link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />*@
+        <script src="~/Scripts/subfilters/jquery.tablesorter.js"></script>
+        <link href="~/Scripts/subfilters/jquery.tablesorter.pager.css" rel="stylesheet" />
+        <script src="~/Scripts/subfilters/jquery.tablesorter.pager.js"></script>
+        <script src="~/Scripts/subfilters/widget-filter.js"></script>
+        <script src="~/Scripts/tablesort/tableToExcel.js"></script>
+        @*<script>
+                var elem = document.querySelector('select');
+                var options = [];
+                var instance = M.FormSelect.init(elem, options);
+            </script>*@
+    </div>
+    if (ViewBag.display)
+    {
+        <script>
+            $(document).ready(function () {
+                $(".grid thead td").click(function () {
+                    showFilterOption(this);
+                });
+                //$("#excelBtn").click(function () {
+                //    $("#table").tableExport();
+                //});
+                $('select.select_all').siblings('ul').prepend('<li id=sm_select_all id="filters_all"><span>Todas Las Opciones</span></li>');
+                $('li#sm_select_all').on('click', function () {
+                    var jq_elem = $(this),
+                        jq_elem_span = jq_elem.find('span'),
+                        select_all = jq_elem_span.text() == 'Todas Las Opciones',
+                        set_text = select_all ? 'Borrar Selección' : 'Todas Las Opciones';
+                    jq_elem_span.text(set_text);
+                    jq_elem.siblings('li').filter(function () {
+                        return $(this).find('input').prop('checked') != select_all;
+                    }).click();
+                });
+
+                $("#id_excel").click(function () {
+                    $("#table").trigger("filterReset");
+                    $('#table').trigger('destroyPager');
+                    $('#table').trigger('destroy');
+                    var pager = $('#table tfoot').html();
+                    $('#table tfoot').html("");
+                    tableToExcel('table', 'Reporte MRL TS');
+                    $('#table tfoot').html(pager);
+                    $('#table').tablesorter({
+                        theme: "materialize",
+                        widthFixed: true,
+                        widgets: ["filter", "zebra"],
+                        widgetOptions: {
+                            zebra: ["even", "odd"],
+                            filter_reset: ".reset",
+                            filter_cssFilter: ["", "", "browser-default"]
+                        }
+                    }).tablesorterPager({
+                        container: $(".ts-pager"),
+                        cssGoto: ".pagenum",
+                        removeRows: true,
+                        output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+                    });
+                });
+            });
+
+            $(function () {
+                $("#table").tablesorter({
+                    theme: "materialize",
+                    widthFixed: true,
+                    // widget code contained in the jquery.tablesorter.widgets.js file
+                    // use the zebra stripe widget if you plan on hiding any rows (filter widget)
+                    widgets: ["filter", "zebra"],
+                    widgetOptions: {
+                        // using the default zebra striping class name, so it actually isn't included in the theme variable above
+                        // this is ONLY needed for materialize theming if you are using the filter widget, because rows are hidden
+                        zebra: ["even", "odd"],
+                        // reset filters button
+                        filter_reset: ".reset",
+                        // extra css class name (string or array) added to the filter element (input or select)
+                        // select needs a "browser-default" class or it gets hidden
+                        filter_cssFilter: ["", "", "browser-default"]
+                    }
+                })
+                    .tablesorterPager({
+                        // target the pager markup - see the HTML block below
+                        container: $(".ts-pager"),
+                        // target the pager page select dropdown - choose a page
+                        cssGoto: ".pagenum",
+                        // remove rows from the table to speed up the sort of large tables.
+                        // setting this to false, only hides the non-visible rows; needed if you plan to add/remove rows with the pager enabled.
+                        removeRows: true,
+                        // output string - default is '{page}/{totalPages}';
+                        // possible variables: {page}, {totalPages}, {filteredPages}, {startRow}, {endRow}, {filteredRows} and {totalRows}
+                        output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+                    });
+            });
+            var tableToExcel = (function () {
+                var uri = 'data:application/vnd.ms-excel;base64,'
+                    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+                    , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+                    , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+                return function (table, name) {
+                    if (!table.nodeType) table = document.getElementById(table)
+                    var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+                    window.location.href = uri + base64(format(template, ctx))
+                }
+            })()
+        </script>
+        <div style="width:100%;height:50vh;overflow:scroll;">
+            <table class="table mdl-data-table striped grid centered table" id="table" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_code">Co. Code</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_pais">País</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_num_solicitud">Número de solicitud</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_fecha_solicitud">Fecha solicitud</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_periodo_contable">Periodo Contable</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_anio_contable">Año</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_no_doc_SAP">Número documento SAP</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_no_rev_SAP">Número reverso SAP</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_fecha_reverso">Fecha Reverso</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_p_contable_reverso">Periodo contable reverso</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_c_reverso_provision">Comentarios reverso provisión</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_tipo_solicitud">Tipo Solicitud</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_status">Status</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_concepto_solicitud">Concepto Solicitud</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_d">De</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_a">A</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_clasificacion">Clasificación</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_num_cliente">Num Cliente</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_cliente">Cliente</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_monto">$ Monto provisión registrada</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_importe">$ Importe NC/OP</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_reverso">$ Reverso</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_beneficio">Beneficio/ (impacto) - MRL</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_expense">Expense Recognition Años Anteriores</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_monto_USD">Monto Provisión registrada USD</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_importe_USD">$ Importe NC/OP USD</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_reverso_USD">$ Reverso USD</th>
+                        <th class="filter-select" data-placeholder="Todas las opciones" id="head_beneficio_USD">Beneficio/ (impacto) - MRL USD</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    @*<tr>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_code">Co. Code</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_pais">País</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_num_solicitud">Número de solicitud</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_fecha_solicitud">Fecha solicitud</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_periodo_contable">Periodo Contable</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_anio_contable">Año</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_no_doc_SAP">Número document SAP</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_no_rev_SAP">Número reverso SAP</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_fecha_reverso">Fecha Reverso</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_p_contable_reverso">Periodo contable reverso</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_c_reverso_provision">Comentarios reverso provisión</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_tipo_solicitud">Tipo Solicitud</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_status">Status</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_concepto_solicitud">Concepto Solicitud</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_d">De</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_a">A</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_clasificacion">Clasificación</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_nunm_cliente">Num Cliente</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_cliente">Cliente</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_monto">$ Monto provisión registrada</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_importe">$ Importe NC/OP</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_reverso">$ Reverso</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_beneficio">Beneficio/ (impacto) - MRL</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_expense">Expense Recognition Años Anteriores</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_monto_USD">Monto Provisión registrada USD</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_importe_USD">$ Importe NC/OP USD</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_reverso_USD">$ Reverso USD</th>
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_beneficio_USD">Beneficio/ (impacto) - MRL USD</th>
+                        </tr>*@
+                    <!-- include "tablesorter-ignoreRow" class for pager rows in thead -->
+                    <tr class="tablesorter-ignoreRow">
+                        <th colspan="2" class="ts-pager form-horizontal">
+                            <button type="button" class="btn first"><i class="small material-icons">first_page</i></button>
+                            <button type="button" class="btn prev"><i class="small material-icons">navigate_before</i></button>
+                            <span class="pagedisplay"></span>
+                            <!-- this can be any element, including an input -->
+                            <button type="button" class="btn next"><i class="small material-icons">navigate_next</i></button>
+                            <button type="button" class="btn last"><i class="small material-icons">last_page</i></button>
+                            <div style="padding:0 78% 0 0;">
+                                <label class="btn_length" id="por_pag">Ver por página</label>
+                                <select class="pagesize" id="selecc" title="Select page size">
+                                    <option selected="selected" value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="40">40</option>
+                                    <option value="50">50</option>
+                                </select>
+                                <label class="label_pag">Ir a Página</label>
+                                <select class="pagenum browser-default" title="Select page number"></select>
+                            </div>
+                        </th>
+                        <th colspan="26">
+                        </th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (TAT001.Models.ReportesModel.MRLTS item in ViewBag.tabla_reporte)
+                    {
+                        // TAT001.Models.ReportesModel.MRLTS item = itemvar.GetType().GetProperty("renglon").GetValue(itemvar, null);
+                        <tr>
+                            <td>@item.CO_CODE </td>
+                            <td>@item.PAIS </td>
+                            <td><a href="@Url.Action("Details", "Solicitudes", new { id = item.NUMERO_SOLICITUD })" style="cursor:pointer">@item.NUMERO_SOLICITUD </a></td>
+                            <td>@item.FECHA_SOLICITUD_STRING </td>
+                            <td>@item.PERIODO_CONTABLE_STRING </td>
+                            <td>@item.ANIO_CONTABLE</td>
+                            <td>@item.NUMERO_DOCUMENTO_SAP </td>
+                            <td>@item.NUMERO_REVERSO_SAP </td>
+                            <td>@item.FECHA_REVERSO_STRING </td>
+                            <td>@item.PERIODO_CONTABLE_REVERSO </td>
+                            <td>@item.COMENTARIOS_REVERSO_PROVISION_STRING </td>
+                            <td>@item.TIPO_SOLICITUD </td>
+                            <td>@item.ESTATUS_STRING </td>
+                            <td>@item.CONCEPTO_SOLICITUD </td>
+                            <td>@item.DE_STRING </td>
+                            <td>@item.A_STRING </td>
+                            <td>@item.CLASIFICACION </td>
+                            <td>@item.NUMERO_CLIENTE </td>
+                            <td>@item.CLIENTE </td>
+                            <td>@item.MONTO_PROVISION_STRING </td>
+                            <td>@item.MONTO_NCOP_STRING </td>
+                            <td>@item.MONTO_REVERSO_STRING </td>
+                            <td>@item.BENEFICIO_IMPACTO_MRL_STRING </td>
+                            <td>@item.EXPENSE_RECOGNITION_STRING </td>
+                            <td>@item.MONTO_PROVISION_USD_STRING </td>
+                            <td>@item.MONTO_NCOP_USD_STRING </td>
+                            <td>@item.MONTO_REVERSO_USD_STRING </td>
+                            <td>@item.BENEFICIO_IMPACTO_MRL_USD_STRING </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else { }
+    <style>
+        .dataTables_length {
+            display: none;
+        }
+
+        .dataTables_filter {
+            display: none;
+        }
+
+        .dataTables_scrollHeadInner, .mdl-data-table {
+            width: 100%;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .btn {
+            font-size: .8em;
+        }
+        /* not sure why this is needed... */
+        .material-icons {
+            vertical-align: bottom;
+        }
+
+        select {
+            display: block !important;
+        }
+
+        th {
+            text-align: center !important;
+        }
+    </style>
+}

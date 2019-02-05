@@ -1,0 +1,186 @@
+﻿@model TAT001.Entities.SOCIEDAD
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 923;
+    ViewBag.carpeta_r = 500;
+}
+
+<div class="col s12 l12 right-align">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BUKRS }, htmlAttributes: new { @class = "btn btn-default", id = "btn_save" })
+</div>
+@*<div class="card-panel">
+        <div class="row">
+            <div class="col s4 offset-s2">
+                <div class="form-group">
+                    <label id="lbl_coCode"></label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.BUKRS, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                    </div>
+                </div>
+            </div>
+            <div class="col s4">
+                <div class="form-group">
+                    <label id="lbl_Compania"></label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.BUTXT, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s4 offset-s2">
+                <div class="form-group">
+                    <label id="lbl_Estado"></label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ORT01, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                    </div>
+                </div>
+            </div>
+            <div class="col s4">
+                <div class="form-group">
+                    <label id="lbl_Pais"></label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.LAND, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s4 offset-s2">
+                <div class="form-group">
+                    <label id="lbl_Moneda"></label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.WAERS, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                    </div>
+                </div>
+            </div>
+            <div class="col s4">
+                <div class="form-group">
+                    <label id="lbl_Idioma"></label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SPRAS, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s4 offset-s2">
+                <div class="form-group">
+                    <label id="lbl_subRegion"></label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SUBREGIO, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                    </div>
+                </div>
+            </div>
+            <div class="col s4">
+                <div class="form-group">
+                    <label id="lbl_Region"></label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.REGION, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                    </div>
+                </div>
+            </div>
+            <div class="col s2 l2">
+                <div class="form-group">
+                    <label id="lbl_Activo"></label>
+                    <div class="col-md-10">
+                        @if ((bool)Model.ACTIVO == true)
+                        {
+                            <i class='material-icons green-text'>check</i>}
+                        else
+                        {
+                            <i class='material-icons red-text'>clear</i>}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>*@
+
+<div class="row">
+    <div class="col s12 l6">
+        <div class="card-panel">
+            @Html.HiddenFor(model => model.BUKRS)
+            @Html.HiddenFor(model => model.BUTXT)
+            @Html.HiddenFor(model => model.ORT01)
+            @Html.HiddenFor(model => model.LAND)
+            @Html.HiddenFor(model => model.SUBREGIO)
+            @Html.HiddenFor(model => model.WAERS)
+            @Html.HiddenFor(model => model.SPRAS)
+            @Html.HiddenFor(model => model.NAME1)
+            @Html.HiddenFor(model => model.KTOPL)
+            <div class="row">
+                <div class="col s12">
+                    <div class="input-field col s6">
+                        @Html.EditorFor(model => model.BUKRS, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                        <label id="lbl_coCode"></label>
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.BUTXT, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                        <label id="lbl_Compania"></label>
+                    </div>
+                    <div class="input-field col s6">
+                        @Html.EditorFor(model => model.WAERS, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                        <label id="lbl_Moneda"></label>
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.SPRAS, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                        <label id="lbl_Idioma"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col s12 l6">
+        <div class="card-panel">
+            <div class="row">
+                <div class="input-field col s12 l6">
+                    @Html.EditorFor(model => model.LAND, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                    <label id="lbl_Pais"></label>
+                </div>
+                <div class="input-field col s12 l6">
+                    @Html.EditorFor(model => model.ORT01, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                    <label id="lbl_Estado"></label>
+                </div>
+
+                <div class="input-field col s12 l6">
+                    @Html.EditorFor(model => model.SUBREGIO, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                    <label id="lbl_subRegion"></label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col s12 l6">
+        <div class="card-panel">
+            <div class="row">
+                <div class="input-field col s12 l6">
+                    @*@Html.DropDownListFor(model=>model.REGION, null,"")*@
+                    @Html.EditorFor(model => model.REGION, new { htmlAttributes = new { @class = "form-control", @maxlength = "10", disabled = true } })
+                    <label id="lbl_Region"></label>
+                </div>
+                <div class="col s12 l12">
+                    <label id="lbl_Activo"></label>
+                    <div class="col-md-10">
+                        @if ((bool)Model.ACTIVO == true)
+                        {
+                            <i class='material-icons green-text'>check</i>
+                        }
+                        else
+                        {
+                            <i class='material-icons red-text'>clear</i>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col s12">
+    <a id="btn_return" href="@Url.Action("Index")"></a>
+</div>
+

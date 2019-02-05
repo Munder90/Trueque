@@ -1,0 +1,537 @@
+﻿@model TAT001.Entities.USUARIO
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 601;
+    ViewBag.carpeta_r = 500;
+}
+<link href="~/Content/autocomplete.css" rel="stylesheet" />
+<script src="~/Scripts/autocomplete1.10.2.js"></script>
+<script src="~/Scripts/autocomplete1.11.4.js"></script>
+<style>
+
+    .ui-autocomplete {
+        z-index: 10010;
+    }
+</style>
+<script>
+    var auto = $.noConflict(true);
+</script>
+@*@using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()*@
+<div class="row">
+    <div class="col s12 l12 right-align">
+        <a class="btn" id="btn_changepassword" href="@Url.Action("Pass", new { id = Model.ID})">Cambiar contraseña</a>
+        @if ((ViewBag.nivelUsuario == 1 || ViewBag.nivelUsuario == 8) && ViewBag.idUsuario != ViewBag.ID)
+        {
+            <a class="btn" id="btn_editar" href="@Url.Action("Edit", new { usuario_id = Model.ID })">Editar</a>
+        }
+        else
+        {
+            <a class="btn" disabled id="btn_editar" href="@Url.Action("Edit", new { usuario_id = Model.ID })">Editar</a>
+        }
+
+    </div>
+</div>
+<div class="row">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.PASS)
+    @*<div class="input-field col s6">
+                    @Html.PasswordFor(model => model.PASS, new { htmlAttributes = new { @disabled= "disabled" } })
+                    @Html.LabelFor(model => model.PASS, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.ValidationMessageFor(model => model.PASS, "", new { @class = "text-danger" })
+                <div class="input-field col s6">
+                    <div style="height:54px;"></div>
+                </div>
+        </div>*@
+    <div class="col l6 s12">
+        <div class="card-panel">
+            <div class="row">
+                <div class="input-field col s12">
+                    @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @disabled = "disabled" } })
+                    @Html.LabelFor(model => model.ID, htmlAttributes: new { @id = "lbl_id" })
+                    @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-field col s12">
+                    @Html.EditorFor(model => model.NOMBRE, new { htmlAttributes = new { @disabled = "disabled" } })
+                    @Html.LabelFor(model => model.NOMBRE, htmlAttributes: new { @id = "lbl_nombre" })
+                    @Html.ValidationMessageFor(model => model.NOMBRE, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-field col s12">
+                    @Html.EditorFor(model => model.APELLIDO_P, new { htmlAttributes = new { @disabled = "disabled" } })
+                    @Html.LabelFor(model => model.APELLIDO_P, htmlAttributes: new { @id = "lbl_appPat" })
+                    @Html.ValidationMessageFor(model => model.APELLIDO_P, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-field col s12">
+                    @Html.EditorFor(model => model.APELLIDO_M, new { htmlAttributes = new { @disabled = "disabled" } })
+                    @Html.LabelFor(model => model.APELLIDO_M, htmlAttributes: new { @id = "lbl_appMat" })
+                    @Html.ValidationMessageFor(model => model.APELLIDO_M, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-field col s12">
+                    @Html.EditorFor(model => model.EMAIL, new { htmlAttributes = new { @disabled = "disabled" } })
+                    @Html.LabelFor(model => model.EMAIL, htmlAttributes: new { @id = "lbl_email" })
+                    @Html.ValidationMessageFor(model => model.EMAIL, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-field col s6">
+                    @Html.EditorFor(model => model.SPRA.DESCRIPCION, null, new { htmlAttributes = new { @disabled = "disabled" } })
+                    <label id="lbl_spras">SPRAS</label>
+                    @Html.ValidationMessageFor(model => model.SPRAS_ID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l6 s12">
+        <div class="card-panel">
+            <div class="row">
+                <div class="input-field col s12">
+                    @Html.EditorFor(model => model.PUESTO.PUESTOTs.Where(a => a.SPRAS_ID.Equals("ES")).FirstOrDefault().TXT50, null, new { htmlAttributes = new { @disabled = "disabled" } })
+                    @Html.LabelFor(model => model.PUESTO_ID, "PUESTO_ID", htmlAttributes: new { @id = "lbl_puesto" })
+                    @Html.ValidationMessageFor(model => model.PUESTO_ID, "", new { @class = "text-danger" })
+                </div>
+                @*<div class="input-field col s12">
+                        @Html.EditorFor(model => model.MIEMBROS.FirstOrDefault().ROL.ROLTs.Where(a => a.SPRAS_ID.Equals("ES")).FirstOrDefault().TXT50, null, new { htmlAttributes = new { @disabled = "disabled" } })
+                        @Html.LabelFor(model => model.MIEMBROS, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.ValidationMessageFor(model => model.MIEMBROS, "", new { @class = "text-danger" })
+                    </div>*@
+                @if (ViewBag.PUESTO_ID1 == null || ViewBag.PUESTO_ID1 == "")
+                {
+                    <div class="input-field col s12">
+                        <table class="table mdl-data-table striped" id="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.EditorFor(model => model.BUNIT, new { htmlAttributes = new { @disabled = "disabled", @style = "display: none" } })
+                                        @Html.LabelFor(model => model.BUNIT, htmlAttributes: new { @id = "lbl_bukrs" })
+                                        @Html.ValidationMessageFor(model => model.BUNIT, "", new { @class = "text-danger" })
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.BUNIT1)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.BUNIT, new { htmlAttributes = new { @disabled = "disabled" } })
+                        @Html.LabelFor(model => model.BUNIT, htmlAttributes: new { @id = "lbl_bukrs" })
+                        @Html.ValidationMessageFor(model => model.BUNIT, "", new { @class = "text-danger" })
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col l6 s12">
+        <div class="card-panel">
+            @*<div class="row">
+                <div class="col s12 l12 right-align">
+                    <a class="btn" id="btn_agregarbackup" href="@Url.Action("AddBackup", new { id = Model.ID})"></a>
+                </div>
+            </div>*@
+            <table>
+                <thead>
+                    <tr>
+                        <th class="lbl_usrbackup">Usuario Backup</th>
+                        <th class="lbl_fechai">Fecha Inicial</th>
+                        <th class="lbl_fechaf">Fecha Final</th>
+                        <th class="lbl_activo">Activo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model.DELEGARs.OrderByDescending(t => t.FECHAF))
+                    {
+                        <tr>
+                            <td>@i.USUARIOD_ID - @i.USUARIO1.NOMBRE @i.USUARIO1.APELLIDO_P </td>
+                            <td>@i.FECHAI.ToShortDateString()</td>
+                            <td>@i.FECHAF.ToShortDateString()</td>
+                            @if ((bool)i.ACTIVO == true)
+                            {
+                                <td style="align-items:center"><i class='material-icons green-text'>check</i></td>}
+                            else
+                            {
+                                <td style="align-items:center;"><i class='material-icons red-text'>clear</i></td>}
+                            <td>
+                                @*<a href="@Url.Action("EditBackup", new { id = i.USUARIO_ID, idd=i.USUARIOD_ID, fi=i.FECHAI, ff=i.FECHAF })">
+                                        <i class='material-icons green-text'>edit</i>
+                                    </a>&nbsp*@
+                                @*@if (i.ACTIVO)
+                                {
+                                    <a href="@Url.Action("DeleteBackup", new { id = i.USUARIO_ID, idd = i.USUARIOD_ID, fi = i.FECHAI, ff = i.FECHAF })">
+                                        <i class='material-icons red-text'>delete</i>
+                                    </a>}*@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        var elem = document.querySelectorAll('select');
+        var options = [];
+        var instance = M.FormSelect.init(elem, options);
+    </script>
+    <div class="col l6 s12">
+        <div class="card-panel">
+            <div class="row">
+                <h5 id="lbl_flujos">Flujos</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="lbl_cliente">Cliente</th>
+                            @*<th class="lbl_activo2">Activo</th>*@
+                            <th class="lbl_ver">Ver</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.USUARIOFs.ToList())
+                        {
+                            <tr>
+                                <td>
+                                    @item.KUNNR.TrimStart('0') -
+                                    @Html.DisplayFor(modelItem => item.CLIENTE.NAME1)
+                                </td>
+                                @*@if ((bool)item.ACTIVO == true)
+                                {
+                                    <td style="align-items:center"><i class='material-icons green-text'>check</i></td>}
+                                else
+                                {
+                                    <td style="align-items:center;"><i class='material-icons red-text'>clear</i></td>}*@
+                                <td>
+                                    @{ if (item.CLIENTE.CLIENTEFs.Count > 0)
+                                        {
+                                            var clientef = item.CLIENTE.CLIENTEFs.Where(t => t.ACTIVO).SingleOrDefault();
+
+                                    <a href="#modalflujoc" class="modal-trigger" data-source="@Url.Action("VerFlujo", "Clientes", new { vko = clientef.VKORG, vtw = clientef.VTWEG, spa = clientef.SPART, kun = clientef.KUNNR, version = clientef.VERSION })">
+                                        <i class='material-icons blue-text'>search</i>
+                                    </a>
+                                            }
+                                        }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+   
+</div>
+
+<script>
+    var root = "@Url.Content("~")";
+    var spras_id = "@ViewBag.spras_id";
+
+    var elem = document.querySelectorAll('.modal');
+    var options = {
+        onCloseEnd: function () {
+            $("#lbl_puestos").empty();
+            document.getElementById("txt_pai").value = "";
+            document.getElementById("txt_clie").value = "";
+            //var elem2 = document.getElementById('txt_soc');
+            //var instance2 = M.FormSelect.init(elem2, []);
+            var elem2 = document.getElementById('txt_pai');
+            var instance2 = M.FormSelect.init(elem2, []);
+        }
+    };
+    var instance = M.Modal.init(elem, options);
+    var elem2 = document.getElementById('txt_rol');
+    var instance2 = M.FormSelect.init(elem2, []);
+    //var elem2 = document.getElementById('txt_soc');
+    //var instance2 = M.FormSelect.init(elem2, []);
+    var elem2 = document.getElementById('txt_pai');
+    var instance2 = M.FormSelect.init(elem2, []);
+
+    function cambioRol(campo) {
+        if (campo.value == "1") {
+            document.getElementById("div_crea").style.display = "initial";
+            //$("#txt_soc option[value='']").attr('selected', true);
+            //document.getElementById("txt_soc").value = "";
+            document.getElementById("txt_pai").value = "";
+            //var elem2 = document.getElementById('txt_soc');
+            //var instance2 = M.FormSelect.init(elem2, []);
+            var elem2 = document.getElementById('txt_pai');
+            var instance2 = M.FormSelect.init(elem2, []);
+            $("#lbl_puestos").empty();
+            document.getElementById("btn_submit").className = "modal-action modal-close btn-flat disabled";
+        } else {
+            document.getElementById("div_crea").style.display = "none";
+            document.getElementById("btn_submit").className = "modal-action modal-close btn-flat";
+        }
+    }
+    var campos_p = [];
+    function selSoci(id) {
+        var campo = document.getElementById(id);
+        $('#txt_pai').find('option').remove();
+        $("#lbl_puestos").empty();
+
+        var soc = campo.value;
+        if (soc != "") {
+            $.ajax({
+                url: root +"Listas/Paises",
+                type: "GET",
+                async: false,
+                timeout: 30000,
+                dataType: "json",
+                data: { bukrs: campo.value },
+                success: function (data) {
+                    var pp = ($.map(data, function (item) {
+                        return { label: item.LANDX, value: item.LAND };
+                    }))
+                    $('#txt_pai')
+                        .append($("<option></option>")
+                            .attr("value", "")
+                            .text(""));
+                    for (var i = 0; i < pp.length; i++) {
+                        $('#txt_pai')
+                            .append($("<option></option>")
+                                .attr("value", pp[i].value)
+                                .text(pp[i].label));
+                    }
+                    var el = document.getElementById("txt_pai");
+                    var instances = M.FormSelect.init(el, []);
+                }
+            });
+        }
+    }
+
+    var campos_p = [];
+    function selPais(clie) {
+        var pais = document.getElementById("txt_pai").value.split('-')[0];
+        var soc = document.getElementById("txt_pai").value.split('-')[1];
+        //var clie = document.getElementById("txt_clie").value;
+        var vkor = document.getElementById("txt_vkor").value;
+        var vtwe = document.getElementById("txt_vtwe").value;
+        var spar = document.getElementById("txt_spar").value;
+        $("#lbl_puestos").empty();
+        if (soc != "" & clie != "") {
+            //var soc = campo.value;
+            var pu = document.getElementById("txt_puestoid").value;
+            $.ajax({
+                url: root+"Listas/Det_Aprob2",
+                type: "GET",
+                async: false,
+                timeout: 30000,
+                dataType: "json",
+                data: { bukrs: soc, puesto: pu, spras: spras_id },
+                success: function (data) {
+                    var pp = ($.map(data, function (item) {
+                        return { pos: item.POS, label: item.TXT50, value: item.Value, monto: item.MONTO, presup: item.PRESUPUESTO };
+                    }))
+                    var poss = 0;
+                    for (var i = 0; i < pp.length; i++) {
+                        if (pp[i].pos < 98) {
+                            if (pp[i].pos > poss)
+                                poss = pp[i].pos;
+                        }
+                    }
+                    var div = "<div class='row'><ul class='collapsible expandable' ><li class='active'><div class='collapsible-header'>Aprobadores</div><div class='collapsible-body'>";
+                    for (var i = 0; i < pp.length; i++) {
+                        if (pp[i].pos < 97) {
+                            div += "<div class='row'><div class='input-field col s4'>" +
+                                "<input id='txt_p-" + pp[i].pos + "' name='txt_p-" + pp[i].pos + "' type='text' class='seleccUser' onchange='autorizadores();' />" +
+                                "<label for='txt_p-" + pp[i].pos + "'>" + pp[i].label + "</label></div>";
+
+                            if (pp[i].pos != poss && pp[i].pos < 97) {
+                                if (pp[i].presup) {
+                                    div += "<div class='col s2'><label>Presupuesto</label><div class='switch'><label>" +
+                                        "<input checked type='checkbox' id='txt_presup-" + pp[i].pos + "'  name='txt_presup'><span class='lever'></span></label></div></div>";
+                                } else {
+                                    div += "<div class='col s2'><label>Presupuesto</label><div class='switch'><label>" +
+                                        "<input type='checkbox' id='txt_presup' name='txt_presup-" + pp[i].pos + "' ><span class='lever'></span></label></div></div>";
+                                }
+                                if (pp[i].monto == null) {
+                                    div += "<div class='col s2'><label>Monto</label><div class='switch'><label>" +
+                                        "<input onchange='cambiaMonto(this.id)' type='checkbox' id='" + pp[i].pos + "-t-t-ch_monto' name='" + pp[i].pos + "-t-t-ch_monto'><span class='lever'></span></label></div></div>";
+                                    div += "<div class='input-field col s4 hide' id='" + pp[i].pos + "-t-t-montoDiv'><input type='text' value='0' name='txt_monto-" + pp[i].pos + "'  id='txt_monto' />" +
+                                        "<label for='txt_monto' class='active'>Monto</label></div>";
+                                } else {
+                                    div += "<div class='col s2'><label>Monto</label><div class='switch'><label>" +
+                                        "<input onchange='cambiaMonto(this.id)' checked type='checkbox' id='" + pp[i].pos + "-t-t-ch_monto' name='" + pp[i].pos + "-t-t-ch_monto'><span class='lever'></span></label></div></div>";
+                                    div += "<div class='input-field col s4' id='" + pp[i].pos + "-t-t-montoDiv'><input type='text' value='" + pp[i].monto + "' name='txt_monto-" + pp[i].pos + "'  id='txt_monto' />" +
+                                        "<label for='txt_monto' class='active'>Monto</label></div>";
+                                }
+                            }
+                        } else if (pp[i].pos == 98) {
+                            div += "</li><li class='active'><div class='collapsible-header'>Taxeo</div><div class='collapsible-body'>";
+                            div += "<div class='row'><div class='input-field col s4'>" +
+                                "<input id='txt_p-" + pp[i].pos + "' name='txt_p-" + pp[i].pos + "' type='text' class='seleccUser' onchange='autorizadores();' />" +
+                                "<label for='txt_p-" + pp[i].pos + "'>" + pp[i].label + "</label></div>";
+                        } else if (pp[i].pos == 99){
+                            div += "</li><li class='active'><div class='collapsible-header'>Trade Spending</div><div class='collapsible-body'>";
+                            div += "<div class='row'><div class='input-field col s4'>" +
+                                "<input id='txt_p-" + pp[i].pos + "' name='txt_p-" + pp[i].pos + "' type='text' class='seleccUser' onchange='autorizadores();' />" +
+                                "<label for='txt_p-" + pp[i].pos + "'>" + pp[i].label + "</label></div>";
+                        }
+                        div += "</div>";
+                    }
+                    campos_p = pp;
+                    $("#lbl_puestos").append(div);
+                    for (var i = 0; i < pp.length; i++) {
+                        autocompleta("txt_p-" + pp[i].pos, pp[i].value, false);
+                    }
+                    div = "";
+                    var elems = document.querySelectorAll('.collapsible');
+                    var instances = M.Collapsible.init(elems, { accordion: false });
+                }
+            });
+
+            if (pais != "" & clie != "") {
+                var p = pais;
+                var v = vkor;
+                var vv = vtwe;
+                var s = spar;
+                var k = clie;
+                var u = '@Model.ID'
+                $.ajax({
+                    url: root +"Listas/Grupos",
+                    type: "GET",
+                    async: false,
+                    timeout: 30000,
+                    dataType: "json",
+                    data: { pais: p, user: u, vkorg: v, vtweg: vv, spart: s, kunnr: k },
+                    success: function (data) {
+                        var pp = ($.map(data, function (item) {
+                            return { label: item.AGROUP_ID, value: item.AGROUP_ID };
+                        }));
+                        if (pp.length > 0) {
+                            $("#lbl_puestos").empty();
+                            M.toast({ html: 'No se puede elegir!' })
+                        }
+                    }
+                });
+            }
+        } else {
+            $("#lbl_puestos").empty();
+        }
+    }
+
+    function formaInpPuestos(p) {
+         $.ajax({
+             url: root +"Listas/UsuariosPuesto",
+            type: "GET",
+            async: false,
+            timeout: 30000,
+            dataType: "json",
+            data: { puesto: p.value },
+            success: function (data) {
+                var uu = ($.map(data, function (item) {
+                    return { label: item.NOMBRE, value: item.ID };
+                }))
+                var ret = "<select id='txt_p-" + p.value + "' name='txt_p-" + p.value + "'>";
+                for (var i = 0; i < uu.length; i++) {
+                    ret += "<option value='" + uu[i].label + "'>" + uu[i].value+"</option>"}
+                ret += "</select>"
+                return ret
+            }
+        });
+    }
+
+    function autorizadores() {
+        //for (var i = 0; i < campos_p.length; i++) {
+        //    var value = document.getElementById("txt_p-" + campos_p[i].value).value;
+        //    if (value != "") {
+        //        document.getElementById("btn_submit").className = "modal-action modal-close btn-flat";
+        //    } else {
+        //        document.getElementById("btn_submit").className = "modal-action modal-close btn-flat disabled";
+        //        break;
+        //    }
+        //}
+    }
+</script>
+
+<script>
+    //var auto = $.noConflict(true);
+    function autocompleta(id, p, freeInput) {
+        auto("#" + id).autocomplete({
+            source: function (request, response) {
+                auto.ajax({
+                    url: root +"Listas/UsuariosPuesto",
+                    type: "GET",
+                    dataType: "json",
+                    data: { puesto: p, Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.NOMBRE, value: item.ID };
+                        }))
+                    },
+                    error: function (data) {
+                        alert("error");
+                    }
+                })
+            },
+            messages: {
+                noResults: '',
+                results: function (resultsCount) { }
+            },
+            change: function (e, ui) {
+                if (!(freeInput || ui.item)) {
+                    e.target.value = "";
+                }
+
+                for (var i = 0; i < campos_p.length; i++) {
+                    var value = document.getElementById("txt_p-" + campos_p[i].pos).value;
+                    if (value != "") {
+                        document.getElementById("btn_submit").className = "modal-action modal-close btn-flat";
+                    } else {
+                        document.getElementById("btn_submit").className = "modal-action modal-close btn-flat disabled";
+                        break;
+                    }
+                }
+            },
+            autoFocus: true,
+            minLength: 1
+        });
+    }
+
+</script>
+<div>
+    @if (ViewBag.nivelUsuario == 1 || ViewBag.nivelUsuario == 8)
+    {
+        @Html.ActionLink("Regresar", "Index", null, new { id = "lbl_regresar" })
+    }
+    else
+    {
+        @Html.ActionLink("Regresar", "Index","Home", null, new { id = "lbl_regresar" })
+    }
+</div>
+<!-- Modal Structure -->
+<div id="modalflujoc" class="modal">
+    <div class="modal-content">
+        
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+        // the "data-source" attribute of .modal-trigger must specify the url that will be ajaxed
+        $('.modal-trigger').click(function () {
+            $(".modal-content").html('<div class="progress"><div class= "indeterminate"></div></div>');
+            var url = $(this).attr("data-source");
+            // use other ajax submission type for post, put ...
+            $.get(url, function (data) {
+                // use this method you need to handle the response from the view
+                // with rails Server-Generated JavaScript Responses this is portion will be in a .js.erb file
+                $(".modal-content").html(data);
+            });
+        });
+        // opens the modal
+        $('.modal').modal();
+    });
+</script>

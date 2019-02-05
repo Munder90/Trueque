@@ -1,0 +1,73 @@
+﻿@model TAT001.Entities.DOCUMENTOR
+@using TAT001.Entities
+@{
+    /**/
+
+    //ViewBag.Title = "Páginas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 201;
+    ViewBag.carpeta_r = 200;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+    <meta name="theme-color" content="#d81b60" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    @Styles.Render("~/Content/materialize")
+    @Scripts.Render("~/bundles/materialize")
+</head>
+
+@*@{ int iidd = ViewBag.TitlePag; }*@
+<body>
+    @using (Html.BeginForm("Cancelar", "Recurrencias", new { id = Model.NUM_DOC }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @*<div style="height:50px; background-color:#d11d53; width:100%; z-index:1000;top:0px;left:0px; position:fixed;"></div>
+        <br />
+        <br />*@
+
+        <div class="row">
+                @*<div class="col l12 m12 left">
+                    <h4>Solicitud @ViewBag.TitlePag</h4>
+                </div>*@
+                <div class="col l12 m12 right-align">
+                    <br />
+                    @*<a data-form-method="post" href="@Url.Action("Cancelar", "Recurrencias")" class="waves-effect waves-light btn">Guardar</a>*@
+                    <input type="submit" value="Guardar" class="btn btn-default" />
+                </div>
+        </div>
+        <div class="row">
+
+            <div class="col s12 m12 l6">
+                <div class="card-panel">
+                    <div class="row">
+                        <div class="row col s10 m10 l12" style="width:100%">
+                            <div class="file-field input-field">
+                                <div class="btn">
+                                    <span>Examinar</span>
+                                    <input type="file" name="file">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text" placeholder="Archivo a subir">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-field col s12 m12 l12">
+                            @Html.TextAreaFor(m => m.COMENTARIO, new { @class = "materialize-textarea" })
+                            @*@Html.TextArea("myTextArea", "shi", new { @class = "form-control", @Style = "width:100%; height:100px;" })*@
+                            @*<textarea class="form-control" cols="20" id="myTextArea" name="myTextArea" rows="2">This is value</textarea>*@
+                            <label>Razón de la cancelación de la recurrencia</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+
+</html>

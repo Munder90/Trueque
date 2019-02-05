@@ -1,0 +1,238 @@
+﻿@model TAT001.Models.DocumentoFlujo
+@using TAT001.Entities
+@{
+    int idn = 0;
+}
+<div id="dist" class="col s12">
+    <div class="row">
+        <div class="col s12">
+            <br />
+            @*///////////////////////////////CAMBIOS LGPP INICIO//////////////////////////*@
+            @using (TruequeEntities db = new TruequeEntities())
+            {
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <div class="card-panel">
+                            <h5 id="head_dis">Distribución</h5>
+                            @if (Model.D.LIGADA != null && Model.D.LIGADA.Value)
+                            {
+                                <div class="row" style="margin-bottom:0">
+                                    <div class="col s6">
+                                        <label>
+                                            <input type="checkbox" checked disabled="disabled" />
+                                            <span id="span_ligada">Solicitud ligada a facturación </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            }
+                            <div class="row" style="margin-bottom:0">
+                                <div class="input-field col s6">
+                                    @Html.EditorFor(model => model.D.TIPO_TECNICO, new { htmlAttributes = new { @disabled = "disabled" } })
+                                    @Html.LabelFor(model => model.D.TIPO_TECNICO, "Negociación", htmlAttributes: new { @id = "lbl_tiponeg" })
+                                </div>
+                                <div class="input-field col s6">
+                                    <input type="text" id="tipodis"  disabled="disabled" value="@ViewBag.mat"/>
+                                    <label id="lbl_tipodis" for="tipodis"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s12 m6 l6">
+                        <div class="card-panel">
+
+                            @if ((Model.D.LIGADA != null && Model.D.LIGADA.Value) || Model.D.TIPO_TECNICO == "P")
+                            {
+                                <h5 id="head_baseaplicar">Base para aplicar %</h5> @*B20180801 MGC Textos*@
+                                <div class="row" style="margin-bottom:0">
+                                    <div class="input-field col s6">
+                                        @Html.EditorFor(model => model.D.PORC_APOYO, new { htmlAttributes = new { @disabled = "disabled", @id = "lbl_montodis", @class = "porcentaje" } })
+                                        <label id="lbl_porcapoyo" for="bmonto_apoyo">% Apoyo</label>@*B20180801 MGC Textos*@
+                                    </div>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <h5 id="head_montob">Monto Base</h5>
+                                <div class="row" style="margin-bottom:0">
+                                    <div class="input-field col s6">
+                                        @Html.EditorFor(model => model.D.MONTO_DOC_MD, new { htmlAttributes = new { @disabled = "disabled", @id = "txt_montodis", @class = "precio" } })
+                                        @Html.LabelFor(model => model.D.MONTO_DOC_MD, "Monto", htmlAttributes: new { @id = "lbl_montodis" })
+                                    </div>
+                                    <div class="input-field col s6">
+                                        @Html.EditorFor(model => model.D.MONEDA_ID, new { htmlAttributes = new { @disabled = "disabled", @id = "txt_monedadis" } })
+                                        @Html.LabelFor(model => model.D.MONEDA_ID, "Moneda", htmlAttributes: new { @for = "monedadis_id", @id = "lbl_monedadis" })
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            }
+            @*///////////////////////////////CAMBIOS LGPP FIN//////////////////////////*@
+            <div class="card-panel">
+                <div class="row" style="margin-bottom:0">
+                    <h5 id="head_mecnegociacion">Distribución</h5>
+                    <div class="input-field col s12" style="overflow:auto;">
+                        @if (Model.D.DOCUMENTOPs.Count > 0)
+                        {
+                            <table style="font-size: 12px;" id="ctlDis" class="table">
+                                <thead>
+                                    <tr>
+                                        <th id="thead_disvde">Vigencia de</th>
+                                        <th id="thead_disval">Vigencia a</th>
+                                        @if (Model.D.DOCUMENTOPs.First().MATNR != "")
+                                        {
+                                            <th id="thead_dismat">Material</th>
+                                        }
+                                        else
+                                        {
+                                            <th id="thead_discat">Categoría</th>
+                                        }
+                                        <th id="thead_disdesc">Descripción</th>
+                                        <th id="thead_discoustou">Precio unitario</th>
+                                        <th id="thead_disporc">% apoyo</th>
+                                        <th id="thead_disapoyop">Apoyo por pieza</th>
+                                        <th id="thead_discosto">Costo con apoyo</th>
+                                        <th id="thead_dispsug">Precio sugerido</th>
+                                        @if (Model.D.TSOL.FACTURA == false)
+                                        {
+                                            <th id="thead_disvolumen">Volumen estimado</th>
+                                            <th id="thead_disvapoyo">Apoyo estimado</th>
+                                        }
+                                        else
+                                        {
+                                            <th id="thead_disvolumen">Volumen real</th>
+                                            <th id="thead_disapoyo">Apoyo real</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.D.DOCUMENTOPs.Where(a => a.VIGENCIA_DE != null & (a.MATNR != "" | a.MATKL != null)))
+                                    {
+                                        <tr id="pos-@item.POS" onclick="muestra(this.id)">
+                                            <td>
+                                                @try
+                                                {@item.VIGENCIA_DE.Value.ToShortDateString()}
+                                            catch { }
+                                            </td>
+                                            <td>
+                                                @try
+                                                {@item.VIGENCIA_AL.Value.ToShortDateString()}
+                                            catch { }
+                                            </td>
+                                            @if (item.MATNR != "")
+                                            {
+                                                <td>@item.MATNR.TrimStart('0')</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@item.MATKL</td>
+                                            }
+                                            @{
+                                                using (TAT001.Entities.TruequeEntities db = new TAT001.Entities.TruequeEntities())
+                                                {
+                                                    if (item.MATNR != "")
+                                                    {
+                                                        var matnr = TAT001.Common.FnCommon.ObtenerMaterial(db, User.Identity.Name, item.MATNR);
+                                                        <td>@matnr.MAKTX</td>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        var matkl = TAT001.Common.FnCommon.ObtenerMaterialGroup(db, item.MATKL);
+                                                        <td>@matkl.DESCRIPCION </td>
+                                                    }
+
+                                                }
+                                            }
+                                            @*LEJ 12.07.18 Añadi un identificador para modificarse dinamicamente*@
+                                            <td id="dsMn-@idn" class="precio">@Math.Round(item.MONTO, 2)</td>
+                                            <td id="dsPAp-@idn" class="porcentaje">@Math.Round(item.PORC_APOYO, 2)</td>
+                                            <td id="dsApo-@idn" class="precio">@Math.Round(item.MONTO_APOYO, 2)</td>
+                                            <td id="dsRes-@idn" class="precio">@Math.Round((item.MONTO - item.MONTO_APOYO), 2)</td>
+                                            <td id="dsPS-@idn" class="precio">@Math.Round(item.PRECIO_SUG, 2)</td>
+                                            @if (Model.D.TSOL.FACTURA == false)
+                                            {
+                                                <td id="dsVE-@idn" class="numero">@Math.Round(item.VOLUMEN_EST, 2)</td>
+                                                <td id="dsAE-@idn" class="precio">@Math.Round((decimal)item.APOYO_EST, 2)</td>
+                                            }
+                                            else
+                                            {
+                                                <td id="dsVR-@idn" class="numero">@Math.Round((item.VOLUMEN_REAL != null ? (decimal)item.VOLUMEN_REAL : 0.0M), 2)</td>
+                                                <td id="dsAR-@idn" class="precio">@Math.Round((item.APOYO_REAL != null ? (decimal)item.APOYO_REAL : 0.0M), 2)</td>
+                                            }
+                                        </tr>
+                                        @*LEJ 12.07.18 Añadi un identificador para modificarse dinamicamente*@
+                                        foreach (var mat in item.DOCUMENTOMs)
+                                        {
+                                            <tr class="mat-@mat.POS_ID grey lighten-4" style="display:none;">
+                                                <td></td>
+                                                <td></td>
+                                                <td>@mat.MATNR.TrimStart('0')</td>
+                                                @{
+                                                    using (TAT001.Entities.TruequeEntities db = new TAT001.Entities.TruequeEntities())
+                                                    {
+                                                        if (mat.MATNR != "")
+                                                        {
+                                                            var matnr = TAT001.Common.FnCommon.ObtenerMaterial(db, User.Identity.Name, mat.MATNR);
+                                                            <td>@matnr.MAKTX</td>
+                                                        }
+                                                    }
+                                                }
+                                                <td></td>
+                                                <td class="porcentaje">@mat.PORC_APOYO</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                @if (Model.D.TSOL.FACTURA == false)
+                                                {
+                                                    <td class="precio">@Math.Round((decimal)mat.APOYO_EST, 2)</td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="precio">
+                                                        @Math.Round(mat.APOYO_REAL != null ? (decimal)mat.APOYO_REAL : 0.0M, 2)
+                                                    </td>
+                                                }
+                                            </tr>
+
+                                        }
+                                        idn++;//LEJ 12.07.18
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<script src="~/Scripts/formatos.js"></script>*@
+    <script>
+        function muestra(id) {
+            var ii = id.split('-')[1];
+            var clas = $("#" + id).hasClass("m");
+            if (!clas) {
+                var a = document.getElementsByClassName("mat-" + ii);
+                var i;
+                for (i = 0; i < a.length; i++) {
+                    a[i].style.display = "table-row";
+                }
+                document.getElementById("pos-" + ii).classList.add("m");
+            }
+            else {
+                var a = document.getElementsByClassName("mat-" + ii);
+                var i;
+                for (i = 0; i < a.length; i++) {
+                    a[i].style.display = "none";
+                }
+                document.getElementById("pos-" + ii).classList.remove("m");
+            }
+
+        }
+    </script>
+</div>
+

@@ -1,0 +1,191 @@
+﻿@model IEnumerable<TAT001.Entities.DOCTOAYUDA>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 1500;
+    ViewBag.carpeta_r = 1200;
+}
+<div class="row">
+    <div class="card-panel">
+        <div class="row" style="margin-bottom:0;">
+            <div class="input-field col s3 m3 l3">
+                <select id="selecc">
+                    <option value="10" selected>10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                <label id="btn_length"></label>
+            </div>
+            <div class="input-field col s5 m3 l3 offset-l6 offset-m6 offset-s4">
+                <input type="text" class="global_filter" id="global_filter">
+                <label for="global_filter" id="lbl_search"></label>
+            </div>
+        </div>
+        <script>
+            var elem = document.querySelector('select');
+            var options = [];
+            var instance = M.FormSelect.init(elem, options);
+        </script>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+        <link href="~/Content/dataTable.css" rel="stylesheet" />
+        <link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+        <table class="table mdl-data-table striped" id="table" style="width:100%;">
+            <thead>
+                <tr>
+                    <th class="lbl_iddocumento">
+                    </th>
+                    <th class="lbl_nombre">
+                    </th>
+                    <th class="lbl_clasificacion">
+                    </th>
+                    <th class="lbl_status">
+                    </th>
+                    <th class="lbl_ruta">
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID_DOCUMENTO)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NOMBRE)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DOCTOCLASIF.CLASIFICACION_DSC)
+                    </td>
+                    @if ((bool)item.ACTIVO == true)
+                    {
+                        <td style="align-items:center"><i class='material-icons green-text'>check</i></td>}
+                    else
+                    {
+                        <td style="align-items:center;"><i class='material-icons red-text'>clear</i></td>}
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RUTA_DOCUMENTO)
+                    </td>
+                    <td>
+                        @{ if (item.RUTA_DOCUMENTO.Split('.').Last() == "pdf" || item.RUTA_DOCUMENTO.Split('.').Last() == "jpg" || item.RUTA_DOCUMENTO.Split('.').Last() == "png")
+                            {
+                                <a data-fancybox href="@Url.Content("~/"+@item.RUTA_DOCUMENTO)">
+                                    <i class='material-icons blue-text'>search</i>
+                                </a>
+                            }
+                            else if (item.RUTA_DOCUMENTO.Split('.').Last() == "txt")
+                            {
+                                <a data-fancybox data-type="iframe" data-iframe='{"preload":false}' href="@Url.Content("~/"+@item.RUTA_DOCUMENTO)">
+                                    <i class='material-icons blue-text'>search</i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Content("~/"+@item.RUTA_DOCUMENTO)">
+                                    <i class='material-icons blue-text'>search</i>
+                                </a>
+                            }
+                        }
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- Modal Structure -->
+    <div id="modalver" class="modal">
+        <div class="modal-content">
+
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+        </div>
+    </div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        var table = $('#table').DataTable({
+            scrollX: "50vh",
+            scrollY: "50vh",
+            scrollCollapse: true,
+            language: {
+                "url": "@Url.Content("~/Scripts/lang/"+@ViewBag.spras_id +".json")"
+            }, columnDefs: [
+                {
+                    targets: [1],
+                    className: 'mdl-data-table__cell--non-numeric'
+                }
+            ],
+            order: [[0, "asc"]],
+            initComplete: function () {
+                        this.api().columns().every(function () {
+                            var column = this;
+                            var select = $('<select style="display:initial;" class="browser-default"><option value=""></option></select>')
+                                .appendTo($(column.footer()).empty())
+                                .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                                );
+                                column
+                                    .search(val ? '^' + val + '$' : '', true, false)
+                                    .draw();
+                            });
+                            column.cells('', column[0]).render('display').sort().unique().each(function (d, j) {
+                                var val = $('<div/>').html(d).text();
+                                select.append('<option value="' + val + '">' + val + '</option>');
+                            });
+                        });
+                    }
+                });
+
+        var a = $('#selecc').val();
+        table.page.len(a).draw();
+        $('#selecc').on('change', function () {
+            table.page.len(this.value).draw();
+        });
+
+        $('input.global_filter').on('keyup click', function () {
+            filterGlobal();
+        });
+
+        $('#table tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                var child = format(row.data(), row, tr);
+                if (child != undefined) {
+                }
+            }
+        });
+    });
+    function filterGlobal() {
+        $('#table').DataTable().search(
+            $('#global_filter').val()).draw();
+    }
+    </script>
+</div>
+<style>
+    .dataTables_length {
+        display: none;
+    }
+
+    .dataTables_filter {
+        display: none;
+    }
+
+    .dataTables_scrollHeadInner, .mdl-data-table {
+        width: 100%;
+    }
+</style>

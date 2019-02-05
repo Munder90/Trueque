@@ -1,0 +1,122 @@
+﻿@model  TAT001.Models.LayoutCargaMasivaViewModels
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 551;
+    ViewBag.carpeta_r = 500;
+}
+<style>
+    .text-center {
+        text-align: center !important;
+    }
+
+    .select-wrapper input.select-dropdown {
+        z-index: 0 !important;
+    }
+
+    label .invalid {
+        display: none !important;
+    }
+</style>
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+<link href="~/Content/autocomplete.css" rel="stylesheet" />
+<script src="~/Scripts/autocomplete1.11.4.js"></script>
+@using (Html.BeginForm("Create", "LayoutCargaMasiva", FormMethod.Post, new { @id = "layoutForm", @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="col s12 l12 right-align">
+        <button type="submit" id="btn_save" class="btn btn-default"></button>
+    </div>
+    <div class="card-panel">
+        <div class="row">
+            <div class="col s4">
+                <div class="form-group">
+                    <label id="lbl_sociedad"></label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.layoutMasiva.SOCIEDAD_ID, new { htmlAttributes = new { @class = "form-control", @required = "", @maxlength = 4 } })
+                    </div>
+                </div>
+            </div>
+            <div class="col s2">
+                <div class="form-group">
+                    <label id="lbl_pais"></label>
+                    <div class="col-md-10">
+                        @Html.HiddenFor(model => model.layoutMasiva.LAND)
+                        @Html.Editor("pais", new { htmlAttributes = new { @id = "pais", @class = "form-control", @required = "", @readonly = "readonly" } } )
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="file-field input-field col s12 m12 l6">
+                <div class="btn-small" style="float:left;">
+                    <span id="lblArchivo">Examinar</span>
+                    <input type="file" accept=".xltx,.xlsx,.xlsm,.xltm,.xlam,.xlsb,.xls,.xlt,.xla" id="PathArchivo" name="PathArchivo">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" required>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+}
+<div class="col s12">
+    <a id="btn_return" href="@Url.Action("Index")"></a>
+</div>
+<script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+<script>
+    var root = "@Url.Content("~")";
+    //---- Inicializador de componentes Materialize----
+    fnCommon.materializeInit('select');
+
+    //----  Se agrega validaciones al formulario----
+    fnCommon.selectRequired();
+    fnCommon.formValidation('layoutForm');
+
+    // Valida si ocurrio un error al intentar crear el periodo y otro.
+    var mnjError = '@ViewBag.mnjError';
+    if (mnjError) {
+        M.toast({ html: mnjError });
+    }
+
+    var auto = $.noConflict(true);
+    auto(document).ready(function () {
+        auto("#layoutMasiva_SOCIEDAD_ID").autocomplete({
+            source: function (request, response) {
+                fnCommon.autoAjax(root + "Listas/Sociedades", response, { Prefix: request.term }, function (item) { return { label: item.BUKRS, value: item.BUKRS,land:item.LAND }; });
+            },
+            messages: {
+                noResults: '',
+                results: function (resultsCount) { }
+            },
+            select: function (event, ui) {
+                var label = ui.item.label;
+                var value = ui.item.value;
+                var land = ui.item.land;
+                $("#layoutMasiva_LAND").val(land);
+                $("#pais").val(obtenerPais(land));
+            },
+            change: function (e, ui) {
+                if (!(ui.item)) {
+                    e.target.value = "";
+                }
+            }
+        });
+    });
+    function obtenerPais(land) {
+        var pais = land;
+        var paises = @Html.Raw(Json.Encode(Model.paises));
+        paises.forEach(function (item, indx) {
+            if (land === item.Value) {
+                pais = item.Text;
+            }
+
+        });
+        return pais;
+    }
+    
+   
+
+
+</script>

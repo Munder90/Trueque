@@ -1,0 +1,59 @@
+﻿@model TAT001.Entities.IMPUESTO
+
+@{
+    //ViewBag.Title = "Create";
+    ViewBag.pagina_r = 744;
+    ViewBag.carpeta_r = 500;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.error != "")
+{
+    <script>
+        $(document).ready(function () {
+        $(document).ready(function () {
+            function errorMessage(msg) {
+                M.toast({ html: msg });
+            }
+
+            var message = '@ViewBag.error';
+
+            if (message != "")
+            {
+                // do drop down loic
+                errorMessage(message);
+            }
+            });
+        });
+
+    </script>
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="form-group">
+            <button id="btnCCrear" type="submit" value="Submit" class="btn btn-default" style="float:right;"></button>
+        </div>
+    </div>
+    <div class="col 12 s12 ">
+        <div class="card-panel">
+            <div class="row">
+                <div class="form-horizontal">
+                    <div class="input-field col l6">
+                        @Html.LabelFor(model => model.MWSKZ, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblMWSKZ" })
+                        @Html.EditorFor(model => model.MWSKZ, new { htmlAttributes = new { @class = "form-control", @maxlength = "2" } })
+                        @Html.ValidationMessageFor(model => model.MWSKZ, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { id = "btnReg" })
+</div>

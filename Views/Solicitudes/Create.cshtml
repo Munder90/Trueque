@@ -1,0 +1,278 @@
+@model TAT001.Entities.DOCUMENTO
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 202;
+    ViewBag.carpeta_r = 200;
+}
+<script>
+    var root = "@Url.Content("~")";
+</script>
+<link rel="stylesheet" type="text/css" href="~/Scripts/DataTables/datatables.min.css" />
+<script type="text/javascript" src="~/Scripts/DataTables/datatables.min.js"></script>
+<script src="~/Scripts/create.js"></script>
+<script src="~/Scripts/Solicitudes/comun.js"></script>
+<script src="~/Scripts/formatos.js"></script>
+<script src="~/Scripts/soporte.js"></script><!--RSG 23.05.2018-->
+<script src="~/Scripts/recurrente.js"></script><!--RSG 27.05.2018-->
+<script src="~/Scripts/rangos.js"></script><!--RSG 27.05.2018-->
+<script src="~/Scripts/borrador.js"></script><!--RSG 30.10.2018-->
+<script src="~/Scripts/ValidarNumero.js"></script><!--LEJ 09.07.2018-->
+<script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/listas.js"></script>
+@if (ViewBag.error != "")
+{
+    <script>
+$(document).ready(function () {
+    var message = '@ViewBag.error';
+
+     if (message != "") {
+         errorMessage(message);
+     }
+     function errorMessage(msg) {
+         M.toast({ html: msg });
+     }
+});
+    </script>
+}
+@* ------------------------------------------------------------------------LEJ 09-07-18 *@
+<input id="miles" name="miles" type="hidden" value="@ViewBag.miles">
+<input id="dec" name="dec" type="hidden" value="@ViewBag.dec">
+<input id="horaServer" type="hidden" value="@ViewBag.horaServer">
+<span class="span_fileload" style="display:none;"></span>
+<span class="lbl_cabono" style="display:none;"></span>
+@*DRS 24.09.18---------------------------------------------*@
+<span class="cuenta_Nombre" style="display:none;"></span>
+<span class="lbl_ccargo" style="display:none;"></span>
+<span class="lbl_cclear" style="display:none;"></span>
+<span class="lbl_cpayer" style="display:none;">Payer</span>
+<input type="hidden" id="txt_backorder" name="txt_backorder" value="@ViewBag.backorder" />
+<input type="hidden" id="txt_caso1" name="txt_caso1" value="@ViewBag.caso1" />
+@* ------------------------------------------------------------------------LEJ 09-07-18 *@
+<div class="row" style="margin-bottom:0">
+    @{TAT001.Entities.USUARIO us = ViewBag.usuario;
+        @* ---DRS 3.10.2018--- *@
+        <div class="col s12 m6 l4">
+            @* ---DRS 3.10.2018--- *@
+            <div class="input-field col s4">
+                @Html.EditorFor(model => model.USUARIOC_ID, "Usuario", new { htmlAttributes = new { @disabled = "disabled", @Value = us.ID, @id = "txt_user" } })
+                @Html.LabelFor(model => model.USUARIOC_ID, "Usuario", new { @id = "lbl_userid" })
+            </div>
+            @* ---DRS 3.10.2018--- *@
+            <div class="input-field col s4">
+                @Html.EditorFor(model => model.USUARIO.MANAGER, new { htmlAttributes = new { @disabled = "disabled" } })
+                @Html.LabelFor(model => model.USUARIO.MANAGER, "Manager", new { @id = "lbl_manager" })
+            </div>
+            @* ---DRS 3.10.2018--- *@
+            <div class="input-field col s4">
+                @Html.EditorFor(model => model.USUARIO.BACKUP_ID, new { htmlAttributes = new { @disabled = "disabled", @Value = ViewBag.USUARIO_BACKUPID } })
+                @Html.LabelFor(model => model.USUARIO.BACKUP_ID, "Backup", new { @id = "lbl_backup" })
+            </div>
+        </div>
+        <div class="col s12 m6 l4">
+            @* ---DRS 3.10.2018--- *@
+            <div class="input-field col s3 m5">
+                @Html.EditorFor(model => model.USUARIO.BUNIT, "BU", new { htmlAttributes = new { @disabled = "disabled", @Value = Model.SOCIEDAD_ID } })
+                @Html.LabelFor(model => model.USUARIO.BUNIT, "BU", new { @id = "lbl_bu" })
+            </div>
+            @* ---DRS 3.10.2018--- *@
+            <div class="input-field col s3">
+                <input type="text" id="txt_status" value="Nuevo" disabled="disabled" />
+                <label for="txt_status" id="lbl_status">Estatus</label>
+            </div>
+            @if (ViewBag.relacionadan != "")
+            {
+                <div class="input-field col s4">
+                    <input type="text" id="txt_rel" name="txt_rel" value="@ViewBag.relacionadan" disabled="disabled" />
+                    <label for="txt_rel" id="lbl_relt">Relacionada</label>
+                </div>
+            }
+        </div>
+    }
+    <style>
+        input[readonly] {
+            color: gray;
+        }
+
+        .dataTables_wrapper {
+            overflow: auto;
+        }
+
+        .div_left {
+            float: left;
+        }
+
+        .div_right {
+            float: right;
+        }
+
+        .div_bottom {
+            clear: both;
+        }
+
+        .hr_bw {
+            height: 4px;
+            border: 0;
+            margin-bottom: 0px;
+            padding: 0;
+            background-color: #ccc;
+        }
+
+        .hr_color {
+            height: 6px;
+            border: 0;
+            margin: 0 0;
+            padding: 0;
+            background-color: #B90C46;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .tabs_menu {
+            width: auto;
+        }
+
+        td.select_row {
+            background: url('../images/playb.png') no-repeat center center;
+            cursor: pointer;
+        }
+
+        tr.selected td.select_row {
+            background: url('../images/play.png') no-repeat center center;
+        }
+
+        td.detail_row {
+            background: url('../images/expandm.png') no-repeat center center;
+            cursor: pointer;
+        }
+
+        tr.details td.detail_row {
+            background: url('../images/expandl.png') no-repeat center center;
+        }
+
+        .errorMaterial {
+            /*background-color: red;*/
+            background-color: #F44336 !important
+        }
+
+        .errorProveedor {
+            /*background-color: red;*/
+            background-color: #F44336 !important
+        }
+    </style>
+    @{
+        string classa = "";
+    }
+    @if (ViewBag.relacionadan != "")
+    {
+        classa = "s12 m12 l4";
+    }
+    else
+    {
+        @* ---DRS 3.10.2018--- *@
+        classa = "s12 m12 l4";
+    }
+    <div class="col @classa right-align">
+        @*//B20180625 MGC 2018.06.26*@
+        @if (ViewBag.relacionada == "")
+        {
+            <a id="btn_borradorh" class="btn btn-small hide">Guardar borrador</a>@*Add MGC B20180619 2018.06.20*@
+        }
+        @*//B20180625 MGC2 2018.07.04*@
+        @{string b = ViewBag.borradore + "";
+            string display = "none";
+            if (b == "true")
+            {
+                display = "inline-block";
+            }
+            if (ViewBag.duplicado == null)
+            {
+                <a id="btn_borradore" class="btn btn-small" style="display:@display">Descartar auto</a>@*//B20180625 MGC2 2018.07.04*@
+            }
+            <input type="text" id="borradore" name="borradore" value="@ViewBag.borradore" hidden /> @*//B20180625 MGC2 2018.07.04*@
+            <input type="text" id="duplicate" name="duplicate" value="@ViewBag.duplicate" hidden /><!--RSG 01.11.2018-->
+        }
+        <a href="@Url.Action("Index", "Home" )" class="btn btn-small" id="btn_cancel">Cancelar</a>
+        @if (ViewBag.reversan != "X")
+        {
+            <a id="btn_guardarBorr" class="btn btn-small">Guardar</a><!--ADD RSG 30.10.2018-->
+        }
+        <a id="btn_guardarh" class="btn btn-small disabled" onclick="guardah()">Enviar</a>
+        <script>
+            function guardah() {
+                document.getElementById("loader").style.display = "flex";//RSG 26.04.2018
+                document.getElementById("btn_guardarh").classList.add("disabled");//RSG 26.04.2018
+            }
+        </script>
+    </div>
+    @*<div class="div_bottom">
+            <hr class="hr_bw" />
+            <hr class="hr_color .pink.darken-1" />
+        </div>*@
+</div>
+<div class="row">
+    <div class="col s12">
+        <ul class="tabs" id="tabs">
+            <li class="tab col s2 tabs_menu"><a id="tab_info" href="#Informacion_cont" class="">Información</a></li>
+            @if (ViewBag.reversan == "X")
+            {
+                <li class="tab col s2 tabs_menu"><a id="tab_soporte" href="#Soporte_cont" disables class="active">Soporte</a></li>
+            }
+            else
+            {
+                <li class="tab col s2 tabs_menu"><a id="tab_soporte" href="#Soporte_cont" disables>Soporte</a></li>
+            }
+            <li class="tab col s3 tabs_menu"><a id="tab_dis" href="#Distribucion_cont">Distribución</a></li>
+            <li id="tabs_rec" class="tab col s3 tabs_menu disabled"><a id="tab_rec" href="#Recurrente_cont">Recurrencia</a></li><!--RSG 09.07.2018-->
+            <li class="tab col s2 tabs_menu"><a id="tab_fin" href="#Financiera_cont"><!--RSG 23.05.2018-->Financiera</a></li>
+        </ul>
+    </div>
+</div>
+@*//B20180625 MGC 2018.07.03*@
+@using (Html.BeginForm("Create", "Solicitudes", FormMethod.Post, new { enctype = "multipart/form-data", id = "formCreate" }))
+{
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" id="txt_flujo" name="txt_flujo" value="P" /><!--ADD RSG 30.10.2018-->
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*Información*@
+        @Html.Partial("_CreateTabInfo", Model)
+        @*Soporte*@
+        @Html.Partial("_CreateTabSop", Model)
+        @*Recurrencia*@
+        @Html.Partial("_CreateTabRec", Model)
+        @*Distribución*@
+        @Html.Partial("_CreateTabDis", Model)
+        @*Financiera*@
+        @Html.Partial("_CreateTabFin", Model)
+    </div>
+}
+<div id="validaciones">
+    <script>
+            var lista1 = [];
+            var lista = @Html.Raw(ViewBag.listaValid);
+
+            //LEJ 30.07.2018
+            ////_ff();
+
+    </script>
+    <script src="~/Scripts/warning.js"></script>
+</div>
+<script>
+    var el = document.querySelector(".tabs");
+    var instance = M.Tabs.init(el, []);
+</script>
+@if (ViewBag.duplicado != null)
+{
+    <script>
+        var dd = false;
+        $('#tab_dis').on("click", function (e) {
+            if (isDuplicado() & !dd & isRecurrente()) {
+                $("#tabs_rec").removeClass("disabled");
+                dd = true;
+            }
+        });
+    </script>
+}

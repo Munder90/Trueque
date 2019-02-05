@@ -1,0 +1,263 @@
+﻿@model TAT001.Entities.DOCUMENTO
+
+<div id="Financiera_cont">
+    <div class="row">
+        <div class="col s12 m6 l6">
+            <div class="card-panel">
+                <div class="row" style="margin-bottom:0">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input value=" " id="txtPres" name="txtPres" type="hidden" class="" />
+                            <input value="" id="monto_doc_md" type="text" class="" disabled="disabled" />
+                            <label for="monto_doc_md">Monto</label>
+                            @Html.HiddenFor(model => model.MONTO_DOC_MD)
+                        </div>
+                        <div class="input-field col s6">
+                            @*<div class="form-group">*@
+                            @*<div class="col-md-10">*@
+                            @Html.DropDownList("MONEDA", null, htmlAttributes: new { @id = "moneda_id", @class = "form-control " + @ViewBag.relacionada, @disabled = "disabled", @onchange = @"selectMoneda(this.value)" }) @*OCG 09/10/2018 Se modifica para evitar el cambiode la moneda*@
+                            @Html.LabelFor(model => model.MONEDA_ID, "Moneda", htmlAttributes: new { @for = "moneda_id" })
+                            @*</div>
+                                </div>*@
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.MONEDA_ID, new { htmlAttributes = new { @id = "monedas_id", @class = "form-control", @style = "display: none" } })   @*@style = "display: none"*@
+                            </div>
+                        </div>
+                        <div class="form-group input-field col s6">
+                            @Html.LabelFor(model => model.TIPO_CAMBIO, "Tipo de cambio", htmlAttributes: new { @class = "control-label active" })
+                            <div class="col-md-10">
+                                @*@Html.EditorFor(model => model.TIPO_CAMBIO, new { htmlAttributes = new { @id = "tipo_cambio", @class = "form-control " + @ViewBag.relacionada, @Value = ViewBag.tcambio } })*@
+                                @*@Html.EditorFor(model => model.TIPO_CAMBIO, new { htmlAttributes = new { @id = "tipo_cambio", @class = "form-control " + @ViewBag.relacionada } })*@
+                                <input type="text" id="tipo_cambio" value="@Model.TIPO_CAMBIO" />
+                            </div>
+                        </div>
+                        <script>
+                            var aa = $("#tipo_cambio").val();
+                        </script>
+                        <div class=" input-field col s6">
+                            <input value="" id="montos_doc_ml2" type="text" class="" disabled="disabled" />
+                            <label for="montos_doc_ml2">Monto en USD</label>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MONTO_DOC_ML, htmlAttributes: new { @class = "control-label col-md-2", @style = "display: none" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.MONTO_DOC_ML, new { htmlAttributes = new { @class = "form-control", @style = "display: none" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MONTO_DOC_ML2, htmlAttributes: new { @class = "control-label col-md-2", @style = "display: none" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.MONTO_DOC_ML2, new { htmlAttributes = new { @id = "monto_doc_ml2", @class = "form-control", @style = "display: none" } })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-panel">
+                <h5 id="head_analisispre">Análisis Presupuesto</h5>@*B20180801 MGC Textos*@
+                <p style="font-size:15px">Última fecha de carga @ViewBag.ultMod</p>
+                <div class="row" style="margin-bottom:0">
+                    <ul class="collection">
+                        <li class="collection-item">
+                            <div class="row" style="margin-bottom:0">
+                                <div class="col s3">
+                                    <div id="lbl_presupuestocanal">Presupuesto canal</div>@*B20180801 MGC Textos*@
+                                </div>
+                                <dic class="col s6">
+                                    <b id="p_vtweg"></b>
+                                </dic>
+                                <div class="col s3 right-align">
+                                    <b id="p_canal"></b>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="collection-item">
+                            <div class="row" style="margin-bottom:0">
+                                <div class="col s3">
+                                    <div id="lbl_presupuestocliente">Presupuesto cliente</div>@*B20180801 MGC Textos*@
+                                </div>
+                                <div class="col s6">
+                                    <b id="p_kunnr"></b>
+                                </div>
+                                <div class="col s3 right-align">
+                                    <b id="p_banner"></b>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row" style="margin-bottom:0">
+                    <ul class="collection">
+                        <li class="collection-item">
+                            <div class="row" style="margin-bottom:0;">
+                                <div class="col s6">
+                                    <div id="lbl_regsap">Registrado en SAP</div>
+                                </div>
+                                <div class="col s3 right-align">
+                                    <div id="pc_c"></div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="collection-item">
+                            <div class="row" style="margin-bottom:0;">
+                                <div class="col s6">
+                                    <div id="lbl_regsapp">Por registrar en SAP</div>@*B20180801 MGC Textos*@
+                                </div>
+                                <div class="col s3 right-align">
+                                    <div id="pc_a"></div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="collection-item">
+                            <div class="row" style="margin-bottom:0;">
+                                <div class="col s6">
+                                    <div id="lbl_procesotat">En proceso TAT</div>@*B20180801 MGC Textos*@
+                                </div>
+                                <div class="col s3 right-align">
+                                    <u id="pc_p"></u>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="collection-item">
+                            <div class="row" style="margin-bottom:0;">
+                                <div class="col s6">
+                                    <div id="lbl_consumido">Consumido</div>@*B20180801 MGC Textos*@
+                                </div>
+                                <div class="col s6 right-align">
+                                    <u><b id="pc_t"></b></u>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="collection-item">
+                            <div class="row" style="margin-bottom:0;">
+                                <div class="col s6">
+                                    <div id="lbl_presudisponible">Presupuesto disponible</div>@*B20180801 MGC Textos*@
+                                </div>
+                                <div class="col s6 right-align">
+                                    <b id="consu"></b>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="col s12 m6 l6">
+                <!--RSG 22.05.2018-->
+                <div class="card-panel">
+                    <div class="row">
+                        <h5 id="headCuentas">Cuentas</h5>
+                        <div class="col s12">
+                            <div id="div_clearing">
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                         var clearing = null;
+                            function formaClearing() {
+
+                                var monto = toNum($('#monto_doc_md').val(), $('#dec').val()),
+                                    tsol_id = $("#TSOL_ID").val(),
+                                    isReverso = false,
+                                    num_doc = $('#NUM_DOC').val();
+
+                                $("#div_clearing").empty();
+                                cuentas(0,tsol_id, monto);
+
+                                var div = "";
+                                if (clearing != null) {
+                                    div = cuentasPorTSol(tsol_id, monto, isReverso);
+                                }
+                                $("#div_clearing").append(div);
+                            }
+                    </script>
+                </div>
+                <div class="card-panel">
+                    <h5 id="head_solicitudanalisis">Análisis Solicitud</h5>
+                    <div class="row" style="margin-bottom:0">
+                        <div class="col s12">
+                            <ul class="collection">
+                                <li class="collection-item">
+                                    <div class="row" style="margin-bottom:0;padding-bottom:0;">
+                                        <div class="col s6">
+                                            Importe solicitud
+                                        </div>
+                                        <div class="col s6 right-align">
+                                            <span id="s_montob">@ViewBag.montoSol</span>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="collection-item" id="a5">
+                                    <div class="row" style="margin-bottom:0;padding-bottom:0;">
+                                        <div id="div_impuesto" class="col s6">
+                                            @*B20180801 MGC Textos*@
+                                            Impuesto
+                                        </div>
+                                        <div class="col s6 right-align">
+                                            <span id="s_impa">@ViewBag.impuesto</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="collection-item" id="a5">
+                                    <div class="row" style="margin-bottom:0;padding-bottom:0;">
+                                        <div class="col s6">
+                                            Monto total
+                                        </div>
+                                        <div class="col s6 right-align">
+                                            <span id="s_total">@ViewBag.montoTotal</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="collection">
+                                <li class="collection-item">
+                                    <div class="row" style="margin-bottom:0;padding-bottom:0;">
+                                        <div class="col s6">
+                                            Monto provisión original
+                                        </div>
+                                        <div class="col s6 right-align">
+                                            <span id="s_montop">@ViewBag.montoProv</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="collection-item" id="a3">
+                                    <div class="row" style="margin-bottom:0;padding-bottom:0;">
+                                        <div class="col s6">
+                                            Monto aplicado
+                                        </div>
+                                        <div class="col s6 right-align">
+                                            <span id="s_montoa">@ViewBag.montoApli</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                    <li class="collection-item" id="a4">
+                                        <div class="row" style="margin-bottom:0;padding-bottom:0;">
+                                            <div id="div_remanente" class="col s6">
+                                                @*B20180801 MGC Textos*@
+                                                Remanente/(Exceso)
+                                            </div>
+                                            <div class="col s6 right-align">
+                                                <span id="s_rema">@ViewBag.remanente</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                            </ul>
+                            <script>
+                                var esNeg = "@ViewBag.remanente.Contains("(")" == "True";
+                                if (esNeg) {
+                                    document.getElementById("a4").classList.add("red");
+                                    document.getElementById("a4").classList.add("white-text");
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

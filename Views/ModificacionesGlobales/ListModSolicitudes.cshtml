@@ -1,0 +1,225 @@
+﻿@model TAT001.Models.ModificacionesGlobalesViewModel
+@using TAT001.Entities
+@using (Html.BeginForm("ListModSolicitudes", "ModificacionesGlobales", FormMethod.Post, new { @id = "modSolicitudesForm" }))
+{
+    <div class="col s12 l12 right-align">
+        <a id="btn_save" class="btn btn-small modal-trigger" href="#modal2" disabled></a>
+    </div>
+    <table class="table mdl-data-table striped" id="tableModSolicitudes" style="width:100%; overflow-x: scroll;">
+        <thead>
+            <tr class="text-left">
+                <th id="lbl_num_doc">Num Doc</th>
+                <th id="lbl_usuario">Usuario</th>
+                <th id="lbl_cliente">Cliente</th>
+                <th id="lbl_contacto">Nombre del contacto</th>
+                <th id="lbl_email_contacto">Email de contacto</th>
+                <th id="lbl_estado">Estado</th>
+                <th id="lbl_ciudad">Ciudad</th>
+                <th id="lbl_concepto">Concepto</th>
+                <th id="lbl_mecanica">Mecánica de negociación</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.solicitudes.Count > 0)
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        @Html.EditorFor(model => Model.solicitudes[0].PAYER_NOMBRE, new { htmlAttributes = new { @maxlength = 50, @id = "PAYER_NOMBRE", @Value = "" } })
+
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => Model.solicitudes[0].PAYER_EMAIL, new { htmlAttributes = new { @maxlength = 255, @id = "PAYER_EMAIL", @Value = "" } })
+
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => Model.solicitudes[0].ESTADO, new { htmlAttributes = new { @maxlength = 50, @id = "ESTADO", @Value = "" } })
+
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => Model.solicitudes[0].CIUDAD, new { htmlAttributes = new { @maxlength = 50, @id = "CIUDAD", @Value = "" } })
+
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => Model.solicitudes[0].CONCEPTO, new { htmlAttributes = new { @maxlength = 100, @id = "CONCEPTO", @Value = "" } })
+
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => Model.solicitudes[0].NOTAS, new { htmlAttributes = new { @maxlength = 255, @id = "NOTAS", @Value = "" } })
+
+                    </td>
+                </tr>
+            }
+            @{
+                for (int i = 0; i < Model.solicitudes.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.HiddenFor(model => Model.solicitudes[i].NUM_DOC)
+                            @Model.solicitudes[i].NUM_DOC
+                        </td>
+                        <td>
+                            @Model.solicitudes[i].USUARIOD_ID
+                        </td>
+                        <td>
+                            @Model.solicitudes[i].PAYER_ID
+                        </td>
+                        <td>
+                            @Model.solicitudes[i].PAYER_NOMBRE
+
+                        </td>
+                        <td>
+                            @Model.solicitudes[i].PAYER_EMAIL
+
+                        </td>
+                        <td>
+                            @Model.solicitudes[i].ESTADO
+
+                        </td>
+                        <td>
+                            @Model.solicitudes[i].CIUDAD
+
+                        </td>
+                        <td>
+                            @Model.solicitudes[i].CONCEPTO
+
+                        </td>
+                        <td>
+                            @Model.solicitudes[i].NOTAS
+
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <div id="modal2" class="modal" style=" background-color: #fff; height: 200px; width: 450px;">
+        <div class="modal-content">
+            <p style="font-size: 16px;" class="lbl_actualizar"></p>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-close waves-effect  btn-flat"><label class="lbl_No"></label></a>
+            <a onclick="actualizarSolicitudes()" class="modal-close waves-effect  btn-flat"><label class="lbl_Si"></label></a>
+        </div>
+    </div>
+    <div>
+
+        @if (ViewBag.textos != null)
+        {
+            foreach (TEXTO t in ViewBag.textos)
+            {
+                <script>
+        try {
+            var elem = document.getElementById("@t.CAMPO_ID");
+            if (elem.nodeName != 'INPUT' & elem.nodeName != 'SELECT' & elem.nodeName != 'TABLE' & elem.nodeName != 'TEXTAREA')
+                elem.innerHTML = "@t.TEXTOS";
+        } catch (e) {
+            try {
+                var divs = document.getElementsByClassName("@t.CAMPO_ID");
+                [].slice.call(divs).forEach(function (div) {
+                    if (div.nodeName != 'INPUT' & div.nodeName != 'SELECT' & div.nodeName != 'TABLE' & div.nodeName != 'TEXTAREA')
+                        div.innerHTML = "@t.TEXTOS";
+                });
+            }
+            catch (ee) {
+
+            }
+        }
+                </script>
+            }
+        }
+    </div>
+}
+<script>
+    fnCommon.materializeInit('modal');
+
+    var registrosSol = "@Model.solicitudes.Count" * 1;
+    //----- Configuracion de Tablas-----
+    var root = "@Url.Content("~")",
+        spras_id = "@ViewBag.spras_id",
+        urlLanguage = root + "Scripts/lang/" + spras_id + ".json";
+    fnCommon.configurarTableNoPagNoBusq('tableModSolicitudes', '50vh', '50vh', urlLanguage,  [0,1,2,3,4,5,6,7,8]);
+    if (registrosSol > 0) {
+        $('#btn_save').removeAttr('disabled');
+    }
+    function actualizarSolicitudes() {
+        var esCambio = ($("#PAYER_NOMBRE").val() != "" || $("#PAYER_EMAIL").val() != "" || $("#ESTADO").val() != "" || $("#CIUDAD").val() != "" || $("#CONCEPTO").val() != "" || $("#NOTAS").val() != "");
+        if (registrosSol > 0 && esCambio) {
+            $("#PAYER_EMAIL").removeClass("invalid");
+            if ($("#PAYER_EMAIL").val() != "" && !validateEmail($("#PAYER_EMAIL").val())) {
+                $("#PAYER_EMAIL").addClass("invalid");
+            } else {
+                document.getElementById("loader").style.display = "flex";
+                $('#modSolicitudesForm').submit();
+            }
+        }
+        
+       
+        
+       
+    }
+    function validateEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+</script>
+<script>
+
+</script>
+<script>
+    auto(document).ready(function () {
+        $("#PAYER_NOMBRE").autocomplete({
+            source: function (request, response) {
+                var kunnr = $("#KUNNR_1").val();
+                if (kunnr) {
+                    fnCommon.autoAjax(root + "Listas/contactos", response, { Prefix: request.term, kunnr: kunnr }, function (item) { return { label: item.NOMBRE + " - " + item.EMAIL, value: item.NOMBRE, mail: item.EMAIL }; });
+                } else {
+                    $("#PAYER_NOMBRE").removeClass('ui-autocomplete-loading');
+                }
+            },
+            messages: {
+                noResults: '',
+                results: function (resultsCount) { }
+            },
+            select: function (event, ui) {
+                var label = ui.item.label;
+                var value = ui.item.value;
+                var email = ui.item.mail;
+                $("#PAYER_EMAIL").val(email);
+            }
+        });
+        $("#ESTADO").autocomplete({
+            source: function (request, response) {
+                var sociedad_id = $("#SOCIEDAD_ID_1").val();
+                fnCommon.autoAjax(root + "Listas/Estados", response, { Prefix: request.term, sociedad_id: sociedad_id }, function (item) { return { label: item.NAME, value: item.NAME }; });
+            },
+            messages: {
+                noResults: '',
+                results: function (resultsCount) { }
+            },
+            select: function (event, ui) {
+                var label = ui.item.label;
+                var value = ui.item.value;
+            }
+        });
+        $("#CIUDAD").autocomplete({
+            source: function (request, response) {
+                var estado = $("#ESTADO").val();
+                fnCommon.autoAjax(root + "Listas/Ciudades", response, { Prefix: request.term, estado: estado }, function (item) { return { label: item.NAME, value: item.NAME }; });
+            },
+            messages: {
+                noResults: '',
+                results: function (resultsCount) { }
+            },
+            select: function (event, ui) {
+                var label = ui.item.label;
+                var value = ui.item.value;
+            }
+        });
+    })
+
+</script>

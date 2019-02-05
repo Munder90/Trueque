@@ -1,0 +1,48 @@
+﻿@model TAT001.Entities.PERMISO_PAGINA
+
+@{
+    //ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 762;
+    ViewBag.carpeta_r = 500;
+    var lan = ViewBag.lan;
+    var ac = "";
+    if (ViewBag.ac == true)
+    {
+        ac = "Activo";
+    }
+    else { ac = "Inactivo"; }
+}
+<div class="row">
+    <div class="col s6 ">
+        <div class="card-panel">
+            <div class="row">
+                <div class="input-field col s12">
+                    @Html.LabelFor(model => model.PAGINA_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblPid" })
+                    @Html.EditorFor(model => model.PAGINA_ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.PAGINA_ID, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-field col s12">
+                    @Html.LabelFor(model => model.PERMISO, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblEst" })
+                    <input value="@ac" type="text" class="control-label col-md-2" disabled="disabled" />
+                    @Html.ValidationMessageFor(model => model.PERMISO, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col s6 ">
+        <div class="card-panel">
+            <div class="row">
+                <div class="input-field col s12">
+                    @Html.LabelFor(model => model.PUESTO.ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblId" })
+                    @Html.EditorFor(model => model.PUESTO.ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.PUESTO.ID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PUESTO.ID, np = Model.PAGINA_ID }, new { id = "lblEdit" }) |
+    @Html.ActionLink("Back to List", "Index", new { id = Model.ROL_ID }, new { id = "lblRegresar" })
+</p>

@@ -1,0 +1,285 @@
+﻿@model TAT001.Models.Calendario445ViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 532;
+    ViewBag.carpeta_r = 500;
+
+}
+<style>
+    .text-center {
+        text-align: center !important;
+    }
+
+    #lbl_precierre {
+        font-size: 20px !important;
+        color: #202020;
+    }
+
+    #lbl_cierre {
+        font-size: 20px !important;
+        color: #202020;
+    }
+
+    .select-wrapper input.select-dropdown {
+        z-index: 0 !important;
+    }
+
+    label .invalid {
+        display: none !important;
+    }
+    /*Para uso Html.CheckBoxFor con Materialize css*/
+    [type="checkbox"] + [type="hidden"] + span:not(.lever) {
+        position: relative;
+        padding-left: 35px;
+        cursor: pointer;
+        display: inline-block;
+        height: 25px;
+        line-height: 25px;
+        font-size: 1rem;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    [type="checkbox"] + [type="hidden"] + span:not(.lever)::before, [type="checkbox"]:not(.filled-in) + [type="hidden"] + span:not(.lever)::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 18px;
+            height: 18px;
+            z-index: 0;
+            border: 2px solid #5a5a5a;
+            border-radius: 1px;
+            margin-top: 3px;
+            -webkit-transition: .2s;
+            transition: .2s;
+        }
+    [type="checkbox"]:not(.filled-in) + [type="hidden"] + span:not(.lever)::after {
+        border: 0;
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    }
+    [type="checkbox"] + [type="hidden"] + span:not(.lever)::before, [type="checkbox"]:not(.filled-in) + [type="hidden"] + span:not(.lever)::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 18px;
+        height: 18px;
+        z-index: 0;
+        border: 2px solid #5a5a5a;
+        border-radius: 1px;
+        margin-top: 3px;
+        -webkit-transition: .2s;
+        transition: .2s;
+    }
+    [type="checkbox"]:checked + [type="hidden"] + span:not(.lever)::before {
+        top: -4px;
+        left: -5px;
+        width: 12px;
+        height: 22px;
+        border-top: 2px solid transparent;
+        border-left: 2px solid transparent;
+        border-right: 2px solid #26a69a;
+        border-bottom: 2px solid #26a69a;
+        -webkit-transform: rotate(40deg);
+        transform: rotate(40deg);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transform-origin: 100% 100%;
+        transform-origin: 100% 100%;
+    }
+    [type="checkbox"] + [type="hidden"] + span:not(.lever)::before, [type="checkbox"]:not(.filled-in) + [type="hidden"] + span:not(.lever)::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 18px;
+        height: 18px;
+        z-index: 0;
+        border: 2px solid #5a5a5a;
+        border-top-color: rgb(90, 90, 90);
+        border-top-style: solid;
+        border-top-width: 2px;
+        border-right-color: rgb(90, 90, 90);
+        border-right-style: solid;
+        border-right-width: 2px;
+        border-bottom-color: rgb(90, 90, 90);
+        border-bottom-style: solid;
+        border-bottom-width: 2px;
+        border-left-color: rgb(90, 90, 90);
+        border-left-style: solid;
+        border-left-width: 2px;
+        border-radius: 1px;
+        margin-top: 3px;
+        -webkit-transition: .2s;
+        transition: .2s;
+    }
+ 
+</style>
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+<script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+@using (Html.BeginForm("Edit", "Calendario445", FormMethod.Post, new { @id = "calendario445Form" }))
+{
+    @Html.AntiForgeryToken()
+        <div class="col s12 l12 right-align">
+            <button type="submit" id="btn_save" class="btn btn-default"></button>
+        </div>
+        <div class="card-panel">
+            @Html.HiddenFor(model => model.calendario445.EJERCICIO)
+            @Html.HiddenFor(model => model.calendario445.TSOL_ID)
+            @Html.HiddenFor(model => model.calendario445.SOCIEDAD_ID)
+            @Html.HiddenFor(model => model.calendario445.PERIODO)
+            @Html.HiddenFor(model => model.calendario445.USUARIOC_ID)
+            @Html.HiddenFor(model => model.calendario445.FECHAC)
+            <div class="row">
+                <div class="col s2">
+                    <div class="form-group">
+                        <label id="lbl_coCode"></label>
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.calendario445.SOCIEDAD_ID, Model.sociedades, "", new { @disabled = true })
+                        </div>
+                    </div>
+                </div>
+                <div class="col s2">
+                    <div class="form-group">
+                        <label id="lbl_ejercicio"></label>
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.calendario445.EJERCICIO, Model.ejercicio, new { @disabled = true })
+                        </div>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="form-group">
+                        <label id="lbl_periodo"></label>
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.calendario445.PERIODO, Model.periodos, "", new { @disabled = true })
+                        </div>
+                    </div>
+                </div>
+                <div class="col s5">
+                    <div class="form-group">
+                        <label id="lbl_tipoSolicitud"></label>
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.calendario445.TSOL_ID, Model.cmbTiposSolicitud, "", new { @disabled = true })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <p class="text-center"> <label id="lbl_precierre"></label></p>
+            <hr>
+            <div class="row">
+                <div class="col s3">
+                    <div class="form-group">
+                        <label class="lbl_desdeDia"></label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.calendario445.PRE_FROMF, new { htmlAttributes = new { @required = "", @class = "datepicker" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="form-group">
+                        <label class="lbl_desdeHora"></label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.calendario445.PRE_FROMH, new { htmlAttributes = new { @required = "", @class = "timepicker" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="form-group">
+                        <label class="lbl_hastaDia"></label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.calendario445.PRE_TOF, new { htmlAttributes = new { @required = "", @class = "datepicker" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="form-group">
+                        <label class="lbl_hastaHora"></label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.calendario445.PRE_TOH, new { htmlAttributes = new { @required = "", @class = "timepicker" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center"><label id="lbl_cierre"></label></p>
+            <hr>
+            <div class="row">
+                <div class="col s3">
+                    <div class="form-group">
+                        <label class="lbl_desdeDia"></label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.calendario445.CIE_FROMF, new { htmlAttributes = new { @required = "", @class = "datepicker" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="form-group">
+                        <label class="lbl_desdeHora"></label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.calendario445.CIE_FROMH, new { htmlAttributes = new { @required = "", @class = "timepicker" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="form-group">
+                        <label class="lbl_hastaDia"></label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.calendario445.CIE_TOF, new { htmlAttributes = new { @required = "", @class = "datepicker" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="form-group">
+                        <label class="lbl_hastaHora"></label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.calendario445.CIE_TOH, new { htmlAttributes = new { @required = "", @class = "timepicker" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 l12 right-align">
+                    <label>
+                        @Html.CheckBoxFor(model => model.calendario445.ACTIVO)
+                        <span id="lbl_activo"></span>
+                    </label>
+                </div>
+            </div>
+            </div>
+            }
+            <div class="col s12">
+                <a id="btn_return" href="@Url.Action("Index")"></a>
+            </div>
+    <script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+    <script>
+          var spras_id ="@ViewBag.spras_id";
+    //---- Inicializador de componentes Materialize----
+        fnCommon.materializeInit( 'datepicker', spras_id);
+        fnCommon.materializeInit('timepicker');
+        fnCommon.materializeInit( 'select');
+
+       
+        //----  Remover Hora de Fecha----
+        document.querySelectorAll('.datepicker').forEach(function (datePicker) {
+            datePicker.value = datePicker.value.substring(0, 10);
+          
+            var dateVal = moment(datePicker.value, 'DD/MM/YYYY');
+            M.Datepicker.getInstance(datePicker).setDate(dateVal._d);
+            
+        });
+        //----  Se agrega validaciones al formulario----
+        fnCommon.selectRequired();
+        fnCommon.formValidation('calendario445Form');
+        fnCommon.dateRangeValidation('calendario445_PRE_FROMF', 'calendario445_PRE_TOF','calendario445_CIE_FROMF', 'calendario445_CIE_TOF');
+
+        // Valida si ocurrio un error al intentar crear el periodo y otro.
+        var mnjError = '@ViewBag.mnjError';
+        if (mnjError) {
+            M.toast({ html: mnjError });
+        }
+ </script>
+
+
+
+

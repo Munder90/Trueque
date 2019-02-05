@@ -1,0 +1,376 @@
+﻿@model IEnumerable<TAT001.Entities.DOCUMENTO>
+@using TAT001.Entities;
+@using TAT001.Controllers;
+
+@{
+    ViewBag.pagina_r = 221;
+    ViewBag.carpeta_r = 200;
+    //ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<link href="~/Content/dataTable.css" rel="stylesheet" />
+
+<script src="~/Scripts/DataTables/datatables.min.js"></script>
+<script src="~/Scripts/DataTables/datatables.js"></script>
+<script src="~/Scripts/DataTables/dataTables.rowGroup.min.js"></script>
+<link href="~/Scripts/DataTables/datatables.css" rel="stylesheet" />
+<link href="~/Scripts/DataTables/datatables.min.css" rel="stylesheet" />
+
+<script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+
+<input class="form-control" id="txt_spras" value="@(ViewBag.usuario.SPRAS_ID)" hidden>
+<input id="USUARIOC_ID" value="@(ViewBag.usuario.ID)" type="hidden">
+
+@*@if (TempData["docs_masiva"] != null)
+    {
+        List<string> list_num_doc = (List<string>)TempData["docs_masiva"];
+        foreach (var num_doc in list_num_doc)
+        {
+
+            <script>
+                $(document).ready(function () {
+                    function docMessage(msg) {
+                        M.toast({ html: msg });
+                    }
+
+                    var messages = '@num_doc';
+
+                    if (messages != "") {
+                        if (messages.substring(0, 4) == "&lt;") {
+                            docMessage('Error en registro ' + messages.replace("&lt;", ""));
+                        }
+                        else {
+                            docMessage('Documento ' + messages + ' fue creado');
+                        }
+                    }
+                });
+            </script>
+        }
+        TempData["docs_masiva"] = null;
+    }*@
+
+<div id="borraTabla" class="modal">
+    <div class="modal-content">
+        <h4>Borrar</h4>
+        <p>¿Estás seguro que quieres borrar la carga actual?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close btn-flat">NO</a>
+        <a href="" class="modal-action modal-close btn-flat">si</a>
+    </div>
+</div>
+<div id="salirPag" class="modal">
+    <div class="modal-content">
+        <h4>Borrar</h4>
+        <p>¿Estás seguro que quieres borrar la carga actual?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close btn-flat">NO</a>
+        <a href="" class="modal-action modal-close btn-flat">SI</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="row left">
+        <a id="btn_formatoMasiva_" class="btn-small" href="@Url.Action("Archivo", "Masiva", new { varArch = "X"})">
+            <i class='material-icons right'>archive</i> <span id="btn_formatoMasiva">FORMATO MASIVA</span>
+        </a>
+        <a id="btn_listadoCP_" class="btn-small" href="@Url.Action("Archivo", "Masiva", new { varArch = "L"})">
+            <i class='material-icons right'>archive</i> <span id="btn_listadoCP">LISTADO CLIENTE/PROVEEDOR</span>
+        </a>
+    </div>
+    <div class="row right">
+        @*<a class="waves-effect waves-light btn" href="borraTabla" onClick="window.location.reload()">Borrar</a>*@
+        <a class="btn-small modal-trigger" href="#borraTabla" id="btn_borrar">Borrar</a>
+        <a class="btn-small" onclick="guardaDatos()" id="btn_enviar">Enviar</a>
+    </div>
+</div>
+
+@*<div class="row">
+        <div class="row" style="height:10px;width:100%;">
+            <div class="col l7 pink darken-1" style="height:10px;padding:0;"></div>
+            <div class="col l3 pink darken-4" style="height:10px;padding:0;">
+                <div class="col l3 pink darken-4" style="height:10px;padding:0;"></div>
+                <div class="col l8 orange" style="height:10px;padding:0;"></div>
+                <div class="col l1 red" style="height:10px;padding:0;"></div>
+            </div>
+            <div class="col l2 yellow" style="height:10px;padding:0;"></div>
+        </div>
+    </div>*@
+
+<div class="row">
+    <div class="col s12">
+        <ul class="tabs" id="tabs">
+            <li class="tab col s2 tabs_menu"><a id="tab_info" href="#test1">INFORMACION</a></li>
+            <li class="tab col s3 tabs_menu"><a id="tab_rel" href="#test2">RELACIONADA</a></li>
+            <li class="tab col s3 tabs_menu"><a id="tab_mul" href="#test3">MULTIPLE</a></li>
+            <li class="tab col s2 tabs_menu"><a id="tab_dis" href="#test4">DISTRIBUCION</a></li>
+            <li class="tab col s2 tabs_menu"><a id="tab_arc" href="#test5">SOPORTE</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="row" style="margin-bottom:0px;">
+    <div class="col s12 m6 l3">
+        @using (Html.BeginForm("Index", "Masiva", new { enctype = "multipart/form-data" }))
+        {
+            <div class="file-field input-field col s12">
+                <div class="waves-effect waves-light btn col s12">
+                    <span id="btn_archivoMasiva">Seleccionar archivo</span>
+                    <input type="file" name="miMas" id="miMas" />
+                </div><div class="file-path-wrapper hide">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col s12 m6 l3" style="padding-top:14px;">
+        <a class="waves-effect waves-light btn-small col s12" id="excelBtn" onclick="generarExcel()" disabled>Exportar vista a Excel</a>
+    </div>
+    <div class="col s12 m6 l3 offset-l3">
+        <div class="input-field col s12">
+            <input type="text" class="global_filter" id="global_filter" disabled>
+            <label for="global_filter" id="lbl_search">Buscar</label>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div id="test1" class="card-panel col s12">
+        <div style="overflow:auto;">
+            <table id="tab_test1"  class="table mdl-data-table striped" cellspacing="0" style="width:100%; overflow-x: scroll;">
+                <thead>
+                    <tr>
+                        <th style="width:50px;" id="lbl_estatusH1">VALIDACION</th>
+                        <th id="lbl_numDocH1">ID</th>
+                        <th id="lbl_tipoSolicitud">T_SOL</th>
+                        <th id="lbl_clasificacion">GALL_ID</th>
+                        <th id="lbl_sociedad">Co. Code</th>
+                        <th id="lbl_pais">LANDX</th>
+                        <th id="lbl_estado">ESTADO</th>
+                        <th id="lbl_ciudad">CIUDAD</th>
+                        <th id="lbl_concepto">CONCEPTO</th>
+                        <th id="lbl_notas">NOTAS</th>
+                        <th id="lbl_payerId">PAYER_ID</th>
+                        <th id="lbl_payerNombre">PAYER_NOMBRE</th>
+                        <th id="lbl_contactoNombre">CONTACTO_NOMBRE</th>
+                        <th id="lbl_contactoEmail">CONTACTO_EMAIL</th>
+                        <th id="lbl_fechaInicio">FECHAI_VIG</th>
+                        <th id="lbl_fechaFin">FECHAF_VIG</th>
+                        <th id="lbl_moneda">MONEDA_ID</th>
+                        <th id="lbl_vkorg" hidden>LABEL</th>
+                        <th id="lbl_vtweg" hidden>LABEL</th>
+                        <th id="lbl_spart" hidden>LABEL</th>
+                        <th id="lbl_miles" hidden>LABEL</th>
+                        <th id="lbl_decimales" hidden>LABEL</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <br />
+    </div>
+
+    <div id="test2" class="card-panel col s12">
+        <div style="overflow:auto;">
+            <table id="tab_test2"  class="table mdl-data-table striped" cellspacing="0" style="width:100%; overflow-x: scroll;">
+                <thead>
+                    <tr>
+                        <th style="width:50px;" id="lbl_estatusH2">VALIDACION</th>
+                        <th id="lbl_numDocH2">ID</th>
+                        <th id="lbl_factura">FACTURA</th>
+                        <th id="lbl_facturaFecha">FECHA</th>
+                        <th id="lbl_proveedor">PROVEEDOR</th>
+                        <th id="lbl_proveedorNombre">PROVEEDOR_NOMBRE</th>
+                        <th id="lbl_autorizacion">AUTORIZACION</th>
+                        <th id="lbl_vencimiento">VENCIMIENTO</th>
+                        <th id="lbl_facturak">FACTURAK</th>
+                        <th id="lbl_ejerciciok">EJERCICIOK</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <br />
+    </div>
+
+    <div id="test3" class="card-panel col s12">
+        <div style="overflow:auto;">
+            <table id="tab_test3"  class="table mdl-data-table striped" cellspacing="0" style="width:100%; overflow-x: scroll;">
+                <thead>
+                    <tr>
+                        <th style="width:50px;" id="lbl_estatusH3">VALIDACION</th>
+                        <th id="lbl_numDocH3">ID</th>
+                        <th id="lbl_facturaFiscal">FACTURA</th>
+                        <th id="lbl_bill">BILL_DOC</th>
+                        <th id="lbl_ejerciciokH3">EJERCICIOK</th>
+                        <th id="lbl_payerIdH3">PAYER</th>
+                        <th id="lbl_payerNombreH3">PAYER_NOMBRE</th>
+                        <th id="lbl_importeFac">IMPORTE_FAC</th>
+                        <th id="lbl_folio">BELNR</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <br />
+    </div>
+
+    <div id="test4" class="card-panel col s12">
+        <div style="overflow:auto;">
+            <table id="tab_test4"  class="table mdl-data-table striped" cellspacing="0" style="width:100%; overflow-x: scroll;">
+                <thead>
+                    <tr>
+                        <th style="width:50px;" id="lbl_estatusH4">VALIDACION</th>
+                        <th id="lbl_numDocH4">ID</th>
+                        <th id="lbl_ligada">LIGADA</th>
+                        <th id="lbl_fechaInicioH4">VIGENCIA DE</th>
+                        <th id="lbl_fechaFinH4">VIGENCIA AL</th>
+                        <th id="lbl_material">MATERIAL</th>
+                        <th id="lbl_categoriaH4">CATEGORIA</th>
+                        <th id="lbl_descripcion">DESCRIPCION</th>
+                        <th id="lbl_monto">MONTO</th>
+                        <th id="lbl_porcentaje">PORC_APOYO</th>
+                        <th id="lbl_apoyoPieza">APOYO_PIEZA</th>
+                        <th id="lbl_costo">COSTO_APOYO</th>
+                        <th id="lbl_precio">PRECIO_SUG</th>
+                        <th id="lbl_volumen">VOLUMEN_REAL</th>
+                        <th id="lbl_apoyo">APOYO</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <br />
+    </div>
+
+    <div id="test5" class="card-panel col s12">
+        <div style="overflow:auto;">
+            <table id="tab_test5" class="table mdl-data-table striped" cellspacing="0" style="width:100%; overflow-x: scroll;">
+                <thead>
+                    <tr>
+                        <th style="width:50px;" id="lbl_estatusH5">VALIDACION</th>
+                        <th id="lbl_numDocH5">ID</th>
+                        <th style="text-align:center;" id="lbl_tipo">TIPO</th>
+                        <th style="text-align:center;" id="lbl_archivo">ARCHIVO</th>
+                        <th style="text-align:center;" id="lbl_notasH5">NOTAS</th>
+                        @*<th style="text-align:center;">BOTON</th>*@
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <br />
+    </div>
+</div>
+
+<script>
+    var el = document.querySelector(".tabs");
+    var instance = M.Tabs.init(el, []);
+
+    var elem = document.getElementById('borraTabla');
+    M.Modal.init(elem, []);
+</script>
+
+<script>
+    var exitClicked = false;
+
+    $("#btn_formatoMasiva").click(function () {
+        exitClicked = true;
+    });
+
+    $("#btn_listadoCP").click(function () {
+        exitClicked = true;
+    });
+
+    $("#btn_formatoMasiva_").click(function () {
+        exitClicked = true;
+    });
+
+    $("#btn_listadoCP_").click(function () {
+        exitClicked = true;
+    });
+
+    window.onbeforeunload = confirmExit;
+    function confirmExit(evento) {
+        if (exitClicked) {
+            exitClicked = false;
+            return;
+        } else {
+            return "¿Deseas salir del módulo? La información se perderá. ";
+        }
+    }
+    var el1 = document.querySelector(".tabs");
+    var instance1 = M.Tabs.init(el1, []);
+
+    var elem1 = document.getElementById('borraTabla');
+    M.Modal.init(elem1, []);
+</script>
+
+<script src="~/Scripts/autocomplete1.10.2.js"></script>
+<script src="~/Scripts/autocomplete1.11.4.js"></script>
+<script src="~/Scripts/Masiva/formatosMasiva.js"></script>
+<script src="~/Scripts/Masiva/create.js"></script><!--LGPP 30.08.2018-->
+<script src="~/Scripts/Masiva/validaTabs.js"></script><!--RSG 26.10.2018-->
+<link href="~/Content/autocomplete.css" rel="stylesheet" />
+<div id="validacionesMasivas">
+    <script>
+         var lista1 = [];
+    var lista = @Html.Raw(ViewBag.listaValid);
+    </script>
+    <script src="~/Scripts/Masiva/warningm.js"></script>
+</div>
+<script>
+    var root = "@Url.Content("~")";
+    var auto = $.noConflict();
+    ln = "@ViewBag.spras_id";
+   // Valida si ocurrio un error al intentar descargar archivo.
+    var Mensaje = '@ViewBag.Mensaje';
+    if (Mensaje) {
+        M.toast({ html: Mensaje });
+        }
+</script>
+
+<style>
+    .dataTables_length {
+        display: none;
+    }
+
+    .dataTables_filter {
+        display: none;
+    }
+
+    .dataTables_scrollHeadInner, .mdl-data-table {
+        width: 100%;
+    }
+    tr.group,
+    tr.group:hover {
+        background-color: white !important;
+    }
+</style>
+
+@*<script>
+        //$(".mdl-button").on("click", function () {
+        //    if ($(this).hasClass("valid")) {
+        //        var id = $(this).closest('tr').children().eq(1).children().val();
+        //        var tipo = $(this).closest('tr').children().eq(2).children().val();
+        //        $(this).closest('tr').children().eq(3).children().children().eq(0).children().eq(1).attr('id', id + tipo);
+        //    } else {
+        //        $(this).closest('tr').children().eq(3).children().children().eq(0).children().eq(1).removeAttr('id');
+        //    }
+        function pag() {
+            $(".outRequiredfile").on("change", function () {
+                if ($(this).hasClass("valid")) {
+                    var id = $(this).closest('tr').children().eq(1).children().val();
+                    var tipo = $(this).closest('tr').children().eq(2).children().val();
+                    $(this).closest('tr').children().eq(3).children().children().eq(0).children().eq(1).attr('id', id + tipo);
+                } else {
+                    $(this).closest('tr').children().eq(3).children().children().eq(0).children().eq(1).removeAttr('id');
+                }
+            });
+        }
+        //});
+    </script>
+    <button class="btn" onclick="pag();">Page</button>*@

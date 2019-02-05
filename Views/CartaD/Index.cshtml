@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "";
+    ViewBag.pagina_r = 101;
+    ViewBag.carpeta_r = 100;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    bool lista = TempData["lista"] != null && TempData["lista"].ToString() == "LIST" ? true : false;
+    if (lista) { TempData["vista"] = "LIST"; }
+    TempData["swf"] = TempData["ESTATUS_WF"];
+}
+
+<div class="row">
+    <div class="row right">
+        <div class="col l12 m12 right">
+            <a href="@Url.Action("Create", "CartaD", new { id = @ViewBag.miNum, Viewlista=lista })" class="waves-effect waves-light btn-small" >Regresar</a>
+        </div>
+    </div>
+</div>
+<div>
+    <iframe src="@ViewBag.url" width="100%" height="600px"></iframe>
+</div>

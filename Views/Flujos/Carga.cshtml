@@ -1,0 +1,293 @@
+﻿
+@{
+    ViewBag.Title = "Carga de flujo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 601;
+    ViewBag.carpeta_r = 500;
+}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.2.6/css/fixedColumns.dataTables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/fixedcolumns/3.2.6/js/dataTables.fixedColumns.min.js"></script>
+
+
+@using (Html.BeginForm("Carga", "Flujos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row right-align">
+        <div class="col s12">
+            <input type="submit" value="Guardar" class="btn-small" />
+        </div>
+    </div>
+    @Html.AntiForgeryToken()
+    <div class="card-panel">
+        <div class="row">
+            <div class="file-field input-field col s12 m12 l6">
+                <div class="btn-small" style="float:left;">
+                    <span>File</span>
+                    <input type="file" id="files" name="files" onchange="subeExcel();">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 ">
+                <table id="table" style="width:100%" class="">
+                    <thead>
+                        <tr>
+                            <th>Usuario creador</th>
+                            <th>País</th>
+                            <th>Cliente</th>
+                            <th>Versión</th>
+                            <th>Nivel</th>
+                            <th>Aprobador</th>
+                            <th>Monto</th>
+                            <th>Presupuesto</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script>
+
+    $(document).ready(function () {
+        $('#table').DataTable({
+            //scrollY: "true",
+            scrollX: "true",
+            scrollCollapse: true,
+            order: [[0, "asc"], [1, "asc"], [2, "asc"], [3, "asc"], [4, "asc"]],
+                       language: {
+                //"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                "url": "../Scripts/lang/@Session["spras"].ToString()"+".json"
+            },
+            "paging": false,
+            //        "ordering": false,
+            "info": false,
+            "searching": false,
+            fixedColumns: {
+                leftColumns: 3
+            },
+            "columns": [
+                //{
+                //    "classname": 'select_row',
+                //    "orderable": false,
+                //    "data": null,
+                //    "defaultcontent": ''
+                //},
+                {
+                    "name": 'USUARIOC_ID',
+                    "className": 'USUARIOC_ID',
+                },
+                {
+                    "name": 'PAIS',
+                    "className": 'PAIS'
+                },
+                {
+                    "name": 'CLIENTE',
+                    "className": 'CLIENTE'
+                },
+                {
+                    "name": 'VERSION',
+                    "className": 'VERSION'
+                },
+                {
+                    "name": 'NIVEL',
+                    "className": 'NIVEL'
+                },
+                {
+                    "name": 'APROBADOR',
+                    "className": 'APROBADOR'
+
+                },
+                {
+                    "name": 'MONTO',
+                    "className": 'MONTO'
+                },
+                {
+                    "name": 'PRESUPUESTO',
+                    "className": 'PRESUPUESTO'
+                }
+            ]
+        });
+
+    });
+
+    function subeExcel() {
+        var filenum = $('#files').get(0).files.length;
+        if (filenum > 0) {
+            var file = document.getElementById("files").files[0];
+            var filename = file.name;
+            if (evaluarExt(filename)) {
+                M.toast({ html: 'Cargando ' + filename });
+                loadExcelDis(file);
+                //updateFooter();
+            } else {
+                document.getElementById("files").value = "";
+                M.toast({ html: 'Tipo de archivo incorrecto: ' + filename });
+            }
+        } else {
+            M.toast({ html: 'Seleccione un archivo' });
+            var table = $('#table').DataTable();
+            table.clear().draw();
+        }
+    }
+
+    function evaluarExt(filename) {
+
+        var exts = ['xls', 'xlsx'];
+        // split file name at dot
+        var get_ext = filename.split('.');
+        // reverse name to check extension
+        get_ext = get_ext.reverse();
+        // check file type is valid as given in 'exts' array
+        if ($.inArray(get_ext[0].toLowerCase(), exts) > -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function loadExcelDis(file) {
+
+        document.getElementById("loader").style.display = "initial";//RSG 24.05.2018
+        var formData = new FormData();
+
+        formData.append("FileUpload", file);
+
+
+        var table = $('#table').DataTable();
+        table.clear().draw();
+        $.ajax({
+            type: "POST",
+            url: 'LoadExcel',
+            data: formData,
+            dataType: "json",
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+
+                if (data !== null || data !== "") {
+                    ////var index = getIndex();
+
+                    ////var relacionada = "";
+
+                    ////if ($("#txt_rel").length) {
+                    ////    var vrelacionada = $('#txt_rel').val();
+                    ////    if (vrelacionada != "") {
+                    ////        relacionada = "prelacionada";
+                    ////    }
+                    ////}
+
+                    ////var reversa = "";
+                    ////if ($("#txt_rev").length) {
+                    ////    var vreversa = $('#txt_rev').val();
+                    ////    if (vreversa == "preversa") {
+                    ////        reversa = vreversa;
+                    ////    }
+                    ////}
+
+                    $.each(data, function (i, dataj) {
+
+                        var usc = dataj.USUARIOC_ID;
+                        var pai = dataj.PAIS_ID;
+                        var cli = dataj.KUNNR;
+
+                        var addedRow = addRow(table, dataj.POS, usc, pai, cli, 1, dataj.POS, dataj.USUARIOA_ID, dataj.MONTO, dataj.PRESUPUESTO);//RSG 24.05.2018
+
+                        var cols = addedRow.cells[0];
+                        var a = $(cols).find("span").hasClass("red");
+                        if (a) {
+                            $(cols).addClass("red");
+                        }
+
+                        var cols = addedRow.cells[1];
+                        var a = $(cols).find("span").hasClass("red");
+                        if (a) {
+                            $(cols).addClass("red");
+                        }
+
+                        var cols = addedRow.cells[2];
+                        var a = $(cols).find("span").hasClass("red");
+                        if (a) {
+                            $(cols).addClass("red");
+                        }
+
+                        var cols = addedRow.cells[4];
+                        var a = $(cols).text();
+                        if (a == "1") {
+                            $(addedRow).addClass("row-border");
+                        }
+
+                        var cols = addedRow.cells[5];
+                        var a = $(cols).find("span").hasClass("red");
+                        if (a) {
+                            $(cols).addClass("red");
+                        }
+                    }); //Fin de for
+
+                    $('#table_dis').css("font-size", "12px");
+                    $('#table_dis').css("display", "table");
+                    $('#tfoot_dis').css("display", "table-footer-group");
+
+                    document.getElementById("loader").style.display = "none";
+                }
+            },
+            error: function (xhr, httpStatusMessage, customErrorMessage) {
+
+                M.toast({
+                    html: "Request couldn't be processed. Please try again later. the reason        " + xhr.status + " : " + httpStatusMessage + ": " + customErrorMessage
+                });
+                document.getElementById("loader").style.display = "none";
+            },
+            async: true
+        });
+
+        $("#table > tbody  > tr[role='row']").each(function () {
+        });
+    }
+
+    function addRow(t, POS, u, p, c, v, po, ua, m, pr) {
+        var ppr = "";
+        if (m == undefined)
+            m = "";
+
+        var r = addRowl(
+            t,
+            POS,
+            u,
+            p,
+            c,
+            v,
+            po,
+            ua,
+            m,
+            pr
+        );
+
+        return r;
+    }
+
+    function addRowl(t, pos, u, p, c, v, po, ua, m, pr) {
+
+        var r = t.row.add([
+            u,
+            p,
+            c,
+            v,
+            po,
+            ua,
+            m,
+            pr,
+        ]).draw(false).node();
+
+        return r;
+    }
+</script>

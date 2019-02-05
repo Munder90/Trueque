@@ -1,0 +1,864 @@
+﻿@model TAT001.Entities.DOCUMENTO
+<div id="Informacion_cont" class="col s12" style="font-size:12px;">
+    @*Tipo de solicitud*@
+    <div class="row">
+        <div class="col s12 m6 l6">
+            @if (ViewBag.USUARIOD_ID != null)
+            {
+                <div class="card-panel">
+                    <!--RSG 13.06.2018-->
+                    <div class="row" style="margin-bottom:0;">
+                        <div class="input-field col s12">
+                            @Html.DropDownList("USUARIOD_ID", null, "", new { @onchange = "document.getElementById('payer_id').value = ''; selectCliente(''); " })
+                            <label for="txt_rel" id="lbl_rel"></label>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <input type="hidden" id="USUARIOD_ID" name="USUARIOD_ID" value="@User.Identity.Name" />
+            }
+            <div class="card-panel">
+                <h5 id="head_solclas">Tipo de solicitud y Clasificación</h5> @*B20180801 MGC Textos*@
+                <div class="row" style="margin-bottom:0">
+                    <div class="form-group col s12">
+                        @Html.LabelFor(model => model.TSOL_ID, "Tipo de solicitud", htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_tiposol" }) @*B20180801 MGC Textos*@
+                        <div class="col-md-10">
+                            @if (ViewBag.reversan == "X")
+                            {
+                                @Html.EditorFor(model => model.TSOL_ID, new { htmlAttributes = new { @class = "dropdowntree", @readonly = "readonly", @style = "color:gray;" } })
+
+                            }
+                            else
+                            {
+                                @Html.EditorFor(model => model.TSOL_ID, new { htmlAttributes = new { @class = "dropdowntree" } })
+                            }
+                        </div>
+
+                        @Html.HiddenFor(model => model.DOCUMENTO_REF)
+                        @{string jval = ViewBag.TSOL_VALUES;
+                            @Html.Hidden("TSOL_VALUES", jval)
+                        }
+                        @Html.HiddenFor(model => model.DOCUMENTO_REF)
+                        @{string jval2 = ViewBag.TSOL_VALUES2;
+                            @Html.Hidden("TSOL_VALUES2", jval2)
+                        }
+                        @*//B20180625 MGC 2018.06.28*@
+                        @{string borrador = ViewBag.borrador;
+                            @Html.Hidden("borrador_bool", borrador)
+                        }
+                    </div>
+                    <div class="form-group col s12">
+                        @Html.LabelFor(model => model.TALL_ID, "Clasificación", htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_tall" }) @*B20180801 MGC Textos*@
+                        <div class="col-md-10">
+                            @if (ViewBag.relacionada == "")
+                            {
+                                @Html.DropDownList("TALL_ID", null, "", htmlAttributes: new { @id = "tall_id", @class = "form-control  " + @ViewBag.relacionada })
+                            }
+                            else
+                            {
+                                @*//MGC B20180611 se elimina clasificación*@
+                                @Html.HiddenFor(model => model.TALL_ID, new { @id = "tall_id" })
+                                <input type="text" value="@ViewBag.TALL_IDI" disabled="disabled" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*Datos del país*@
+            <div class="card-panel">
+                <h5 id="head_datospais">Datos del país</h5>@*B20180801 MGC Textos*@
+                <div class="row" style="margin-bottom:0">
+                    <div class="col s6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SOCIEDAD_ID, "Co. Code", htmlAttributes: new { @class = "control-label col-md-2", @id = "lbl_sociedad" })@*B20180801 MGC Textos*@
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.SOCIEDAD_ID, new { htmlAttributes = new { @id = "sociedad_id", @class = "form-control", @readonly = "readonly" } })
+                            </div>
+                        </div>
+                    </div>
+                    @{TAT001.Entities.PAI pais = ViewBag.PAIS_ID;
+                        ///////DRS 27.09.18/////////
+                        <div class="col s6" style="margin-top:1.9%">
+                            <div class="form-group hidden">
+                                @Html.LabelFor(model => model.PAIS_ID, "Subregión", htmlAttributes: new { @class = "control-label col-md-2 hidden", @id = "lbl_pais" }) @*B20180801 MGC Textos*@
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.PAIS_ID, new { htmlAttributes = new { @id = "pais_id", @class = "form-control hidden", @readonly = "readonly", @Value = pais.LAND } })
+                                </div>
+                            </div>
+                            <div class="input-field col-md-2">
+                                <input value="@pais.LANDX" id="pais_txt" type="text" class="" disabled="disabled" />
+                                <label id="lbl_paiss" for="pais_txt">Subregión</label> @*B20180801 MGC Textos*@
+                            </div>
+                        </div>
+                    }
+                    <div>
+                        <div class="input-field col s6">
+                            @Html.EditorFor(model => model.SOCIEDAD.REGION, new { htmlAttributes = new { @id = "region_id", @disabled = "disabled" } })
+                            @Html.LabelFor(model => model.SOCIEDAD.REGION, "Región", htmlAttributes: new { @for = "region_id", @id = "lbl_region" }) @*B20180801 MGC Textos*@
+                        </div>
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.ESTADO, new { htmlAttributes = new { @id = "state_id", @class = "form-control " + @ViewBag.relacionada, @maxlength = 50 } })
+                        @Html.LabelFor(model => model.ESTADO, "Estado", htmlAttributes: new { @for = "state_id", @id = "lbl_estado" }) @*B20180801 MGC Textos*@
+                    </div>
+                    <link href="~/Content/autocomplete.css" rel="stylesheet" />
+                    <link href="~/Content/dropdowntree.css" rel="stylesheet" />
+                    <script src="~/Scripts/autocomplete1.10.2.js"></script>
+                    <script src="~/Scripts/autocomplete1.11.4.js"></script>
+                    <script src="~/Scripts/dropdowntree.js"></script>
+                    <script>
+                                    $("#TSOL_ID").kendoDropDownTree({
+                                            placeholder: "",
+                                        idValid: "tsol_id",
+                                        dataSource:@Html.Raw(Json.Encode(ViewBag.listtreetsol)),
+                                        change: function (e) {
+                                                var val = e.sender.value();
+                                                selectTsol(val);
+                                                soportes(val, '@ViewBag.spras_id');
+                                                M.Toast.dismissAll();
+                                                periodo(val);
+                                            }
+                                        });
+
+                                    var reversan = "@ViewBag.reversan";
+                                    if (reversan == "X") {
+                                        $("#TSOL_ID").attr('readonly', 'readonly');
+                                        $("#tsol_id").attr('readonly', 'readonly');
+                                    }
+                                        var auto = $.noConflict(true);
+                                        auto(document).ready(function () {
+                                            var pais = $("#pais_id").val();
+                                            auto("#state_id").autocomplete({
+                                                source: function (request, response) {
+                                                    auto.ajax({
+                                                        url: root+"Listas/Estados",
+                                                type: "GET",
+                                                dataType: "json",
+                                                data: { pais: pais, Prefix: request.term },
+                                                success: function (data) {
+                                                            response($.map(data, function (item) {
+                                                                return { label: item.NAME, value: item.NAME };
+                                                            }))
+                                                    }
+                                                    })
+                                            },
+                                    messages: {
+                                                    noResults: '',
+                                        results: function (resultsCount) { }
+                                                },
+
+                                    change: function (e, ui) {
+                                                    if (!(ui.item)) {
+                                                    }
+                                                }
+                                            });
+                                        })
+                    </script>
+                    <script src="~/Scripts/createa.js"></script>
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.CIUDAD, new { htmlAttributes = new { @id = "city_id", @class = "form-control " + @ViewBag.relacionada, @maxlength = 50 } })
+                        @Html.LabelFor(model => model.CIUDAD, "Ciudad", htmlAttributes: new { @for = "city_id", @id = "lbl_ciudad" }) @*B20180801 MGC Textos*@
+                    </div>
+                    <script>
+                        auto(document).ready(function () {
+                            auto("#city_id").autocomplete({
+                                source: function (request, response) {
+                                    var estado = $("#state_id").val();
+                                    auto.ajax({
+                                        url: root + "Listas/Ciudades",
+                                        type: "GET",
+                                        dataType: "json",
+                                        data: { estado: estado, Prefix: request.term },
+                                        success: function (data) {
+                                            response(auto.map(data, function (item) {
+                                                return { label: item.NAME, value: item.NAME };
+                                            }))
+                                        }
+                                    })
+                                },
+                                messages: {
+                                    noResults: '',
+                                    results: function (resultsCount) { }
+                                },
+                                change: function (e, ui) {
+                                    if (!(ui.item)) {
+
+                                    }
+                                }
+                            });
+                        })
+                    </script>
+                </div>
+            </div>
+            @*Información General*@
+            <div class="card-panel">
+                <h5 id="head_geninfo">Información General</h5> @*B20180801 MGC Textos*@
+                <div class="row" style="margin-bottom:0">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">date_range</i>
+                        @Html.HiddenFor(model => model.FECHAD, new { htmlAttributes = new { @class = "form-control datepicker", onkeyup = "borrar(this);" } })
+                        <input value="@ViewBag.FECHAD" id="fechad" type="text" class="" disabled="disabled" />
+                        <label id="lbl_fechad" for="fechad">Fecha</label> @*B20180801 MGC Textos*@
+                    </div>
+                    <div class="input-field col s6">
+                        @Html.HiddenFor(model => model.PERIODO, new { htmlAttributes = new { @class = "form-control" } })
+                        <input value="@ViewBag.PERIODO" id="periodo" type="text" class="" disabled="disabled" />
+                        <label id="lbl_periodo" for="periodo">Periodo</label>@*B20180801 MGC Textos*@
+                    </div>
+                    <script>
+                        var reversan = "@ViewBag.reversan";
+                        var relacionada = "@ViewBag.relacionada";
+                        var borrador = "@ViewBag.borrador";
+                        if (reversan == "X" || relacionada == "prelacionada" || (borrador == "true" && $('#TSOL_ID').val()!="")) {
+                            periodo(val);
+                        }
+                                var elemdp = document.querySelector('#fechad');
+                                var optionsdp = {
+                                    format: 'dd/mm/yyyy',
+                                    onClose: function (e) {
+                                        var date = $('#fechad').val();
+                                        var periodo = date.split("/");
+
+                                    },
+                                    i18n: {
+                                        clear: 'Limpiar',
+                                        today: 'Hoy',
+                                        done: 'Seleccionar',
+                                        previousMonth: '‹',
+                                        nextMonth: '›',
+                                        months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                                        monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                                        weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                                        weekdays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                                        weekdaysAbbrev: ['D', 'L', 'M', 'X', 'J', 'V', 'S']
+                                    }
+                                };
+                                var instancedp = M.Datepicker.init(elemdp, optionsdp);
+
+                    </script>
+                    <div class="input-field col s6">
+                        @Html.HiddenFor(model => model.EJERCICIO, new { htmlAttributes = new { @class = "form-control" } })
+                        <input value="@ViewBag.EJERCICIO" id="ejercicio" type="text" class="" disabled="disabled" />
+                        <label id="lbl_ejercicio" for="ejercicio">Ejercicio</label>@*B20180801 MGC Textos*@
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.CONCEPTO, new { htmlAttributes = new { @id = "concepto", @class = "form-control " + @ViewBag.relacionada, @maxlength = 100 } })
+                        <label id="lbl_concepto" for="concepto">Concepto*</label> @*B20180801 MGC Textos*@
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.TextAreaFor(model => model.NOTAS, new { @class = "materialize-textarea ", @id = "notas_txt", onkeyup = "maxchar();", @maxlength = 255 })
+                        @Html.LabelFor(model => model.NOTAS, "Mecánica de negociación", htmlAttributes: new { @class = "active", @for = "notas_txt", @id = "lbl_notas" })@*B20180801 MGC Textos*@
+                    </div>
+                    <script>
+                        function maxchar(w) {
+                            var maxLength = 255;
+                            var text = $('#notas_txt').val();
+                            var textLength = text.length;
+                            if (textLength > (maxLength)) {
+                                $('#notas_txt').val(text.substring(0, ((maxLength))));
+                                var msg = 'Número máximo para la negociación es ' + maxLength;
+                                M.toast({ html: msg });
+                            }
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6 l6">
+            @*Información Cliente*@
+            <div class="card-panel">
+                <h5 id="head_infocli">Información del cliente</h5>@*B20180801 MGC Textos*@
+                <div class="row" style="margin-bottom:0">
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.PAYER_ID, new { htmlAttributes = new { @id = "payer_id", @class = "form-control " + @ViewBag.relacionada, @maxlength = 10 } }) @*OCG 15-10-18 Se inserta aqui para no afectar la vista*@
+                        @Html.LabelFor(model => model.PAYER_ID, "Cliente", htmlAttributes: new { @for = "payer_id", @id = "lbl_payer" })@*B20180801 MGC Textos*@
+                    </div>
+                    <script>
+                                if ($('#payer_id').hasClass("prelacionada")) {
+                                    selectCliente($('#payer_id').val());
+                                }
+                                    auto(document).ready(function () {
+                                        auto("#payer_id").autocomplete({
+                                            source: function (request, response) {
+                                                var userC = document.getElementById("USUARIOD_ID");
+                                                if (userC == undefined)
+                                                    var user = '@ViewBag.usuario.ID';
+                                                else
+                                                    var user = userC.value;
+                                                auto.ajax({
+                                                    url: root + "Listas/Clientes",
+                                                    type: "GET",
+                                                    dataType: "json",
+                                                    data: { Prefix: request.term, usuario: user, pais: '@Model.PAIS_ID' },
+                                                    success: function (data) {
+                                                        response(auto.map(data, function (item) {
+                                                            return { label: trimStart('0', item.KUNNR) + " - " + item.NAME1, value: trimStart('0', item.KUNNR) };
+                                                        }))
+                                                    }
+                                                })
+                                            },
+                                            messages: {
+                                                noResults: '',
+                                                results: function (resultsCount) { }
+                                            },
+                                            change: function (e, ui) {
+                                                if (!(ui.item) && $("#payer_id").val() === "") {
+                                                    e.target.value = "";
+                                                }
+                                            },
+                                            select: function (event, ui) {
+                                                var label = ui.item.label;
+                                                var value = ui.item.value;
+                                                selectCliente(value);
+                                            }
+                                        });
+                                        //OCG 11/10/18
+                                        var cliente = auto("#payer_id").val();
+                                        var cli = cliente.split("");
+                                        var con = 0;
+                                        for (var i = 0; i < 10; i++) {
+                                            if (cli[i] == 0) {
+                                                con++;
+                                            }
+                                            else {
+                                                i = 9;
+                                            }
+                                        }
+                                        var clien = cliente.substring(con, i);
+                                        auto("#payer_id").attr("value", clien);
+                        });
+
+                        $('#payer_id').focusout(function (e) {
+                            if ($("#payer_id").val() === "") {
+                                limpiarCliente();
+                            }
+
+                        });
+                    </script>
+                    <input type="hidden" id="txt_vkorg" />
+                    <input type="hidden" id="txt_vtweg" />
+                    <input type="hidden" id="txt_spras" value="@Session["spras"].ToString()" />
+                    <div class="input-field col s12">
+                        <input type="text" id="cli_name" value="@ViewBag.NAME1" disabled="disabled" />
+                        <label id="lbl_nombrecli" for="cli_name">Nombre</label> @*B20180801 MGC Textos*@
+                    </div>
+                    <div class="input-field  col s12">
+                        <input value="@ViewBag.PARVW" id="parvw" type="text" class="" disabled="disabled" />
+                        <label id="lbl_parvwcli" for="parvw">Tipo de cliente</label> @*B20180801 MGC Textos*@
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.LabelFor(model => model.VKORG, "Razón Social", htmlAttributes: new { @class = "control-label col-md-2", @for = "vkorg", @id = "lbl_vkorg" }) @*B20180801 MGC Textos*@
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.VKORG, new { htmlAttributes = new { @disabled = "disabled", @id = "vkorg", @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="input-field  col s12">
+                        <input value="@ViewBag.STCD1" id="stcd1" type="text" class="" disabled="disabled" />
+                        <label id="lbl_stcdcli" for="stcd1">Tax ID</label> @*B20180801 MGC Textos*@
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.LabelFor(model => model.VTWEG, "Canal", htmlAttributes: new { @class = "control-label col-md-2", @for = "vtweg", @id = "lbl_vtweg" }) @*B20180801 MGC Textos*@
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.VTWEG, new { htmlAttributes = new { @disabled = "disabled", @id = "vtweg", @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.PAYER_NOMBRE, new { htmlAttributes = new { @id = "payer_nombre", @class = "form-control " + @ViewBag.relacionada, @maxlength = 150 } })
+                        @Html.LabelFor(model => model.PAYER_NOMBRE, "Nombre del contacto", htmlAttributes: new { @class = "control-label col-md-2", @for = "payer_nombre", @id = "lbl_payernom" }) @*B20180801 MGC Textos*@
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.EditorFor(model => model.PAYER_EMAIL, new { htmlAttributes = new { @id = "PAYER_EMAIL", @class = " " + @ViewBag.relacionada, @type = "text", @maxlength = 250 } })
+                        @Html.LabelFor(model => model.PAYER_EMAIL, "Email de contacto", htmlAttributes: new { @class = "control-label col-md-2", @for = "PAYER_EMAIL", @id = "lbl_payeremail" }) @*B20180801 MGC Textos*@
+                    </div>
+
+                    <script>
+                        auto(document).ready(function () {
+                            auto("#payer_nombre").autocomplete({
+                                source: function (request, response) {
+                                    var kunnr = document.getElementById("payer_id").value;
+                                    var vk = document.getElementById("txt_vkorg").value;
+                                    var vt = document.getElementById("txt_vtweg").value;
+
+
+                                    auto.ajax({
+                                        url: root + "Listas/contactos",
+                                        type: "GET",
+                                        dataType: "json",
+                                        data: { Prefix: request.term, vkorg: vk, vtweg: vt, kunnr: kunnr },
+                                        success: function (data) {
+                                            response(auto.map(data, function (item) {
+                                                return { label: item.NOMBRE + " - " + item.EMAIL, value: item.NOMBRE, mail: item.EMAIL };
+                                            }))
+                                        }
+                                    })
+                                },
+                                messages: {
+                                    noResults: '',
+                                    results: function (resultsCount) { }
+                                },
+                                change: function (e, ui) {
+                                    if (!(ui.item)) {
+                                        //e.target.value = "";
+                                    }
+                                },
+
+                                select: function (event, ui) {
+
+                                    var label = ui.item.label;
+                                    var value = ui.item.value;
+                                    var email = ui.item.mail;
+                                    document.getElementById('PAYER_EMAIL').value = email;
+                                    $("#PAYER_EMAIL").trigger('focusout');
+                                }
+                            });
+                        })
+                    </script>
+
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6 l6">
+            <div class="card-panel">
+                <h5 id="head_vigencia">Vigencia</h5> @*B20180801 MGC Textos*@
+                <div class="row" style="margin-bottom:0">
+                    @if (ViewBag.relacionada == "")
+                    {
+                        <div class="col s12">
+                            <p>
+                                <label>
+                                    @if (Model.DOCUMENTORECs.Count > 1)
+                                    {
+                                        <input id="check_recurrente" type="checkbox" onchange="cambiaCheckRec(false)" checked="checked" />
+                                    }
+                                    else
+                                    {
+                                        <input id="check_recurrente" type="checkbox" onchange="cambiaCheckRec(false)" />
+                                    }
+                                    <span id="span_docrec">Documento recurrente</span>
+                                </label>
+                            </p>
+                        </div>
+                        <div class="col s12">
+                            <label class="col s6">
+                                @if (Model.DOCUMENTORECs.Count > 1)
+                                {
+                                <input name="group1" type="radio" id="btn-date" disabled="disabled" onchange="cambiaTemp(this.id)" />
+                                }
+                                else {
+                            <input name="group1" type="radio" id="btn-date" onchange="cambiaTemp(this.id)" /> }
+                            <span id="span_pfecha">Por fecha</span> @*B20180801 MGC Textos*@
+                            </label>
+                            <label class="col s6">
+                                @if (Model.DOCUMENTORECs.Count > 1)
+                                {
+                                    <input name="group1" type="radio" checked disabled="disabled" id="btn-peri" onclick="cambiaTemp(this.id)" />
+                                }
+                                else
+                                {
+                                    <input name="group1" type="radio" id="btn-peri" onclick="cambiaTemp(this.id)" />
+                                }
+                                <span id="span_pperiodo">Por periodo</span> @*B20180801 MGC Textos*@
+                            </label>
+                        </div>
+
+                        <script>
+                            function cambiaTemp(id) {
+                                var tipo = id.split('-')[1];
+                                var periodoIId = document.getElementById("periodoi_id"),
+                                    anioIId = document.getElementById("anioi_id"),
+                                    periodoFId = document.getElementById("periodof_id"),
+                                    anioFId = document.getElementById("aniof_id"),
+
+                                    fechI = document.getElementById("fechai_vig2"),
+                                    fechF = document.getElementById("fechaf_vig2");
+
+                                if (tipo == "date" & document.getElementById(id).checked) {
+                                    periodoIId.setAttribute("disabled", "disabled");
+                                    anioIId.setAttribute("disabled", "disabled");
+                                    periodoFId.setAttribute("disabled", "disabled");
+                                    anioFId.setAttribute("disabled", "disabled");
+
+                                    fechI.removeAttribute("disabled");
+                                    fechF.removeAttribute("disabled");
+
+
+                                } else if (tipo == "peri") {
+                                    periodoIId.removeAttribute("disabled");
+                                    anioIId.removeAttribute("disabled");
+                                    periodoFId.removeAttribute("disabled");
+                                    anioFId.removeAttribute("disabled");
+
+                                    fechI.setAttribute("disabled", "disabled");
+                                    fechF.setAttribute("disabled", "disabled");
+                                    fechI.removeAttribute('class', 'valid');
+                                    fechF.removeAttribute('class', 'valid');
+                                    document.getElementById("lbl_fechade").setAttribute('class', 'active');
+                                    document.getElementById("lbl_fechahasta").setAttribute('class', 'active');
+
+                                    fechI.value = '';
+                                    fechF.value = '';
+
+                                    //Se quitan las opciones sin valor en combos de periodo
+                                    var selects = ["periodoi_id", "anioi_id", "periodof_id", "aniof_id"];
+                                    for (var i = 0; i < selects.length; i++) {
+                                        if (document.getElementById(selects[i]).options.item(0).value == "") {
+                                            try {
+                                                document.getElementById(selects[i]).options.item(0).remove();
+                                            } catch(e){}
+                                        }
+                                    }
+                                }
+                                setDates(tipo);
+                                var elem = document.querySelectorAll('select');
+                                M.FormSelect.init(elem, {});
+
+                                //cambiaRec();
+                            }
+                        </script>
+
+                        <div class="col s6">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">date_range</i>
+                                @Html.HiddenFor(model => model.FECHAI_VIG, new { @id = "fechai_vig", @class = "form-control datepicker " + @ViewBag.relacionada })
+                                <input type="text" class="datepicker" id="fechai_vig2" onkeyup="borrar(this);" onchange="document.getElementById('fechai_vig').value = this.value; $('#fechai_vig').trigger('change');" />
+                                @Html.LabelFor(model => model.FECHAI_VIG, "De", htmlAttributes: new { @class = "active", @for = "fechai_vig2", @id = "lbl_fechade" }) @*B20180801 MGC Textos*@
+                            </div>
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">date_range</i>
+                                @Html.HiddenFor(model => model.FECHAF_VIG, new { @id = "fechaf_vig", @class = "form-control datepicker " + @ViewBag.relacionada })
+                                <input type="text" class="datepicker" id="fechaf_vig2" onkeyup="borrar(this);" onchange="document.getElementById('fechaf_vig').value = this.value; $('#fechaf_vig').trigger('change');" />
+                                @Html.LabelFor(model => model.FECHAF_VIG, "Hasta", htmlAttributes: new { @class = "active", @for = "fechaf_vig2", @id = "lbl_fechahasta" }) @*B20180801 MGC Textos*@
+                            </div>
+                        </div>
+
+                        <script>
+                            asignaFechasInit();
+                            function asignaFechasInit() {
+                                var datei = document.getElementById("fechai_vig").value.split(' ')[0];
+                                var datef = document.getElementById("fechaf_vig").value.split(' ')[0];
+
+                                if (datei != "") {
+                                    document.getElementById("fechai_vig").value = datei;
+                                    document.getElementById("fechai_vig2").value = datei;
+                                }
+                                if (datef != "") {
+                                    document.getElementById("fechaf_vig").value = datef;
+                                    document.getElementById("fechaf_vig2").value = datef;
+                                }
+
+                                if (!document.getElementById('btn-date').checked) {
+                                    document.getElementById("fechai_vig2").setAttribute("disabled", "disabled");
+                                    document.getElementById("fechaf_vig2").setAttribute("disabled", "disabled");
+                                }
+                            }
+                        </script>
+
+                        <div class="col s6">
+                            <div class="col s12">
+                                <div class="input-field col s8">
+                                    @Html.DropDownList("PERIODOS", null, "", htmlAttributes: new { @id = "periodoi_id", @disabled = "disabled", @onchange = "setDates('')" })
+                                    <label id="lbl_perdiodode">De</label> @*B20180801 MGC Textos*@
+                                </div>
+                                <div class="input-field col s4">
+                                    @Html.DropDownList("ANIOS", null, "", htmlAttributes: new { @id = "anioi_id", @disabled = "disabled", @onchange = "setDates('')" })
+                                </div>
+                            </div><div class="col s12">
+                                <div class="input-field col s8">
+                                    @Html.DropDownList("PERIODOS", null, "", htmlAttributes: new { @id = "periodof_id", @disabled = "disabled", @onchange = "setDates('')" })
+                                    <label id="lbl_periodohasta">Hasta</label> @*B20180801 MGC Textos*@
+                                </div>
+                                <div class="input-field col s4">
+                                    @Html.DropDownList("ANIOS", null, "", htmlAttributes: new { @id = "aniof_id", @disabled = "disabled", @onchange = "setDates('')" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            var datei = document.getElementById("fechai_vig").value;
+                            var datef = document.getElementById("fechaf_vig").value;
+                            var elemth = document.querySelector('#fechai_vig2');
+                            var optionsth = {
+                                defaultDate: new Date(datei.split('/')[2], datei.split('/')[1] - 1, datei.split('/')[0]),
+                                format: 'dd/mm/yyyy',
+                                onClose: function (e) {
+                                    var datei = $('#fechai_vig2').val();
+                                    var datef = $('#fechaf_vig2').val();
+
+                                    var FechaActual = new Date();
+                                    anioActual = FechaActual.getFullYear();
+
+                                    date = new Date(datei)
+                                    AniofechaIni = date.getFullYear()
+
+                                    if (AniofechaIni < anioActual) {
+                                        M.toast({
+                                            classes: "pFechas",
+                                            displayLength: 1000000,
+                                            html: '<span style="padding-right:15px;"><i class="material-icons yellow-text">info</i></span> El año seleccionado no debe ser menor al año actual.'
+                                                + '<button class="btn-small btn-flat toast-action" onclick="dismiss(\'pFechas\')">Aceptar</button>'
+                                        });
+                                        $('#fechai_vig2').val("");
+                                        return;
+                                    }
+                                    if (AniofechaIni > (anioActual + 4)) {
+                                        M.toast({
+                                            classes: "pFechas",
+                                            displayLength: 1000000,
+                                            html: '<span style="padding-right:15px;"><i class="material-icons yellow-text">info</i></span> El año seleccionado no debe ser mayor a ' + (anioActual + 4) + '.'
+                                                + '<button class="btn-small btn-flat toast-action" onclick="dismiss(\'pFechas\')">Aceptar</button>'
+                                        });
+
+                                        $('#fechai_vig2').val("");
+                                        return;
+                                    }
+
+                                    if (datei !== "" && datef !== "") {
+                                        var res = validar_fechas(datei, datef);
+
+                                        if (!res) {
+                                            $('#fechaf_vig2').val("");
+
+                                            M.toast({
+                                                classes: "pFechas",
+                                                displayLength: 1000000,
+                                                html: '<span style="padding-right:15px;"><i class="material-icons yellow-text">info</i></span> Las fechas no tienen una secuencia correcta. '
+                                                    + '<button class="btn-small btn-flat toast-action" onclick="dismiss(\'pFechas\')">Aceptar</button>'
+                                            });
+                                        }
+                                    }
+                                },
+                                i18n: {
+                                    clear: 'Limpiar',
+                                    today: 'Hoy',
+                                    done: 'Seleccionar',
+                                    previousMonth: '‹',
+                                    nextMonth: '›',
+                                    months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                                    monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                                    weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                                    weekdays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                                    weekdaysAbbrev: ['D', 'L', 'M', 'X', 'J', 'V', 'S']
+                                }
+                            };
+                            var instanceth = M.Datepicker.init(elemth, optionsth);
+
+                            var elemtd = document.querySelector('#fechaf_vig2');
+                            var optionstd = {
+                                defaultDate: new Date(datef.split('/')[2], datef.split('/')[1] - 1, datef.split('/')[0]),
+                                format: 'dd/mm/yyyy',
+                                onClose: function (e) {
+                                    var datei = $('#fechai_vig2').val();
+                                    var datef = $('#fechaf_vig2').val();
+
+                                    var FechaActual = new Date();
+                                    anioActual = FechaActual.getFullYear();
+
+                                    date = new Date(datef)
+                                    AniofechaFin = date.getFullYear()
+
+                                    if (AniofechaFin < anioActual) {
+                                        M.toast({
+                                            classes: "pFechas",
+                                            displayLength: 1000000,
+                                            html: '<span style="padding-right:15px;"><i class="material-icons yellow-text">info</i></span> El año seleccionado no debe ser menor al año actual.'
+                                                + '<button class="btn-small btn-flat toast-action" onclick="dismiss(\'pFechas\')">Aceptar</button>'
+                                        });
+                                        $('#fechaf_vig2').val("");
+                                        return;
+                                    }
+                                    if (AniofechaFin > (anioActual + 4)) {
+                                        M.toast({
+                                            classes: "pFechas",
+                                            displayLength: 1000000,
+                                            html: '<span style="padding-right:15px;"><i class="material-icons yellow-text">info</i></span> El año seleccionado no debe ser mayor a ' + (anioActual + 4) + '.'
+                                                + '<button class="btn-small btn-flat toast-action" onclick="dismiss(\'pFechas\')">Aceptar</button>'
+                                        });
+                                        $('#fechaf_vig2').val("");
+                                        return;
+                                    }
+
+                                    if (datei !== "" && datef !== "") {
+                                        var res = validar_fechas(datei, datef);
+
+                                        if (!res) {
+                                            $('#fechaf_vig2').val("");
+                                            M.toast({
+                                                classes: "pFechas",
+                                                displayLength: 1000000,
+                                                html: '<span style="padding-right:15px;"><i class="material-icons yellow-text">info</i></span> Las fechas no tienen una secuencia correcta.'
+                                                    + '<button class="btn-small btn-flat toast-action" onclick="dismiss(\'pFechas\')">Aceptar</button>'
+                                            });
+                                        }
+                                    }
+                                },
+                                i18n: {
+                                    clear: 'Limpiar',
+                                    today: 'Hoy',
+                                    done: 'Seleccionar',
+                                    previousMonth: '‹',
+                                    nextMonth: '›',
+                                    months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                                    monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                                    weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                                    weekdays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                                    weekdaysAbbrev: ['D', 'L', 'M', 'X', 'J', 'V', 'S']
+                                }
+                            };
+                            var instancetd = M.Datepicker.init(elemtd, optionstd);
+
+                            function borrar(field) {
+                                field.value = "";
+                            }
+
+                        </script>
+
+                    }
+                    else
+                    {
+                        <input id="check_recurrente" type="hidden" value="" />
+                        <input name="group1" type="hidden" id="btn-date" />
+                        <input name="group1" type="hidden" checked id="btn-peri" />
+                        <div class="col s12">
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">date_range</i>
+                                @Html.EditorFor(model => model.FECHAI_VIG, new { htmlAttributes = new { @id = "fechai_vig", @class = "form-control datepicker " + @ViewBag.relacionada, @onkeyup = "borrar(this);" } })
+                                @Html.LabelFor(model => model.FECHAI_VIG, "De", htmlAttributes: new { @class = "active", @for = "fechai_vig2", @id = "lbl_fechavde" })@*B20180801 MGC Textos*@
+                            </div>
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">date_range</i>
+                                @Html.EditorFor(model => model.FECHAF_VIG, new { htmlAttributes = new { @id = "fechaf_vig", @class = "form-control datepicker " + @ViewBag.relacionada, onkeyup = "borrar(this);" } })
+                                @Html.LabelFor(model => model.FECHAF_VIG, "Hasta", htmlAttributes: new { @class = "active", @for = "fechaf_vig2", @id = "lbl_fechavhasta" })@*B20180801 MGC Textos*@
+                            </div>
+                        </div>
+                        <input type="hidden" id="fechai_vig2" value="@Model.FECHAI_VIG.Value.ToShortDateString()" />
+                        <input type="hidden" id="fechaf_vig2" value="@Model.FECHAF_VIG.Value.ToShortDateString()" />
+                    }
+                </div>
+            </div>
+            <div id="div_picker2"></div>
+        </div>
+        <div id="ref_soporte" style="display:none" class="col s12">
+            <div class="card-panel">
+                <h5 id="head_reffact">Referencia de Facturas</h5> @*B20180801 MGC Textos*@
+                <div class="row" style="margin-bottom:0;">
+                    <p>
+                        <label>
+                            <input id="check_facturas" name="unafact" type="hidden" value="@ViewBag.UNAFACTURA" />
+                            @if (Model.DOCUMENTOF != null)
+                            {
+                                if (Model.DOCUMENTOF.Count > 1)
+                                {
+                                    <input id="check_factura" type="checkbox" checked="checked" /><!--RSG 01.08.2018-->
+                                }
+                                else
+                                {
+                                    <input id="check_factura" type="checkbox" @*checked="checked"*@ /><!--RSG 01.08.2018-->
+                                }
+                            }
+                            else
+                            {
+                                <input id="check_factura" type="checkbox" @*checked="checked"*@ /><!--RSG 01.08.2018-->}
+                            <span id="span_multi">Multiples</span> @*B20180801 MGC Textos*@
+                        </label>
+                    </p>
+                    @*Cargar archivo excel soporte*@
+                    <div id="file_facturat" class="file-field input-field" style="display:none">
+                        <div class="btn">
+                            <span id="span_filefact">File</span> @*B20180801 MGC Textos*@
+                            <input type="file" class="file_sop" id="file_sop">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path  file_sop" type="text">
+                        </div>
+                    </div>
+                    <div class="table_sop" id="" style="display:none">
+                    </div>
+                    <table class="table_sop display" id="table_sop" cellspacing="0" style="width:100%;display:none">
+                        <thead>
+                            <tr>
+                                <th id="thead_pos">Pos</th> @*B20180801 MGC Textos*@
+                                <th id="thead_sociedad">Co. Code</th>@*@03-08-2018 jemo *@
+                                <th id="thead_fact">No. Factura Fiscal</th> @*B20180801 MGC Textos*@
+                                <th id="thead_fecha">Fecha Factura</th> @*B20180801 MGC Textos*@
+                                <th id="thead_bill">Billing</th> @*B20180801 MGC Textos*@
+                                <th id="thead_prov">Proveedor</th> @*B20180801 MGC Textos*@
+                                <th id="thead_provdesc">Proveedor Desc</th> @*B20180801 MGC Textos*@
+                                <th id="thead_control">Control</th> @*B20180801 MGC Textos*@
+                                <th id="thead_aut">Autorización</th> @*B20180801 MGC Textos*@
+                                <th id="thead_ven">Vencimiento</th> @*B20180801 MGC Textos*@
+                                <th id="thead_factk">Factura k</th> @*B20180801 MGC Textos*@
+                                <th id="thead_ejercicio">Año</th> @*B20180801 MGC Textos*@
+                                <th id="thead_payer">Payer</th> @*B20180801 MGC Textos*@@*@18-07-2018 jemo *@
+                                <th id="thead_desc">Customer</th> @*B20180801 MGC Textos*@@*@18-07-2018 jemo *@
+                                <th id="thead_importe">Importe por Factura</th> @*B20180801 MGC Textos*@@*@18-07-2018 jemo *@
+                                <th id="thead_belnr">Folio</th> @*B20180801 MGC Textos*@
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <table id="table_soph" class="display" cellspacing="0" style="display:none">
+                        <tbody>
+                            @if (Model.DOCUMENTOF != null)
+                            {
+                                @*//B20180625 MGC 2018.06.27*@
+                                for (var i = 0; i < Model.DOCUMENTOF.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.EditorFor(m => m.DOCUMENTOF[i].POS)@*//B20180625 MGC 2018.06.27*@
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(m => m.DOCUMENTOF[i].SOCIEDAD)@*//B20180625 JEMO 2018.08.03*@
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(m => m.DOCUMENTOF[i].FACTURA)@*//B20180625 MGC 2018.06.27*@
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(m => m.DOCUMENTOF[i].FECHA)@*//B20180625 MGC 2018.06.27*@
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(m => m.DOCUMENTOF[i].BILL_DOC)@*//B20180625 MGC 2018.06.27*@
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(m => m.DOCUMENTOF[i].PROVEEDOR)@*//B20180625 MGC 2018.06.27*@
+                                        </td>
+                                        <td></td>
+                                        <td>
+                                            @Html.EditorFor(m => m.DOCUMENTOF[i].CONTROL)@*//B20180625 MGC 2018.06.27*@
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(m => m.DOCUMENTOF[i].AUTORIZACION)@*//B20180625 MGC 2018.06.27*@
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(m => m.DOCUMENTOF[i].VENCIMIENTO)@*//B20180625 MGC 2018.06.27*@
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(m => m.DOCUMENTOF[i].FACTURAK)@*//B20180625 MGC 2018.06.27*@
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(m => m.DOCUMENTOF[i].EJERCICIOK)@*//B20180625 MGC 2018.06.27*@
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(m => m.DOCUMENTOF[i].PAYER)@*//B20180625 JEMO 2018.06.27*@
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(m => m.DOCUMENTOF[i].DESCRIPCION)@*//B20180625 JEMO 2018.06.27*@
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(m => m.DOCUMENTOF[i].IMPORTE_FAC)@*//B20180625 JEMO 2018.06.27*@
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(m => m.DOCUMENTOF[i].BELNR)@*//B20180625 MGC 2018.06.27*@
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

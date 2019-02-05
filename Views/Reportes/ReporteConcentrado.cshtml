@@ -1,0 +1,1117 @@
+﻿@model IEnumerable<TAT001.Entities.DOCUMENTO>
+@*@model TAT001.Entities.DOCUMENTO*@
+
+
+@{
+    /**/
+
+    //ViewBag.Title = "Páginas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 1100;
+    ViewBag.carpeta_r = 1101;
+    List<Tuple<decimal, decimal>> negAmount = new List<Tuple<decimal, decimal>>();
+}
+@if (!ViewBag.Display)
+{
+    <script>
+        $(document).ready(function () {
+            $('select.select_all').siblings('ul').prepend("<li id=sm_select_all><span id='filters_all'>Todas las Opciones</span></li>");
+            $('li#sm_select_all').on('click', function () {
+                var jq_elem = $(this),
+                    jq_elem_span = jq_elem.find('span'),
+                    select_all = jq_elem_span.text() == 'Todas las Opciones',
+                    set_text = select_all ? 'Borrar Selección' : 'Todas las Opciones';
+                jq_elem_span.text(set_text);
+                jq_elem.siblings('li').filter(function () {
+                    return $(this).find('input').prop('checked') != select_all;
+                }).click();
+            });
+            //$(document).ready(function () {
+            //    $("#sendbtn").click(function () {
+            //        $("#excelBtn").prop("disabled", "false");
+            //    });
+            //});
+        });
+    </script>
+}
+
+@using (Html.BeginForm("ExportReporteConcentrado", "Reportes", FormMethod.Post, new { id = "exportForm", @style = "display:inline;" }))
+{
+    if (ViewBag.Display)
+    {
+        <div class="" style="float: right;margin-left: 10px;">
+            <div class="col s12 right-align">
+                <input type="hidden" name="selectedcocode" value="@((ViewBag.selectedcocode == null)?String.Empty:ViewBag.selectedcocode)" />
+                <input type="hidden" name="selectedyear" value="@((ViewBag.selectedyear == null)?String.Empty:ViewBag.selectedyear)" />
+                <input type="hidden" name="selectedperiod" value="@((ViewBag.selectedperiod == null)?String.Empty:ViewBag.selectedperiod)" />
+                <input type="hidden" name="selectedpais" value="@((ViewBag.selectedpais == null)?String.Empty:ViewBag.selectedpais)" />
+                <input type="hidden" name="selectedcampos" value="@((ViewBag.selectedcampos == null)?String.Empty:ViewBag.selectedcampos)" />
+                <input type="hidden" id="selectedsubfilters" name="selectedsubfilters" value="" />
+                <button id="btnExport" name="excel" class="btn-small" type="button">Exportar</button>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $(document).on('click', '#btnExport', function () {
+                    $("#selectedsubfilters").val("");
+                    $("select.tablesorter-filter").each(function (index, element) {
+                        if ($("option:selected", this).attr('parsed') != undefined)
+                            $("#selectedsubfilters").val($("#selectedsubfilters").val() + $(this).attr('data-column') + "|ST|" + $("option:selected", this).val() + "|T,T|");
+                        else
+                            $("#selectedsubfilters").val($("#selectedsubfilters").val() + $(this).attr('data-column') + "|ST||T,T|");
+                    });
+                    $('#exportForm').submit();
+                });
+            });
+        </script>
+    }
+}
+
+@using (Html.BeginForm("ReporteConcentrado", "Reportes", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    System.Globalization.TextInfo myTI = new System.Globalization.CultureInfo("en-US", false).TextInfo;
+    System.Globalization.DateTimeFormatInfo formatoFecha = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat;
+    DateTime newDate = DateTime.Now;
+    int yeard = newDate.Year;
+    int year1 = yeard + 1;
+    int year2 = yeard + 2;
+    int yearback = yeard - 1;
+    int yearback2 = yeard - 2;
+    <div class="">
+        <div class="col s12 right-align">
+            <button class="btn-small" id="sendbtn" type="submit" name="action">Consultar</button>
+            @*<input class="btn-small" id="id_excel" type="button" value="Generar Excel" name="action" />*@
+        </div>
+    </div>
+    <div class="card-panel">
+        <div class="row">
+            <div class="row" style="margin-bottom:0;">
+                <div class="input-field col s3 m3 l3">
+                    <select multiple name="selectcocode" id="selectcocode" class="comcode" required="">
+                        @try
+                        {
+                            foreach (var item in ViewBag.sociedad)
+                            {
+                                <option value="@item.BUKRS">@item.BUKRS</option>
+                            }
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    </select>
+                    <label id="lbl_cocode">Co. Code *</label>
+                    <script>
+                        $(document).on('change', '#selectcocode', function () {
+                            var vcocode = $("#selectcocode").val();
+                            if (vcocode != null) {
+                                vcocode = vcocode.join(',');
+                            }
+                            $.ajax({
+                                url: "../Listas/ReportesFiltroPaises",
+                                type: "GET",
+                                dataType: "json",
+                                data: { cocodes: vcocode },//cocode: $(this).val() },
+                                success: function (data) {
+                                    $('#selectpais').find('option').remove();
+                                    var opciones = 0;
+                                    for (var i in data) {
+                                        $('#selectpais').append($('<option>', { value: data[i].LAND }).text(data[i].LANDX));
+                                        var elem = document.querySelector('#selectpais');
+                                        var options = [];
+                                        var instance = M.FormSelect.init(elem, options);
+                                    }
+                                },
+                                //error: function (data) {
+                                //}
+                            })
+                        });
+                    </script>
+                </div>
+                <div class="input-field col s3 m3 l3">
+                    <select multiple name="selectpais" id="selectpais" class="comcode select_all">
+                        @*@try
+                            {
+                                foreach (TAT001.Entities.PAI pais in ViewBag.paises)
+                                {
+                                    if (pais.ACTIVO)
+                                    {
+                                        <option value="@pais.LAND">@pais.LANDX</option>
+                                    }
+                                }
+
+                            }
+                            catch (Exception)
+                            {
+                                <option value="" id="no_optper">No hay opciones</option>
+                            }*@
+                    </select>
+                    <label id="lbl_pais">Pais</label>
+                </div>
+                <div class="input-field col s2 m2 l2">
+                    <select multiple name="selectperiod" id="selectperiod" class="comcode select_all" required="">
+
+                        @try
+                        {
+                            foreach (var periodo in ViewBag.periodo)
+                            {
+                                var concat = "P";
+                                if (Int32.Parse(periodo.ACTIVO) == 1)
+                                {
+                                    Console.Write(periodo.ACTIVO);
+                                    <option value="@periodo.ID">@(concat + periodo.ID)</option>
+
+                                }
+                                else { }
+                            }
+
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    </select>
+                    <label id="lbl_periodo">Periodo *</label>
+                </div>
+                <div class="input-field col s2 m2 l2">
+                    <select multiple name="selectyear" id="selectyear" class="comcode select_all" required="">
+                        @if (yeard == DateTime.Now.Year)
+                        {
+
+                            <option value="@yeard">@yeard</option>
+                            <option value="@year1">@year1</option>
+                            <option value="@year2">@year2</option>
+                        }
+                        else
+                        {
+                            <option value="@yearback2">@yearback2</option>
+                            <option value="@yearback">@yearback</option>
+                            <option value="@yeard">@yeard</option>
+                        }
+                    </select>
+                    <label id="lbl_anio">Año *</label>
+                </div>
+                <div class="input-field col s2 m2 l2">
+                    <select multiple name="selectcampos" id="selectcampos" class="comcode select_all" required="">
+                        <option id="opt_campo_1" value="1">Co. Code</option>
+                        <option id="opt_campo_2" value="2">País</option>
+                        <option id="opt_campo_3" value="3">Subregión</option>
+                        <option id="opt_campo_4" value="4">Estado</option>
+                        <option id="opt_campo_5" value="5">Ciudad</option>
+                        <option id="opt_campo_6" value="6">Número solicitud</option>
+                        <option id="opt_campo_7" value="7">Fecha Solicitud</option>
+                        <option id="opt_campo_8" value="8">Hora solicitud</option>
+                        <option id="opt_campo_9" value="9">Semana del periodo</option>
+                        <option id="opt_campo_10" value="10">Periodo contable</option>
+                        <option id="opt_campo_11" value="11">Año</option>
+                        <option id="opt_campo_12" value="12">Tipo Solicitud</option>
+                        <option id="opt_campo_13" value="13">Tipo Provisión</option>
+                        <option id="opt_campo_14" value="14">Tipo NC</option>
+                        <option id="opt_campo_15" value="15">Tipo OP</option>
+                        <option id="opt_campo_16" value="16">Status</option>
+                        <option id="opt_campo_17" value="17">Concepto</option>
+                        <option id="opt_campo_18" value="18">Mecánica</option>
+                        <option id="opt_campo_19" value="19">De</option>
+                        <option id="opt_campo_20" value="20">A</option>
+                        <option id="opt_campo_21" value="21">De</option>
+                        <option id="opt_campo_22" value="22">A</option>
+                        <option id="opt_campo_23" value="23">Clasificación</option>
+                        <option id="opt_campo_24" value="24">Cuenta Contable Gasto</option>
+                        <option id="opt_campo_25" value="25">Nombre de la cuenta</option>
+                        <option id="opt_campo_26" value="26">Cliente</option>
+                        <option id="opt_campo_27" value="27">Nombre</option>
+                        <option id="opt_campo_28" value="28">Tipo de Cliente</option>
+                        <option id="opt_campo_29" value="29">Organización de Ventas</option>
+                        <option id="opt_campo_30" value="30">Tax ID</option>
+                        <option id="opt_campo_31" value="31">Canal</option>
+                        <option id="opt_campo_32" value="32">Descripción</option>
+                        <option id="opt_campo_33" value="33">Nombre de Contacto</option>
+                        <option id="opt_campo_34" value="34">Email de Contacto</option>
+                        <option id="opt_campo_35" value="35">$ Monto Original de Provisión</option>
+                        <option id="opt_campo_36" value="36">$ Monto NC/OP</option>
+                        <option id="opt_campo_37" value="37">$Monto Aplicado</option>
+                        <option id="opt_campo_38" value="38">Saldo Remanente Provisión</option>
+                        <option id="opt_campo_39" value="39">$ Monto Reverso Provisión</option>
+                        <option id="opt_campo_40" value="40">% Reverso</option>
+                        <option id="opt_campo_41" value="41">$ Exceso/(Insuficiencia) Provisión</option>
+                        <option id="opt_campo_42" value="42">% Exceso/(Insuficiencia) Provisión</option>
+                        <option id="opt_campo_43" value="43">Impactos / Beneficios en el gasto del Periodo</option>
+                        <option id="opt_campo_44" value="44">Núm. Registro Provisión</option>
+                        <option id="opt_campo_45" value="45">Núm. Registro NC/OP</option>
+                        <option id="opt_campo_46" value="46">Núm. Registro Reverso</option>
+                        <option id="opt_campo_47" value="47">Fecha Reverso Provisión</option>
+                        <option id="opt_campo_48" value="48">Periodo Contable Reverso</option>
+                        <option id="opt_campo_49" value="49">Razón Reverso</option>
+                        <option id="opt_campo_50" value="50">Comentario Reverso</option>
+                        <option id="opt_campo_51" value="51">Usuario</option>
+                        <option id="opt_campo_52" value="52">Back Up</option>
+                        <option id="opt_campo_53" value="53">Creado Por</option>
+                        <option id="opt_campo_54" value="54">Creado Por ID</option>
+                        <option id="opt_campo_55" value="55">Solicitado Por</option>
+                        <option id="opt_campo_56" value="56">Solicitado Por ID</option>
+                        <option id="opt_campo_57" value="57">Modificado Por</option>
+                        <option id="opt_campo_58" value="58">Modificado Por ID</option>
+                        <option id="opt_campo_59" value="59">Aprobador Nivel 1</option>
+                        <option id="opt_campo_60" value="60">Aprobador Nivel 2</option>
+                        <option id="opt_campo_61" value="61">Aprobador Nivel 3</option>
+                        <option id="opt_campo_62" value="62">Aprobador Nivel 4</option>
+                        <option id="opt_campo_63" value="63">Aprobador Nivel 5</option>
+                        <option id="opt_campo_64" value="64">Proveedor</option>
+                        <option id="opt_campo_65" value="65">Nombre Proveedor</option>
+                        <option id="opt_campo_66" value="66">Número Factura Proveedor</option>
+                        <option id="opt_campo_67" value="67">Número Factura Kellogg´s</option>
+                        <option id="opt_campo_68" value="68">Número NC </option>
+                        <option id="opt_campo_69" value="69">Número Orden de Pago</option>
+                        <option id="opt_campo_70" value="70">Expense Recognition en periodo</option>
+                        <option id="opt_campo_71" value="71">Expense Recognition Ejercicio</option>
+                        <option id="opt_campo_72" value="72">Soporte Incorrecto</option>
+                        <option id="opt_campo_73" value="73">Soporte validado con base variable pendiente</option>
+                        <option id="opt_campo_74" value="74">Carta</option>
+                        <option id="opt_campo_75" value="75">Contrato</option>
+                        <option id="opt_campo_76" value="76">JBP</option>
+                        <option id="opt_campo_77" value="77">Factura</option>
+                        <option id="opt_campo_78" value="78">Otros</option>
+                        <option id="opt_campo_79" value="79">Negociación por monto</option>
+                        <option id="opt_campo_80" value="80">Negociación por %</option>
+                        <option id="opt_campo_81" value="81">Distribución por material</option>
+                        <option id="opt_campo_82" value="82">Distribución categoría</option>
+                        <option id="opt_campo_83" value="83">Monto Base</option>
+                        <option id="opt_campo_84" value="84">Monto %</option>
+                        <option id="opt_campo_85" value="85">Recurrente</option>
+                        <option id="opt_campo_86" value="86">Recurrente por porcentaje</option>
+                        <option id="opt_campo_87" value="87">Recurrente por Monto</option>
+                        <option id="opt_campo_88" value="88">Recurrente Cancelada</option>
+                        <option id="opt_campo_89" value="89">Objetivo Inicio</option>
+                        <option id="opt_campo_90" value="90">Objetivo Límite</option>
+                        <option id="opt_campo_91" value="91">Estatus</option>
+                        <option id="opt_campo_92" value="92">Venta del Periodo</option>
+                        <option id="opt_campo_93" value="93">Monto Provisión</option>
+                        <option id="opt_campo_94" value="94">Back Order</option>
+                        <option id="opt_campo_95" value="95">Venta Real + BO</option>
+                        <option id="opt_campo_96" value="96">NC / OP o Reverso</option>
+                        <option id="opt_campo_97" value="97">Monto</option>
+                    </select>
+                    <label id="lbl_campos">Campos *</label>
+                </div>
+            </div>
+        </div>
+        <script>
+            var elem = document.querySelectorAll('select');
+            var options = [];
+            var instance = M.FormSelect.init(elem, options);
+        </script>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+        <link href="~/Content/dataTable.css" rel="stylesheet" />
+        @*<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>*@
+        <script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+        @*<link href="~/Content/dataTable.css" rel="stylesheet" />
+            <link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />*@
+        <script src="~/Scripts/subfilters/jquery.tablesorter.js"></script>
+        <link href="~/Scripts/subfilters/jquery.tablesorter.pager.css" rel="stylesheet" />
+        <script src="~/Scripts/subfilters/jquery.tablesorter.pager.js"></script>
+        <script src="~/Scripts/subfilters/widget-filter.js"></script>
+        <script src="~/Scripts/tablesort/tableToExcel.js"></script>
+        @*<script>
+                var elem = document.querySelector('select');
+                var options = [];
+                var instance = M.FormSelect.init(elem, options);
+            </script>*@
+    </div>
+    if (ViewBag.display)
+    {
+        <script>
+
+            $(document).ready(function () {
+                $(".grid thead td").click(function () {
+                    showFilterOption(this);
+                });
+                //$("#excelBtn").click(function () {
+                //    $("#table").tableExport();
+                //});
+                $('select.select_all').siblings('ul').prepend('<li id=sm_select_all id="filters_all"><span>Todas Las Opciones</span></li>');
+                $('li#sm_select_all').on('click', function () {
+                    var jq_elem = $(this),
+                        jq_elem_span = jq_elem.find('span'),
+                        select_all = jq_elem_span.text() == 'Todas Las Opciones',
+                        set_text = select_all ? 'Borrar Selección' : 'Todas Las Opciones';
+                    jq_elem_span.text(set_text);
+                    jq_elem.siblings('li').filter(function () {
+                        return $(this).find('input').prop('checked') != select_all;
+                    }).click();
+                });
+                $("#id_excel").click(function () {
+                    $("#table").trigger("filterReset");
+                    $('#table').trigger('destroyPager');
+                    $('#table').trigger('destroy');
+                    var pager = $('#table tfoot').html();
+                    //var filters = $('#table thead tr.tablesorter-filter-row').html();
+                    $('#table tfoot').html("");
+                    //$('#table thead tr.tablesorter-filter-row').html("");
+                    tableToExcel('table', 'Reporte Concentrado');
+                    $('#table tfoot').html(pager);
+                    //$('#table thead tr.tablesorter-filter-row').html(filters);
+                    $('#table').tablesorter({
+                        theme: "materialize",
+                        headerTemplate: '{content} {icon}',
+                        widthFixed: true,
+                        widgets: ["filter", "zebra", "stickyHeaders"],
+                        widgetOptions: {
+                            stickyHeaders: '',
+                            stickyHeaders_offset: 0,
+                            stickyHeaders_cloneId: '-sticky',
+                            stickyHeaders_addResizeEvent: true,
+                            stickyHeaders_includeCaption: true,
+                            stickyHeaders_zIndex: 2,
+                            stickyHeaders_attachTo: null,
+                            stickyHeaders_xScroll: null,
+                            stickyHeaders_yScroll: null,
+                            stickyHeaders_filteredToTop: true,
+                        }
+                    }).tablesorterPager({
+                        container: $(".ts-pager"),
+                        cssGoto: ".pagenum",
+                        removeRows: true,
+                        output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+                    });
+                });
+            });
+
+
+            $(function () {
+                $("#table").tablesorter({
+                    theme: "materialize",
+                    headerTemplate: '{content} {icon}',
+                    widthFixed: true,
+                    // widget code contained in the jquery.tablesorter.widgets.js file
+                    // use the zebra stripe widget if you plan on hiding any rows (filter widget)
+                    widgets: ["filter", "zebra", "stickyHeaders"],
+
+                    widgetOptions: {
+                        // extra class name added to the sticky header row
+                        stickyHeaders: '',
+                        // number or jquery selector targeting the position:fixed element
+                        stickyHeaders_offset: 0,
+                        // added to table ID, if it exists
+                        stickyHeaders_cloneId: '-sticky',
+                        // trigger "resize" event on headers
+                        stickyHeaders_addResizeEvent: true,
+                        // if false and a caption exist, it won't be included in the sticky header
+                        stickyHeaders_includeCaption: true,
+                        // The zIndex of the stickyHeaders, allows the user to adjust this to their needs
+                        stickyHeaders_zIndex: 2,
+                        // jQuery selector or object to attach sticky header to
+                        stickyHeaders_attachTo: null,
+                        // jQuery selector or object to monitor horizontal scroll position (defaults: xScroll > attachTo > window)
+                        stickyHeaders_xScroll: null,
+                        // jQuery selector or object to monitor vertical scroll position (defaults: yScroll > attachTo > window)
+                        stickyHeaders_yScroll: null,
+
+                        // scroll table top into view after filtering
+                        stickyHeaders_filteredToTop: true,
+
+                        // using the default zebra striping class name, so it actually isn't included in the theme variable above
+                        // this is ONLY needed for materialize theming if you are using the filter widget, because rows are hidden
+                        // zebra: ["even", "odd"],
+
+                        // reset filters button
+                        // filter_reset: ".reset",
+
+                        // extra css class name (string or array) added to the filter element (input or select)
+                        // select needs a "browser-default" class or it gets hidden
+                        // filter_cssFilter: ["", "", "browser-default"]
+                    }
+                })
+                    .tablesorterPager({
+
+                        // target the pager markup - see the HTML block below
+                        container: $(".ts-pager"),
+
+                        // target the pager page select dropdown - choose a page
+                        cssGoto: ".pagenum",
+
+                        // remove rows from the table to speed up the sort of large tables.
+                        // setting this to false, only hides the non-visible rows; needed if you plan to add/remove rows with the pager enabled.
+                        removeRows: true,
+
+                        // output string - default is '{page}/{totalPages}';
+                        // possible variables: {page}, {totalPages}, {filteredPages}, {startRow}, {endRow}, {filteredRows} and {totalRows}
+                        output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+
+                    });
+            });
+            var tableToExcel = (function () {
+                var uri = 'data:application/vnd.ms-excel;base64,'
+                    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+                    , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+                    , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+                return function (table, name) {
+                    if (!table.nodeType) table = document.getElementById(table)
+                    var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+                    window.location.href = uri + base64(format(template, ctx))
+                }
+            })()
+        </script>
+        <div style="width:100%;height:50vh;overflow:scroll;">
+            <table class="table mdl-data-table striped grid centered table" id="table" style="width:100%;">
+                <thead>
+                    <tr>
+                        @if (((string[])ViewBag.campos).Contains("1"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_1">Co. Code</th>}
+                        @if (((string[])ViewBag.campos).Contains("2"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_2">País</th>}
+                        @if (((string[])ViewBag.campos).Contains("3"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_3">Subregión</th>}
+                        @if (((string[])ViewBag.campos).Contains("4"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_4">Estado</th>}
+                        @if (((string[])ViewBag.campos).Contains("5"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_5">Ciudad</th>}
+                        @if (((string[])ViewBag.campos).Contains("6"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_6">Número solicitud</th>}
+                        @if (((string[])ViewBag.campos).Contains("7"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_7">Fecha Solicitud</th>}
+                        @if (((string[])ViewBag.campos).Contains("8"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_8">Hora solicitud</th>}
+                        @if (((string[])ViewBag.campos).Contains("9"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_9">Semana del periodo</th>}
+                        @if (((string[])ViewBag.campos).Contains("10"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_10">Periodo contable</th>}
+                        @if (((string[])ViewBag.campos).Contains("11"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_11">Año</th>}
+                        @if (((string[])ViewBag.campos).Contains("12"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_12">Tipo Solicitud</th>}
+                        @if (((string[])ViewBag.campos).Contains("13"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_13">Tipo Provisión</th>}
+                        @if (((string[])ViewBag.campos).Contains("14"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_14">Tipo NC</th>}
+                        @if (((string[])ViewBag.campos).Contains("15"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_15">Tipo OP</th>}
+                        @if (((string[])ViewBag.campos).Contains("16"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_16">Status</th>}
+                        @if (((string[])ViewBag.campos).Contains("17"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_17">Concepto</th>}
+                        @if (((string[])ViewBag.campos).Contains("18"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_18">Mecánica</th>}
+                        @if (((string[])ViewBag.campos).Contains("19"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_19">De</th>}
+                        @if (((string[])ViewBag.campos).Contains("20"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_20">A</th>}
+                        @if (((string[])ViewBag.campos).Contains("21"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_21">De</th>}
+                        @if (((string[])ViewBag.campos).Contains("22"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_22">A</th>}
+                        @if (((string[])ViewBag.campos).Contains("23"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_23">Clasificación</th>}
+                        @if (((string[])ViewBag.campos).Contains("24"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_24">Cuenta Contable Gasto</th>}
+                        @if (((string[])ViewBag.campos).Contains("25"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_25">Nombre de la cuenta</th>}
+                        @if (((string[])ViewBag.campos).Contains("26"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_26">Cliente</th>}
+                        @if (((string[])ViewBag.campos).Contains("27"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_27">Nombre</th>}
+                        @if (((string[])ViewBag.campos).Contains("28"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_28">Tipo de Cliente</th>}
+                        @if (((string[])ViewBag.campos).Contains("29"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_29">Organización de Ventas</th>}
+                        @if (((string[])ViewBag.campos).Contains("30"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_30">Tax ID</th>}
+                        @if (((string[])ViewBag.campos).Contains("31"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_31">Canal</th>}
+                        @if (((string[])ViewBag.campos).Contains("32"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_32">Descripción</th>}
+                        @if (((string[])ViewBag.campos).Contains("33"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_33">Nombre de Contacto</th>}
+                        @if (((string[])ViewBag.campos).Contains("34"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_34">Email de Contacto</th>}
+                        @if (((string[])ViewBag.campos).Contains("35"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_35">$ Monto Original de Provisión</th>}
+                        @if (((string[])ViewBag.campos).Contains("36"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_36">$ Monto NC/OP</th>}
+                        @if (((string[])ViewBag.campos).Contains("37"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_37">$Monto Aplicado</th>}
+                        @if (((string[])ViewBag.campos).Contains("38"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_38">Saldo Remanente Provisión</th>}
+                        @if (((string[])ViewBag.campos).Contains("39"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_39">$ Monto Reverso Provisión</th>}
+                        @if (((string[])ViewBag.campos).Contains("40"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_40">% Reverso</th>}
+                        @if (((string[])ViewBag.campos).Contains("41"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_41">$ Exceso/(Insuficiencia) Provisión</th>}
+                        @if (((string[])ViewBag.campos).Contains("42"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_42">% Exceso/(Insuficiencia) Provisión</th>}
+                        @if (((string[])ViewBag.campos).Contains("43"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_43">Impactos / Beneficios en el gasto del Periodo</th>}
+                        @if (((string[])ViewBag.campos).Contains("44"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_44">Núm. Registro Provisión</th>}
+                        @if (((string[])ViewBag.campos).Contains("45"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_45">Núm. Registro NC/OP</th>}
+                        @if (((string[])ViewBag.campos).Contains("46"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_46">Núm. Registro Reverso</th>}
+                        @if (((string[])ViewBag.campos).Contains("47"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_47">Fecha Reverso Provisión</th>}
+                        @if (((string[])ViewBag.campos).Contains("48"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_48">Periodo Contable Reverso</th>}
+                        @if (((string[])ViewBag.campos).Contains("49"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_49">Razón Reverso</th>}
+                        @if (((string[])ViewBag.campos).Contains("50"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_50">Comentario Reverso</th>}
+                        @if (((string[])ViewBag.campos).Contains("51"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_51">Usuario</th>}
+                        @if (((string[])ViewBag.campos).Contains("52"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_52">Back Up</th>}
+                        @if (((string[])ViewBag.campos).Contains("53"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_53">Creado Por</th>}
+                        @if (((string[])ViewBag.campos).Contains("54"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_54">Creado Por ID</th>}
+                        @if (((string[])ViewBag.campos).Contains("55"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_55">Solicitado Por</th>}
+                        @if (((string[])ViewBag.campos).Contains("56"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_56">Solicitado Por ID</th>}
+                        @if (((string[])ViewBag.campos).Contains("57"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_57">Modificado Por</th>}
+                        @if (((string[])ViewBag.campos).Contains("58"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_58">Modificado Por ID</th>}
+                        @if (((string[])ViewBag.campos).Contains("59"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_59">Aprobador Nivel 1</th>}
+                        @if (((string[])ViewBag.campos).Contains("60"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_60">Aprobador Nivel 2</th>}
+                        @if (((string[])ViewBag.campos).Contains("61"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_61">Aprobador Nivel 3</th>}
+                        @if (((string[])ViewBag.campos).Contains("62"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_62">Aprobador Nivel 4</th>}
+                        @if (((string[])ViewBag.campos).Contains("63"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_63">Aprobador Nivel 5</th>}
+                        @if (((string[])ViewBag.campos).Contains("64"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_64">Proveedor</th>}
+                        @if (((string[])ViewBag.campos).Contains("65"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_65">Nombre Proveedor</th>}
+                        @if (((string[])ViewBag.campos).Contains("66"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_66">Número Factura Proveedor</th>}
+                        @if (((string[])ViewBag.campos).Contains("67"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_67">Número Factura Kellogg´s</th>}
+                        @if (((string[])ViewBag.campos).Contains("68"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_68">Número NC </th>}
+                        @if (((string[])ViewBag.campos).Contains("69"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_69">Número Orden de Pago</th>}
+                        @if (((string[])ViewBag.campos).Contains("70"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_70">Expense Recognition en periodo</th>}
+                        @if (((string[])ViewBag.campos).Contains("71"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_71">Expense Recognition Ejercicio</th>}
+                        @if (((string[])ViewBag.campos).Contains("72"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_72">Soporte Incorrecto</th>}
+                        @if (((string[])ViewBag.campos).Contains("73"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_73">Soporte validado con base variable pendiente</th>}
+                        @if (((string[])ViewBag.campos).Contains("74"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_74">Carta</th>}
+                        @if (((string[])ViewBag.campos).Contains("75"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_75">Contrato</th>}
+                        @if (((string[])ViewBag.campos).Contains("76"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_76">JBP</th>}
+                        @if (((string[])ViewBag.campos).Contains("77"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_77">Factura</th>}
+                        @if (((string[])ViewBag.campos).Contains("78"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_78">Otros</th>}
+                        @if (((string[])ViewBag.campos).Contains("79"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_79">Negociación por monto</th>}
+                        @if (((string[])ViewBag.campos).Contains("80"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_80">Negociación por %</th>}
+                        @if (((string[])ViewBag.campos).Contains("81"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_81">Distribución por material</th>}
+                        @if (((string[])ViewBag.campos).Contains("82"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_82">Distribución categoría</th>}
+                        @if (((string[])ViewBag.campos).Contains("83"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_83">Monto Base</th>}
+                        @if (((string[])ViewBag.campos).Contains("84"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_84">Monto %</th>}
+                        @if (((string[])ViewBag.campos).Contains("85"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_85">Recurrente</th>}
+                        @if (((string[])ViewBag.campos).Contains("86"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_86">Recurrente por porcentaje</th>}
+                        @if (((string[])ViewBag.campos).Contains("87"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_87">Recurrente por Monto</th>}
+                        @if (((string[])ViewBag.campos).Contains("88"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_88">Recurrente Cancelada</th>}
+                        @if (((string[])ViewBag.campos).Contains("89"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_89">Objetivo Inicio</th>}
+                        @if (((string[])ViewBag.campos).Contains("90"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_90">Objetivo Límite</th>}
+                        @if (((string[])ViewBag.campos).Contains("91"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_91">Estatus</th>}
+                        @if (((string[])ViewBag.campos).Contains("92"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_92">Venta del Periodo</th>}
+                        @if (((string[])ViewBag.campos).Contains("93"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_93">Monto Provisión</th>}
+                        @if (((string[])ViewBag.campos).Contains("94"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_94">Back Order</th>}
+                        @if (((string[])ViewBag.campos).Contains("95"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_95">Venta Real + BO</th>}
+                        @if (((string[])ViewBag.campos).Contains("96"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_96">NC / OP o Reverso</th>}
+                        @if (((string[])ViewBag.campos).Contains("97"))
+                        {
+                            <th class="filter-select" data-placeholder="Todas las opciones" id="head_campo_97">Monto</th>}
+                    </tr>
+                </thead>
+                <tfoot>
+                    <!-- include "tablesorter-ignoreRow" class for pager rows in thead -->
+                    <tr class="tablesorter-ignoreRow">
+                        <th colspan="2" class="ts-pager form-horizontal">
+                            <button type="button" class="btn first"><i class="small material-icons">first_page</i></button>
+                            <button type="button" class="btn prev"><i class="small material-icons">navigate_before</i></button>
+                            <span class="pagedisplay"></span>
+                            <!-- this can be any element, including an input -->
+                            <button type="button" class="btn next"><i class="small material-icons">navigate_next</i></button>
+                            <button type="button" class="btn last"><i class="small material-icons">last_page</i></button>
+                            <div style="padding:0 78% 0 0;">
+                                <label class="btn_length" id="por_pag">Ver por página</label>
+                                <select class="pagesize" id="selecc" title="Select page size">
+                                    <option selected="selected" value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="40">40</option>
+                                    <option value="50">50</option>
+                                </select>
+                                <label class="label_pag">Ir a Página</label>
+                                <select class="pagenum browser-default" title="Select page number"></select>
+                            </div>
+                        </th>
+                        <th colspan="95">
+                        </th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @{
+                        string camposstring = ViewBag.camposstring.ToString();
+                    }
+                    @foreach (TAT001.Models.ReportesModel.Concentrado item in ViewBag.lista_reporte)
+                    {
+                        <tr>
+                            @if (((string[])ViewBag.campos).Contains("1"))
+                            {
+                                <td>@(item.CoCode_STRING)</td>}<!--Co. Code-->
+                            @if (((string[])ViewBag.campos).Contains("2"))
+                            {
+                                <td>@(item.Pais_STRING)</td>}<!--País-->
+                            @if (((string[])ViewBag.campos).Contains("3"))
+                            {
+                                <td>@(item.Subregion_STRING)</td>}<!--Subregión-->
+                            @if (((string[])ViewBag.campos).Contains("4"))
+                            {
+                                <td>@(item.Estado_STRING)</td>}<!--Estado-->
+                            @if (((string[])ViewBag.campos).Contains("5"))
+                            {
+                                <td>@(item.Ciudad_STRING)</td>}<!--Ciudad-->
+                            @if (((string[])ViewBag.campos).Contains("6"))
+                            {
+                                <td><a href="@Url.Action("Details", "Solicitudes", new { id = item.documento.NUM_DOC })" style="cursor:pointer">@item.NumeroSolicitud_STRING </a></td>}<!--Número solicitud-->
+                            @if (((string[])ViewBag.campos).Contains("7"))
+                            {
+                                <td>@(item.FechaSolicitud_STRING)</td>}<!--Fecha Solicitud-->
+                            @if (((string[])ViewBag.campos).Contains("8"))
+                            {
+                                <td>@(item.HoraSolicitud_STRING)</td>}<!--Hora solicitud-->
+                            @if (((string[])ViewBag.campos).Contains("9"))
+                            {
+                                <td>@(item.SemanaPeriodo_STRING)</td>}<!--Semana del periodo-->
+                            @if (((string[])ViewBag.campos).Contains("10"))
+                            {
+                                <td>@(item.PeriodoContable_STRING)</td>}<!--Periodo contable-->
+                            @if (((string[])ViewBag.campos).Contains("11"))
+                            {
+                                <td>@(item.Anio_STRING)</td>}<!--Año-->
+                            @if (((string[])ViewBag.campos).Contains("12"))
+                            {
+                                <td>@(item.TipoSolicitud_STRING)</td>}<!--Tipo Solicitud-->
+                            @if (((string[])ViewBag.campos).Contains("13"))
+                            {
+                                <td>@(item.TipoProvision_STRING)</td>}<!--Tipo Provisión-->
+                            @if (((string[])ViewBag.campos).Contains("14"))
+                            {
+                                <td>@(item.TipoNC_STRING)</td>}<!--Tipo NC-->
+                            @if (((string[])ViewBag.campos).Contains("15"))
+                            {
+                                <td>@(item.TipoOP_STRING)</td>}<!--Tipo OP-->
+                            @if (((string[])ViewBag.campos).Contains("16"))
+                            {
+                                <td>@(item.Status_STRING)</td>}<!--Status-->
+                            @if (((string[])ViewBag.campos).Contains("17"))
+                            {
+                                <td>@(item.Concepto_STRING)</td>}<!--Concepto-->
+                            @if (((string[])ViewBag.campos).Contains("18"))
+                            {
+                                <td>@(item.Mecanica_STRING)</td>}<!--Mecánica-->
+                            @if (((string[])ViewBag.campos).Contains("19"))
+                            {
+                                <td>@(item.De_STRING)</td>}<!--De-->
+                            @if (((string[])ViewBag.campos).Contains("20"))
+                            {
+                                <td>@(item.A_STRING)</td>}<!--A-->
+                            @if (((string[])ViewBag.campos).Contains("21"))
+                            {
+                                <td>@(item.DePeriodo_STRING)</td>}<!--De-->
+                            @if (((string[])ViewBag.campos).Contains("22"))
+                            {
+                                <td>@(item.APeriodo_STRING)</td>}<!--A-->
+                            @if (((string[])ViewBag.campos).Contains("23"))
+                            {
+                                <td>@(item.Clasificacion_STRING)</td>}<!--Clasificación-->
+                            @if (((string[])ViewBag.campos).Contains("24"))
+                            {
+                                <td>@(item.CuentaContableGasto_STRING)</td>}<!--Cuenta Contable Gasto-->
+                            @if (((string[])ViewBag.campos).Contains("25"))
+                            {
+                                <td>@(item.NombreCuenta_STRING)</td>}<!--Nombre de la cuenta-->
+                            @if (((string[])ViewBag.campos).Contains("26"))
+                            {
+                                <td>@(item.Cliente_STRING)</td>}<!--Cliente-->
+                            @if (((string[])ViewBag.campos).Contains("27"))
+                            {
+                                <td>@(item.Nombre_STRING)</td>}<!--Nombre-->
+                            @if (((string[])ViewBag.campos).Contains("28"))
+                            {
+                                <td>@(item.TipoCliente_STRING)</td>
+                            }<!--Tipo de Cliente-->
+                            @if (((string[])ViewBag.campos).Contains("29"))
+                            {
+                                <td>@(item.OrganizacionVentas_STRING)</td>}<!--Organización de Ventas-->
+                            @if (((string[])ViewBag.campos).Contains("30"))
+                            {
+                                <td>@(item.TaxID_STRING)</td>}<!--Tax ID-->
+                            @if (((string[])ViewBag.campos).Contains("31"))
+                            {
+                                <td>@(item.Canal_STRING)</td>}<!--Canal-->
+                            @if (((string[])ViewBag.campos).Contains("32"))
+                            {
+                                <td>@(item.Descripcion_STRING)</td>}<!--Descripción-->
+                            @if (((string[])ViewBag.campos).Contains("33"))
+                            {
+                                <td>@(item.NombreContacto_STRING)</td>}<!--Nombre de Contacto-->
+                            @if (((string[])ViewBag.campos).Contains("34"))
+                            {
+                                <td>@(item.EmailContacto_STRING)</td>}<!--Email de Contacto-->
+                            @if (((string[])ViewBag.campos).Contains("35"))
+                            {
+                                <td>@(item.MontoOriginalProvision_STRING)</td>}<!--$ Monto Original de Provisión-->
+                            @if (((string[])ViewBag.campos).Contains("36"))
+                            {
+                                <td>@(item.MontoNCOP_STRING)</td>}<!--$ Monto NC/OP-->
+                            @if (((string[])ViewBag.campos).Contains("37"))
+                            {
+                                <td>@(item.MontoAplicado_STRING)</td>}<!--$Monto Aplicado-->
+                            @if (((string[])ViewBag.campos).Contains("38"))
+                            {
+                                <td>@(item.SaldoRemanenteProvision_STRING)</td>}<!--Saldo Remanente Provisión-->
+                            @if (((string[])ViewBag.campos).Contains("39"))
+                            {
+                                <td>@(item.MontoReversoProvision_STRING)</td>}<!--$ Monto Reverso Provisión-->
+                            @if (((string[])ViewBag.campos).Contains("40"))
+                            {
+                                <td>@(item.PorcentajeReverso_STRING)</td>}<!--% Reverso-->
+                            @if (((string[])ViewBag.campos).Contains("41"))
+                            {
+                                <td>@(item.MontoExcesoProvision_STRING)</td>}<!--$ Exceso/(Insuficiencia) Provisión-->
+                            @if (((string[])ViewBag.campos).Contains("42"))
+                            {
+                                <td>@(item.PorcentajeExcesoProvision_STRING)</td>}<!--% Exceso/(Insuficiencia) Provisión-->
+                            @if (((string[])ViewBag.campos).Contains("43"))
+                            {
+                                <td>@(item.Impactos_STRING)</td>}<!--Impactos / Beneficios en el gasto del Periodo-->
+                            @if (((string[])ViewBag.campos).Contains("44"))
+                            {
+                                <td>@(item.NumRegistroProvision_STRING)</td>}<!--Núm. Registro Provisión-->
+                            @if (((string[])ViewBag.campos).Contains("45"))
+                            {
+                                <td>@(item.NumRegistroNCOP_STRING)</td>}<!--Núm. Registro NC/OP-->
+                            @if (((string[])ViewBag.campos).Contains("46"))
+                            {
+                                <td>@(item.NumRegistroReverso_STRING)</td>}<!--Núm. Registro Reverso-->
+                            @if (((string[])ViewBag.campos).Contains("47"))
+                            {
+                                <td>@(item.FechaReverso_STRING)</td>}<!--Fecha Reverso Provisión-->
+                            @if (((string[])ViewBag.campos).Contains("48"))
+                            {
+                                <td>@(item.PeriodoContableReverso_STRING)</td>}<!--Periodo Contable Reverso-->
+                            @if (((string[])ViewBag.campos).Contains("49"))
+                            {
+                                <td>@(item.RazonReverso_STRING)</td>}<!--Razón Reverso-->
+                            @if (((string[])ViewBag.campos).Contains("50"))
+                            {
+                                <td>@(item.ComentarioReverso_STRING)</td>}<!--Comentario Reverso-->
+                            @if (((string[])ViewBag.campos).Contains("51"))
+                            {
+                                <td>@(item.Usuario_STRING)</td>}<!--Usuario-->
+                            @if (((string[])ViewBag.campos).Contains("52"))
+                            {
+                                <td>@(item.Backup_STRING)</td>}<!--Back Up-->
+                            @if (((string[])ViewBag.campos).Contains("53"))
+                            {
+                                <td>@(item.CreadoPor_STRING)</td>}<!--Creado Por-->
+                            @if (((string[])ViewBag.campos).Contains("54"))
+                            {
+                                <td>@(item.CreadoPorID_STRING)</td>}<!--Creado Por ID-->
+                            @if (((string[])ViewBag.campos).Contains("55"))
+                            {
+                                <td>@(item.SolicitadoPor_STRING)</td>}<!--Solicitado Por-->
+                            @if (((string[])ViewBag.campos).Contains("56"))
+                            {
+                                <td>@(item.SolicitadoPorID_STRING)</td>}<!--Solicitado Por ID-->
+                            @if (((string[])ViewBag.campos).Contains("57"))
+                            {
+                                <td>@(item.ModificadoPor_STRING)</td>}<!--Modificado Por-->
+                            @if (((string[])ViewBag.campos).Contains("58"))
+                            {
+                                <td>@(item.ModificadoPorID_STRING)</td>}<!--Modificado Por ID-->
+                            @if (((string[])ViewBag.campos).Contains("59"))
+                            {
+                                <td>@(item.AprobadorN1_STRING)</td>}<!--Aprobador Nivel 1-->
+                            @if (((string[])ViewBag.campos).Contains("60"))
+                            {
+                                <td>@(item.AprobadorN2_STRING)</td>}<!--Aprobador Nivel 2-->
+                            @if (((string[])ViewBag.campos).Contains("61"))
+                            {
+                                <td>@(item.AprobadorN3_STRING)</td>}<!--Aprobador Nivel 3-->
+                            @if (((string[])ViewBag.campos).Contains("62"))
+                            {
+                                <td>@(item.AprobadorN4_STRING)</td>}<!--Aprobador Nivel 4-->
+                            @if (((string[])ViewBag.campos).Contains("63"))
+                            {
+                                <td>@(item.AprobadorN5_STRING)</td>}<!--Aprobador Nivel 5-->
+                            @if (((string[])ViewBag.campos).Contains("64"))
+                            {
+                                <td>@(item.Proveedor_STRING)</td>}<!--Proveedor-->
+                            @if (((string[])ViewBag.campos).Contains("65"))
+                            {
+                                <td>@(item.NombreProveedor_STRING)</td>}<!--Nombre Proveedor-->
+                            @if (((string[])ViewBag.campos).Contains("66"))
+                            {
+                                <td>@(item.NumeroFacturaProveedor_STRING)</td>}<!--Número Factura Proveedor-->
+                            @if (((string[])ViewBag.campos).Contains("67"))
+                            {
+                                <td>@(item.NumeroFacturaK_STRING)</td>}<!--Número Factura Kellogg´s-->
+                            @if (((string[])ViewBag.campos).Contains("68"))
+                            {
+                                <td>@(item.NumeroNC_STRING)</td>}<!--Número NC -->
+                            @if (((string[])ViewBag.campos).Contains("69"))
+                            {
+                                <td>@(item.NumeroOP_STRING)</td>}<!--Número Orden de Pago-->
+                            @if (((string[])ViewBag.campos).Contains("70"))
+                            {
+                                <td>@(item.ExpRecognitionPeriodo_STRING)</td>}<!--Expense Recognition en periodo-->
+                            @if (((string[])ViewBag.campos).Contains("71"))
+                            {
+                                <td>@(item.ExpRecognitionEjercicio_STRING)</td>}<!--Expense Recognition Ejercicio-->
+                            @if (((string[])ViewBag.campos).Contains("72"))
+                            {
+                                <td>@(item.SoporteIncorrecto_STRING)</td>}<!--Soporte Incorrecto-->
+                            @if (((string[])ViewBag.campos).Contains("73"))
+                            {
+                                <td>@(item.SoporteValidado_STRING)</td>}<!--Soporte validado con base variable pendiente-->
+                            @if (((string[])ViewBag.campos).Contains("74"))
+                            {
+                                <td>@(item.Carta_STRING)</td>}<!--Carta-->
+                            @if (((string[])ViewBag.campos).Contains("75"))
+                            {
+                                <td>@(item.Contrato_STRING)</td>}<!--Contrato-->
+                            @if (((string[])ViewBag.campos).Contains("76"))
+                            {
+                                <td>@(item.JBP_STRING)</td>}<!--JBP-->
+                            @if (((string[])ViewBag.campos).Contains("77"))
+                            {
+                                <td>@(item.Factura_STRING)</td>}<!--Factura-->
+                            @if (((string[])ViewBag.campos).Contains("78"))
+                            {
+                                <td>@(item.Otros_STRING)</td>}<!--Otros-->
+                            @if (((string[])ViewBag.campos).Contains("79"))
+                            {
+                                <td>@(item.NegociacionMonto_STRING)</td>}<!--Negociación por monto-->
+                            @if (((string[])ViewBag.campos).Contains("80"))
+                            {
+                                <td>@(item.NegociacionPorcentaje_STRING)</td>}<!--Negociación por %-->
+                            @if (((string[])ViewBag.campos).Contains("81"))
+                            {
+                                <td>@(item.DistribucionMaterial_STRING)</td>}<!--Distribución por material-->
+                            @if (((string[])ViewBag.campos).Contains("82"))
+                            {
+                                <td>@(item.DistribucionCategoria_STRING)</td>}<!--Distribución categoría-->
+                            @if (((string[])ViewBag.campos).Contains("83"))
+                            {
+                                <td>@(item.MontoBase_STRING)</td>}<!--Monto Base-->
+                            @if (((string[])ViewBag.campos).Contains("84"))
+                            {
+                                <td>@(item.MontoPorcentaje_STRING)</td>}<!--Monto %-->
+                            @if (((string[])ViewBag.campos).Contains("85"))
+                            {
+                                <td>@(item.Recurrente_STRING)</td>}<!--Recurrente-->
+                            @if (((string[])ViewBag.campos).Contains("86"))
+                            {
+                                <td>@(item.RecurrentePorcentaje_STRING)</td>}<!--Recurrente por porcentaje-->
+                            @if (((string[])ViewBag.campos).Contains("87"))
+                            {
+                                <td>@(item.RecurrenteMonto_STRING)</td>}<!--Recurrente por Monto-->
+                            @if (((string[])ViewBag.campos).Contains("88"))
+                            {
+                                <td>@(item.RecurrenteCancelada_STRING)</td>}<!--Recurrente Cancelada-->
+                            @if (((string[])ViewBag.campos).Contains("89"))
+                            {
+                                <td>@(item.ObjetivoInicio_STRING)</td>}<!--Objetivo Inicio-->
+                            @if (((string[])ViewBag.campos).Contains("90"))
+                            {
+                                <td>@(item.ObjetivoLimite_STRING)</td>}<!--Objetivo Límite-->
+                            @if (((string[])ViewBag.campos).Contains("91"))
+                            {
+                                <td>@(item.Estatus_STRING)</td>}<!--Estatus-->
+                            @if (((string[])ViewBag.campos).Contains("92"))
+                            {
+                                <td>@(item.VentaPeriodo_STRING)</td>}<!--Venta del Periodo-->
+                            @if (((string[])ViewBag.campos).Contains("93"))
+                            {
+                                <td>@(item.MontoProvision_STRING)</td>}<!--Monto Provisión-->
+                            @if (((string[])ViewBag.campos).Contains("94"))
+                            {
+                                <td>@(item.BackOrder_STRING)</td>}<!--Back Order-->
+                            @if (((string[])ViewBag.campos).Contains("95"))
+                            {
+                                <td>@(item.VentaRealBackOrder_STRING)</td>}<!--Venta Real + BO-->
+                            @if (((string[])ViewBag.campos).Contains("96"))
+                            {
+                                <td>@(item.NCOPReverso_STRING)</td>}<!--NC / OP o Reverso-->
+                            @if (((string[])ViewBag.campos).Contains("97"))
+                            {
+                                <td>@(item.MontoProvision_STRING)</td>}<!--Monto-->
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else { }
+    <style>
+        .dataTables_length {
+            display: none;
+        }
+
+        .dataTables_filter {
+            display: none;
+        }
+
+        .dataTables_scrollHeadInner, .mdl-data-table {
+            width: 100%;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .btn {
+            font-size: .8em;
+        }
+        /* not sure why this is needed... */
+        .material-icons {
+            vertical-align: bottom;
+        }
+
+        select {
+            display: block !important;
+        }
+
+        th {
+            text-align: center !important;
+        }
+    </style>
+}

@@ -1,0 +1,653 @@
+﻿@model TAT001.Entities.DOCUMENTO
+
+@{
+    //ViewBag.Title = "Páginas";
+    Layout = "~/Views/Shared/_LayoutMail.cshtml";
+}
+
+<div class="container" style="width:1000px">
+    <h4 style="font-family: -apple-system, BlinkMacSystemFont,Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
+               font-size:25px;">
+        @ViewBag.Title @Model.NUM_DOC
+    </h4>
+    <table>
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.USUARIOC_ID, new
+                {
+                    @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                    @id = "lbl_userid"
+                })
+            </td>
+            <td>
+                @Html.LabelFor(model => model.USUARIO.MANAGER, new
+                {
+                    @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                    @id = "lbl_manager"
+                })
+            </td>
+            <td>
+                @Html.LabelFor(model => model.USUARIO.BACKUP_ID, new
+                {
+                    @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                    @id = "lbl_backup"
+                })
+            </td>
+            <td>
+                @Html.LabelFor(model => model.USUARIO.BUNIT, new
+                {
+                    @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                    @id = "lbl_bunit"
+                })
+            </td>
+            <td>
+                @Html.LabelFor(model => model.ESTATUS, new
+                {
+                    @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                    @id = "lbl_status"
+                })
+            </td>
+            <td colspan="4"></td>
+        </tr>
+        <tr>
+            <td style="padding:5px;">
+                <div class="input-field col s4">
+                    @Html.EditorFor(model => model.USUARIOC_ID, new
+                    {
+                        htmlAttributes = new
+                        {
+                            @disabled = "disabled",
+                            @style = "color: rgba(0, 0, 0, 1.0); background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 120px;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                        }
+                    })
+                </div>
+            </td>
+            <td style="padding:5px;">
+                <div class="input-field col s4">
+                    @Html.EditorFor(model => model.USUARIO.MANAGER, new
+                    {
+                        htmlAttributes = new
+                        {
+                            @disabled = "disabled",
+                            @style = "color: rgba(0, 0, 0, 1.0); background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 120px;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                        }
+                    })
+                </div>
+            </td>
+            <td style="padding:5px;">
+                <div class="input-field col s4">
+                    @Html.EditorFor(model => model.USUARIO.BACKUP_ID, new
+                    {
+                        htmlAttributes = new
+                        {
+                            @disabled = "disabled",
+                            @style = "color: rgba(0, 0, 0, 1.0); background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 120px;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                        }
+                    })
+                </div>
+            </td>
+            <td style="padding:5px;">
+                <div class="input-field col s4">
+                    @Html.EditorFor(model => model.USUARIO.BUNIT, new
+                    {
+                        htmlAttributes = new
+                        {
+                            @disabled = "disabled",
+                            @style = "color: rgba(0, 0, 0, 1.0); background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 120px;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                        }
+                    })
+                </div>
+            </td>
+            <td style="padding:5px;">
+                <div class="input-field col s6">
+                    @if (Model.ESTATUS == "N")
+                    {
+                        <input type="text" id="txt_status" value="Nuevo" disabled="disabled" style="color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 60px;font-size: 16px;margin: 0 0 8px 0;padding: 0;" />
+                    }
+                </div>
+            </td>
+            <td style="width:30px"></td>
+            <td style="width:30px"></td>
+            <td style="width:30px"></td>
+            <td>
+                <a type="button" class="btn-small" id="btn_cancel"
+                   style="height: 32.4px;line-height: 32.4px;
+                        font-size: 13px;
+                        text-decoration: none;
+                        color: #fff;
+                        background-color: #26a69a;
+                        text-align: center;
+                        letter-spacing: .5px;
+                        -webkit-transition: background-color .2s ease-out;
+                        transition: background-color .2s ease-out;
+                        cursor: pointer;
+                        border: none;
+                        border-radius: 2px;
+                        display: inline-block;
+                        height: 36px;
+                        line-height: 36px;
+                        padding: 0 2rem;
+                        text-transform: uppercase;
+                        vertical-align: middle;
+                        -webkit-tap-highlight-color: transparent;"
+                   href="@ViewBag.url@Url.Action("Details", "Solicitudes", new {id= Model.NUM_DOC, pais=Model.PAIS_ID })">
+                    Ver
+                </a>
+            </td>
+        </tr>
+    </table>
+    <table style="width:100%;">
+        <tr>
+            <!------------------------------------11111111111111111111111111111111111----------------------------->
+            <td style="width:50%;padding:5px;vertical-align:baseline;">
+                <div class="card-panel"
+                     style="transition: box-shadow .25s, -webkit-box-shadow .25s;
+                                padding: 24px;
+                                margin: 0.5rem 0 1rem 0;
+                                border-radius: 2px;
+                                background-color: #fff;
+                                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+                                ">
+                    <div class="row" style="margin-bottom:0">
+                        <table style="width:100%">
+                            <tr>
+                                <td>
+                                    @Html.LabelFor(model => model.TSOL_ID, new
+                                {
+                                    @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                                    @id = "lbl_userid"
+                                })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:5px;">
+                                    <div class="input-field col s4">
+                                        @Html.EditorFor(model => model.TSOL.TSOLTs.Where(a => a.SPRAS_ID.Equals(model.USUARIO.SPRAS_ID)).FirstOrDefault().TXT020, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @disabled = "disabled",
+                                            @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 100%;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                                        }
+                                    })
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.LabelFor(model => model.TALL_ID, new
+                                {
+                                    @style = "    color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                                    @id = "lbl_userid"
+                                })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:5px;">
+                                    <div class="input-field col s4">
+                                        @Html.EditorFor(model => model.TALL.TALLTs.Where(a => a.SPRAS_ID.Equals(model.USUARIO.SPRAS_ID)).FirstOrDefault().TXT50, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @disabled = "disabled",
+                                            @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 100%;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                                        }
+                                    })
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="card-panel" style="transition: box-shadow .25s, -webkit-box-shadow .25s;padding: 24px;margin: 0.5rem 0 1rem 0;border-radius: 2px;background-color: #fff;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);">
+                    <h5 style="font-size:20px;margin:5px;">Datos país</h5>
+                    <table>
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.SOCIEDAD_ID, new
+                            {
+                                @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                                @id = "lbl_userid"
+                            })
+                            </td>
+                            <td>
+                                @Html.LabelFor(model => model.PAIS_ID, new
+                            {
+                                @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                                @id = "lbl_userid"
+                            })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;">
+                                <div class="input-field col s4">
+                                    @Html.EditorFor(model => model.SOCIEDAD_ID, new
+                                {
+                                    htmlAttributes = new
+                                    {
+                                        @disabled = "disabled",
+                                        @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 100%;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                                    }
+                                })
+                                </div>
+                            </td>
+                            <td style="padding:5px;">
+                                <div class="input-field col s4">
+                                    @Html.EditorFor(model => model.PAIS_ID, new
+                                {
+                                    htmlAttributes = new
+                                    {
+                                        @disabled = "disabled",
+                                        @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 100%;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                                    }
+                                })
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:50%;padding:5px;vertical-align:baseline;">
+                <div class="card-panel" style="transition: box-shadow .25s, -webkit-box-shadow .25s;padding: 24px;margin: 0.5rem 0 1rem 0;border-radius: 2px;background-color: #fff;box-shadow:0 2px 2px 0 #888888, 0 2px 2px -2px #888888, 0 2px 2px 0 #888888;">
+                    <h5 style="font-size:20px;margin:5px;">Información general</h5>
+                    <table>
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.FECHAC, new
+                            {
+                                @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                                @id = "lbl_userid"
+                            })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-field col s4">
+                                    @Html.EditorFor(model => model.FECHAC, new
+                                {
+                                    htmlAttributes = new
+                                    {
+                                        @disabled = "disabled",
+                                        @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 100%;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                                    }
+                                })
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.PERIODO, new
+                            {
+                                @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                                @id = "lbl_userid"
+                            })
+                            </td>
+                            <td>
+                                @Html.LabelFor(model => model.EJERCICIO, new
+                            {
+                                @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                                @id = "lbl_userid"
+                            })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;">
+                                <div class="input-field col s4">
+                                    @Html.EditorFor(model => model.PERIODO, new
+                                {
+                                    htmlAttributes = new
+                                    {
+                                        @disabled = "disabled",
+                                        @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 100%;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                                    }
+                                })
+                                </div>
+                            </td>
+                            <td style="padding:5px;">
+                                <div class="input-field col s4">
+                                    @Html.EditorFor(model => model.EJERCICIO, new
+                                {
+                                    htmlAttributes = new
+                                    {
+                                        @disabled = "disabled",
+                                        @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 100%;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                                    }
+                                })
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.CONCEPTO, new
+                            {
+                                @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                                @id = "lbl_userid"
+                            })
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="width:100%">
+                        <tr>
+                            <td style="padding:5px;">
+                                <div class="input-field col s4">
+                                    @Html.EditorFor(model => model.CONCEPTO, new
+                                {
+                                    htmlAttributes = new
+                                    {
+                                        @disabled = "disabled",
+                                        @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 100%;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                                    }
+                                })
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="card-panel"
+                     style="transition: box-shadow .25s, -webkit-box-shadow .25s;
+                                padding: 24px;
+                                margin: 0.5rem 0 1rem 0;
+                                border-radius: 2px;
+                                background-color: #fff;
+                                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+                                ">
+                    <h5 style="font-size:20px;margin:5px;">Cliente @Model.CLIENTE.KUNNR</h5>
+                    <div class="row" style="margin-bottom:0">
+                        <table style="width:100%">
+                            <tr>
+                                <td>
+                                    @Html.LabelFor(model => model.CLIENTE.NAME1, new
+                                {
+                                    @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                                    @id = "lbl_userid"
+                                })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:5px;">
+                                    <div class="input-field col s4">
+                                        @Html.EditorFor(model => model.CLIENTE.NAME1, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @disabled = "disabled",
+                                            @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 100%;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                                        }
+                                    })
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.LabelFor(model => model.CLIENTE.STCD1, new
+                                {
+                                    @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                                    @id = "lbl_userid"
+                                })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:5px;">
+                                    <div class="input-field col s4">
+                                        @Html.EditorFor(model => model.CLIENTE.STCD1, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @disabled = "disabled",
+                                            @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 100%;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                                        }
+                                    })
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <!------------------------------------222222222222222222222222222222222222222----------------------------->
+            <td style="width:50%;padding:5px;vertical-align:baseline;">
+                <div class="card-panel"
+                     style="transition: box-shadow .25s, -webkit-box-shadow .25s;
+                                padding: 24px;
+                                margin: 0.5rem 0 1rem 0;
+                                border-radius: 2px;
+                                background-color: #fff;
+                                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+                                ">
+                    <h5 style="font-size:20px;margin:5px;">Temporalidad</h5>
+                    <div class="row" style="margin-bottom:0">
+                        <table style="width:100%">
+                            <tr>
+                                <td>
+                                    @Html.LabelFor(model => model.FECHAI_VIG, new
+                                {
+                                    @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                                    @id = "lbl_userid"
+                                })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:5px;">
+                                    <div class="input-field col s4">
+                                        @Html.EditorFor(model => model.FECHAI_VIG, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @disabled = "disabled",
+                                            @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 100%;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                                        }
+                                    })
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.LabelFor(model => model.FECHAF_VIG, new
+                                {
+                                    @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                                    @id = "lbl_userid"
+                                })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:5px;">
+                                    <div class="input-field col s4">
+                                        @Html.EditorFor(model => model.FECHAF_VIG, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @disabled = "disabled",
+                                            @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 100%;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                                        }
+                                    })
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:50%;padding:5px;vertical-align:baseline;">
+                <div class="card-panel"
+                     style="transition: box-shadow .25s, -webkit-box-shadow .25s;
+                                padding: 24px;
+                                margin: 0.5rem 0 1rem 0;
+                                border-radius: 2px;
+                                background-color: #fff;
+                                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+                                ">
+                    <h5 style="font-size:20px;margin:5px;">Finanzas</h5>
+                    <div class="row" style="margin-bottom:0">
+                        <table style="width:100%">
+                            <tr>
+                                <td colspan="2">
+                                    @Html.LabelFor(model => model.MONTO_DOC_MD, new
+                                {
+                                    @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                                    @id = "lbl_userid"
+                                })
+                                </td>
+                                <td>
+                                    @Html.LabelFor(model => model.MONEDA_ID, new
+                                {
+                                    @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                                    @id = "lbl_userid"
+                                })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:5px;" colspan="2">
+                                    <div class="input-field col s4">
+                                        @Html.EditorFor(model => model.MONTO_DOC_MD, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @disabled = "disabled",
+                                            @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 100%;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                                        }
+                                    })
+                                    </div>
+                                </td>
+                                <td style="padding:5px;">
+                                    <div class="input-field col s4">
+                                        @Html.EditorFor(model => model.MONEDA_ID, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @disabled = "disabled",
+                                            @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 100%;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                                        }
+                                    })
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.LabelFor(model => model.TIPO_CAMBIO, new
+                                {
+                                    @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                                    @id = "lbl_userid"
+                                })
+                                </td>
+                                <td>
+                                    @Html.LabelFor(model => model.MONTO_DOC_ML, new
+                                {
+                                    @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                                    @id = "lbl_userid"
+                                })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:5px;">
+                                    <div class="input-field col s4">
+                                        @Html.EditorFor(model => model.TIPO_CAMBIO, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @disabled = "disabled",
+                                            @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 100%;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                                        }
+                                    })
+                                    </div>
+                                </td>
+                                <td style="padding:5px;">
+                                    <div class="input-field col s4">
+                                        @Html.EditorFor(model => model.MONTO_DOC_ML, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @disabled = "disabled",
+                                            @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 100%;font-size: 16px;margin: 0 0 8px 0;padding: 0; ",
+                                            @class = "precio"
+                                        }
+                                    })
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    @Html.LabelFor(model => model.NOTAS, new
+                                {
+                                    @style = "color: rgba(0, 0, 0, 1.0);font-size:10px;",
+                                    @id = "lbl_userid"
+                                })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:5px;" colspan="3">
+                                    <div class="input-field col s4">
+                                        @Html.EditorFor(model => model.NOTAS, new
+                                    {
+                                        htmlAttributes = new
+                                        {
+                                            @disabled = "disabled",
+                                            @style = "color: rgba(0, 0, 0, 1.0);background-color: transparent;border: none;border-bottom: 1px dotted rgba(0, 0, 0, 1.0);border-radius: 0;outline: none;height: 50px;width: 100%;font-size: 16px;margin: 0 0 8px 0;padding: 0; "
+                                        }
+                                    })
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    @if (ViewBag.workflow.Count != 0)
+    {
+        <div class="row" style="font-size:12px;">
+            <div class="col s12">
+                <div class="row" style="margin-bottom:0">
+                    <div class="card-panel" style="transition: box-shadow .25s, -webkit-box-shadow .25s;padding: 24px;margin: 0.5rem 0 1rem 0;border-radius: 2px;background-color: #fff;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);">
+                        <h5 style="font-size:20px;margin:5px;">Workflow</h5>
+                        <table class="table highlight" id="table" style="border-collapse:collapse;width:100%;display:table;border-spacing:0">
+                            <thead>
+                                <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.12);">
+                                    <th style="padding: 15px 5px;display: table-cell;text-align: left;vertical-align: middle;border-radius: 2px;">Usuario</th>
+                                    <th style="padding: 15px 5px;display: table-cell;text-align: left;vertical-align: middle;border-radius: 2px;">Evento</th>
+                                    <th style="padding: 15px 5px;display: table-cell;text-align: left;vertical-align: middle;border-radius: 2px;">Fecha</th>
+                                    <th style="padding: 15px 5px;display: table-cell;text-align: left;vertical-align: middle;border-radius: 2px;">Fecha Procesada</th>
+                                    <th style="padding: 15px 5px;display: table-cell;text-align: left;vertical-align: middle;border-radius: 2px;">Estatus</th>
+                                    <th width="30%" style="padding: 15px 5px;display: table-cell;text-align: left;vertical-align: middle;border-radius: 2px;">Comentario</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (TAT001.Entities.FLUJO f in ViewBag.workflow)
+                                {
+                                    <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.12);">
+                                        <td style="padding: 15px 5px;display: table-cell;text-align: left;vertical-align: middle;border-radius: 2px;">@Html.DisplayFor(modelItem => f.USUARIOA_ID) - @Html.DisplayFor(modelItem => f.USUARIO.NOMBRE) @Html.DisplayFor(modelItem => f.USUARIO.APELLIDO_P) @Html.DisplayFor(modelItem => f.USUARIO.APELLIDO_M)</td>
+                                        <td style="padding: 15px 5px;display: table-cell;text-align: left;vertical-align: middle;border-radius: 2px;">@Html.DisplayFor(modelItem => f.WORKFP.ACCION.ACCIONTs.Where(a => a.SPRAS_ID == Session["spras"].ToString()).FirstOrDefault().TXT050)</td>
+                                        <td style="padding: 15px 5px;display: table-cell;text-align: left;vertical-align: middle;border-radius: 2px;">@Html.DisplayFor(modelItem => f.FECHAC)</td>
+                                        <td style="padding: 15px 5px;display: table-cell;text-align: left;vertical-align: middle;border-radius: 2px;">@Html.DisplayFor(modelItem => f.FECHAM)</td>
+                                        <td style="padding: 15px 5px;display: table-cell;text-align: left;vertical-align: middle;border-radius: 2px;">@Html.DisplayFor(modelItem => f.ESTATUS)</td>
+                                        <td width="30%" style="padding: 15px 5px;display: table-cell;text-align: left;vertical-align: middle;border-radius: 2px;">@Html.DisplayFor(modelItem => f.COMENTARIO)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style type="text/css">
+</style>
+
+<script src="~/Scripts/formatos.js"></script>

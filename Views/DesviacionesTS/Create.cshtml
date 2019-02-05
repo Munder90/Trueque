@@ -1,0 +1,92 @@
+﻿@model TAT001.Entities.TS_CAMPO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 1312;
+    ViewBag.carpeta_r = 500;
+}
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+<link href="~/Content/autocomplete.css" rel="stylesheet" />
+<script src="~/Scripts/autocomplete1.11.4.js"></script>
+
+<span style="display:none;" class="lbl_selecionar_todo"></span>
+<span style="display:none;" class="lbl_deselecionar"></span>
+<div class="row">
+    @using (Html.BeginForm("Create", "DesviacionesTS", FormMethod.Post, new { @id = "desviacionesForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button id="btnGC" type="submit" value="Create" style="float:right;" class="btn btn-default">Crear</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <div class="col s6">
+                <div class="card-panel">
+                    <div class="row">
+                        <div class="input-field col l12 m12" style="margin-bottom:0;">
+                            <select name="sociedadesSelected" id="sociedades" multiple required>
+                                @foreach (var item in (List<SelectListItem>)ViewBag.SOCIEDADES)
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            </select>
+                            <label  class="control-label col-md-2" id="lbl_sociedad"></label>
+                        </div>
+                        <div class="input-field col l12 m12" style="margin-bottom:0;">
+                            <h5>Traducciones</h5>
+                        </div>
+                        <div class="input-field col l12 m12" style="margin-bottom:0;">
+                            @Html.Editor("EN", new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @required = "" } })
+                            <label id="lblIngles">EN</label>
+                        </div>
+                        <div class="input-field col l12 m12" style="margin-bottom:0;">
+                            @Html.Editor("ES", new { htmlAttributes = new { @class = "form-control", @maxlength = "50", @required = "" } })
+                            <label id="lblEspa">ES</label>
+                        </div>
+                        <div class="input-field col l2 m12 right">
+                            <label>
+                                <input type="checkbox" name="ACTIVO" value="true" id="fac" readonly="readonly" checked />
+                                <span id="lblActivo"></span>
+
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>
+
+<script type="text/javascript" src="~/Scripts/fnCommon.js"></script>
+<script>
+    var root = "@Url.Content("~")";
+    //---- Inicializador de componentes Materialize----
+    fnCommon.materializeInit('select');
+    fnCommon.selectRequired();
+    //----  Se agrega validaciones al formulario----
+    fnCommon.formValidation('desviacionesForm');
+    //-- Actualizar seleccion de Sociedades
+    $('#sociedades').siblings('ul').prepend('<li id=op_select_all><span>Seleccionar todo</span></li>');
+    $('li#op_select_all').on('click', function () {
+        var jq_elem = $(this),
+            jq_elem_span = jq_elem.find('span'),
+            select_all = jq_elem_span.text() == $('.lbl_selecionar_todo').html(),
+            set_text = select_all ? $('.lbl_deselecionar').html() : $('.lbl_selecionar_todo').html();
+        jq_elem_span.text(set_text);
+        jq_elem.siblings('li').filter(function () {
+            return $(this).find('input').prop('checked') != select_all;
+        }).click();
+    });
+    //Mostrar process
+    $('#desviacionesForm').submit(function () {
+        if ($('#desviacionesForm').valid()) {
+            document.getElementById("loader").style.display = "flex";
+        }
+    });
+</script>

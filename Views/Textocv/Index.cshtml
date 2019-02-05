@@ -1,0 +1,168 @@
+﻿@model IEnumerable<TAT001.Entities.TEXTOCV>
+
+@{
+    ViewBag.pagina_r = 711;
+    ViewBag.carpeta_r = 500;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<div class="row">
+        <div class="row right">
+            <div class="col l12 m12 right">
+                <a href="@Url.Action("Create", "Textocv")" class="waves-effect waves-light btn">AGREGAR</a>
+            </div>
+        </div>
+    </div>*@
+
+@*<div class="row" style="height:10px;width:100%;">
+        <div class="col l7 pink darken-1" style="height:10px;padding:0;"></div>
+        <div class="col l3 pink darken-4" style="height:10px;padding:0;">
+            <div class="col l3 pink darken-4" style="height:10px;padding:0;"></div>
+            <div class="col l8 orange" style="height:10px;padding:0;"></div>
+            <div class="col l1 red" style="height:10px;padding:0;"></div>
+        </div>
+        <div class="col l2 yellow" style="height:10px;padding:0;"></div>
+    </div>*@
+<div class="row">
+    <div class="card-panel">
+        <div class="row" style="margin-bottom:0;">
+            <div class="input-field col s3 m3 l3">
+                <select id="selecc">
+                    <option value="10" selected>10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                <label id="lbl_length">Ver por página</label>
+            </div>
+            <div class="input-field col s5 m3 l3 offset-l6 offset-m6 offset-s4">
+                <input type="text" class="global_filter" id="global_filter">
+                <label for="global_filter" id="lbl_search">Buscar</label>
+            </div>
+        </div>
+        <script>
+            var elem = document.querySelector('select');
+            var options = [];
+            var instance = M.FormSelect.init(elem, options);
+        </script>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="//cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+        <link href="~/Content/dataTable.css" rel="stylesheet" />
+        <link href="//cdn.datatables.net/1.10.16/css/dataTables.material.min.css" rel="stylesheet" />
+        <table class="table mdl-data-table striped" id="table" style="width:100%;">
+            <thead>
+                <tr class="">
+                    <th class="lblIdioma">
+                        @Html.DisplayNameFor(model => model.SPRAS_ID)
+                    </th>
+                    <th class="lblCampo">
+                        @Html.DisplayNameFor(model => model.CAMPO)
+                    </th>
+                    <th class="lblTexto">
+                        @Html.DisplayNameFor(model => model.TEXTO)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SPRAS_ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CAMPO)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TEXTO)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", "Textocv", new { id = item.ID })">
+                                <i class='material-icons green-text'>edit</i>
+                            </a>&nbsp
+                            <a href="@Url.Action("Details", "Textocv", new { id = item.ID })">
+                                <i class='material-icons blue-text'>search</i>
+                            </a>&nbsp
+                            @*<a href="@Url.Action("Delete", "Textocv", new { id = item.ID })">
+                                    <i class='material-icons red-text'>delete</i>
+                                </a>*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@*<script type="text/javascript">
+    $("a[data-form-method='post']").click(function (event) {
+        event.preventDefault();
+        var element = $(this);
+        var action = element.attr("href");
+        element.closest("form").each(function () {
+            var form = $(this);
+            form.attr("action", action);
+            form.submit();
+        });
+    });
+</script>*@
+
+<script>
+    $(document).ready(function () {
+        var table = $('#table').DataTable({
+            scrollX: "50vh",
+            scrollY: "50vh",
+            scrollCollapse: true,
+            language: {
+                "url": "../Scripts/lang/@Session["spras"].ToString()"+".json"
+            },
+            order: [[0, "asc"]],
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var select = $('<select style="display:initial;" class="browser-default"><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+                    column.cells('', column[0]).render('display').sort().unique().each(function (d, j) {
+                        var val = $('<div/>').html(d).text();
+                        select.append('<option value="' + val + '">' + val + '</option>');
+                    });
+                });
+            }
+        });
+
+        var a = $('#selecc').val();
+        table.page.len(a).draw();
+        $('#selecc').on('change', function () {
+            table.page.len(this.value).draw();
+        });
+
+        $('input.global_filter').on('keyup click', function () {
+            filterGlobal();
+        });
+    });
+    function filterGlobal() {
+        $('#table').DataTable().search(
+            $('#global_filter').val()).draw();
+    }
+</script>
+<style>
+    .dataTables_length {
+        display: none;
+    }
+
+    .dataTables_filter {
+        display: none;
+    }
+
+    .dataTables_scrollHeadInner, .mdl-data-table {
+        width: 100%;
+    }
+</style>

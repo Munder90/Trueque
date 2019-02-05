@@ -1,0 +1,316 @@
+﻿@model TAT001.Entities.TAXEOH
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 854;
+    ViewBag.carpeta_r = 500;
+}
+<script src="~/Scripts/ProbarFiltrado.js"></script>
+<style>
+    .pnl-cli {
+        background-color: white;
+        padding: 5px 15px 5px 15px;
+        border-radius: 5px;
+    }
+</style>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="row left pnl-cli">
+            <h6>@ViewBag.NoCliente - @ViewBag.Cliente</h6>
+        </div>
+        <div class="row right">
+            <div class="col s12 right-align">
+                @*<a href="@Url.Action("Index", "Taxeoh", new { kun = @ViewBag.kun, vko = @ViewBag.vko, vtw = @ViewBag.vtw, spa = @ViewBag.spa })" id="lblRegresar" class="btn-small"></a>*@
+                <button id="btnAg" type="submit" value="Submit" class="btn-small">Submit</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="card-panel">
+            <div class="row">
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="col s6 m6 l6">
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.SOCIEDAD_ID, "SOCIEDAD_ID", htmlAttributes: new { @class = "control-label col-md-2", @id = "lblSocId" })
+                            @*@Html.DropDownList("SOCIEDAD_ID", null, htmlAttributes: new { @class = "form-control clSc" })*@
+                            @Html.EditorFor(model => model.SOCIEDAD_ID, new { htmlAttributes = new { @class = "form-control", @id = "input_sociedad", required = true } })
+                            @Html.ValidationMessageFor(model => model.SOCIEDAD_ID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col l11 m11 s11">
+                            @Html.LabelFor(model => model.CONCEPTO_ID, "CONCEPTO_ID", htmlAttributes: new { @class = "control-label col-md-2", @id = "lblConId" })
+                            @*@Html.DropDownList("CONCEPTO_ID", null, htmlAttributes: new { @class = "form-control col-md-8" })*@
+                            @Html.EditorFor(model => model.CONCEPTO_ID, new { htmlAttributes = new { @class = "form-control", @id = "input_concepto", required = true } })
+                            @Html.ValidationMessageFor(model => model.CONCEPTO_ID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col l1 m1 s1">
+                            <a href="#modalconcepto" class="btn-floating modal-trigger" id="newtxc"><i class="material-icons">add</i></a>
+                        </div>
+                        <div class="col l11 m11 s11">
+                            @Html.LabelFor(model => model.TNOTA_ID, "TNOTA_ID", htmlAttributes: new { @class = "control-label col-md-2", @id = "lblNotas" })
+                            @*@Html.DropDownList("TNOTA_ID", null, htmlAttributes: new { @class = "form-control" })*@
+                            @Html.EditorFor(model => model.TNOTA_ID, new { htmlAttributes = new { @class = "form-control", @id = "input_tnota", required = true } })
+                            @Html.ValidationMessageFor(model => model.TNOTA_ID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col l1 m1 s1">
+                            <a href="#modalnota" class="modal-trigger btn-floating" id="newtxn"><i class="material-icons">add</i></a>
+                        </div>
+                    </div>
+                    <div class="col s6 m6 l6">
+                        <div class="col l12 m12 s12">
+                            @Html.LabelFor(model => model.IMPUESTO_ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblImpId" })
+                            @*@Html.DropDownList("IMPUESTO_ID", null, new { htmlAttributes = new { @class = "form-control" } })*@
+                            @Html.EditorFor(model => model.IMPUESTO_ID, new { htmlAttributes = new { @class = "form-control", @id = "input_impuesto", required = true } })
+                            @Html.ValidationMessageFor(model => model.IMPUESTO_ID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="input-field col l12 m12 s12">
+                            @Html.LabelFor(model => model.PAY_T, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblPayt" })
+                            @Html.EditorFor(model => model.PAY_T, new { htmlAttributes = new { @class = "form-control", @maxlength = "4" } })
+                            @Html.ValidationMessageFor(model => model.PAY_T, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div id="modalconcepto" class="modal">
+    <form id="newconcepto" method="post" action="@Url.Content("~")Txc/CreateA" class="col s12">
+        <div class="modal-content">
+            <h4 id="lbl_nuevoconcepto">Nuevo </h4>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="DESCRIPCION" type="text" class="validate" required>
+                    <label for="DESCRIPCION" id="lbl_dscnuevoconcepto"></label>
+                </div>
+            </div>
+            <button id="btnCreate" type="submit" class="btn btn-default" name="submit" value="" onclick="cierraModal('modalconcepto')"></button>
+            <div id="server-results1" class="center-align"><!-- For server results --></div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-action modal-close waves-effect waves-green btn-flat" id="lbl_cerrar"></button>
+        </div>
+        <script>
+            function cierraModal(id) {
+                var elem = document.getElementById(id);
+                var instance = M.Modal.getInstance(elem);
+                instance.close();
+            }
+        </script>
+    </form>
+</div>
+<div id="modalnota" class="modal">
+    <div class="modal-content">
+        <h4 id="lbl_nuevocont">Nuevo Tipo Contribuyente</h4>
+        <form id="newnota" method="post" action="@Url.Content("~")Txn/CreateA" class="col s12">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="DESCRIPCIONNOTA" type="text" class="validate" required>
+                    <label for="DESCRIPCIONNOTA" id="lbl_dscnuevocont"></label>
+                </div>
+            </div>
+            <button id="btnCreate2" type="submit" class="btn btn-default" name="submit" value="" onclick="cierraModal('modalnota')"/>
+            <div class="center-align" id="server-results2"><!-- For server results --></div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-green btn-flat" id="lbl_cerrar2"></button>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index", new { kun = @ViewBag.kun, vko = @ViewBag.vko, vtw = @ViewBag.vtw, spa = @ViewBag.spa }, new { id = "lblRegresar" })
+</div>
+
+<script src="~/Scripts/autocomplete1.10.2.js"></script>
+<script src="~/Scripts/autocomplete1.11.4.js"></script>
+<link href="~/Content/autocomplete.css" rel="stylesheet" />
+<script>
+        var root = '@Url.Content("~")';
+
+        var elem = document.querySelectorAll('select');
+        var instance = M.FormSelect.init(elem, []);
+        $("#input_concepto").attr("type", "text");
+        $("#input_tnota").attr("type", "text");
+    $(document).ready(function () {
+        // opens the modal    
+        var elems = document.querySelectorAll('.modal');
+        var options = {
+            onOpenStart: function () {
+                $('#DESCRIPCIONNOTA').val('');
+                $('#DESCRIPCION').val('');
+            }};
+            var instances = M.Modal.init(elems, options);
+
+            $("#newconcepto").submit(function (event) {
+                event.preventDefault(); //prevent default action
+                var post_url = $(this).attr("action"); //get form action url
+                var request_method = $(this).attr("method"); //get form GET/POST method
+                var form_data = new FormData(this);
+                $.ajax({
+                    url: post_url,
+                    type: request_method,
+                    data: { DESCRIPCION: $("#DESCRIPCION").val() },
+                    success: function (result) {
+                        $("#server-results1").text(result);
+                    }
+                });
+            });
+            $("#newnota").submit(function (event) {
+                event.preventDefault(); //prevent default action
+                var post_url = $(this).attr("action"); //get form action url
+                var request_method = $(this).attr("method"); //get form GET/POST method
+                var form_data = new FormData(this);
+                $.ajax({
+                    url: post_url,
+                    type: request_method,
+                    data: { DESCRIPCION: $("#DESCRIPCIONNOTA").val() },
+                    success: function (result) {
+                        $("#server-results2").text(result);
+                    }
+                });
+            });
+            $('.modal-close').click(function (e) {
+                window.location.reload();
+            });
+        });
+
+        $('body').on('keydown.autocomplete', '#input_sociedad', function () {
+
+            auto(this).autocomplete({
+                source: function (request, response) {
+                    auto.ajax({
+                        type: "GET",
+                        url: root+'Listas/Sociedades',
+                        dataType: "json",
+                        data: { "Prefix": request.term },
+                        success: function (data) {
+                            response(auto.map(data, function (item) {
+                                return { label: item.BUKRS , value: item.BUKRS };
+                            }))
+                        }
+                    })
+                },
+
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) { }
+                },
+
+                change: function (e, ui) {
+                    if (!(ui.item)) {
+                        e.target.value = "";
+                    }
+                },
+
+                select: function (event, ui) {
+                }
+            });
+        });
+
+        $('body').on('keydown.autocomplete', '#input_concepto', function () {
+
+            auto(this).autocomplete({
+                source: function (request, response) {
+                    auto.ajax({
+                        type: "POST",
+                        url: 'Concepto',
+                        dataType: "json",
+                        data: { "Prefix": request.term },
+                        success: function (data) {
+                            response(auto.map(data, function (item) {
+                                return { label: item.ID + " | " + item.TEXTO, value: item.ID };
+                            }))
+                        }
+                    })
+                },
+
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) { }
+                },
+
+                change: function (e, ui) {
+                    if (!(ui.item)) {
+                        e.target.value = "";
+                    }
+                },
+
+                select: function (event, ui) {
+                }
+            });
+        });
+
+        $('body').on('keydown.autocomplete', '#input_tnota', function () {
+
+            auto(this).autocomplete({
+                source: function (request, response) {
+                    auto.ajax({
+                        type: "POST",
+                        url: 'Tnota',
+                        dataType: "json",
+                        data: { "Prefix": request.term },
+                        success: function (data) {
+                            response(auto.map(data, function (item) {
+                                return { label: item.ID + " | " + item.TEXTO, value: item.ID };
+                            }))
+                        }
+                    })
+                },
+
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) { }
+                },
+
+                change: function (e, ui) {
+                    if (!(ui.item)) {
+                        e.target.value = "";
+                    }
+                },
+
+                select: function (event, ui) {
+                }
+            });
+        });
+
+        $('body').on('keydown.autocomplete', '#input_impuesto', function () {
+
+            auto(this).autocomplete({
+                source: function (request, response) {
+                    auto.ajax({
+                        type: "POST",
+                        url: 'Impuesto',
+                        dataType: "json",
+                        data: { "Prefix": request.term },
+                        success: function (data) {
+                            response(auto.map(data, function (item) {
+                                return { label: item.MWSKZ, value: item.MWSKZ };
+                            }))
+                        }
+                    })
+                },
+
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) { }
+                },
+
+                change: function (e, ui) {
+                    if (!(ui.item)) {
+                        e.target.value = "";
+                    }
+                },
+
+                select: function (event, ui) {
+                }
+            });
+        });
+</script>
+<script>
+    var auto = $.noConflict();
+    $("#files").on("click", function () {
+        $("#files").val('');
+    });
+</script>

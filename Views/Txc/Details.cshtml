@@ -1,0 +1,89 @@
+﻿@model TAT001.Entities.TX_CONCEPTO
+@{
+    //ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.pagina_r = 802;
+    ViewBag.carpeta_r = 500;
+    List<TAT001.Entities.SPRA> spras = ViewBag.SPRAS as List<TAT001.Entities.SPRA>;
+    List<TAT001.Entities.TX_CONCEPTOT> lstTXT = new List<TAT001.Entities.TX_CONCEPTOT>();
+
+    List<TAT001.Entities.SPRA> spras2 = new List<TAT001.Entities.SPRA>();
+    foreach (var item in Model.TX_CONCEPTOT)
+    {
+        TAT001.Entities.TX_CONCEPTOT txt = new TAT001.Entities.TX_CONCEPTOT();
+        txt.SPRAS_ID = item.SPRAS_ID;
+        txt.CONCEPTO_ID = item.CONCEPTO_ID;
+        txt.TXT50 = item.TXT50;
+        lstTXT.Add(txt);
+    }
+    for (int i = 0; i < spras.Count; i++)
+    {
+        TAT001.Entities.TX_CONCEPTOT x2 = lstTXT.Where(a => a.SPRAS_ID == spras[i].ID).FirstOrDefault();
+        if (x2 == null)
+        {
+            spras2.Add(spras[i]);
+        }
+    }
+}
+<div class="row">
+    <div class="col s6 ">
+        <div class="card-panel">
+            <div class="row">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblId" })
+                        @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DESCRIPCION, htmlAttributes: new { @class = "control-label col-md-2", @id = "lblDescripcion" })
+                        @Html.EditorFor(model => model.DESCRIPCION, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.DESCRIPCION, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>
+                    @{ bool activo = Convert.ToBoolean(Model.ACTIVO);
+                        @Html.CheckBox("ACTIVO", activo,new { @disabled="disabled"})
+                    }
+                    <span id="lblActivo"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="col s6 ">
+        <div class="card-panel">
+            <h5 id="hdTr">Traducciones</h5>
+            <div class="row">
+                @foreach (var item in Model.TX_CONCEPTOT)
+                {
+                    <div class=" input-field col s12">
+                        @Html.EditorFor(modelItem => item.TXT50, null, item.SPRAS_ID, new { htmlAttributes = new { @id = "A" + item.SPRAS_ID, @readonly = "readonly" } })
+                        <label for="@("A"+item.SPRAS_ID)">@item.SPRA.DESCRIPCION</label>
+                    </div>
+                }
+                @foreach (var item in spras2)
+                {
+                    <div class=" input-field col s12 pr1">
+                        @Html.Editor("Editor", null, "txval", new { htmlAttributes = new {@readonly="readonly" } })
+                        <label for="Editor">@item.DESCRIPCION</label>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { id = "lblEditar" }) |*@
+    @Html.ActionLink("Back to List", "Index", null, new { id = "lblRegresar" })
+</p>
+<script>
+    $("input[type='hidden']").each(function (index, element) {
+        $(this).appendTo($(element).parent());
+    });
+</script>
